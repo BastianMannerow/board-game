@@ -1,6 +1,6 @@
 package tnt.model;
-import model.Figure;
-import model.Card;
+import tnt.model.Figure;
+import tnt.model.Card;
 import java.util.ArrayList;
 
 
