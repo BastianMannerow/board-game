@@ -1,7 +1,17 @@
 package tnt.model;
 import java.util.ArrayList;
 
+/**
+ * The Validator is responsible for suggesting the active player actions to choose from. It also prevents the player
+ * from doing illegal actions and serves the AI as a method for predictions.
+ */
 public class Validator {
+
+    /**
+     * @param figure the figure object which's valid moves should be calculated
+     * @param board the board the possible actions should be calculated on
+     * @return possibleFields is a list of Field Objects, which are legal to use
+     */
     public ArrayList<Field> getValidMoves(Figure figure, Board board) {
         int figureX = figure.getX();
         int figureY = figure.getY();

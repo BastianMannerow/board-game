@@ -7,6 +7,10 @@ import tnt.model.Player;
 import tnt.model.Game;
 
 public class Main {
+    /**
+     * Objekte & Aktionen werden hier testweise erstellt. Muss noch auf Controller verlagert werden! Evtl. sollte Datentyp
+     * von Colour & Cards geändert werden?
+     */
     public static void main(String[] args) {
         // Kreiiert testweise ein paar Playerobjekte mit zugehörigen Figuren.
         ArrayList<Player> players = new ArrayList<Player>();
