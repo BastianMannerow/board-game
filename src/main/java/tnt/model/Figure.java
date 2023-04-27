@@ -2,10 +2,12 @@ package tnt.model;
 public class Figure {
     private int x;
     private int y;
+    private Card card;
 
-    public Figure(int x, int y) {
+    public Figure(int x, int y, Card card) {
         this.x = x;
         this.y = y;
+        this.card = card;
     }
 
     public int getX() {
@@ -24,4 +26,11 @@ public class Figure {
         this.y = y;
     }
 
+    public int getCard() {
+        return card;
+    }
+
+    public void setCard(int y) {
+        this.card = card;
+    }
 }

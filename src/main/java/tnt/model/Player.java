@@ -3,7 +3,6 @@ import tnt.model.Figure;
 import tnt.model.Card;
 import java.util.ArrayList;
 
-
 public class Player {
     private String name;
     private String colour;
@@ -37,7 +36,7 @@ public class Player {
     }
     public void addFigure(int amount) {
         for (int i = 0; i < amount; i++) {
-            Figure newFigure = new Figure(i, i);
+            Figure newFigure = new Figure(i, i, card);
             this.figures.add(newFigure);
         }
     }

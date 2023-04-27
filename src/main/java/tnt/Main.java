@@ -8,7 +8,7 @@ import tnt.model.Game;
 
 public class Main {
     public static void main(String[] args) {
-        // Kreiert testweise ein paar Playerobjekte mit zugehörigen Figuren.
+        // Kreiiert testweise ein paar Playerobjekte mit zugehörigen Figuren.
         ArrayList<Player> players = new ArrayList<Player>();
         Game game = new Game(players);
         ArrayList<String> names = new ArrayList<>(Arrays.asList("Mathis", "Basti", "Nils", "Aaron"));
@@ -18,12 +18,12 @@ public class Main {
         game.createPlayer(playerAmount, names, colour, figureAmount);
 
         // Printe Ergebnisse
-        ArrayList<Player> order = game.getPlayerOrder();
-        System.out.println(order);
-        for (Player player : order) {
+        ArrayList<Player> playerOrder = game.getPlayerOrder();
+        System.out.println(playerOrder);
+        for (Player player : playerOrder) {
             System.out.println(player.getName());
         }
-        // Kreiert testweise ein Board mit zugehörigen Feldern.
+        // Kreiiert testweise ein Board mit zugehörigen Feldern.
         int boardSize = 6;
         game.createBoard(boardSize);
     }
