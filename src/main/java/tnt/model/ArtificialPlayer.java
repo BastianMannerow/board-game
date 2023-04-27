@@ -1,5 +1,4 @@
 package tnt.model;
-import tnt.model.Validator;
 import java.util.Random;
 
 import java.util.ArrayList;
@@ -13,11 +12,11 @@ public class ArtificialPlayer {
      */
     public void easyAI(Player player, Board board){
         ArrayList<Figure> figureList = player.getFigure();
-        int randomNumber = new Random().nextInt(figureList.size());
-        Figure randomFigure =  figureList.get(randomNumber);
+        int randomFigureNumber = new Random().nextInt(figureList.size());
+        Figure randomFigure =  figureList.get(randomFigureNumber);
         ArrayList<Field>  possibleMoves = Validator.getValidMoves(randomFigure, board);
-        int randomNumber = new Random().nextInt(possibleMoves.size());
-        Field randomMove = possibleMoves.get(randomNumber);
+        int randomFieldNumber = new Random().nextInt(possibleMoves.size());
+        Field randomMove = possibleMoves.get(randomFieldNumber);
         int x = randomMove.getX();
         int y = randomMove.getY();
         randomMove.setIsFigureHere(true);

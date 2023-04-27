@@ -18,8 +18,8 @@ public class Validator {
         int ownTowerLevel = board.getField(figureX,figureY).getTowerLevel();
         int boardX = board.getXSize();
         int boardY = board.getYSize();
-        ArrayList<Field> reachableFields;
-        ArrayList<Field> possibleFields;
+        ArrayList<Field> reachableFields = new ArrayList<Field>();
+        ArrayList<Field> possibleFields = new ArrayList<Field>();
 
         Card card = figure.getCard();
         if (card != null) {
@@ -33,10 +33,10 @@ public class Validator {
                     if(figureX<0 && figureY < 0){
                         reachableFields.add(board.getField(boardX-figureX, boardY-figureY));
                     }
-                    else-if(figureX <0 && figureY >=0){
+                    else if(figureX < 0 && figureY >=0){
                         reachableFields.add(board.getField(boardX-figureX, figureY));
                     }
-                    else-if(figureY<0&&figureX>=0){
+                    else if(figureY <0 && figureX >=0){
                         reachableFields.add(board.getField(figureX, boardY-figureY));
                     }
                     else {

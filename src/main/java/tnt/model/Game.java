@@ -53,21 +53,22 @@ public class Game {
     /**
      * Creates Board and containing Field objects.
      *
-     * @param boardSize the Size of the board (will be a square).
+     * @param boardX the Width of the board
+     * @param boardY the Height of the board
      */
-    public void createBoard(int boardSize) {
-        Field[][] fields = new Field[boardSize][boardSize];
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+    public void createBoard(int boardX, int boardY) {
+        Field[][] fields = new Field[boardX][boardY];
+        for (int i = 0; i < boardX; i++) {
+            for (int j = 0; j < boardY; j++) {
                 Field field = new Field(i, j);
                 fields[i][j] = field;
             }
         }
-        Board board = new Board(fields);
+        Board board = new Board(fields, boardX, boardY);
 
         // Testprint, kann später entfernt werden.
-        for (int i = 0; i < boardSize; i++) {
-            for (int j = 0; j < boardSize; j++) {
+        for (int i = 0; i < boardX; i++) {
+            for (int j = 0; j < boardY; j++) {
                 System.out.println(board.getField(i, j));
             }
         }
