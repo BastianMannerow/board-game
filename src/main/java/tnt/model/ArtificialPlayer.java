@@ -9,6 +9,8 @@ public class ArtificialPlayer {
      * @param player the active player
      * @param board the current status of the board
      */
+
+    /*
     public void easyAI(Player player, Board board){
         ArrayList<Figure> figureList = player.getFigure();
         int randomFigureNumber = new Random().nextInt(figureList.size());
@@ -24,6 +26,7 @@ public class ArtificialPlayer {
 
         // Anschließend muss noch gebaut werden.
     }
+    */
 
     /**
      * Greedy decision making.

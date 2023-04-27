@@ -1,20 +1,24 @@
 package tnt.model;
 import java.util.ArrayList;
+import tnt.model.enums.Gods;
+
 /**
  * A figure owned by the Player.
  */
 public class Figure {
     private int x;
     private int y;
+    private Gods god;
 
     /**
      * Constructing an object Figure.
      * @param x initial x coordinate
      * @param y initial y coordinate
      */
-    public Figure(int x, int y) {
+    public Figure(int x, int y, Gods god) {
         this.x = x;
         this.y = y;
+        this.god = god;
     }
 
     /**
@@ -43,6 +47,13 @@ public class Figure {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * @return name of the god
+     */
+    public Gods getGodName() {
+        return god;
     }
 
     /**
@@ -95,5 +106,7 @@ public class Figure {
      */
     public ArrayList<Field> getValidBuilds(){
         // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind.
+        ArrayList<Field> validBuilds = new ArrayList<Field>();
+        return null;
     }
 }

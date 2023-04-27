@@ -1,5 +1,7 @@
 package tnt.model;
 import java.util.ArrayList;
+import tnt.model.enums.Gods;
+import tnt.model.gods.movement.*;
 
 /**
  * A player with his attributes.
@@ -72,9 +74,25 @@ public class Player {
     /**
      * @param amount creates new Figure objects for the player
      */
-    public void addFigure(int amount) {
+    public void addFigure(int amount, Gods god) {
         for (int i = 0; i < amount; i++) {
-            Figure newFigure = new Figure(i, i, card); // Hier müssen die initialen Koordinaten geändert werden (csv laden beachten)
+            Figure newFigure;
+            switch (god){
+                case Apollo:
+                    newFigure = new Apollo(i,i, god); // initiale Koordinaten i,i müssen noch geändert werden (csv laden beachten)
+                case Artemis:
+                    newFigure = new Artemis(i,i, god);
+                case Charon:
+                    newFigure = new Charon(i,i, god);
+                case Hermes:
+                    newFigure = new Hermes(i,i, god);
+                case Minotaures:
+                    newFigure = new Minotaures(i,i, god);
+                case Triton:
+                    newFigure = new Triton(i,i, god);
+                default:
+                    newFigure = new Figure(i, i, god);
+            }
             this.figures.add(newFigure);
         }
     }

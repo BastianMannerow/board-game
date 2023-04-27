@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import tnt.model.Player;
 import tnt.model.Game;
+import tnt.model.enums.Gods;
 
 public class Main {
     /**
@@ -20,13 +21,20 @@ public class Main {
         ArrayList<String> colour = new ArrayList<>(Arrays.asList("Blue", "Red", "Yellow", "Green"));
         int playerAmount = 4;
         int figureAmount = 5;
-        game.createPlayer(levelOfIntelligence, playerAmount, names, colour, figureAmount);
+
+        // Gotttyp
+        Gods[] allEnums = Gods.values();
+        ArrayList<Gods> gods = new ArrayList<>(Arrays.asList(allEnums[0], allEnums[1], allEnums[2], allEnums[3]));
+
+        // Erstellt Player und zugehörige Figuren
+        game.createPlayer(levelOfIntelligence, playerAmount, names, colour, figureAmount, gods);
 
         // Printe Ergebnisse
         ArrayList<Player> playerOrder = game.getPlayerOrder();
         System.out.println(playerOrder);
         for (Player player : playerOrder) {
             System.out.println(player.getName());
+            System.out.println(player.getFigure().get(0).getGodName());
         }
         // Kreiiert testweise ein Board mit zugehörigen Feldern.
         int x = 6;

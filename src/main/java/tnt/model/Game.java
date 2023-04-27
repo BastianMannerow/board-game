@@ -1,6 +1,7 @@
 package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
+import tnt.model.enums.Gods;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.
@@ -39,10 +40,10 @@ public class Game {
      * @param colour the colours of the new players
      * @param figureAmount the amount of figures on the players disposal
      */
-    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount) {
+    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods) {
         for (int i = 0; i < playerAmount; i++) {
             Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), null);
-            newPlayer.addFigure(figureAmount);
+            newPlayer.addFigure(figureAmount, gods.get(i));
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);
             setPlayerOrder(newPlayerOrder);
