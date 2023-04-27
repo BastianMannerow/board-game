@@ -1,7 +1,6 @@
 package tnt.model;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.
@@ -40,9 +39,9 @@ public class Game {
      * @param colour the colours of the new players
      * @param figureAmount the amount of figures on the players disposal
      */
-    public void createPlayer(int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount) {
+    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount) {
         for (int i = 0; i < playerAmount; i++) {
-            Player newPlayer = new Player(names.get(i), colour.get(i), new ArrayList<Figure>(), null);
+            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), null);
             newPlayer.addFigure(figureAmount);
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);
@@ -74,7 +73,16 @@ public class Game {
         }
     }
 
-    public void loadGame() {
+    /**
+     * Runs the Game
+     */
+    public void runGame() {
+        boolean gameEnded = false;
+        while(gameEnded == false){
+            Player activePlayer = playerOrder.get(0);
 
+            // Spielerwechsel
+            Collections.rotate(playerOrder, -1);
+        }
     }
 }

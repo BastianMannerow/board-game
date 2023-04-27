@@ -1,12 +1,11 @@
 package tnt.model;
-import tnt.model.Figure;
-import tnt.model.Card;
 import java.util.ArrayList;
 
 /**
  * A player with his attributes.
  */
 public class Player {
+    private String levelOfIntelligence;
     private String name;
     private String colour;
     private ArrayList<Figure> figures;
@@ -14,16 +13,25 @@ public class Player {
 
     /**
      * Constructing an object Player.
+     * @param levelOfIntelligence Human, easyAI, mediumAI, hardAI
      * @param name initial name
      * @param colour initial colour
      * @param figures ArrayList of figures, which belongs to the player
      * @param card the card, which affects the players abilities
      */
-    public Player(String name, String colour, ArrayList<Figure> figures, Card card) {
+    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, Card card) {
+        this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.colour = colour;
         this.figures = figures;
         this.card = card;
+    }
+
+    /**
+     * @return name of the player
+     */
+    public String getLevelOfIntelligence() {
+        return levelOfIntelligence;
     }
 
     /**
