@@ -1,4 +1,9 @@
 package tnt.model.gods.movement;
+import tnt.model.Figure
 
-public class Hermes {
+public class Hermes extends Figure{
+    public Figure(int x, int y) {
+        setX(x);
+        setY(y);
+    }
 }

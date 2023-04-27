@@ -16,8 +16,6 @@ public class Validator {
         int figureX = figure.getX();
         int figureY = figure.getY();
         int ownTowerLevel = board.getField(figureX,figureY).getTowerLevel();
-        int boardX = board.getXSize();
-        int boardY = board.getYSize();
         ArrayList<Field> reachableFields = new ArrayList<Field>();
         ArrayList<Field> possibleFields = new ArrayList<Field>();
 
@@ -26,24 +24,7 @@ public class Validator {
             System.out.println("Kartenmöglichkeit muss berücksichtigt werden.");
         }
         else {
-            for (int i = figureX-1; i <= figureX+1; i++) {
-                for (int j = figureY-1; j <= figureY+1; j++) {
-
-                    // "Wahlpflichtfeature - Die Welt ist eine Kugel"
-                    if(figureX<0 && figureY < 0){
-                        reachableFields.add(board.getField(boardX-figureX, boardY-figureY));
-                    }
-                    else if(figureX < 0 && figureY >=0){
-                        reachableFields.add(board.getField(boardX-figureX, figureY));
-                    }
-                    else if(figureY <0 && figureX >=0){
-                        reachableFields.add(board.getField(figureX, boardY-figureY));
-                    }
-                    else {
-                        reachableFields.add(board.getField(figureX, figureY));
-                    }
-                }
-            }
+            figure.movementOptions(board);
 
             // Is a reachable field also legal, hence possible?
             for (Field field : reachableFields) {
