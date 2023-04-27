@@ -42,7 +42,7 @@ public class Game {
      */
     public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods) {
         for (int i = 0; i < playerAmount; i++) {
-            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), null);
+            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), gods.get(i));
             newPlayer.addFigure(figureAmount, gods.get(i));
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);

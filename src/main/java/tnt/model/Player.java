@@ -11,7 +11,7 @@ public class Player {
     private String name;
     private String colour;
     private ArrayList<Figure> figures;
-    private Card card;
+    private Gods god;
 
     /**
      * Constructing an object Player.
@@ -19,14 +19,14 @@ public class Player {
      * @param name initial name
      * @param colour initial colour
      * @param figures ArrayList of figures, which belongs to the player
-     * @param card the card, which affects the players abilities
+     * @param god the card, which affects the players abilities
      */
-    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, Card card) {
+    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, Gods god) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.colour = colour;
         this.figures = figures;
-        this.card = card;
+        this.god = god;
     }
 
     /**
@@ -72,6 +72,8 @@ public class Player {
     }
 
     /**
+     * Depending on the god type, the specific figure object will be created.
+     *
      * @param amount creates new Figure objects for the player
      */
     public void addFigure(int amount, Gods god) {
@@ -100,22 +102,7 @@ public class Player {
     /**
      * @return card god/demon card, which belongs to the player
      */
-    public Card getCard() {
-        return card;
-    }
-
-    /**
-     * @param card new god/demon card for the player
-     */
-    public void setCard(Card card) {
-        this.card = card;
-    }
-
-    public void moveFigure(){
-
-    }
-
-    public void build(){
-        // Wegen Zusatzaufgabe mit Stack arbeiten und Playerinventar um Gebäudeteile erweitern.
+    public Gods getGod() {
+        return god;
     }
 }
