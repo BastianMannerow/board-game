@@ -3,9 +3,11 @@ import java.util.ArrayList;
 
 public class Validator {
     public ArrayList<Field> getValidMoves(Figure figure, Board board) {
-        int x = figure.getX();
-        int y = figure.getY();
-        int ownTowerLevel = board.getField(x,y).getTowerLevel();
+        int figureX = figure.getX();
+        int figureY = figure.getY();
+        int ownTowerLevel = board.getField(figureX,figureY).getTowerLevel();
+        int boardX = board.getXSize();
+        int boardY = board.getYSize();
         ArrayList<Field> reachableFields;
         ArrayList<Field> possibleFields;
 
@@ -14,9 +16,20 @@ public class Validator {
             System.out.println("Kartenmöglichkeit muss berücksichtigt werden.");
         }
         else {
-            for (int i = x-1; i <= x+1; i++) {
-                for (int j = y-1; j <= y+1; j++) {
-                    reachableFields.add(board.getField(x,y));
+            for (int i = figureX-1; i <= figureX+1; i++) {
+                for (int j = figureY-1; j <= figureY+1; j++) {
+                    if(figureX&&figureY < 0){
+                        reachableFields.add(board.getField(boardX-figureX, boardY-figureY));
+                    }
+                    else-if(figureX<0&&figureY>=0){
+                        reachableFields.add(board.getField(boardX-figureX, figureY));
+                    }
+                    else-if(figureY<0&&figureX>=0){
+                        reachableFields.add(board.getField(figureX, boardY-figureY));
+                    }
+                    else {
+                        reachableFields.add(board.getField(figureX, figureY));
+                    }
                 }
             }
 
