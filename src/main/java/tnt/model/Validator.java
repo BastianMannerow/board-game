@@ -12,7 +12,7 @@ public class Validator {
      * @param board the board the possible actions should be calculated on
      * @return possibleFields is a list of Field Objects, which are legal to use
      */
-    public ArrayList<Field> getValidMoves(Figure figure, Board board) {
+    public static ArrayList<Field> getValidMoves(Figure figure, Board board) {
         int figureX = figure.getX();
         int figureY = figure.getY();
         int ownTowerLevel = board.getField(figureX,figureY).getTowerLevel();
@@ -28,10 +28,12 @@ public class Validator {
         else {
             for (int i = figureX-1; i <= figureX+1; i++) {
                 for (int j = figureY-1; j <= figureY+1; j++) {
-                    if(figureX&&figureY < 0){
+
+                    // "Wahlpflichtfeature - Die Welt ist eine Kugel"
+                    if(figureX<0 && figureY < 0){
                         reachableFields.add(board.getField(boardX-figureX, boardY-figureY));
                     }
-                    else-if(figureX<0&&figureY>=0){
+                    else-if(figureX <0 && figureY >=0){
                         reachableFields.add(board.getField(boardX-figureX, figureY));
                     }
                     else-if(figureY<0&&figureX>=0){
@@ -43,6 +45,7 @@ public class Validator {
                 }
             }
 
+            // Is a reachable field also legal, hence possible?
             for (Field field : reachableFields) {
                 if(!field.getIsFigureHere() && !field.getTowerComplete() && field.getTowerLevel() <= ownTowerLevel+1){
                     possibleFields.add(field);
@@ -53,6 +56,6 @@ public class Validator {
     }
 
     public void getValidBuilds(Player player){
-
+        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind.
     }
 }

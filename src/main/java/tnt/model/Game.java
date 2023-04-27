@@ -59,7 +59,7 @@ public class Game {
         Field[][] fields = new Field[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                Field field = new Field();
+                Field field = new Field(i, j);
                 fields[i][j] = field;
             }
         }

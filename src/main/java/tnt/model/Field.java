@@ -4,14 +4,21 @@ package tnt.model;
  * The Field class contains the status of a single field inside a Board object.
  */
 public class Field {
+    private int fieldX;
+    private int fieldY;
     private boolean isFigureHere;
     private int towerLevel;
     private boolean towerComplete;
 
     /**
      * Constructing an empty (not null) Field object
+     *
+     * @param x coordinate of the field
+     * @param y coordinate of the field
      */
-    public Field() {
+    public Field(int x, int y) {
+        this.fieldX = x;
+        this.fieldY = y;
         this.isFigureHere = false;
         this.towerLevel = 0;
         this.towerComplete = false;
@@ -57,5 +64,19 @@ public class Field {
      */
     public boolean getTowerComplete() {
         return this.towerComplete;
+    }
+
+    /**
+     * @return x coordinate of the field
+     */
+    public int getX() {
+        return fieldX;
+    }
+
+    /**
+     * @return y coordinate of the field
+     */
+    public int getY() {
+        return fieldY;
     }
 }
