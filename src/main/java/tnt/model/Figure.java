@@ -74,6 +74,26 @@ public class Figure {
                 }
             }
         }
-        return reachableFields;
+
+        // Filter the reachable fields, so that only the legal fields remain
+        int ownTowerLevel = board.getField(x,y).getTowerLevel();
+        ArrayList<Field> possibleFields = new ArrayList<Field>();
+
+        for (Field field : reachableFields) {
+            if(!field.getIsFigureHere() && !field.getTowerComplete() && field.getTowerLevel() <= ownTowerLevel+1){
+                possibleFields.add(field);
+            }
+        }
+
+        return possibleFields;
+    }
+
+    /**
+     * Filters the reachable build positions by legal build options
+     *
+     * @return valid build positions
+     */
+    public ArrayList<Field> getValidBuilds(){
+        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind.
     }
 }
