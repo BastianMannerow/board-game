@@ -92,4 +92,12 @@ public class Player {
     public void setCard(Card card) {
         this.card = card;
     }
+
+    public void moveFigure(){
+
+    }
+
+    public void build(){
+        // Wegen Zusatzaufgabe mit Stack arbeiten und Playerinventar um Gebäudeteile erweitern.
+    }
 }

@@ -82,7 +82,16 @@ public class Game {
             Player activePlayer = playerOrder.get(0);
 
             // Spielerwechsel
+            gameEnded = checkEnd(gameEnded);
             Collections.rotate(playerOrder, -1);
         }
+    }
+
+    /**
+     * Checks if the Game is over
+     */
+    public boolean checkEnd(boolean gameEnded){
+        // Differenzierung 2 oder 4 Spieler einbauen.
+        return gameEnded;
     }
 }
