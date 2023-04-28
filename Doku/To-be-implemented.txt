@@ -1,0 +1,10 @@
+To-be-implemented
+
+1.User-Schnittstelle
+2.Gui
+3.Gods
+4.ki
+5.Grober Spielablauf
+6.Menü
+7.Save/Load
+8.Highscore
