@@ -40,7 +40,7 @@ public class Figure {
      */
     public int getY() {
         return y;
-    }
+    };
 
     /**
      * @param y new y coordinate of the figure
@@ -126,7 +126,7 @@ public class Figure {
      * @param board the board which is played on
      */
     public void executeBuild(Field field, Board board){
-        int newLevel = field.getTowerLevel()+1
+        int newLevel = field.getTowerLevel()+1;
         field.setTowerLevel(newLevel);
         if(newLevel == 4){
             field.setTowerComplete(true);
