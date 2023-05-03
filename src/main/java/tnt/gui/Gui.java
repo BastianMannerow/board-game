@@ -5,6 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import tnt.controller.Controller;
+import tnt.model.Game;
+import tnt.model.Player;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Starting point of the JavaFX GUI
@@ -17,14 +24,21 @@ public class Gui extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(event -> System.out.println("Hello World!"));
+        primaryStage.setTitle("TNT");
+//        Button btn = new Button();
+//        btn.setText("Say 'Hello World'");
+//        btn.setOnAction(event -> System.out.println("Hello World!"));
 
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-        primaryStage.setScene(new Scene(root, 300, 250));
+//        StackPane root = new StackPane();
+//        root.getChildren().add(btn);
+        ArrayList<Player> player = new ArrayList<Player>();
+//        player.add()
+        Game g = new Game(player);
+		View v = new View();
+        v.setModel(g);
+        Controller c = new Controller();
+        c.setView(v);
+        primaryStage.setScene(new Scene(v, 300, 250));
         primaryStage.show();
     }
 

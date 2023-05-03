@@ -2,12 +2,14 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import tnt.model.enums.Gods;
+import tnt.util.Observable;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.
  */
-public class Game {
+public class Game extends Observable {
     private ArrayList<Player> playerOrder;
+    int playersTurn = -1;
 
     /**
      * Constructing an object Game.
@@ -94,5 +96,14 @@ public class Game {
     public boolean checkEnd(boolean gameEnded){
         // Differenzierung 2 oder 4 Spieler einbauen.
         return gameEnded;
+    }
+
+    public int getPlayersTurn(){
+        return playersTurn;
+    }
+
+    public void setPlayersTurn(int i){
+        this.playersTurn =  i;
+        notifyObservers();
     }
 }
