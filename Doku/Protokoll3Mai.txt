@@ -1,0 +1,19 @@
+isFigurehere -> hasFigure
+gods : getvalidbuilds und getvalidmove auf jeden god implementieren über interface
+	   götter von der figur entkoppeln und nur im player behandeln
+	   
+	   
+Goals für erste itereation(28.5): 
+		 1. Storycards und formalia						Mathis
+		 2. Objekterstellung regeln(enums inclusive)	Peter
+		 3. Gui erstellen(view)							Ludwig/Peter
+		 4. Göttermethoden                              Basti
+		 5. Ki(mittel/schwer)							Basti
+		 6. Player Klasse umschreiben					Basti
+		 7. refractor methodenamen    					Peter
+		 8. graphiken erstellen							Mathis
+		 9. Game(Bausteine)
+		 10. (Buildings auslagern)
+		 11. Prototype startbar
+		 12. Controller									Ludwig/Peter
+		 
