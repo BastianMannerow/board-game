@@ -10,13 +10,16 @@ import tnt.model.gods.sabotage.Persephone;
  */
 public class Game {
     private ArrayList<Player> playerOrder;
+    private Board board;
+    private int amountOfTurns;
 
     /**
      * Constructing an object Game.
      * @param playerOrder
      */
-    public Game(ArrayList<Player> playerOrder) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns) {
         this.playerOrder = playerOrder;
+        this.amountOfTurns = amountOfTurns;
     }
 
     /**
@@ -24,6 +27,13 @@ public class Game {
      */
     public ArrayList<Player> getPlayerOrder() {
         return playerOrder;
+    }
+
+    /**
+     * @return amountOfTurns
+     */
+    public int getAmountOfTurns() {
+        return amountOfTurns;
     }
 
     /**
@@ -67,6 +77,7 @@ public class Game {
             }
         }
         Board board = new Board(fields, boardX, boardY);
+        this.board = board;
 
         // Testprint, kann später entfernt werden.
         for (int i = 0; i < boardX; i++) {
@@ -86,6 +97,100 @@ public class Game {
     }
 
     /**
+     * Checks if the game ended, because of a gods ability.
+     *
+     * @return boardY the Height of the board
+     */
+    public boolean checkSpecialEnding() {
+        boolean gameEnded = false;
+        for (int i = 1; i < playerOrder.size(); i++) {
+            Player player = playerOrder.get(i);
+            ArrayList<Gods> allGods = player.getGods();
+        }
+        for (Gods god : allGods) {
+            switch (god) {
+                case Chronus:
+                    if ( Chronus.checkSpecialEnding();){
+                    gameEnded = true;
+                    break;
+                }
+                case Eros:
+                    if ( Eros.checkSpecialEnding();){
+                    gameEnded = true;
+                    break;
+                }
+                case Hera:
+                    if ( Hera.checkSpecialEnding();){
+                    gameEnded = true;
+                    break;
+                }
+                case Pan:
+                    if ( Pan.checkSpecialEnding();){
+                    gameEnded = true;
+                    break;
+                }
+                default:
+                    continue;
+            }
+        }
+        return gameEnded;
+    }
+
+    /**
+     * Sabotage of the players movement abilities by other players gods.
+     *
+     * @param figure the figure executing the movement
+     * @param possibleMovement the possible movement before the sabotage
+     *
+     * @return the List of fields, which are reachable after sabotage
+     */
+    public ArrayList<Field> sabotageMovement(Figure figure, ArrayList<Field> possibleMovement){
+        for (int i = 1; i < playerOrder.size(); i++) {
+            Player passivePlayer = playerOrder.get(i);
+            ArrayList<Gods> passiveGods = passivePlayer.getGods();
+            for(Gods god:passiveGods) {
+                switch (god) {
+                    case Aphrodite:
+                        possibleMovement = Aphrodite.sabotage(figure, possibleMovement);
+                    case Athena:
+                        possibleMovement = Athena.sabotage(figure, possibleMovement);
+                    case Hypnus:
+                        possibleMovement = Hypnus.sabotage(figure, possibleMovement);
+                    case Persephone:
+                        possibleMovement = Persephone.sabotage(figure, possibleMovement);
+                    default:
+                        continue;
+                }
+            }
+        }
+        return possibleMovement;
+    }
+
+    /**
+     * Sabotage of the players building abilities by other players gods.
+     *
+     * @param figure the figure executing the movement
+     * @param possibleBuilds the possible builds before the sabotage
+     *
+     * @return the List of fields, which are buildable after sabotage
+     */
+    public ArrayList<Field> sabotageBuilds(Figure figure, ArrayList<Field> possibleBuilds){
+        for (int i = 1; i < playerOrder.size(); i++) {
+            Player passivePlayer = playerOrder.get(i);
+            ArrayList<Gods> passiveGods = passivePlayer.getGods();
+            for (Gods god : passiveGods) {
+                switch (god) {
+                    case Limus:
+                        possibleBuilds = Limus.sabotage(figure, possibleBuilds);
+                    default:
+                        continue;
+                }
+            }
+        }
+        return possibleBuilds;
+    }
+
+    /**
      * Runs the Game
      */
     public void runGame() {
@@ -93,70 +198,35 @@ public class Game {
         while(gameEnded == false){
             Player activePlayer = playerOrder.get(0);
 
-            // Checks which gods are in the game
+            // Checks the active players resources
             ArrayList<Gods> activeGods = activePlayer.getGods();
-            ArrayList <Gods> passiveGods = new ArrayList<Gods>();
-            for(Player player:playerOrder){
-                passiveGods.addAll(player.getGods());
-            }
-            for (int i = 1; i < playerOrder.size(); i++) {
-                Player player = playerOrder[i];
-                passiveGods.addAll(player.getGods());
-            }
+            ArrayList<Figure> activeFigures = activePlayer.getFigure();
+
             // Movement
-            ArrayList<Field> validMovement = activePlayer.getValidMovement();
-            for(Gods god:passiveGods){
-                switch(god){
-                    case Aphrodite:
-                        validMovement = Aphrodite.sabotage(validMovement);
-                    case Athena:
-                        validMovement = Athena.sabotage(validMovement);
-                    case Hypnus:
-                        validMovement = Hypnus.sabotage(validMovement);
-                    case Persephone:
-                        validMovement = Persephone.sabotage(validMovement);
-                }
+            for(Figure figure:activeFigures){
+                ArrayList<Field> possibleFields = sabotageMovement(figure, figure.movementOptions(board));
             }
-            activePlayer.executeMove();
+            Field field = board.getField(0, 0)
+            Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
+            figure.executeMove(field, board);
 
             // Building
-            ArrayList<Field> validBuilds = activePlayer.getValidBuilds();
-            for(Gods god:passiveGods){
-                switch(god){
-                    case Limus:
-                        validBuilds = Limus.sabotage(validBuilds);
+            for(Figure figure:activeFigures){
+                ArrayList<Field> possibleFields = sabotageBuilds(figure, figure.getValidBuilds());
+            }
 
-            activePlayer.executeBuilds();
+            Field field = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
+            activePlayer.executeBuild(field, board);
 
             // Checks if the game is over
+            this.amountOfTurns ++;
             if(checkRegularEnding()){
                 gameEnded = true;
                 break;
             }
-
-            ArrayList<Gods> allGods = new ArrayList<>(activeGods);
-            allGods.addAll(passiveGods);
-            for(Gods god:allGods){
-                switch (god) {
-                    case Chronus:
-                        if(Chronus.checkSpecialEnding();){
-                            gameEnded = true;
-                            break;
-                    case Eros:
-                        if(Eros.checkSpecialEnding();){
-                        gameEnded = true;
-                        break;
-                    case Hera:
-                        if(Hera.checkSpecialEnding();){
-                        gameEnded = true;
-                        break;
-                    case Pan:
-                        if(Pan.checkSpecialEnding();){
-                        gameEnded = true;
-                        break;
-                    default:
-                        continue;
-                }
+            if(checkSpecialEnding()){
+                gameEnded = true;
+                break;
             }
 
             // Spielerwechsel

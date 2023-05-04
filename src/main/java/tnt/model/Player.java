@@ -105,4 +105,16 @@ public class Player {
     public ArrayList<Gods> getGods() {
         return gods;
     }
+
+    /**
+     * @param field the field chosen by the player
+     * @param board the board which is played on
+     */
+    public void executeBuild(Field field, Board board){
+        int newLevel = field.getTowerLevel()+1;
+        field.setTowerLevel(newLevel);
+        if(newLevel == 4){
+            field.setTowerComplete(true);
+        }
+    }
 }

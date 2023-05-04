@@ -107,7 +107,7 @@ public class Figure {
     public ArrayList<Field> getValidBuilds(){
         // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind & nur Felder um Figur rum sind buildable.
         ArrayList<Field> validBuilds = new ArrayList<Field>();
-        return null;
+        return validBuilds;
     }
 
     /**
@@ -119,17 +119,5 @@ public class Figure {
         field.setIsFigureHere(true);
         this.x = field.getX();
         this.y = field.getY();
-    }
-
-    /**
-     * @param field the field chosen by the player
-     * @param board the board which is played on
-     */
-    public void executeBuild(Field field, Board board){
-        int newLevel = field.getTowerLevel()+1;
-        field.setTowerLevel(newLevel);
-        if(newLevel == 4){
-            field.setTowerComplete(true);
-        }
     }
 }
