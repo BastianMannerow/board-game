@@ -117,4 +117,15 @@ public class Player {
             field.setTowerComplete(true);
         }
     }
+
+    /**
+     * @param field the field chosen by the player
+     * @param board the board which is played on
+     */
+    public void executeMove(Field field, Board board, Figure figure){
+        board.getField(figure.getX(), figure.getY()).setIsFigureHere(false);
+        field.setIsFigureHere(true);
+        figure.setX(field.getX());
+        figure.setY(field.getY());
+    }
 }

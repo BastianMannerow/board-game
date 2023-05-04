@@ -210,7 +210,7 @@ public class Game {
             }
             Field field = board.getField(0, 0)
             Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
-            figure.executeMove(field, board);
+            activePlayer.executeMove(field, board, figure);
 
             // Building
             for(Figure figure:activeFigures){

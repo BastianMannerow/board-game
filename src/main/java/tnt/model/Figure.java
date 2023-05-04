@@ -109,15 +109,4 @@ public class Figure {
         ArrayList<Field> validBuilds = new ArrayList<Field>();
         return validBuilds;
     }
-
-    /**
-     * @param field the field chosen by the player
-     * @param board the board which is played on
-     */
-    public void executeMove(Field field, Board board){
-        board.getField(x, y).setIsFigureHere(false);
-        field.setIsFigureHere(true);
-        this.x = field.getX();
-        this.y = field.getY();
-    }
 }
