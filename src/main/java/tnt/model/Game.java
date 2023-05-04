@@ -205,13 +205,16 @@ public class Game {
             ArrayList<Figure> activeFigures = activePlayer.getFigure();
 
             // Movement
+            boolean artemisIsAvailable = false;
             for(Figure figure:activeFigures){
-                ArrayList<Field> possibleFields = sabotageMovement(figure, figure.getValidMoves(board));
+                ArrayList<Field> regularFields = sabotageMovement(figure, figure.getValidMoves(board));
                 for(Gods god:activeGods) {
                     switch (god) {
                         case Apollo:
                             ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
+                            apolloFields = sabotageMovement(figure, apolloFields);
                         case Artemis:
+                            artemisIsAvailable = true;
                         case Charon:
                         case Hermes:
                         case Minotaures:
@@ -221,7 +224,14 @@ public class Game {
             }
             Field field = board.getField(0, 0)
             Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
-            activePlayer.executeMove(field, board, figure);
+            // Artemis
+            if(artemisIsAvailable){
+                int originalFigureX = figure.getX();
+                int originalFigureY = figure.getY();
+                Artemis.getValidMove(figure, originalFigureX, originalFigureY);
+            }
+
+            activePlayer.executeMove(field, board, figure); //Kann auch zB. Apollo.executeMove sein
 
             // Building
             for(Figure figure:activeFigures){
@@ -229,7 +239,7 @@ public class Game {
             }
 
             Field field = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
-            activePlayer.executeBuild(field, board);
+            activePlayer.executeBuild(field, board); // Kann auch zB. BuildingGod.executeBuild sein
 
             // Checks if the game is over
             this.amountOfTurns ++;
