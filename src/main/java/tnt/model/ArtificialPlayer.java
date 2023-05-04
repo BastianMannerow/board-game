@@ -32,7 +32,7 @@ public class ArtificialPlayer extends Player{
         ArrayList<Figure> figureList = getFigure();
         ArrayList<Field>  possibleMoves = new ArrayList<>();
         for (Figure figure : figureList) {
-            possibleMoves.addAll(figure.movementOptions(board));
+            possibleMoves.addAll(figure.getValidMoves(board));
         }
 
         int randomFigureNumber = new Random().nextInt(possibleMoves.size());

@@ -90,6 +90,8 @@ public class Player {
     }
 
     /**
+     * Increases the height of a field
+     *
      * @param field the field chosen by the player
      * @param board the board which is played on
      */
@@ -102,6 +104,8 @@ public class Player {
     }
 
     /**
+     * Moves the figure on the board
+     *
      * @param field the field chosen by the player
      * @param board the board which is played on
      */

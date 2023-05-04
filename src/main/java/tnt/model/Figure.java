@@ -52,7 +52,7 @@ public class Figure {
      * @param board the board the possible actions should be calculated on
      * @return reachable fields
      */
-    public ArrayList<Field> movementOptions(Board board){
+    public ArrayList<Field> getValidMoves(Board board){
         ArrayList<Field> reachableFields = new ArrayList<Field>();
         int boardX = board.getXSize();
         int boardY = board.getYSize();

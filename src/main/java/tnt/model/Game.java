@@ -2,9 +2,9 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import tnt.model.enums.Gods;
+import tnt.model.gods.movement.*;
 import tnt.model.gods.victory.*;
 import tnt.model.gods.sabotage.*;
-import tnt.model.gods.sabotage.Persephone;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.
@@ -206,7 +206,18 @@ public class Game {
 
             // Movement
             for(Figure figure:activeFigures){
-                ArrayList<Field> possibleFields = sabotageMovement(figure, figure.movementOptions(board));
+                ArrayList<Field> possibleFields = sabotageMovement(figure, figure.getValidMoves(board));
+                for(Gods god:activeGods) {
+                    switch (god) {
+                        case Apollo:
+                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
+                        case Artemis:
+                        case Charon:
+                        case Hermes:
+                        case Minotaures:
+                        case Triton:
+                    }
+                }
             }
             Field field = board.getField(0, 0)
             Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
