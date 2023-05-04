@@ -1,6 +1,5 @@
 package tnt.model;
 import java.util.ArrayList;
-import tnt.model.enums.Gods;
 
 /**
  * A figure owned by the Player.
@@ -8,17 +7,15 @@ import tnt.model.enums.Gods;
 public class Figure {
     private int x;
     private int y;
-    private Gods god;
 
     /**
      * Constructing an object Figure.
      * @param x initial x coordinate
      * @param y initial y coordinate
      */
-    public Figure(int x, int y, Gods god) {
+    public Figure(int x, int y) {
         this.x = x;
         this.y = y;
-        this.god = god;
     }
 
     /**
@@ -47,13 +44,6 @@ public class Figure {
      */
     public void setY(int y) {
         this.y = y;
-    }
-
-    /**
-     * @return name of the god
-     */
-    public Gods getGodName() {
-        return god;
     }
 
     /**
