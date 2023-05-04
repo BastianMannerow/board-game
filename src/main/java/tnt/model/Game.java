@@ -2,6 +2,8 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import tnt.model.enums.Gods;
+import tnt.model.gods.movement.*;
+import tnt.model.gods.sabotage.Persephone;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.
@@ -75,6 +77,15 @@ public class Game {
     }
 
     /**
+     * Checks if the Game is over
+     */
+    public boolean checkRegularEnding(){
+        // Differenzierung 2 oder 4 Spieler einbauen.
+        boolean gameEnded = false;
+        return gameEnded;
+    }
+
+    /**
      * Runs the Game
      */
     public void runGame() {
@@ -82,17 +93,74 @@ public class Game {
         while(gameEnded == false){
             Player activePlayer = playerOrder.get(0);
 
+            // Checks which gods are in the game
+            ArrayList<Gods> activeGods = activePlayer.getGods();
+            ArrayList <Gods> passiveGods = new ArrayList<Gods>();
+            for(Player player:playerOrder){
+                passiveGods.addAll(player.getGods());
+            }
+            for (int i = 1; i < playerOrder.size(); i++) {
+                Player player = playerOrder[i];
+                passiveGods.addAll(player.getGods());
+            }
+            // Movement
+            ArrayList<Field> validMovement = activePlayer.getValidMovement();
+            for(Gods god:passiveGods){
+                switch(god){
+                    case Aphrodite:
+                        validMovement = Aphrodite.sabotage(validMovement);
+                    case Athena:
+                        validMovement = Athena.sabotage(validMovement);
+                    case Hypnus:
+                        validMovement = Hypnus.sabotage(validMovement);
+                    case Persephone:
+                        validMovement = Persephone.sabotage(validMovement);
+                }
+            }
+            activePlayer.executeMove();
+
+            // Building
+            ArrayList<Field> validBuilds = activePlayer.getValidBuilds();
+            for(Gods god:passiveGods){
+                switch(god){
+                    case Limus:
+                        validBuilds = Limus.sabotage(validBuilds);
+
+            activePlayer.executeBuilds();
+
+            // Checks if the game is over
+            if(checkRegularEnding()){
+                gameEnded = true;
+                break;
+            }
+
+            ArrayList<Gods> allGods = new ArrayList<>(activeGods);
+            allGods.addAll(passiveGods);
+            for(Gods god:allGods){
+                switch (god) {
+                    case Chronus:
+                        if(Chronus.checkSpecialEnding();){
+                            gameEnded = true;
+                            break;
+                    case Eros:
+                        if(Eros.checkSpecialEnding();){
+                        gameEnded = true;
+                        break;
+                    case Hera:
+                        if(Hera.checkSpecialEnding();){
+                        gameEnded = true;
+                        break;
+                    case Pan:
+                        if(Pan.checkSpecialEnding();){
+                        gameEnded = true;
+                        break;
+                    default:
+                        continue;
+                }
+            }
+
             // Spielerwechsel
-            gameEnded = checkEnd(gameEnded);
             Collections.rotate(playerOrder, -1);
         }
-    }
-
-    /**
-     * Checks if the Game is over
-     */
-    public boolean checkEnd(boolean gameEnded){
-        // Differenzierung 2 oder 4 Spieler einbauen.
-        return gameEnded;
     }
 }

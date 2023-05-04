@@ -105,7 +105,7 @@ public class Figure {
      * @return valid build positions
      */
     public ArrayList<Field> getValidBuilds(){
-        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind.
+        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind & nur Felder um Figur rum sind buildable.
         ArrayList<Field> validBuilds = new ArrayList<Field>();
         return null;
     }

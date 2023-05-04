@@ -11,7 +11,7 @@ public class Player {
     private String name;
     private String colour;
     private ArrayList<Figure> figures;
-    private Gods god;
+    private ArrayList<Gods> gods;
 
     /**
      * Constructing an object Player.
@@ -21,12 +21,12 @@ public class Player {
      * @param figures ArrayList of figures, which belongs to the player
      * @param god the card, which affects the players abilities
      */
-    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, Gods god) {
+    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, ArrayList<Gods> god) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.colour = colour;
         this.figures = figures;
-        this.god = god;
+        this.gods = gods;
     }
 
     /**
@@ -102,7 +102,7 @@ public class Player {
     /**
      * @return card god/demon card, which belongs to the player
      */
-    public Gods getGod() {
-        return god;
+    public ArrayList<Gods> getGods() {
+        return gods;
     }
 }
