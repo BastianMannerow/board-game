@@ -2,7 +2,8 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import tnt.model.enums.Gods;
-import tnt.model.gods.movement.*;
+import tnt.model.gods.victory.*;
+import tnt.model.gods.sabotage.*;
 import tnt.model.gods.sabotage.Persephone;
 
 /**
@@ -106,31 +107,32 @@ public class Game {
         for (int i = 1; i < playerOrder.size(); i++) {
             Player player = playerOrder.get(i);
             ArrayList<Gods> allGods = player.getGods();
-        }
-        for (Gods god : allGods) {
-            switch (god) {
-                case Chronus:
-                    if ( Chronus.checkSpecialEnding();){
-                    gameEnded = true;
-                    break;
+
+            for (Gods god : allGods) {
+                switch (god) {
+                    case Chronus:
+                        if (Chronus.checkSpecialEnding()) {
+                            gameEnded = true;
+                            break;
+                        }
+                    case Eros:
+                        if (Eros.checkSpecialEnding()) {
+                            gameEnded = true;
+                            break;
+                        }
+                    case Hera:
+                        if (Hera.checkSpecialEnding()) {
+                            gameEnded = true;
+                            break;
+                        }
+                    case Pan:
+                        if (Pan.checkSpecialEnding()) {
+                            gameEnded = true;
+                            break;
+                        }
+                    default:
+                        continue;
                 }
-                case Eros:
-                    if ( Eros.checkSpecialEnding();){
-                    gameEnded = true;
-                    break;
-                }
-                case Hera:
-                    if ( Hera.checkSpecialEnding();){
-                    gameEnded = true;
-                    break;
-                }
-                case Pan:
-                    if ( Pan.checkSpecialEnding();){
-                    gameEnded = true;
-                    break;
-                }
-                default:
-                    continue;
             }
         }
         return gameEnded;
