@@ -3,9 +3,11 @@ import tnt.model.Board;
 import tnt.model.Field;
 import tnt.model.Figure;
 import tnt.model.Player;
+import tnt.model.interfaces.Gods;
+
 import java.util.ArrayList;
 
-public class Minotaures{
+public class Minotaures implements Gods{
 
     /**
      * Identifies possible fields

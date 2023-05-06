@@ -1,5 +1,5 @@
 package tnt.model;
-import tnt.model.enums.Gods;
+import tnt.model.interfaces.Gods;
 
 import java.util.Random;
 import java.util.ArrayList;

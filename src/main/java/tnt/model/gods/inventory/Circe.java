@@ -1,4 +1,5 @@
 package tnt.model.gods.inventory;
 
-public class Circe {
+import tnt.model.interfaces.Gods;
+public class Circe implements Gods{
 }

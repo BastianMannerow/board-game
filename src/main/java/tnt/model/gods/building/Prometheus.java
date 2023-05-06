@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Prometheus {
+import tnt.model.interfaces.Gods;
+public class Prometheus implements Gods{
 }

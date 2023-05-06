@@ -1,11 +1,10 @@
 package tnt;
-import tnt.gui.Gui;
 
 import java.util.Arrays;
 import java.util.ArrayList;
 import tnt.model.Player;
 import tnt.model.Game;
-import tnt.model.enums.Gods;
+import tnt.model.interfaces.Gods;
 
 public class Main {
     /**
@@ -23,8 +22,8 @@ public class Main {
         int figureAmount = 5;
 
         // Gotttyp
-        Gods[] allEnums = Gods.values();
-        ArrayList<Gods> gods = new ArrayList<>(Arrays.asList(allEnums[0], allEnums[1], allEnums[2], allEnums[3]));
+        //Gods[] allEnums = Gods.values();
+        ArrayList<Gods> gods = new ArrayList<Gods>();
 
         // Erstellt Player und zugehörige Figuren
         game.createPlayer(levelOfIntelligence, playerAmount, names, colour, figureAmount, gods);
@@ -34,7 +33,9 @@ public class Main {
         System.out.println(playerOrder);
         for (Player player : playerOrder) {
             System.out.println(player.getName());
-            System.out.println(player.getFigure().get(0).getGodName());
+            for(Gods god: player.getGods()){
+                System.out.println(god.getGodName());
+            }
         }
         // Kreiiert testweise ein Board mit zugehörigen Feldern.
         int x = 6;

@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Hephaistos {
+import tnt.model.interfaces.Gods;
+public class Hephaistos implements Gods{
 }

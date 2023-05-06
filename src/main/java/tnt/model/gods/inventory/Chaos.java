@@ -1,4 +1,5 @@
 package tnt.model.gods.inventory;
 
-public class Chaos {
+import tnt.model.interfaces.Gods;
+public class Chaos implements Gods{
 }

@@ -1,7 +1,7 @@
 package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
-import tnt.model.enums.Gods;
+import tnt.model.interfaces.Gods;
 import tnt.model.gods.movement.*;
 import tnt.model.gods.victory.*;
 import tnt.model.gods.sabotage.*;
@@ -56,7 +56,7 @@ public class Game {
     public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods) {
         for (int i = 0; i < playerAmount; i++) {
             Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), gods.get(i));
-            newPlayer.addFigure(figureAmount, gods.get(i));
+            newPlayer.addFigure(figureAmount);
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);
             setPlayerOrder(newPlayerOrder);
@@ -222,7 +222,7 @@ public class Game {
                     }
                 }
             }
-            Field field = board.getField(0, 0)
+            Field field = board.getField(0, 0);// es ist zweimal dieses stück code hier bitte eins entfernen
             Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
             // Artemis
             if(artemisIsAvailable){

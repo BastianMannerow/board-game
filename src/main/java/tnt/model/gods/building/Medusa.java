@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Medusa {
+import tnt.model.interfaces.Gods;
+public class Medusa implements Gods{
 }

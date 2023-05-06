@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Dyonisus {
+import tnt.model.interfaces.Gods;
+public class Dyonisus implements Gods{
 }

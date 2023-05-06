@@ -3,12 +3,12 @@ import tnt.model.Board;
 import tnt.model.Field;
 import tnt.model.Figure;
 import tnt.model.Player;
-import tnt.model.enums.Gods;
+import tnt.model.interfaces.Gods;
 
 import java.util.ArrayList;
 
 
-public class Charon {
+public class Charon implements Gods{
 
     /**
      * @param figure the players figure
