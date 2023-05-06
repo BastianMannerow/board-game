@@ -1,4 +1,5 @@
 package tnt;
+import tnt.gui.Gui;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -21,9 +22,10 @@ public class Main {
         int playerAmount = 4;
         int figureAmount = 5;
 
-        // Gotttyp
+        // Gotttyp | ich weiß hier nicht ganz was man machen will bzw. sehr inkompatible mit neuer hierarchie
         //Gods[] allEnums = Gods.values();
-        ArrayList<Gods> gods = new ArrayList<Gods>();
+        //ArrayList<Gods> gods = new ArrayList<>(Arrays.asList(allEnums[0], allEnums[1], allEnums[2], allEnums[3]));
+        //ArrayList<Gods> gods = new ArrayList<Gods>();
 
         // Erstellt Player und zugehörige Figuren
         game.createPlayer(levelOfIntelligence, playerAmount, names, colour, figureAmount, gods);
