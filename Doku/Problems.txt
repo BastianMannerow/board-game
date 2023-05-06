@@ -1,0 +1,2 @@
+1. In der Klasse Main wird ungefähr bei zeile 25 Götter nach ihrem typ deklariert und ich bin mir nicht ganz sicher
+wie ich das in die neue struktur einbinden sollte
