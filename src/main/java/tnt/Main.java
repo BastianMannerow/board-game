@@ -34,7 +34,7 @@ public class Main {
         System.out.println(playerOrder);
         for (Player player : playerOrder) {
             System.out.println(player.getName());
-            System.out.println(player.getFigure().get(0).getGodName());
+            System.out.println(player.getFigure().get(0).getX());
         }
         // Kreiiert testweise ein Board mit zugehörigen Feldern.
         int x = 6;

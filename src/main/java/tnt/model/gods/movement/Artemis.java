@@ -7,18 +7,19 @@ import tnt.model.enums.Gods;
 
 import java.util.ArrayList;
 
-public class Artemis extends Figure{
-    public static ArrayList<Field> getValidMove(Figure figure, int originalFigureX, int originalFigureY{
-        for(Gods god:activeGods) {
-            switch (god) {
-                case Apollo:
-                    ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
-                case Charon:
-                case Hermes:
-                case Minotaures:
-                case Triton:
-            }
-        }
+public class Artemis{
+    public static ArrayList<Field> getValidMove(Figure figure, int originalFigureX, int originalFigureY){
+//        for(Gods god:activeGods) {
+//            switch (god) {
+//                case Apollo:
+//                    ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
+//                case Charon:
+//                case Hermes:
+//                case Minotaures:
+//                case Triton:
+//            }
+//        }
+        return new ArrayList<>();
         //Remove Artemis double
     }
 }

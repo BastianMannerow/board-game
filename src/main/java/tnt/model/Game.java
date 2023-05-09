@@ -55,7 +55,7 @@ public class Game {
      */
     public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods) {
         for (int i = 0; i < playerAmount; i++) {
-            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), gods.get(i));
+            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), gods);
             newPlayer.addFigure(figureAmount, gods.get(i));
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);
@@ -211,7 +211,7 @@ public class Game {
                 for(Gods god:activeGods) {
                     switch (god) {
                         case Apollo:
-                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
+                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, figure, board);
                             apolloFields = sabotageMovement(figure, apolloFields);
                         case Artemis:
                             artemisIsAvailable = true;
@@ -222,7 +222,7 @@ public class Game {
                     }
                 }
             }
-            Field field = board.getField(0, 0)
+            Field field = board.getField(0, 0);
             Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
             // Artemis
             if(artemisIsAvailable){
@@ -234,12 +234,12 @@ public class Game {
             activePlayer.executeMove(field, board, figure); //Kann auch zB. Apollo.executeMove sein
 
             // Building
-            for(Figure figure:activeFigures){
-                ArrayList<Field> possibleFields = sabotageBuilds(figure, figure.getValidBuilds());
+            for(Figure figure1:activeFigures){
+                ArrayList<Field> possibleFields = sabotageBuilds(figure1, figure1.getValidBuilds());
             }
 
-            Field field = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
-            activePlayer.executeBuild(field, board); // Kann auch zB. BuildingGod.executeBuild sein
+            Field field1 = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
+            activePlayer.executeBuild(field1, board); // Kann auch zB. BuildingGod.executeBuild sein
 
             // Checks if the game is over
             this.amountOfTurns ++;
