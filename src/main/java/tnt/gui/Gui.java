@@ -2,16 +2,15 @@ package tnt.gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import tnt.controller.Controller;
+import tnt.game.GameController;
+import tnt.game.GameView;
+import tnt.mainmenu.MainMenuController;
+import tnt.mainmenu.MainMenuView;
 import tnt.model.Game;
 import tnt.model.Player;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Starting point of the JavaFX GUI
@@ -33,12 +32,19 @@ public class Gui extends Application {
 //        root.getChildren().add(btn);
         ArrayList<Player> player = new ArrayList<Player>();
 //        player.add()
+
+        MainMenuView mainView = new MainMenuView();
+        GameView gameView = new GameView();
+
         Game g = new Game(player);
-		View v = new View();
-        v.setModel(g);
-        Controller c = new Controller();
-        c.setView(v);
-        primaryStage.setScene(new Scene(v, 300, 250));
+        gameView.setGame(g);
+
+        Scene scene = new Scene(mainView, 300, 260);
+
+        MainMenuController mainController = new MainMenuController(mainView, gameView, scene);
+        GameController gameController = new GameController(gameView, mainView, scene);
+
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 

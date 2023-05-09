@@ -1,6 +1,5 @@
-package tnt.gui;
+package tnt.game;
 
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -8,16 +7,19 @@ import tnt.model.Game;
 import tnt.util.Observer;
 
 
-public class View extends VBox implements Observer {
+public class GameView extends VBox implements Observer {
+
+    private Button btnBack = new Button("Back!");
+
     private Button btnCounterUp = new Button("+");
     private Button btnCounterDown = new Button("-");
     private Label lblCounter = new Label();
     private Game game;
 
-    public View() {
+    public GameView() {
 //        setAlignment(Pos.CENTER);
 //        setSpacing(10);
-        getChildren().addAll(btnCounterUp, lblCounter, btnCounterDown);
+        getChildren().addAll(btnCounterUp, lblCounter, btnCounterDown, btnBack);
     }
 
     public Button getBtnCounterDown() {
@@ -36,7 +38,7 @@ public class View extends VBox implements Observer {
         this.btnCounterUp = btnCounterUp;
     }
 
-    public void setModel(Game game) {
+    public void setGame(Game game) {
         this.game = game;
         game.addObserver(this);
         update();
@@ -47,8 +49,13 @@ public class View extends VBox implements Observer {
         lblCounter.setText("Counter: " + game.getPlayersTurn());
     }
 
-    public Game getModel() {
+    public Game getGame() {
         return game;
     }
+
+    public Button getBtnBack() {
+        return btnBack;
+    }
+
 
 }
