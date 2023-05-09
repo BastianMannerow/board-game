@@ -1,6 +1,5 @@
 package tnt.model;
 import java.util.ArrayList;
-import tnt.model.enums.Gods;
 
 /**
  * A figure owned by the Player.
@@ -8,17 +7,15 @@ import tnt.model.enums.Gods;
 public class Figure {
     private int x;
     private int y;
-    private Gods god;
 
     /**
      * Constructing an object Figure.
      * @param x initial x coordinate
      * @param y initial y coordinate
      */
-    public Figure(int x, int y, Gods god) {
+    public Figure(int x, int y) {
         this.x = x;
         this.y = y;
-        this.god = god;
     }
 
     /**
@@ -50,19 +47,12 @@ public class Figure {
     }
 
     /**
-     * @return name of the god
-     */
-    public Gods getGodName() {
-        return god;
-    }
-
-    /**
      * Calculating the reachable fields.
      *
      * @param board the board the possible actions should be calculated on
      * @return reachable fields
      */
-    public ArrayList<Field> movementOptions(Board board){
+    public ArrayList<Field> getValidMoves(Board board){
         ArrayList<Field> reachableFields = new ArrayList<Field>();
         int boardX = board.getXSize();
         int boardY = board.getYSize();
@@ -105,31 +95,8 @@ public class Figure {
      * @return valid build positions
      */
     public ArrayList<Field> getValidBuilds(){
-        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind.
+        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind & nur Felder um Figur rum sind buildable.
         ArrayList<Field> validBuilds = new ArrayList<Field>();
-        return null;
-    }
-
-    /**
-     * @param field the field chosen by the player
-     * @param board the board which is played on
-     */
-    public void executeMove(Field field, Board board){
-        board.getField(x, y).setIsFigureHere(false);
-        field.setIsFigureHere(true);
-        this.x = field.getX();
-        this.y = field.getY();
-    }
-
-    /**
-     * @param field the field chosen by the player
-     * @param board the board which is played on
-     */
-    public void executeBuild(Field field, Board board){
-        int newLevel = field.getTowerLevel()+1;
-        field.setTowerLevel(newLevel);
-        if(newLevel == 4){
-            field.setTowerComplete(true);
-        }
+        return validBuilds;
     }
 }

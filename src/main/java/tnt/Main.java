@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         // Kreiiert testweise ein paar Playerobjekte mit zugehörigen Figuren.
         ArrayList<Player> players = new ArrayList<Player>();
-        Game game = new Game(players);
+        Game game = new Game(players, 0);
         ArrayList<String> levelOfIntelligence = new ArrayList<>((Arrays.asList("Human", "Human", "Human", "easyAI")));
         ArrayList<String> names = new ArrayList<>(Arrays.asList("Mathis", "Basti", "Nils", "Aaron"));
         ArrayList<String> colour = new ArrayList<>(Arrays.asList("Blue", "Red", "Yellow", "Green"));
@@ -34,7 +34,7 @@ public class Main {
         System.out.println(playerOrder);
         for (Player player : playerOrder) {
             System.out.println(player.getName());
-            System.out.println(player.getFigure().get(0).getGodName());
+            System.out.println(player.getFigure().get(0).getX());
         }
         // Kreiiert testweise ein Board mit zugehörigen Feldern.
         int x = 6;

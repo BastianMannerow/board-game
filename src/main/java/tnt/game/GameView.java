@@ -46,6 +46,11 @@ public class GameView extends VBox implements Observer {
 
     @Override
     public void update() {
+        if (game.getPlayersTurn() == null) {
+
+            lblCounter.setText("No Players available");
+            return;
+        }
         lblCounter.setText("Counter: " + game.getPlayersTurn());
     }
 

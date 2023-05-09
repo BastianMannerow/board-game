@@ -9,6 +9,8 @@ import tnt.mainmenu.MainMenuController;
 import tnt.mainmenu.MainMenuView;
 import tnt.model.Game;
 import tnt.model.Player;
+import tnt.playerchoosemenu.mainmenu.PlayerChooseController;
+import tnt.playerchoosemenu.mainmenu.PlayerChooseView;
 
 import java.util.ArrayList;
 
@@ -34,16 +36,19 @@ public class Gui extends Application {
 //        player.add()
 
         MainMenuView mainView = new MainMenuView();
+        PlayerChooseView playerChooseView = new PlayerChooseView();
         GameView gameView = new GameView();
-
-        Game g = new Game(player);
+        System.out.println("views created");
+        Game g = new Game(player, 1);
         gameView.setGame(g);
 
         Scene scene = new Scene(mainView, 300, 260);
 
-        MainMenuController mainController = new MainMenuController(mainView, gameView, scene);
+        MainMenuController mainController = new MainMenuController(mainView, gameView, playerChooseView, scene);
+        PlayerChooseController playerChooseController = new PlayerChooseController(playerChooseView, gameView, scene);
         GameController gameController = new GameController(gameView, mainView, scene);
 
+        System.out.println("controller cr");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

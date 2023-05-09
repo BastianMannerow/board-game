@@ -1,18 +1,17 @@
-package tnt.mainmenu;
+package tnt.playerchoosemenu.mainmenu;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import tnt.util.Observer;
 
-public class MainMenuView extends VBox {
+public class PlayerChooseView extends VBox {
 
     private Button btnContinue = new Button("Go!");
-    private Button btnContinue2 = new Button("Go! player");
+    private Button btnContinue2 = new Button("Go2!");
 
-    public MainMenuView() {
+    public PlayerChooseView() {
         setAlignment(Pos.CENTER);
         setSpacing(10);
         Label lblTitle = new Label("Some title!");
@@ -23,5 +22,7 @@ public class MainMenuView extends VBox {
         return btnContinue;
     }
 
-    public Button getBtnContinue2(){return btnContinue2; }
+    public Button getBtnContinue2() {
+        return btnContinue2;
+    }
 }

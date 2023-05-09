@@ -1,7 +1,6 @@
 package tnt.model;
 import java.util.ArrayList;
 import tnt.model.enums.Gods;
-import tnt.model.gods.movement.*;
 
 /**
  * A player with his attributes.
@@ -11,7 +10,7 @@ public class Player {
     private String name;
     private String colour;
     private ArrayList<Figure> figures;
-    private Gods god;
+    private ArrayList<Gods> gods;
 
     /**
      * Constructing an object Player.
@@ -19,14 +18,14 @@ public class Player {
      * @param name initial name
      * @param colour initial colour
      * @param figures ArrayList of figures, which belongs to the player
-     * @param god the card, which affects the players abilities
+     * @param gods the cards, which affect the players abilities
      */
-    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, Gods god) {
+    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, ArrayList<Gods> gods) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.colour = colour;
         this.figures = figures;
-        this.god = god;
+        this.gods = gods;
     }
 
     /**
@@ -76,25 +75,9 @@ public class Player {
      *
      * @param amount creates new Figure objects for the player
      */
-    public void addFigure(int amount, Gods god) {
+    public void addFigure(int amount) {
         for (int i = 0; i < amount; i++) {
-            Figure newFigure;
-            switch (god){
-                case Apollo:
-                    newFigure = new Apollo(i,i, god); // initiale Koordinaten i,i müssen noch geändert werden (csv laden beachten)
-                case Artemis:
-                    newFigure = new Artemis(i,i, god);
-                case Charon:
-                    newFigure = new Charon(i,i, god);
-                case Hermes:
-                    newFigure = new Hermes(i,i, god);
-                case Minotaures:
-                    newFigure = new Minotaures(i,i, god);
-                case Triton:
-                    newFigure = new Triton(i,i, god);
-                default:
-                    newFigure = new Figure(i, i, god);
-            }
+            Figure newFigure = new Figure(i, i);
             this.figures.add(newFigure);
         }
     }
@@ -102,7 +85,34 @@ public class Player {
     /**
      * @return card god/demon card, which belongs to the player
      */
-    public Gods getGod() {
-        return god;
+    public ArrayList<Gods> getGods() {
+        return gods;
+    }
+
+    /**
+     * Increases the height of a field
+     *
+     * @param field the field chosen by the player
+     * @param board the board which is played on
+     */
+    public void executeBuild(Field field, Board board){
+        int newLevel = field.getTowerLevel()+1;
+        field.setTowerLevel(newLevel);
+        if(newLevel == 4){
+            field.setTowerComplete(true);
+        }
+    }
+
+    /**
+     * Moves the figure on the board
+     *
+     * @param field the field chosen by the player
+     * @param board the board which is played on
+     */
+    public void executeMove(Field field, Board board, Figure figure){
+        board.getField(figure.getX(), figure.getY()).setIsFigureHere(false);
+        field.setIsFigureHere(true);
+        figure.setX(field.getX());
+        figure.setY(field.getY());
     }
 }

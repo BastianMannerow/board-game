@@ -1,24 +1,43 @@
 package tnt.model;
+import tnt.model.enums.Gods;
+
 import java.util.Random;
 import java.util.ArrayList;
 
-public class ArtificialPlayer {
+public class ArtificialPlayer extends Player{
+    public ArtificialPlayer(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, ArrayList<Gods> god) {
+        super(levelOfIntelligence, name, colour, figures, god);
+    }
 
-    // Ändern, dass von Player geerbt wird.
+    public void artificialPlayerTurn(Board board){
+        if(getLevelOfIntelligence().equals("Easy")){
+            easyAI(board);
+        }
+        else if(getLevelOfIntelligence().equals("Medium")){
+            mediumAI(board);
+        }
+        else{
+            hardAI(board);
+        }
+    }
 
     /**
      * Random decision making.
      *
-     * @param player the active player
      * @param board the current status of the board
      */
+    public void easyAI(Board board){
 
-    /*
-    public void easyAI(Player player, Board board){
-        ArrayList<Figure> figureList = player.getFigure();
-        int randomFigureNumber = new Random().nextInt(figureList.size());
+        // Execute random Movement
+        ArrayList<Figure> figureList = getFigure();
+        ArrayList<Field>  possibleMoves = new ArrayList<>();
+        for (Figure figure : figureList) {
+            possibleMoves.addAll(figure.getValidMoves(board));
+        }
+
+        int randomFigureNumber = new Random().nextInt(possibleMoves.size());
         Figure randomFigure =  figureList.get(randomFigureNumber);
-        ArrayList<Field>  possibleMoves = Validator.getValidMoves(randomFigure, board);
+
         int randomFieldNumber = new Random().nextInt(possibleMoves.size());
         Field randomMove = possibleMoves.get(randomFieldNumber);
         int x = randomMove.getX();
@@ -29,23 +48,20 @@ public class ArtificialPlayer {
 
         // Anschließend muss noch gebaut werden.
     }
-    */
 
     /**
      * Greedy decision making.
      *
-     * @param player the active player
      * @param board the current status of the board
      */
-    public void mediumAI(Player player, Board board){
+    public void mediumAI(Board board){
     }
 
     /**
      * Greedy decision making with some tweeks.
      *
-     * @param player the active player
      * @param board the current status of the board
      */
-    public void hardAI(Player player, Board board){
+    public void hardAI(Board board){
     }
 }
