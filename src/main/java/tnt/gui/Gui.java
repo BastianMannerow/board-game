@@ -1,17 +1,21 @@
 package tnt.gui;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tnt.game.GameController;
-import tnt.game.GameView;
-import tnt.mainmenu.MainMenuController;
-import tnt.mainmenu.MainMenuView;
+import tnt.gui.game.GameController;
+import tnt.gui.game.GameView;
+import tnt.gui.mainmenu.MainMenuController;
+import tnt.gui.mainmenu.MainMenuView;
 import tnt.model.Game;
 import tnt.model.Player;
-import tnt.playerchoosemenu.mainmenu.PlayerChooseController;
-import tnt.playerchoosemenu.mainmenu.PlayerChooseView;
+import tnt.gui.playerchoosemenu.PlayerChooseController;
+import tnt.gui.playerchoosemenu.PlayerChooseView;
+import tnt.ResourceHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -26,31 +30,34 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("TNT");
-//        Button btn = new Button();
-//        btn.setText("Say 'Hello World'");
-//        btn.setOnAction(event -> System.out.println("Hello World!"));
+        FXMLLoader fxmlLoader = ResourceHandler.getInstance().getFXML("test1");
+        System.out.println(fxmlLoader.getLocation());
+        try {
+            Parent root = (Parent)fxmlLoader.load();
+            ArrayList<Player> player = new ArrayList<Player>();
 
-//        StackPane root = new StackPane();
-//        root.getChildren().add(btn);
-        ArrayList<Player> player = new ArrayList<Player>();
-//        player.add()
+            MainMenuView mainView = new MainMenuView();
+            PlayerChooseView playerChooseView = new PlayerChooseView();
+            GameView gameView = new GameView();
 
-        MainMenuView mainView = new MainMenuView();
-        PlayerChooseView playerChooseView = new PlayerChooseView();
-        GameView gameView = new GameView();
-        System.out.println("views created");
-        Game g = new Game(player, 1);
-        gameView.setGame(g);
+            Game g = new Game(player, 1);
+            gameView.setGame(g);
 
-        Scene scene = new Scene(mainView, 300, 260);
+            Scene scene = new Scene(mainView, 300, 260);
 
-        MainMenuController mainController = new MainMenuController(mainView, gameView, playerChooseView, scene);
-        PlayerChooseController playerChooseController = new PlayerChooseController(playerChooseView, gameView, scene);
-        GameController gameController = new GameController(gameView, mainView, scene);
+            MainMenuController mainController = new MainMenuController(mainView, gameView, playerChooseView, scene);
+            PlayerChooseController playerChooseController = new PlayerChooseController(playerChooseView, gameView, scene);
+            GameController gameController = new GameController(gameView, mainView, scene);
 
-        System.out.println("controller cr");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+            primaryStage.setScene(root.getScene());
+            primaryStage.show();
+        } catch (IOException e) {
+            System.out.println("could not load fxml file");
+            return;
+        } catch (RuntimeException e){
+            System.out.println("other fxml error");
+            return;
+        }
     }
 
     /**

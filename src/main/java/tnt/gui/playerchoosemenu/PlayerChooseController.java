@@ -1,7 +1,7 @@
-package tnt.playerchoosemenu.mainmenu;
+package tnt.gui.playerchoosemenu;
 
 import javafx.scene.Scene;
-import tnt.game.GameView;
+import tnt.gui.game.GameView;
 import tnt.model.Figure;
 import tnt.model.Player;
 import tnt.model.enums.Gods;

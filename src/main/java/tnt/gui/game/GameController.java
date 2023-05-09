@@ -1,7 +1,7 @@
-package tnt.game;
+package tnt.gui.game;
 
 import javafx.scene.Scene;
-import tnt.mainmenu.MainMenuView;
+import tnt.gui.mainmenu.MainMenuView;
 
 public class GameController {
     public GameController(GameView gameView, MainMenuView mainView, Scene scene){

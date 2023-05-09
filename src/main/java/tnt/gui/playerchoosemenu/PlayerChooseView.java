@@ -1,4 +1,4 @@
-package tnt.playerchoosemenu.mainmenu;
+package tnt.gui.playerchoosemenu;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -14,7 +14,7 @@ public class PlayerChooseView extends VBox {
     public PlayerChooseView() {
         setAlignment(Pos.CENTER);
         setSpacing(10);
-        Label lblTitle = new Label("Some title!");
+        Label lblTitle = new Label("ChoosePlayer");
         getChildren().addAll(lblTitle, btnContinue, btnContinue2);
     }
 

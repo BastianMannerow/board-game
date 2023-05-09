@@ -1,4 +1,4 @@
-package tnt.mainmenu;
+package tnt.gui.mainmenu;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -15,7 +15,7 @@ public class MainMenuView extends VBox {
     public MainMenuView() {
         setAlignment(Pos.CENTER);
         setSpacing(10);
-        Label lblTitle = new Label("Some title!");
+        Label lblTitle = new Label("Main Menu!");
         getChildren().addAll(lblTitle, btnContinue, btnContinue2);
     }
 

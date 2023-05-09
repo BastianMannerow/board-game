@@ -1,4 +1,4 @@
-package tnt.game;
+package tnt.gui.game;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

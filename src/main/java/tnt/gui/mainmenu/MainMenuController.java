@@ -1,8 +1,8 @@
-package tnt.mainmenu;
+package tnt.gui.mainmenu;
 
 import javafx.scene.Scene;
-import tnt.game.GameView;
-import tnt.playerchoosemenu.mainmenu.PlayerChooseView;
+import tnt.gui.game.GameView;
+import tnt.gui.playerchoosemenu.PlayerChooseView;
 
 public class MainMenuController {
     public MainMenuController(MainMenuView mainMenuView, GameView gameView, PlayerChooseView playerChooseView, Scene scene) {

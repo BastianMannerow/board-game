@@ -276,7 +276,6 @@ public class Game extends Observable {
     }
 
     public Player getPlayersTurn(){
-        System.out.println("Test");
         if (playerOrder.isEmpty()){
             return null;
         }
