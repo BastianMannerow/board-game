@@ -26,6 +26,7 @@ public class Game extends Observable {
     }
 
     public Game(int amountOfTurns) {
+        this.playerOrder = new ArrayList<Player>();
         this.amountOfTurns = amountOfTurns;
     }
 

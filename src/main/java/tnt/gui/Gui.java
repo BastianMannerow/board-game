@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import tnt.Main;
 import tnt.gui.game.GameController;
 import tnt.gui.game.GameView;
 import tnt.gui.mainmenu.MainMenuController;
@@ -28,39 +30,32 @@ public class Gui extends Application {
      * @param primaryStage The initial root stage of the application.
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
-        FXMLLoader fxmlLoader = ResourceHandler.getInstance().getFXML("choosePlayer");
-
-//        FXMLLoader fxmlLoader = ResourceHandler.getInstance().getFXML("gui");
-        System.out.println(fxmlLoader.getLocation());
+        VBox choosePlayerMenu;
         try {
-            Parent root = (Parent)fxmlLoader.load();
-            System.out.println("95");
-//            ArrayList<Player> player = new ArrayList<Player>();
-            MainMenuView mainView = new MainMenuView();
-//            PlayerChooseView playerChooseView = new PlayerChooseView();
-            GameView gameView = new GameView();
-            Game g = new Game(1);
-//            gameView.setGame(g);
-            System.out.println("216541");
-            Scene mainScene = new Scene(mainView, 600, 400);
-            System.out.println("liu");
-            MainMenuController mainController = new MainMenuController(mainView, gameView, root, mainScene);
-//            PlayerChooseController playerChooseController = new PlayerChooseController(playerChooseView, gameView, mainScene);
-            GameController gameController = new GameController(gameView, mainView, mainScene);
-
-            primaryStage.setScene(mainScene);
-            primaryStage.show();
+            choosePlayerMenu = (VBox) ResourceHandler.getInstance().getFXML("choosePlayer").load();
         } catch (IOException e) {
-            System.out.println("could not load fxml file");
-//            throw RuntimeException;
-            return;
+            throw new RuntimeException(e);
         } catch (RuntimeException e){
             System.out.println("other fxml error");
-//            throw RuntimeException;
-            return;
+            throw new IOException(e);
         }
+
+        MainMenuView mainView = new MainMenuView();
+
+        Game g = new Game(1);
+        GameView gameView = new GameView(g);
+        gameView.setGame(g);
+        System.out.println("216541");
+        Scene mainScene = new Scene(mainView, 600, 400);
+        System.out.println("liu");
+        MainMenuController mainController = new MainMenuController(mainView, gameView, choosePlayerMenu, mainScene);
+        GameController gameController = new GameController(gameView, mainView, mainScene);
+
+
+        primaryStage.setScene(mainScene);
+        primaryStage.show();
     }
 
     /**

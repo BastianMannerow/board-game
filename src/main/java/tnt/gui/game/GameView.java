@@ -22,6 +22,11 @@ public class GameView extends VBox implements Observer {
         getChildren().addAll(btnCounterUp, lblCounter, btnCounterDown, btnBack);
     }
 
+    public GameView(Game g) {
+        getChildren().addAll(btnCounterUp, lblCounter, btnCounterDown, btnBack);
+        setGame(g);
+    }
+
     public Button getBtnCounterDown() {
         return btnCounterDown;
     }

@@ -7,5 +7,5 @@ module tnt {
     requires javafx.fxml;
 
     exports tnt.gui;
-    opens tnt;
+    opens tnt.gui.playerchoosemenu to javafx.fxml;
 }
