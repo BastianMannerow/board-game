@@ -30,32 +30,35 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("TNT");
-        FXMLLoader fxmlLoader = ResourceHandler.getInstance().getFXML("test1");
+        FXMLLoader fxmlLoader = ResourceHandler.getInstance().getFXML("choosePlayer");
+
+//        FXMLLoader fxmlLoader = ResourceHandler.getInstance().getFXML("gui");
         System.out.println(fxmlLoader.getLocation());
         try {
             Parent root = (Parent)fxmlLoader.load();
-            ArrayList<Player> player = new ArrayList<Player>();
-
+            System.out.println("95");
+//            ArrayList<Player> player = new ArrayList<Player>();
             MainMenuView mainView = new MainMenuView();
-            PlayerChooseView playerChooseView = new PlayerChooseView();
+//            PlayerChooseView playerChooseView = new PlayerChooseView();
             GameView gameView = new GameView();
+            Game g = new Game(1);
+//            gameView.setGame(g);
+            System.out.println("216541");
+            Scene mainScene = new Scene(mainView, 600, 400);
+            System.out.println("liu");
+            MainMenuController mainController = new MainMenuController(mainView, gameView, root, mainScene);
+//            PlayerChooseController playerChooseController = new PlayerChooseController(playerChooseView, gameView, mainScene);
+            GameController gameController = new GameController(gameView, mainView, mainScene);
 
-            Game g = new Game(player, 1);
-            gameView.setGame(g);
-
-            Scene scene = new Scene(mainView, 300, 260);
-
-            MainMenuController mainController = new MainMenuController(mainView, gameView, playerChooseView, scene);
-            PlayerChooseController playerChooseController = new PlayerChooseController(playerChooseView, gameView, scene);
-            GameController gameController = new GameController(gameView, mainView, scene);
-
-            primaryStage.setScene(root.getScene());
+            primaryStage.setScene(mainScene);
             primaryStage.show();
         } catch (IOException e) {
             System.out.println("could not load fxml file");
+//            throw RuntimeException;
             return;
         } catch (RuntimeException e){
             System.out.println("other fxml error");
+//            throw RuntimeException;
             return;
         }
     }

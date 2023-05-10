@@ -25,6 +25,10 @@ public class Game extends Observable {
         this.amountOfTurns = amountOfTurns;
     }
 
+    public Game(int amountOfTurns) {
+        this.amountOfTurns = amountOfTurns;
+    }
+
     /**
      * @return playerOrder
      */

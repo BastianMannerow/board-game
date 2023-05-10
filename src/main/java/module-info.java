@@ -7,4 +7,5 @@ module tnt {
     requires javafx.fxml;
 
     exports tnt.gui;
+    opens tnt;
 }
