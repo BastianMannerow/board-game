@@ -5,7 +5,7 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class ArtificialPlayer extends Player{
-    public ArtificialPlayer(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, Gods god) {
+    public ArtificialPlayer(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, ArrayList<Gods> god) {
         super(levelOfIntelligence, name, colour, figures, god);
     }
 
