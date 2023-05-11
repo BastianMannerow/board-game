@@ -33,31 +33,30 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
-        VBox choosePlayerMenu;
-        ArrayList<HBox> choosePlayer = new ArrayList<>();
-        try {
-            choosePlayerMenu = (VBox) ResourceHandler.getInstance().getFXML("choosePlayerMenu").load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (RuntimeException e){
-            System.out.println("other fxml error");
-            throw new IOException(e);
-        }
-        for(int i = 0; i< 1; i++) {
-            try {
-                choosePlayer.add(ResourceHandler.getInstance().getFXML("choosePlayer").load());
-            } catch (IOException e) {
-                System.out.println("other fxml etest");
-                throw new RuntimeException(e);
-            } catch (RuntimeException e) {
-                System.out.println("other fxml error2");
-                throw new IOException(e);
-            }
-        }
+//        VBox choosePlayerMenu;
+//        ArrayList<HBox> choosePlayer = new ArrayList<>();
+//        try {
+//            choosePlayerMenu = (VBox) ResourceHandler.getInstance().getFXML("choosePlayerMenu").load();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (RuntimeException e){
+//            System.out.println("other fxml error");
+//            throw new IOException(e);
+//        }
+//        try {
+//
+//            HBox abc = ResourceHandler.getInstance().getFXML("choosePlayer").load();
+//        } catch (IOException e) {
+//            System.out.println("other fxml etest");
+//            throw new RuntimeException(e);
+//        } catch (RuntimeException e) {
+//            System.out.println("other fxml error2");
+//            throw new IOException(e);
+//        }
 
-        for (HBox player:choosePlayer) {
-            ((VBox) choosePlayerMenu.getChildren().get(0)).getChildren().add(player);
-        }
+//        for (HBox player:choosePlayer) {
+//            ((VBox) choosePlayerMenu.getChildren().get(0)).getChildren().add(player);
+//        }
 
         MainMenuView mainView = new MainMenuView();
 
@@ -67,6 +66,8 @@ public class Gui extends Application {
         System.out.println("216541");
         Scene mainScene = new Scene(mainView, 600, 400);
         System.out.println("liu");
+        PlayerChooseController playerChooseController = new PlayerChooseController();
+        Parent choosePlayerMenu = new PlayerChooseView(playerChooseController);
         MainMenuController mainController = new MainMenuController(mainView, gameView, choosePlayerMenu, mainScene);
         GameController gameController = new GameController(gameView, mainView, mainScene);
 
