@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tnt.Main;
@@ -33,13 +34,29 @@ public class Gui extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
         VBox choosePlayerMenu;
+        ArrayList<HBox> choosePlayer = new ArrayList<>();
         try {
-            choosePlayerMenu = (VBox) ResourceHandler.getInstance().getFXML("choosePlayer").load();
+            choosePlayerMenu = (VBox) ResourceHandler.getInstance().getFXML("choosePlayerMenu").load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (RuntimeException e){
             System.out.println("other fxml error");
             throw new IOException(e);
+        }
+        for(int i = 0; i< 1; i++) {
+            try {
+                choosePlayer.add(ResourceHandler.getInstance().getFXML("choosePlayer").load());
+            } catch (IOException e) {
+                System.out.println("other fxml etest");
+                throw new RuntimeException(e);
+            } catch (RuntimeException e) {
+                System.out.println("other fxml error2");
+                throw new IOException(e);
+            }
+        }
+
+        for (HBox player:choosePlayer) {
+            ((VBox) choosePlayerMenu.getChildren().get(0)).getChildren().add(player);
         }
 
         MainMenuView mainView = new MainMenuView();

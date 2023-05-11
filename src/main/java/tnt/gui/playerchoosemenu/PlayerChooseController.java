@@ -15,17 +15,9 @@ public class PlayerChooseController {
 //    private void initialize(){
 //
 //    }
-    @FXML
-    private void handlePlayButton(){
-        System.out.println("teszete");
-    }
-    @FXML
-    private void handleBtnCounterUpClick() {
-        System.out.println("A");
-    }
 
     @FXML
-    private void handleBtnCounterDownClick() {
+    private void runGame() {
         System.out.println("B");
     }
 }
