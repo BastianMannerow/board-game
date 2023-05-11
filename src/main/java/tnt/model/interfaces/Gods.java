@@ -7,6 +7,5 @@ public interface Gods {
     //methoden die irgendwo benutzt werden werden hier deklariert damit sie allgmein in anderen Klassen benutzt
     //können
 
-    public String getGodName();//wird in der Main methode benutzt
 
 }
