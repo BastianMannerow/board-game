@@ -33,39 +33,12 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
-//        VBox choosePlayerMenu;
-//        ArrayList<HBox> choosePlayer = new ArrayList<>();
-//        try {
-//            choosePlayerMenu = (VBox) ResourceHandler.getInstance().getFXML("choosePlayerMenu").load();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        } catch (RuntimeException e){
-//            System.out.println("other fxml error");
-//            throw new IOException(e);
-//        }
-//        try {
-//
-//            HBox abc = ResourceHandler.getInstance().getFXML("choosePlayer").load();
-//        } catch (IOException e) {
-//            System.out.println("other fxml etest");
-//            throw new RuntimeException(e);
-//        } catch (RuntimeException e) {
-//            System.out.println("other fxml error2");
-//            throw new IOException(e);
-//        }
-
-//        for (HBox player:choosePlayer) {
-//            ((VBox) choosePlayerMenu.getChildren().get(0)).getChildren().add(player);
-//        }
-
         MainMenuView mainView = new MainMenuView();
 
         Game g = new Game(1);
         GameView gameView = new GameView(g);
         gameView.setGame(g);
-        System.out.println("216541");
-        Scene mainScene = new Scene(mainView, 600, 400);
-        System.out.println("liu");
+        Scene mainScene = new Scene(mainView, 1000, 800);
         PlayerChooseController playerChooseController = new PlayerChooseController();
         Parent choosePlayerMenu = new PlayerChooseView(playerChooseController);
         MainMenuController mainController = new MainMenuController(mainView, gameView, choosePlayerMenu, mainScene);
