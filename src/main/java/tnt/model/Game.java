@@ -1,6 +1,8 @@
 package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import javafx.scene.paint.Color;
 import tnt.model.enums.Gods;
 import tnt.util.Observable;
 import tnt.model.gods.movement.*;
@@ -62,7 +64,7 @@ public class Game extends Observable {
      */
     public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods) {
         for (int i = 0; i < playerAmount; i++) {
-            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), gods);
+            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), Color.RED, new ArrayList<Figure>(), gods);
             newPlayer.addFigure(figureAmount);
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);

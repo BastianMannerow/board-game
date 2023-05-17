@@ -35,13 +35,20 @@ public class Gui extends Application {
         primaryStage.setTitle("TNT");
         MainMenuView mainView = new MainMenuView();
 
+
+
         Game g = new Game(1);
         GameView gameView = new GameView(g);
         gameView.setGame(g);
         Scene mainScene = new Scene(mainView, 1000, 800);
-        PlayerChooseController playerChooseController = new PlayerChooseController();
-        Parent choosePlayerMenu = new PlayerChooseView(playerChooseController);
+
+        Parent choosePlayerMenu = new PlayerChooseView();
         MainMenuController mainController = new MainMenuController(mainView, gameView, choosePlayerMenu, mainScene);
+
+
+
+
+
         GameController gameController = new GameController(gameView, mainView, mainScene);
 
 

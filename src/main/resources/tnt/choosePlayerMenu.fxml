@@ -11,6 +11,7 @@
             <VBox prefHeight="200.0" prefWidth="100.0" />
          </content>
       </ScrollPane>
+      <Button fx:id="addPlayer" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
       <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#runGame" prefWidth="100.0" text="Play" />
    </children>
 </fx:root>

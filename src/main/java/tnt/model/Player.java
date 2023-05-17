@@ -1,5 +1,7 @@
 package tnt.model;
 import java.util.ArrayList;
+
+import javafx.scene.paint.Color;
 import tnt.model.enums.Gods;
 
 /**
@@ -8,7 +10,7 @@ import tnt.model.enums.Gods;
 public class Player {
     private String levelOfIntelligence;
     private String name;
-    private String colour;
+    private Color color;
     private ArrayList<Figure> figures;
     private ArrayList<Gods> gods;
 
@@ -16,16 +18,22 @@ public class Player {
      * Constructing an object Player.
      * @param levelOfIntelligence Human, easyAI, mediumAI, hardAI
      * @param name initial name
-     * @param colour initial colour
+     * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
      * @param gods the cards, which affect the players abilities
      */
-    public Player(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, ArrayList<Gods> gods) {
+    public Player(String levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, ArrayList<Gods> gods) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
-        this.colour = colour;
+        this.color = color;
         this.figures = figures;
         this.gods = gods;
+    }
+
+    public Player(String levelOfIntelligence, String name, Color color) {
+        this.levelOfIntelligence = levelOfIntelligence;
+        this.name = name;
+        this.color = color;
     }
 
     /**
@@ -52,15 +60,15 @@ public class Player {
     /**
      * @return colour of the player
      */
-    public String getColour() {
-        return colour;
+    public Color getColor() {
+        return color;
     }
 
     /**
-     * @param colour new colour of the player
+     * @param color new colour of the player
      */
-    public void setColour(String colour) {
-        this.colour = colour;
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     /**
