@@ -46,7 +46,7 @@ public class GameView extends BorderPane implements Observer {
                 gridPane.add(tpane,j, i);
                 GridPane.setConstraints(tpane, j, i);
 
-//                ((Button)((HBox) tpane.getChildren().get(0)).getChildren().get(0)).setText("B: " + i + ", " + j);
+                ((Button)tpane.getChildren().get(0)).setText("B: " + i + ", " + j);
             }
         }
 
