@@ -1,16 +1,8 @@
 package tnt.gui.playerchoosemenu;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import tnt.gui.game.GameView;
 import tnt.model.Player;
-import tnt.model.enums.Gods;
 import tnt.util.Observable;
 
 import java.util.ArrayList;

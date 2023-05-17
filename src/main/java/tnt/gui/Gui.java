@@ -1,25 +1,18 @@
 package tnt.gui;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
-import tnt.Main;
 import tnt.gui.game.GameController;
 import tnt.gui.game.GameView;
 import tnt.gui.mainmenu.MainMenuController;
 import tnt.gui.mainmenu.MainMenuView;
-import tnt.model.Game;
-import tnt.model.Player;
-import tnt.gui.playerchoosemenu.PlayerChooseController;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
-import tnt.ResourceHandler;
+import tnt.model.Game;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Starting point of the JavaFX GUI
@@ -33,23 +26,30 @@ public class Gui extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
-        MainMenuView mainView = new MainMenuView();
+
+        Parent scene = new TilePane();
 
 
-
-        Game g = new Game(1);
-        GameView gameView = new GameView(g);
-        gameView.setGame(g);
-        Scene mainScene = new Scene(mainView, 1000, 800);
+        Scene mainScene = new Scene(scene, 1000, 800);
 
         Parent choosePlayerMenu = new PlayerChooseView();
-        MainMenuController mainController = new MainMenuController(mainView, gameView, choosePlayerMenu, mainScene);
+
+        MainMenuController mainMenuController = new MainMenuController(mainScene, choosePlayerMenu);
+        MainMenuView mainView = new MainMenuView(mainMenuController);
+
+        mainMenuController.setMainView(mainView);
+
+//        mainMenuController.setPlayerChoose(choosePlayerMenu);
+
+//        mainScene.setRoot(choosePlayerMenu);
+//        Game g = new Game(1);
+//        GameView gameView = new GameView(g);
+//        gameView.setGame(g);
 
 
+//        MainMenuController mainController = new MainMenuController();
 
-
-
-        GameController gameController = new GameController(gameView, mainView, mainScene);
+//        GameController gameController = new GameController(gameView, mainView, mainScene);
 
 
         primaryStage.setScene(mainScene);
