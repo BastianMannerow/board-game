@@ -29,15 +29,19 @@ public class Gui extends Application {
 
         Parent scene = new TilePane();
 
+        Game game = new Game();
 
         Scene mainScene = new Scene(scene, 1000, 800);
 
-        Parent choosePlayerMenu = new PlayerChooseView();
+        Parent choosePlayerMenu = new PlayerChooseView(game);
 
         MainMenuController mainMenuController = new MainMenuController(mainScene, choosePlayerMenu);
         MainMenuView mainView = new MainMenuView(mainMenuController);
+//        MainMenuView mainView = new MainMenuView(mainScene, choosePlayerMenu);
 
         mainMenuController.setMainView(mainView);
+
+        GameView gameView = new GameView(game);
 
 //        mainMenuController.setPlayerChoose(choosePlayerMenu);
 

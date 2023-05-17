@@ -50,4 +50,12 @@ public class MainMenuController {
         mainMenu = mainView;
         mainScene.setRoot(mainMenu);
     }
+
+    public void setMainScene(Scene mainScene) {
+        this.mainScene = mainScene;
+    }
+
+    public void setChoosePlayerMenu(Parent choosePlayerMenu) {
+        this.playerChooseMenu = choosePlayerMenu;
+    }
 }

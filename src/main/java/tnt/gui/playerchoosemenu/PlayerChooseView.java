@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
+import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observer;
 
@@ -19,23 +20,25 @@ import java.util.Map;
 public class PlayerChooseView extends VBox implements Observer {
 
     private Map<Player, HBox> playerHolder = new HashMap<Player, HBox>();
-    private PlayerChooseController playerChooseController;
-    public PlayerChooseView() throws IOException {
+    private Game game;
+    public PlayerChooseView(Game game) throws IOException {
+        this.game = game;
         FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("choosePlayerMenu");
         choosePlayerMenu.setRoot(this);
         VBox playerChooseMenu = choosePlayerMenu.load();
-        this.playerChooseController = choosePlayerMenu.getController();
+        PlayerChooseController controller = choosePlayerMenu.getController();
+        controller.setGame(game);
         ((ScrollPane) this.getChildren().get(0)).setFitToHeight(true);
         ((ScrollPane) this.getChildren().get(0)).setFitToWidth(true);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setSpacing(20);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setPadding(new Insets(20,0,5,0));
-        playerChooseController.addObserver(this);
+        game.addObserver(this);
         update();
     }
 
     @Override
     public void update() {
-        ArrayList<Player> players = playerChooseController.getPlayers();
+        ArrayList<Player> players = game.getPlayerOrder();
         VBox playerBox = (VBox) ((ScrollPane) this.getChildren().get(0)).getContent();
         int i = 0;
         for (Player playerHere: playerHolder.keySet()){
@@ -43,6 +46,7 @@ public class PlayerChooseView extends VBox implements Observer {
                 playerBox.getChildren().remove(playerHolder.get(playerHere));
             }
         }
+        System.out.println("A " + players);
         for(Player player: players){
             if (playerHolder.containsKey(player)){
                 ((Label) playerHolder.get(player).getChildren().get(1)).setText("Player " + (i + 1));
@@ -63,7 +67,7 @@ public class PlayerChooseView extends VBox implements Observer {
                 ((Button) hBox.getChildren().get(0)).setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        playerChooseController.removePlayer(player);
+                        game.removePlayer(player);
                     }
                 });
             }

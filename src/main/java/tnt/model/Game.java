@@ -13,6 +13,8 @@ import tnt.model.gods.sabotage.*;
  * The Game class, which is responsible for general mechanics during the Game.
  */
 public class Game extends Observable {
+
+    private Color[] def_colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.PINK};
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
@@ -30,6 +32,12 @@ public class Game extends Observable {
     public Game(int amountOfTurns) {
         this.playerOrder = new ArrayList<Player>();
         this.amountOfTurns = amountOfTurns;
+    }
+
+    public Game() {
+        this.playerOrder = new ArrayList<Player>();
+        addPlayer();
+        addPlayer();
     }
 
     /**
@@ -291,5 +299,16 @@ public class Game extends Observable {
 
     public boolean isRunnung(){
         return isRunning;
+    }
+
+
+    public void addPlayer() {
+        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length]));
+        notifyObservers();
+    }
+
+    public void removePlayer(Player player) {
+        playerOrder.remove(player);
+        notifyObservers();
     }
 }

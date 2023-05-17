@@ -1,21 +1,21 @@
 package tnt.gui.playerchoosemenu;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observable;
 
 import java.util.ArrayList;
 
-public class PlayerChooseController extends Observable {
 
-    private Color[] def_colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.PINK};
-    @FXML
-    private void initialize(){
-        addPlayer();
-        addPlayer();
-    }
-    private ArrayList<Player> players = new ArrayList<>();
+public class PlayerChooseController{
+
+//    @FXML
+//    private void initialize(){
+//    }
+    private Game game;
 
     @FXML
     private void runGame() {
@@ -23,16 +23,15 @@ public class PlayerChooseController extends Observable {
     }
     @FXML
     private void addPlayer() {
-        players.add(new Player("" , "Player " + (players.size()+1), def_colors[players.size() % def_colors.length]));
-        notifyObservers();
+        game.addPlayer();
     }
 
-    public ArrayList<Player> getPlayers() {
-        return players;
-    }
 
     public void removePlayer(Player player) {
-        players.remove(player);
-        notifyObservers();
+        game.removePlayer(player);
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 }
