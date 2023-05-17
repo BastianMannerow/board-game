@@ -27,21 +27,21 @@ public class Gui extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
 
-        Parent scene = new TilePane();
+//        Parent scene = new TilePane();
 
         Game game = new Game();
 
-        Scene mainScene = new Scene(scene, 1000, 800);
+        SceneHandler sceneHandler = new SceneHandler();
 
-        Parent choosePlayerMenu = new PlayerChooseView(game);
+        Parent choosePlayerMenu = new PlayerChooseView(sceneHandler, game);
 
-        MainMenuController mainMenuController = new MainMenuController(mainScene, choosePlayerMenu);
+        MainMenuController mainMenuController = new MainMenuController(sceneHandler, choosePlayerMenu);
         MainMenuView mainView = new MainMenuView(mainMenuController);
-//        MainMenuView mainView = new MainMenuView(mainScene, choosePlayerMenu);
 
+        sceneHandler.addMain(new Scene(mainView, 1000, 800));
         mainMenuController.setMainView(mainView);
 
-        GameView gameView = new GameView(game);
+        GameView gameView = new GameView(sceneHandler, game);
 
 //        mainMenuController.setPlayerChoose(choosePlayerMenu);
 
@@ -56,7 +56,7 @@ public class Gui extends Application {
 //        GameController gameController = new GameController(gameView, mainView, mainScene);
 
 
-        primaryStage.setScene(mainScene);
+        primaryStage.setScene(sceneHandler.getScene());
         primaryStage.show();
     }
 

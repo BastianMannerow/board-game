@@ -9,4 +9,5 @@ module tnt {
     exports tnt.gui;
     opens tnt.gui.playerchoosemenu to javafx.fxml;
     opens tnt.gui.mainmenu to javafx.fxml;
+    opens tnt.gui.game to javafx.fxml;
 }

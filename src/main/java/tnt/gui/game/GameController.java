@@ -1,13 +1,29 @@
 package tnt.gui.game;
 
+import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import tnt.gui.mainmenu.MainMenuView;
+import javafx.scene.paint.Color;
+import tnt.gui.SceneHandler;
+import tnt.model.Game;
+import tnt.model.Player;
+import tnt.util.Observable;
 
-public class GameController {
-    public GameController(GameView gameView, MainMenuView mainView, Scene scene){
+import java.util.ArrayList;
 
-//        gameView.getBtnBack().setOnAction(event -> {
-//            scene.setRoot(mainView);
-//        });
+
+public class GameController{
+
+    //    @FXML
+//    private void initialize(){
+//    }
+    private Game game;
+    private SceneHandler sceneHandler;
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void setSceneHandler(SceneHandler sceneHandler) {
+        this.sceneHandler = sceneHandler;
     }
 }

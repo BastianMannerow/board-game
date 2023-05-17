@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
+import tnt.gui.SceneHandler;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observer;
@@ -21,13 +22,15 @@ public class PlayerChooseView extends VBox implements Observer {
 
     private Map<Player, HBox> playerHolder = new HashMap<Player, HBox>();
     private Game game;
-    public PlayerChooseView(Game game) throws IOException {
+    public PlayerChooseView(SceneHandler sceneHandler, Game game) throws IOException {
         this.game = game;
         FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("choosePlayerMenu");
         choosePlayerMenu.setRoot(this);
-        VBox playerChooseMenu = choosePlayerMenu.load();
+        choosePlayerMenu.load();
         PlayerChooseController controller = choosePlayerMenu.getController();
         controller.setGame(game);
+        controller.setSceneHandler(sceneHandler);
+        sceneHandler.add("playerMenu", this);
         ((ScrollPane) this.getChildren().get(0)).setFitToHeight(true);
         ((ScrollPane) this.getChildren().get(0)).setFitToWidth(true);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setSpacing(20);

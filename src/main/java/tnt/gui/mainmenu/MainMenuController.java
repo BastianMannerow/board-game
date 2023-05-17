@@ -5,21 +5,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import tnt.gui.SceneHandler;
 
 public class MainMenuController {
 
     Parent playerChooseMenu;
     Parent mainMenu;
-    Scene mainScene;
+    SceneHandler sceneHandler;
     @FXML
     private HBox wholeMenu;
     @FXML
     private Button gotoGame;
 
-    public MainMenuController(Scene scene, Parent playerChooseMenu) {
+    public MainMenuController(SceneHandler sceneHandler, Parent playerChooseMenu) {
 
         this.playerChooseMenu = playerChooseMenu;
-        this.mainScene = scene;
+        this.sceneHandler = sceneHandler;
     }
 
     @FXML
@@ -28,19 +29,8 @@ public class MainMenuController {
 
     @FXML
     private void gotoGame() {
-        mainScene.setRoot(playerChooseMenu);
-//        System.out.println(playerChooseMenu);
-//        System.out.println(mainScene.getRoot());
+        sceneHandler.getScene().setRoot(playerChooseMenu);
     }
-
-//    public void setPlayerChoose(Parent choosePlayerMenu) {
-////        System.out.println(" A: " + choosePlayerMenu);
-////        System.out.println(" B: " + this.playerChooseMenu);
-////        this.playerChooseMenu = playerChooseMenu;
-//        System.out.println(" C: " + choosePlayerMenu);
-//        System.out.println(" D: " + this.playerChooseMenu);
-//
-//    }
     public Parent getPlayerChoose() {
         return this.playerChooseMenu;
 
@@ -48,12 +38,12 @@ public class MainMenuController {
 
     public void setMainView(MainMenuView mainView) {
         mainMenu = mainView;
-        mainScene.setRoot(mainMenu);
+        sceneHandler.getScene().setRoot(mainMenu);
     }
 
-    public void setMainScene(Scene mainScene) {
-        this.mainScene = mainScene;
-    }
+//    public void setMainScene(Scene mainScene) {
+//        this.sceneHandler.getScene() = mainScene;
+//    }
 
     public void setChoosePlayerMenu(Parent choosePlayerMenu) {
         this.playerChooseMenu = choosePlayerMenu;

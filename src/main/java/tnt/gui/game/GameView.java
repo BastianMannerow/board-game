@@ -1,13 +1,12 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import tnt.ResourceHandler;
+import tnt.gui.SceneHandler;
 import tnt.model.Game;
 import tnt.util.Observer;
 
@@ -23,64 +22,34 @@ public class GameView extends BorderPane implements Observer {
 //    private Label lblCounter = new Label();
     private Game game;
 
-    public GameView(Game game) throws IOException {
+    public GameView(SceneHandler sceneHandler, Game game) throws IOException {
 //        setAlignment(Pos.CENTER);
 //        setSpacing(10);
 //        getChildren().addAll(btnCounterUp, lblCounter, btnCounterDown, btnBack);
+        this.game = game;
+        FXMLLoader gameLoader = ResourceHandler.getInstance().getFXML("game");
+        gameLoader.setRoot(this);
+        gameLoader.load();
+        GameController controller = gameLoader.getController();
+        controller.setGame(game);
+        controller.setSceneHandler(sceneHandler);
+        sceneHandler.add("gameView", this);
 
-//        FXMLLoader gameLoader = ResourceHandler.getInstance().getFXML("game");
-//        gameLoader.setRoot(this);
-////        BorderPane gameView =
-//        gameLoader.load();
 //        System.out.println(gameLoader.getController().toString());
-//        game.addObserver(this);
+        game.addObserver(this);
         update();
+        HBox tpane = new HBox();
+        FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
+        fieldLayout.setRoot(tpane);
+        ((GridPane) this.getCenter()).add(tpane,0, 0);
+        fieldLayout.load();
+        System.out.println(tpane.getChildren().get(0));
+
     }
-
-//    public GameView(Game g) {
-//        getChildren().addAll(btnCounterUp, lblCounter, btnCounterDown, btnBack);
-//        setGame(g);
-//    }
-
-//    public Button getBtnCounterDown() {
-//        return btnCounterDown;
-//    }
-//
-//    public void setBtnCounterDown(Button btnCounterDown) {
-//        this.btnCounterDown = btnCounterDown;
-//    }
-//
-//    public Button getBtnCounterUp() {
-//        return btnCounterUp;
-//    }
-//
-//    public void setBtnCounterUp(Button btnCounterUp) {
-//        this.btnCounterUp = btnCounterUp;
-//    }
-
-//    public void setGame(Game game) {
-//        this.game = game;
-//        game.addObserver(this);
-//        update();
-//    }
 
     @Override
     public void update() {
-//        if (game.getPlayersTurn() == null) {
-//
-//            lblCounter.setText("No Players available");
-//            return;
-//        }
-//        lblCounter.setText("Counter: " + game.getPlayersTurn());
     }
-
-//    public Game getGame() {
-//        return game;
-//    }
-
-//    public Button getBtnBack() {
-//        return btnBack;
-//    }
 
 
 }

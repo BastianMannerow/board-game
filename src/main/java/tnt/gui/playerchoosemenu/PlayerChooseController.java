@@ -3,6 +3,7 @@ package tnt.gui.playerchoosemenu;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import tnt.gui.SceneHandler;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observable;
@@ -16,10 +17,11 @@ public class PlayerChooseController{
 //    private void initialize(){
 //    }
     private Game game;
+    private SceneHandler sceneHandler;
 
     @FXML
     private void runGame() {
-        System.out.println("B");
+        sceneHandler.loadView("gameView");
     }
     @FXML
     private void addPlayer() {
@@ -33,5 +35,9 @@ public class PlayerChooseController{
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public void setSceneHandler(SceneHandler sceneHandler) {
+        this.sceneHandler = sceneHandler;
     }
 }
