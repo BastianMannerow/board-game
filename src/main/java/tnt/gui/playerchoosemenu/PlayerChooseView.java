@@ -46,7 +46,6 @@ public class PlayerChooseView extends VBox implements Observer {
                 playerBox.getChildren().remove(playerHolder.get(playerHere));
             }
         }
-        System.out.println("A " + players);
         for(Player player: players){
             if (playerHolder.containsKey(player)){
                 ((Label) playerHolder.get(player).getChildren().get(1)).setText("Player " + (i + 1));
