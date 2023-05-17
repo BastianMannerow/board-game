@@ -1,10 +1,9 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.*;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
 import tnt.model.Game;
@@ -35,15 +34,22 @@ public class GameView extends BorderPane implements Observer {
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("gameView", this);
 
-//        System.out.println(gameLoader.getController().toString());
         game.addObserver(this);
         update();
-        HBox tpane = new HBox();
-        FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
-        fieldLayout.setRoot(tpane);
-        ((GridPane) this.getCenter()).add(tpane,0, 0);
-        fieldLayout.load();
-        System.out.println(tpane.getChildren().get(0));
+        GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
+        for (int i = 0; i < 15; i++){
+            for(int j = 0 ; j < 15 ; j++){
+                HBox tpane = new HBox();
+                FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
+                fieldLayout.setRoot(tpane);
+                fieldLayout.load();
+                gridPane.add(tpane,j, i);
+                GridPane.setConstraints(tpane, j, i);
+
+//                ((Button)((HBox) tpane.getChildren().get(0)).getChildren().get(0)).setText("B: " + i + ", " + j);
+            }
+        }
+
 
     }
 
