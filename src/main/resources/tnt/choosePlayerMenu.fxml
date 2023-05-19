@@ -38,7 +38,7 @@
 
 <fx:root alignment="CENTER" prefHeight="400.0" prefWidth="640.0" spacing="10.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tnt.gui.playerchoosemenu.PlayerChooseController">
    <children>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0">
+      <ScrollPane prefHeight="401.0" prefWidth="762.0">
          <content>
             <VBox prefHeight="200.0" prefWidth="100.0" />
          </content>
