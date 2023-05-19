@@ -37,8 +37,8 @@ public class GameView extends BorderPane implements Observer {
         game.addObserver(this);
         update();
         GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
-        for (int i = 0; i < 15; i++){
-            for(int j = 0 ; j < 15 ; j++){
+        for (int i = 0; i < game.getBoard().getYSize(); i++){
+            for(int j = 0 ; j < game.getBoard().getXSize() ; j++){
                 HBox tpane = new HBox();
                 FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
                 fieldLayout.setRoot(tpane);

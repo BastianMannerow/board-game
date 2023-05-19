@@ -38,6 +38,7 @@ public class Game extends Observable {
         this.playerOrder = new ArrayList<Player>();
         addPlayer();
         addPlayer();
+        this.board = new Board(new Field[5][6],5,6);
     }
 
     /**
@@ -310,5 +311,9 @@ public class Game extends Observable {
     public void removePlayer(Player player) {
         playerOrder.remove(player);
         notifyObservers();
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 }
