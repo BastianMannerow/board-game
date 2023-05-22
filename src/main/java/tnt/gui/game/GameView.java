@@ -6,25 +6,23 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
+import tnt.model.Field;
 import tnt.model.Game;
+import tnt.model.Player;
 import tnt.util.Observer;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class GameView extends BorderPane implements Observer {
 
-//    private Button btnBack = new Button("Back!");
-//
-//    private Button btnCounterUp = new Button("+");
-//    private Button btnCounterDown = new Button("-");
-//    private Label lblCounter = new Label();
     private Game game;
+    private Map<Field, HBox> fieldHolder = new HashMap<Field, HBox>();
 
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
-//        setAlignment(Pos.CENTER);
-//        setSpacing(10);
-//        getChildren().addAll(btnCounterUp, lblCounter, btnCounterDown, btnBack);
+
         this.game = game;
         FXMLLoader gameLoader = ResourceHandler.getInstance().getFXML("game");
         gameLoader.setRoot(this);
@@ -36,25 +34,34 @@ public class GameView extends BorderPane implements Observer {
 
         game.addObserver(this);
         update();
-        GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
-        for (int i = 0; i < game.getBoard().getYSize(); i++){
-            for(int j = 0 ; j < game.getBoard().getXSize() ; j++){
-                HBox tpane = new HBox();
-                FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
-                fieldLayout.setRoot(tpane);
-                fieldLayout.load();
-                gridPane.add(tpane,j, i);
-                GridPane.setConstraints(tpane, j, i);
-
-                ((Button)tpane.getChildren().get(0)).setText("B: " + i + ", " + j);
-            }
-        }
-
-
     }
 
     @Override
     public void update() {
+
+        GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
+        for (int i = 0; i < game.getBoard().getXSize(); i++){
+            for(int j = 0 ; j < game.getBoard().getYSize() ; j++){
+                Field field = game.getBoard().getField(i, j);
+
+                if (!fieldHolder.containsKey(field)){
+                    HBox hBox = new HBox();
+                    fieldHolder.put(field, hBox);
+                    FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
+                    fieldLayout.setRoot(hBox);
+                    try {
+                        fieldLayout.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    gridPane.add(hBox,i, j);
+                    GridPane.setConstraints(hBox, i, j);
+                }
+
+                HBox hBox = fieldHolder.get(field);
+//                ((Button)hBox.getChildren().get(0)).setText("B: " + i + ", " + j);
+            }
+        }
     }
 
 
