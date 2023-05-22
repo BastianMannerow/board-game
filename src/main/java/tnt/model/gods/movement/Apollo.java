@@ -4,8 +4,9 @@ import tnt.model.Figure;
 import tnt.model.Player;
 import tnt.model.Board;
 import java.util.ArrayList;
+import tnt.model.interfaces.Gods;
 
-public class Apollo{
+public class Apollo implements Gods{
     /**
      * Gets the possible fields
      *

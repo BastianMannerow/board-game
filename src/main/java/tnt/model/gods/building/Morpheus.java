@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Morpheus {
+import tnt.model.interfaces.Gods;
+public class Morpheus implements Gods{
 }

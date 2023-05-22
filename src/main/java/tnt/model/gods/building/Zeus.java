@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Zeus {
+import tnt.model.interfaces.Gods;
+public class Zeus implements Gods{
 }

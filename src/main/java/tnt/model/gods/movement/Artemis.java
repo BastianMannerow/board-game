@@ -3,11 +3,14 @@ import tnt.model.Board;
 import tnt.model.Field;
 import tnt.model.Figure;
 import tnt.model.Player;
-import tnt.model.enums.Gods;
+import tnt.model.interfaces.Gods;
 
 import java.util.ArrayList;
 
-public class Artemis{
+public class Artemis implements Gods{
+
+
+    // muss überarbeited werden, da die art und weise wir götter jetzt implementiert werden
     public static ArrayList<Field> getValidMove(Figure figure, int originalFigureX, int originalFigureY){
 //        for(Gods god:activeGods) {
 //            switch (god) {
@@ -19,7 +22,7 @@ public class Artemis{
 //                case Triton:
 //            }
 //        }
-        return new ArrayList<>();
         //Remove Artemis double
+        return null;
     }
 }

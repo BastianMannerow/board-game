@@ -1,9 +1,9 @@
 package tnt.model.gods.movement;
 import tnt.model.Figure;
-import tnt.model.enums.Gods;
+import tnt.model.interfaces.Gods;
 
-public class Triton{
-    public Triton(int x, int y) {
-
-    }
+public class Triton implements Gods{
+    //public Triton(int x, int y, Gods god) {
+    //    super(x, y, god);
+   // }
 }

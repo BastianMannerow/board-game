@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Poseidon {
+import tnt.model.interfaces.Gods;
+public class Poseidon implements Gods{
 }

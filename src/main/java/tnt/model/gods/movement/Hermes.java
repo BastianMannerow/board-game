@@ -3,8 +3,9 @@ import tnt.model.Board;
 import tnt.model.Field;
 import tnt.model.Figure;
 import java.util.ArrayList;
+import tnt.model.interfaces.Gods;
 
-public class Hermes {
+public class Hermes implements Gods{
     /**
      * Gets all reachable fields
      *

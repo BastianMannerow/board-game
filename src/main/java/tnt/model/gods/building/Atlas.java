@@ -1,4 +1,6 @@
 package tnt.model.gods.building;
 
-public class Atlas {
+import tnt.model.interfaces.Gods;
+public class Atlas implements Gods{
+
 }

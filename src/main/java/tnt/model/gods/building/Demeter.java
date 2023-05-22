@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Demeter {
+import tnt.model.interfaces.Gods;
+public class Demeter implements Gods{
 }

@@ -2,8 +2,17 @@ package tnt.model;
 import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
-import tnt.model.enums.Gods;
 
+import tnt.model.interfaces.Gods;
+import tnt.model.gods.building.*;
+import tnt.model.gods.inventory.Chaos;
+import tnt.model.gods.inventory.Circe;
+import tnt.model.gods.movement.*;
+import tnt.model.gods.sabotage.*;
+import tnt.model.gods.victory.Chronus;
+import tnt.model.gods.victory.Eros;
+import tnt.model.gods.victory.Hera;
+import tnt.model.gods.victory.Pan;
 /**
  * A player with his attributes.
  */
@@ -78,6 +87,53 @@ public class Player {
         return figures;
     }
 
+    /**
+     * Adds a god into the ArrayList gods
+     *
+     * @param god is a instance of a class implementing interface Gods
+     */
+    public void addGod(Gods god){
+        gods.add(god);
+    }
+
+    /**
+     * Adds all gods into the ArrayList gods
+     *
+     */
+    public void AddAllGods(){
+        addGod(new Ares());
+        addGod(new Atlas());
+        addGod(new Demeter());
+        addGod(new Dyonisus());
+        addGod(new Hephaistos());
+        addGod(new Hestia());
+        addGod(new Medusa());
+        addGod(new Morpheus());
+        addGod(new Poseidon());
+        addGod(new Prometheus());
+        addGod(new Selene());
+        addGod(new Zeus());
+
+        addGod(new Chaos());
+        addGod(new Circe());
+        addGod(new Apollo());
+        addGod(new Artemis());
+        addGod(new Charon());
+        addGod(new Hermes());
+        addGod(new Minotaures());
+        addGod(new Triton());
+
+        addGod(new Aphrodite());
+        addGod(new Athena());
+        addGod(new Hypnus());
+        addGod(new Limus());
+        addGod(new Persephone());
+
+        addGod(new Chronus());
+        addGod(new Eros());
+        addGod(new Hera());
+        addGod(new Pan());
+    }
     /**
      * Depending on the god type, the specific figure object will be created.
      *

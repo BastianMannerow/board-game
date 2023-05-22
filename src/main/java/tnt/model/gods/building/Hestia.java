@@ -1,4 +1,5 @@
 package tnt.model.gods.building;
 
-public class Hestia {
+import tnt.model.interfaces.Gods;
+public class Hestia implements Gods{
 }
