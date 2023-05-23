@@ -11,4 +11,8 @@ public class FieldView extends HBox {
     public FieldView(Field field) {
         this.field = field;
     }
+
+    public Field getField() {
+        return field;
+    }
 }

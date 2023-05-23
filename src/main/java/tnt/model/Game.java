@@ -330,4 +330,11 @@ public class Game extends Observable {
     public boolean placeFigures(){
         return gameStatus == GameStatus.PLACE_FIGURES;
     };
+
+    public boolean isValidPlacement(Field field){
+        if (gameStatus!=GameStatus.PLACE_FIGURES){
+            return false;
+        }
+        return !field.getIsFigureHere();
+    }
 }

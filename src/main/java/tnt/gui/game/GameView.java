@@ -56,7 +56,9 @@ public class GameView extends BorderPane implements Observer {
             dragFigure.setMouseTransparent(true);
             dragFigure.setVisible(false);
             ((VBox) this.getRight()).getChildren().clear();
-            int k = 0;
+
+            int leftFigures  = 0;
+
             ArrayList<Player> players = game.getPlayerOrder();
             for (Player player: players) {
                 for (int i = 0; i < player.figuresLeftToSet(); i++) {
@@ -67,8 +69,8 @@ public class GameView extends BorderPane implements Observer {
                         throw new RuntimeException(e);
                     }
 //            figureView.radiusProperty().set(20);
+                    leftFigures++;
                     ((VBox) this.getRight()).getChildren().add(figureView);
-                    System.out.println("TEst " + k++ );
                     FigureView finalFigureView = figureView;
 
                     figureView.setOnDragDetected(event -> {
@@ -86,6 +88,9 @@ public class GameView extends BorderPane implements Observer {
                         finalFigureView.setVisible(true);
                     });
                 }
+            }
+            if (leftFigures <=0 ){
+                game.startGame();
             }
         }
 
@@ -107,11 +112,13 @@ public class GameView extends BorderPane implements Observer {
                     int finalJ = j;
                     fieldView.setOnMouseDragReleased(event -> {
                         FigureView source = (FigureView) event.getGestureSource();
-                        ((Pane) source.getParent()).getChildren().remove(source);
-                        fieldView.getChildren().add(source);
-                        dragFigure.setVisible(false);
-                        source.setVisible(true);
-                        source.getPlayer().addFigure(finalI, finalJ);
+                        if (game.isValidPlacement(fieldView.getField())) {
+                            ((Pane) source.getParent()).getChildren().remove(source);
+                            fieldView.getChildren().add(source);
+                            dragFigure.setVisible(false);
+                            source.setVisible(true);
+                            source.getPlayer().addFigure(finalI, finalJ);
+                        }
                     });
                     gridPane.add(fieldView,i, j);
                     GridPane.setConstraints(fieldView, i, j);
