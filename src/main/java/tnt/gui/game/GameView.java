@@ -27,7 +27,7 @@ public class GameView extends BorderPane implements Observer {
 
     private Game game;
     private FigureView dragFigure;
-    private Map<Field, HBox> fieldHolder = new HashMap<Field, HBox>();
+    private Map<Field, FieldView> fieldHolder = new HashMap<Field, FieldView>();
 
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
 
@@ -41,6 +41,7 @@ public class GameView extends BorderPane implements Observer {
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("gameView", this);
 
+        this.getChildren().add(dragFigure);
 
         game.addObserver(this);
         update();
@@ -54,69 +55,74 @@ public class GameView extends BorderPane implements Observer {
 
             dragFigure.setMouseTransparent(true);
             dragFigure.setVisible(false);
-
-            this.getChildren().add(dragFigure);
+            ((VBox) this.getRight()).getChildren().clear();
+            int k = 0;
             ArrayList<Player> players = game.getPlayerOrder();
-            for (Player player: players){
-                FigureView figureView = null;
-                try {
-                    figureView = new FigureView(player);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            for (Player player: players) {
+                for (int i = 0; i < player.figuresLeftToSet(); i++) {
+                    FigureView figureView = null;
+                    try {
+                        figureView = new FigureView(player);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
 //            figureView.radiusProperty().set(20);
-                ((VBox) this.getRight()).getChildren().add(figureView);
+                    ((VBox) this.getRight()).getChildren().add(figureView);
+                    System.out.println("TEst " + k++ );
+                    FigureView finalFigureView = figureView;
 
-                FigureView finalFigureView = figureView;
-
-                figureView.setOnDragDetected(event -> {
-                    finalFigureView.setVisible(false);
-                    dragFigure.setVisible(true);
-                    finalFigureView.startFullDrag();
-                });
-                figureView.setOnMouseDragged((MouseEvent event) -> {
-                    dragFigure.setPlayer(player);
-                    dragFigure.setLayoutX(event.getSceneX());
-                    dragFigure.setLayoutY(event.getSceneY());
-                });
-                figureView.setOnMouseReleased(event -> {
-                    dragFigure.setVisible(false);
-                    finalFigureView.setVisible(true);
-                });
+                    figureView.setOnDragDetected(event -> {
+                        finalFigureView.setVisible(false);
+                        dragFigure.setVisible(true);
+                        finalFigureView.startFullDrag();
+                    });
+                    figureView.setOnMouseDragged((MouseEvent event) -> {
+                        dragFigure.setPlayer(player);
+                        dragFigure.setLayoutX(event.getSceneX());
+                        dragFigure.setLayoutY(event.getSceneY());
+                    });
+                    figureView.setOnMouseReleased(event -> {
+                        dragFigure.setVisible(false);
+                        finalFigureView.setVisible(true);
+                    });
+                }
             }
-
         }
+
         GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
         for (int i = 0; i < game.getBoard().getXSize(); i++){
             for(int j = 0 ; j < game.getBoard().getYSize() ; j++){
                 Field field = game.getBoard().getField(i, j);
                 if (!fieldHolder.containsKey(field)){
-                    HBox hBox = new HBox();
-                    fieldHolder.put(field, hBox);
+                    FieldView fieldView = new FieldView(field);
+                    fieldHolder.put(field, fieldView);
                     FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
-                    fieldLayout.setRoot(hBox);
+                    fieldLayout.setRoot(fieldView);
                     try {
                         fieldLayout.load();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-                    hBox.setOnMouseDragReleased(event -> {
+                    int finalI = i;
+                    int finalJ = j;
+                    fieldView.setOnMouseDragReleased(event -> {
                         FigureView source = (FigureView) event.getGestureSource();
                         ((Pane) source.getParent()).getChildren().remove(source);
-                        hBox.getChildren().add(source);
+                        fieldView.getChildren().add(source);
                         dragFigure.setVisible(false);
                         source.setVisible(true);
+                        source.getPlayer().addFigure(finalI, finalJ);
                     });
-                    gridPane.add(hBox,i, j);
-                    GridPane.setConstraints(hBox, i, j);
+                    gridPane.add(fieldView,i, j);
+                    GridPane.setConstraints(fieldView, i, j);
                 }
 
-                HBox hBox = fieldHolder.get(field);
-                ((Label)((VBox)hBox.getChildren().get(1)).getChildren().get(1)).setText(" " + field.getTowerLevel());
+                FieldView fieldView = fieldHolder.get(field);
+                ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(1)).setText(" " + field.getTowerLevel());
                 if (field.getIsFigureHere()){
-                    ((Label)((VBox)hBox.getChildren().get(1)).getChildren().get(0)).setText(" Player here ");
+                    ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(0)).setText(" Player here ");
                 } else {
-                    ((Label)((VBox)hBox.getChildren().get(1)).getChildren().get(0)).setText("");
+                    ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(0)).setText("");
                 }
             }
         }

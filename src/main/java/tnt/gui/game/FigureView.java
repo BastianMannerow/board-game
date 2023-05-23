@@ -25,4 +25,8 @@ public class FigureView extends Polygon {
         this.player = player;
         this.setFill(player.getColor());
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

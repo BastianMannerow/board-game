@@ -26,7 +26,7 @@ public class PlayerChooseController{
     }
     @FXML
     private void addPlayer() {
-        game.addPlayer();
+        game.addPlayer(2);
     }
 
 

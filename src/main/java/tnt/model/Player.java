@@ -1,5 +1,6 @@
 package tnt.model;
 import java.util.ArrayList;
+import java.util.Observable;
 
 import javafx.scene.paint.Color;
 
@@ -18,9 +19,11 @@ import tnt.model.gods.victory.Pan;
  */
 public class Player {
     private String levelOfIntelligence;
+    private Game game;
     private String name;
     private Color color;
-    private ArrayList<Figure> figures;
+    private int amountOfFigures;
+    private ArrayList<Figure> figures = new ArrayList<Figure>();
     private ArrayList<Gods> gods;
 
     /**
@@ -39,10 +42,12 @@ public class Player {
         this.gods = gods;
     }
 
-    public Player(String levelOfIntelligence, String name, Color color) {
+    public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
+        this.amountOfFigures = amountOfFigures;
+        this.game = game;
     }
 
     /**
@@ -145,6 +150,11 @@ public class Player {
             this.figures.add(newFigure);
         }
     }
+    public void addFigure(int x, int y) {
+        Figure newFigure = new Figure(x, y);
+        this.figures.add(newFigure);
+        game.notifyObservers();
+    }
 
     /**
      * @return card god/demon card, which belongs to the player
@@ -178,5 +188,8 @@ public class Player {
         field.setIsFigureHere(true);
         figure.setX(field.getX());
         figure.setY(field.getY());
+    }
+    public int figuresLeftToSet(){
+        return amountOfFigures - figures.size();
     }
 }

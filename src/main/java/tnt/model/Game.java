@@ -40,8 +40,8 @@ public class Game extends Observable {
     public Game() {
         gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
-        addPlayer();
-        addPlayer();
+        addPlayer(2);
+        addPlayer(2);
         createBoard(5,6);
     }
 
@@ -314,8 +314,8 @@ public class Game extends Observable {
     }
 
 
-    public void addPlayer() {
-        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length]));
+    public void addPlayer(int amountOfFigures) {
+        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this));
         notifyObservers();
     }
 
