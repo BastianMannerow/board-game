@@ -53,9 +53,10 @@ public class Game {
      * @param colour the colours of the new players
      * @param figureAmount the amount of figures on the players disposal
      */
-    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods) {
+    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names,
+                             ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods)                  {
         for (int i = 0; i < playerAmount; i++) {
-            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), gods.get(i));
+            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), colour.get(i), new ArrayList<Figure>(), new ArrayList<Gods>());
             newPlayer.addFigure(figureAmount);
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);
@@ -107,25 +108,29 @@ public class Game {
         for (int i = 1; i < playerOrder.size(); i++) {
             Player player = playerOrder.get(i);
             ArrayList<Gods> allGods = player.getGods();
-
+            if(allGods.contains(new Chronus())){
+                if(Chronus.checkSpecialEnding()){
+                    gameEnded = true;
+                }
+            }
             for (Gods god : allGods) {
-                switch (god) {
-                    case Chronus:
+                switch (god.getName()) {
+                    case "Chronus":
                         if (Chronus.checkSpecialEnding()) {
                             gameEnded = true;
                             break;
                         }
-                    case Eros:
+                    case "Eros":
                         if (Eros.checkSpecialEnding()) {
                             gameEnded = true;
                             break;
                         }
-                    case Hera:
+                    case "Hera":
                         if (Hera.checkSpecialEnding()) {
                             gameEnded = true;
                             break;
                         }
-                    case Pan:
+                    case "Pan":
                         if (Pan.checkSpecialEnding()) {
                             gameEnded = true;
                             break;
@@ -151,14 +156,14 @@ public class Game {
             Player passivePlayer = playerOrder.get(i);
             ArrayList<Gods> passiveGods = passivePlayer.getGods();
             for(Gods god:passiveGods) {
-                switch (god) {
-                    case Aphrodite:
+                switch (god.getName()) {
+                    case "Aphrodite":
                         possibleMovement = Aphrodite.sabotage(figure, possibleMovement);
-                    case Athena:
+                    case "Athena":
                         possibleMovement = Athena.sabotage(figure, possibleMovement);
-                    case Hypnus:
+                    case "Hypnus":
                         possibleMovement = Hypnus.sabotage(figure, possibleMovement);
-                    case Persephone:
+                    case "Persephone":
                         possibleMovement = Persephone.sabotage(figure, possibleMovement);
                     default:
                         continue;
@@ -181,8 +186,8 @@ public class Game {
             Player passivePlayer = playerOrder.get(i);
             ArrayList<Gods> passiveGods = passivePlayer.getGods();
             for (Gods god : passiveGods) {
-                switch (god) {
-                    case Limus:
+                switch (god.getName()) {
+                    case "Limus":
                         possibleBuilds = Limus.sabotage(figure, possibleBuilds);
                     default:
                         continue;
@@ -209,36 +214,36 @@ public class Game {
             for(Figure figure:activeFigures){
                 ArrayList<Field> regularFields = sabotageMovement(figure, figure.getValidMoves(board));
                 for(Gods god:activeGods) {
-                    switch (god) {
-                        case Apollo:
-                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
+                    switch (god.getName()) {
+                        case "Apollo":
+                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder,figure, board);
                             apolloFields = sabotageMovement(figure, apolloFields);
-                        case Artemis:
+                        case "Artemis":
                             artemisIsAvailable = true;
-                        case Charon:
-                        case Hermes:
-                        case Minotaures:
-                        case Triton:
+                        case "Charon":
+                        case "Hermes":
+                        case "Minotaures":
+                        case "Triton":
                     }
                 }
             }
             Field field = board.getField(0, 0);// es ist zweimal dieses stück code hier bitte eins entfernen
             Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
-            // Artemis
+            // Artemis !!!!!!!!! muss noch angepasst werden für getvalid move
             if(artemisIsAvailable){
                 int originalFigureX = figure.getX();
                 int originalFigureY = figure.getY();
-                Artemis.getValidMove(figure, originalFigureX, originalFigureY);
+               // Artemis.getValidMove(figure, originalFigureX, originalFigureY);
             }
 
             activePlayer.executeMove(field, board, figure); //Kann auch zB. Apollo.executeMove sein
 
             // Building
-            for(Figure figure:activeFigures){
-                ArrayList<Field> possibleFields = sabotageBuilds(figure, figure.getValidBuilds());
+            for(Figure figure2:activeFigures){
+                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds());
             }
-
-            Field field = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
+            //Testweise dieses Stück rausgenommen
+            //Field field = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
             activePlayer.executeBuild(field, board); // Kann auch zB. BuildingGod.executeBuild sein
 
             // Checks if the game is over

@@ -9,6 +9,10 @@ import java.util.ArrayList;
 
 
 public class Charon implements Gods{
+    @Override
+    public String getName() {
+        return "Charon";
+    }
 
     /**
      * @param figure the players figure

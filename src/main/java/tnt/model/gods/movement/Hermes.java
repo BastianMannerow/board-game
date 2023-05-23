@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import tnt.model.interfaces.Gods;
 
 public class Hermes implements Gods{
+    @Override
+    public String getName() {
+        return "Hermes";
+    }
     /**
      * Gets all reachable fields
      *

@@ -4,6 +4,10 @@ import tnt.model.Figure;
 import java.util.ArrayList;
 import tnt.model.interfaces.Gods;
 public class Limus implements Gods{
+    @Override
+    public String getName() {
+        return "Limus";
+    }
     public static ArrayList<Field> sabotage(Figure figure, ArrayList<Field> possibleBuilds){
         return possibleBuilds;
     }

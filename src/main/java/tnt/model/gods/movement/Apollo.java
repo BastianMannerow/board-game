@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import tnt.model.interfaces.Gods;
 
 public class Apollo implements Gods{
+    @Override
+    public String getName() {
+        return "Apollo";
+    }
+
     /**
      * Gets the possible fields
      *

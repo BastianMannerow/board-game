@@ -8,6 +8,10 @@ import tnt.model.interfaces.Gods;
 import java.util.ArrayList;
 
 public class Minotaures implements Gods{
+    @Override
+    public String getName() {
+        return "Minotaures";
+    }
 
     /**
      * Identifies possible fields
