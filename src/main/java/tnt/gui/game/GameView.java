@@ -18,6 +18,7 @@ import tnt.util.Observer;
 
 //import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,12 +26,13 @@ import java.util.Map;
 public class GameView extends BorderPane implements Observer {
 
     private Game game;
-    private Circle dragCircle  = makeCircle();
+    private FigureView dragFigure;
     private Map<Field, HBox> fieldHolder = new HashMap<Field, HBox>();
 
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
 
         this.game = game;
+        dragFigure  = makeFigure();
         FXMLLoader gameLoader = ResourceHandler.getInstance().getFXML("game");
         gameLoader.setRoot(this);
         gameLoader.load();
@@ -38,32 +40,6 @@ public class GameView extends BorderPane implements Observer {
         controller.setGame(game);
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("gameView", this);
-
-        dragCircle.setMouseTransparent(true);
-        dragCircle.setVisible(false);
-
-
-        this.getChildren().add(dragCircle);
-
-        Circle circle = new Circle();
-        circle.radiusProperty().set(20);
-        ((VBox) this.getRight()).getChildren().add(circle);
-        circle.setFill(Color.RED);
-        circle.setOnDragDetected(event -> {
-            circle.setVisible(false);
-            dragCircle.setVisible(true);
-            dragCircle.setFill(Color.GREEN);
-            circle.startFullDrag();
-        });
-        circle.setOnMouseDragged((MouseEvent event) -> {
-            dragCircle.setCenterX(event.getSceneX());
-            dragCircle.setCenterY(event.getSceneY());
-        });
-        circle.setOnMouseReleased(event -> {
-            dragCircle.setVisible(false);
-            circle.setVisible(true);
-        });
-
 
 
         game.addObserver(this);
@@ -73,6 +49,43 @@ public class GameView extends BorderPane implements Observer {
     @Override
     public void update() {
 
+        if (game.placeFigures()){
+
+
+            dragFigure.setMouseTransparent(true);
+            dragFigure.setVisible(false);
+
+            this.getChildren().add(dragFigure);
+            ArrayList<Player> players = game.getPlayerOrder();
+            for (Player player: players){
+                FigureView figureView = null;
+                try {
+                    figureView = new FigureView(player);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+//            figureView.radiusProperty().set(20);
+                ((VBox) this.getRight()).getChildren().add(figureView);
+
+                FigureView finalFigureView = figureView;
+
+                figureView.setOnDragDetected(event -> {
+                    finalFigureView.setVisible(false);
+                    dragFigure.setVisible(true);
+                    finalFigureView.startFullDrag();
+                });
+                figureView.setOnMouseDragged((MouseEvent event) -> {
+                    dragFigure.setPlayer(player);
+                    dragFigure.setLayoutX(event.getSceneX());
+                    dragFigure.setLayoutY(event.getSceneY());
+                });
+                figureView.setOnMouseReleased(event -> {
+                    dragFigure.setVisible(false);
+                    finalFigureView.setVisible(true);
+                });
+            }
+
+        }
         GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
         for (int i = 0; i < game.getBoard().getXSize(); i++){
             for(int j = 0 ; j < game.getBoard().getYSize() ; j++){
@@ -88,10 +101,10 @@ public class GameView extends BorderPane implements Observer {
                         throw new RuntimeException(e);
                     }
                     hBox.setOnMouseDragReleased(event -> {
-                        Circle source = (Circle) event.getGestureSource();
+                        FigureView source = (FigureView) event.getGestureSource();
                         ((Pane) source.getParent()).getChildren().remove(source);
                         hBox.getChildren().add(source);
-                        dragCircle.setVisible(false);
+                        dragFigure.setVisible(false);
                         source.setVisible(true);
                     });
                     gridPane.add(hBox,i, j);
@@ -108,10 +121,14 @@ public class GameView extends BorderPane implements Observer {
             }
         }
     }
-    private Circle makeCircle() {
-        Circle circle = new Circle();
-        circle.radiusProperty().set(20);
-        return circle;
+    private FigureView makeFigure() {
+        FigureView figureView;
+        try {
+            figureView = new FigureView(game.getPlayersTurn());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return figureView;
     }
 
 

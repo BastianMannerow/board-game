@@ -5,19 +5,23 @@ import javafx.scene.paint.Color;
 import tnt.util.Observable;
 import tnt.model.interfaces.Gods;
 import tnt.model.gods.movement.*;
-import tnt.model.gods.victory.*;
-import tnt.model.gods.sabotage.*;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.
  */
 public class Game extends Observable {
 
+    enum GameStatus {
+        SELECT_PLAYER,
+        PLACE_FIGURES,
+        RUNNING
+    }
+
     private Color[] def_colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.PINK};
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
-    private boolean isRunning;
+    private GameStatus gameStatus;
 
     /**
      * Constructing an object Game.
@@ -34,6 +38,7 @@ public class Game extends Observable {
     }
 
     public Game() {
+        gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
         addPlayer();
         addPlayer();
@@ -298,7 +303,14 @@ public class Game extends Observable {
     }
 
     public boolean isRunnung(){
-        return isRunning;
+        return gameStatus == GameStatus.RUNNING;
+    }
+
+    public void startPlaceFigures(){
+        gameStatus = GameStatus.PLACE_FIGURES;
+    }
+    public void startGame(){
+        gameStatus = GameStatus.RUNNING;
     }
 
 
@@ -315,4 +327,7 @@ public class Game extends Observable {
     public Board getBoard(){
         return this.board;
     }
+    public boolean placeFigures(){
+        return gameStatus == GameStatus.PLACE_FIGURES;
+    };
 }

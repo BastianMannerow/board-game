@@ -21,6 +21,7 @@ public class PlayerChooseController{
 
     @FXML
     private void runGame() {
+        game.startPlaceFigures();
         sceneHandler.loadView("gameView");
     }
     @FXML
@@ -29,9 +30,9 @@ public class PlayerChooseController{
     }
 
 
-    public void removePlayer(Player player) {
-        game.removePlayer(player);
-    }
+//    public void removePlayer(Player player) {
+//        game.removePlayer(player);
+//    }
 
     public void setGame(Game game) {
         this.game = game;
