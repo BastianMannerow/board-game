@@ -11,7 +11,8 @@ import tnt.model.gods.movement.*;
  */
 public class Game extends Observable {
 
-    enum GameStatus {
+
+    public enum GameStatus {
         SELECT_PLAYER,
         PLACE_FIGURES,
         RUNNING
@@ -21,6 +22,8 @@ public class Game extends Observable {
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
+
+
     private GameStatus gameStatus;
 
     /**
@@ -335,6 +338,14 @@ public class Game extends Observable {
         if (gameStatus!=GameStatus.PLACE_FIGURES){
             return false;
         }
+        return !field.getIsFigureHere();
+    }
+
+    public GameStatus getGameStatus() {
+        return gameStatus;
+    }
+
+    public boolean isValidMove(Figure figure, Field field) {
         return !field.getIsFigureHere();
     }
 }

@@ -112,12 +112,30 @@ public class GameView extends BorderPane implements Observer {
                     int finalJ = j;
                     fieldView.setOnMouseDragReleased(event -> {
                         FigureView source = (FigureView) event.getGestureSource();
-                        if (game.isValidPlacement(fieldView.getField())) {
-                            ((Pane) source.getParent()).getChildren().remove(source);
-                            fieldView.getChildren().add(source);
-                            dragFigure.setVisible(false);
-                            source.setVisible(true);
-                            source.getPlayer().addFigure(finalI, finalJ);
+                        switch (game.getGameStatus()){
+                            case SELECT_PLAYER:
+                                break;
+                            case PLACE_FIGURES:
+                                if (game.isValidPlacement(fieldView.getField()) && !(source.getParent() instanceof FieldView)) {
+                                    ((Pane) source.getParent()).getChildren().remove(source);
+                                    fieldView.getChildren().add(source);
+                                    dragFigure.setVisible(false);
+                                    source.setVisible(true);
+                                    source.getPlayer().addFigure(finalI, finalJ);
+                                    fieldView.getField().setIsFigureHere(true);
+                                }
+                                break;
+                            case RUNNING:
+                                if (game.isValidMove(source.getFigure(), fieldView.getField())){
+                                    ((FieldView) source.getParent()).getField().setIsFigureHere(false);
+                                    ((HBox) source.getParent()).getChildren().remove(source);
+                                    fieldView.getChildren().add(source);
+                                    dragFigure.setVisible(false);
+                                    source.setVisible(true);
+                                    source.getPlayer().addFigure(finalI, finalJ);
+                                    fieldView.getField().setIsFigureHere(true);
+                                }
+                                break;
                         }
                     });
                     gridPane.add(fieldView,i, j);

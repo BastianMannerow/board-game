@@ -15,6 +15,9 @@ public class FigureView extends Polygon {
 
     private Player player;
 
+
+    private Figure figure;
+
     public FigureView(Player player) throws IOException {
         this.player = player;
         FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("figureView");
@@ -30,5 +33,11 @@ public class FigureView extends Polygon {
 
     public Player getPlayer() {
         return player;
+    }
+    public void setFigure(Figure figure) {
+        this.figure = figure;
+    }
+    public Figure getFigure() {
+        return figure;
     }
 }
