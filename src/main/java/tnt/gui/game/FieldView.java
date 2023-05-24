@@ -3,8 +3,9 @@ package tnt.gui.game;
 import javafx.scene.layout.HBox;
 import tnt.model.Field;
 import tnt.model.Figure;
+import tnt.util.Observer;
 
-public class FieldView extends HBox {
+public class FieldView extends HBox implements Observer {
 
     private Field field;
 
@@ -14,5 +15,10 @@ public class FieldView extends HBox {
 
     public Field getField() {
         return field;
+    }
+
+    @Override
+    public void update() {
+
     }
 }

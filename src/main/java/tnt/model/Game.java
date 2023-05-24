@@ -88,12 +88,8 @@ public class Game extends Observable {
         }
     }
     public void addPlayer(Player player) {
-//        Player newPlayer = new Player(levelOfIntelligence, name, colour, new ArrayList<Figure>(), gods);
-//        newPlayer.addFigure(figureAmount);
-//        ArrayList<Player> newPlayerOrder = getPlayerOrder();
         playerOrder.add(player);
         System.out.println("added Player");
-//        setPlayerOrder(newPlayerOrder);
     }
 
     /**

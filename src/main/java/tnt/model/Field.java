@@ -1,9 +1,11 @@
 package tnt.model;
 
+import tnt.util.Observable;
+
 /**
  * The Field class contains the status of a single field inside a Board object.
  */
-public class Field {
+public class Field extends Observable {
     private int fieldX;
     private int fieldY;
     private boolean isFigureHere;
@@ -43,6 +45,7 @@ public class Field {
      */
     public void setTowerLevel(int level) {
         this.towerLevel = level;
+        notifyObservers();
     }
 
     /**

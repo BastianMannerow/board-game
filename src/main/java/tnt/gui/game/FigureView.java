@@ -1,9 +1,6 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
 import tnt.ResourceHandler;
 import tnt.model.Figure;
 import tnt.model.Player;
@@ -11,7 +8,7 @@ import tnt.model.Player;
 import java.io.IOException;
 
 
-public class FigureView extends Polygon {
+public class FigureView extends DragableObject {
 
     private Player player;
 
@@ -20,9 +17,9 @@ public class FigureView extends Polygon {
 
     public FigureView(Player player) throws IOException {
         this.player = player;
-        FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("figureView");
-        choosePlayerMenu.setRoot(this);
-        choosePlayerMenu.load();
+        FXMLLoader loader = ResourceHandler.getInstance().getFXML("figureView");
+        loader.setRoot(this);
+        loader.load();
         this.setFill(player.getColor());
     }
 

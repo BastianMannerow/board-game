@@ -1,14 +1,10 @@
 package tnt.gui.game;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
 import tnt.model.Field;
@@ -26,13 +22,13 @@ import java.util.Map;
 public class GameView extends BorderPane implements Observer {
 
     private Game game;
-    private FigureView dragFigure;
+    private DragableObject dragableObject;
     private Map<Field, FieldView> fieldHolder = new HashMap<Field, FieldView>();
 
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
 
         this.game = game;
-        dragFigure  = makeFigure();
+        dragableObject = makeFigure();
         FXMLLoader gameLoader = ResourceHandler.getInstance().getFXML("game");
         gameLoader.setRoot(this);
         gameLoader.load();
@@ -41,7 +37,7 @@ public class GameView extends BorderPane implements Observer {
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("gameView", this);
 
-        this.getChildren().add(dragFigure);
+        this.getChildren().add(dragableObject);
 
         game.addObserver(this);
         update();
@@ -53,8 +49,8 @@ public class GameView extends BorderPane implements Observer {
         if (game.placeFigures()){
 
 
-            dragFigure.setMouseTransparent(true);
-            dragFigure.setVisible(false);
+            dragableObject.setMouseTransparent(true);
+            dragableObject.setVisible(false);
             ((VBox) this.getRight()).getChildren().clear();
 
             int leftFigures  = 0;
@@ -74,23 +70,58 @@ public class GameView extends BorderPane implements Observer {
                     FigureView finalFigureView = figureView;
 
                     figureView.setOnDragDetected(event -> {
+                        this.getChildren().remove(dragableObject);
+                        dragableObject = makeFigure();
+                        ((FigureView) dragableObject).setPlayer(player);
+                        this.getChildren().add(dragableObject);
                         finalFigureView.setVisible(false);
-                        dragFigure.setVisible(true);
+                        dragableObject.setVisible(true);
                         finalFigureView.startFullDrag();
                     });
                     figureView.setOnMouseDragged((MouseEvent event) -> {
-                        dragFigure.setPlayer(player);
-                        dragFigure.setLayoutX(event.getSceneX());
-                        dragFigure.setLayoutY(event.getSceneY());
+                        dragableObject.setLayoutX(event.getSceneX());
+                        dragableObject.setLayoutY(event.getSceneY());
                     });
                     figureView.setOnMouseReleased(event -> {
-                        dragFigure.setVisible(false);
+                        dragableObject.setVisible(false);
                         finalFigureView.setVisible(true);
                     });
                 }
             }
             if (leftFigures <=0 ){
                 game.startGame();
+            }
+
+            if (game.getGameStatus()== Game.GameStatus.RUNNING){
+                BuildingLevel1View buildingLevel1View = null;
+                try {
+                    buildingLevel1View = new BuildingLevel1View();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                ((VBox) this.getRight()).getChildren().add(buildingLevel1View);
+                BuildingLevel1View buildingLevel1View1 = buildingLevel1View;
+
+                buildingLevel1View.setOnDragDetected(event -> {
+                    this.getChildren().remove(dragableObject);
+                    try {
+                        dragableObject = new BuildingLevel1View();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    this.getChildren().add(dragableObject);
+//                    buildingLevel1View1.setVisible(false);
+                    dragableObject.setVisible(true);
+                    buildingLevel1View1.startFullDrag();
+                });
+                buildingLevel1View.setOnMouseDragged((MouseEvent event) -> {
+                    dragableObject.setLayoutX(event.getSceneX());
+                    dragableObject.setLayoutY(event.getSceneY());
+                });
+                buildingLevel1View.setOnMouseReleased(event -> {
+                    dragableObject.setVisible(false);
+//                    buildingLevel1View1.setVisible(true);
+                });
             }
         }
 
@@ -111,31 +142,52 @@ public class GameView extends BorderPane implements Observer {
                     int finalI = i;
                     int finalJ = j;
                     fieldView.setOnMouseDragReleased(event -> {
-                        FigureView source = (FigureView) event.getGestureSource();
-                        switch (game.getGameStatus()){
-                            case SELECT_PLAYER:
-                                break;
-                            case PLACE_FIGURES:
-                                if (game.isValidPlacement(fieldView.getField()) && !(source.getParent() instanceof FieldView)) {
-                                    ((Pane) source.getParent()).getChildren().remove(source);
-                                    fieldView.getChildren().add(source);
-                                    dragFigure.setVisible(false);
-                                    source.setVisible(true);
-                                    source.getPlayer().addFigure(finalI, finalJ);
-                                    fieldView.getField().setIsFigureHere(true);
-                                }
-                                break;
-                            case RUNNING:
-                                if (game.isValidMove(source.getFigure(), fieldView.getField())){
-                                    ((FieldView) source.getParent()).getField().setIsFigureHere(false);
-                                    ((HBox) source.getParent()).getChildren().remove(source);
-                                    fieldView.getChildren().add(source);
-                                    dragFigure.setVisible(false);
-                                    source.setVisible(true);
-                                    source.getPlayer().addFigure(finalI, finalJ);
-                                    fieldView.getField().setIsFigureHere(true);
-                                }
-                                break;
+                        System.out.println(event.getGestureSource());
+                        if (event.getGestureSource() instanceof FigureView) {
+                            FigureView source = (FigureView) event.getGestureSource();
+                            switch (game.getGameStatus()) {
+                                case SELECT_PLAYER:
+                                    break;
+                                case PLACE_FIGURES:
+                                    if (game.isValidPlacement(fieldView.getField()) && !(source.getParent() instanceof FieldView)) {
+                                        ((Pane) source.getParent()).getChildren().remove(source);
+                                        fieldView.getChildren().add(source);
+                                        dragableObject.setVisible(false);
+                                        source.setVisible(true);
+                                        source.getPlayer().addFigure(finalI, finalJ);
+                                        fieldView.getField().setIsFigureHere(true);
+                                    }
+                                    break;
+                                case RUNNING:
+                                    if (game.isValidMove(source.getFigure(), fieldView.getField())) {
+                                        ((FieldView) source.getParent()).getField().setIsFigureHere(false);
+                                        ((HBox) source.getParent()).getChildren().remove(source);
+                                        fieldView.getChildren().add(source);
+                                        dragableObject.setVisible(false);
+                                        source.setVisible(true);
+                                        source.getPlayer().addFigure(finalI, finalJ);
+                                        fieldView.getField().setIsFigureHere(true);
+                                    }
+                                    break;
+                            }
+                        } else if (event.getGestureSource() instanceof BuildingLevel1View) {
+                            BuildingLevel1View source = (BuildingLevel1View) event.getGestureSource();
+                            switch (game.getGameStatus()) {
+                                case SELECT_PLAYER:
+                                    break;
+                                case PLACE_FIGURES:
+                                    break;
+                                case RUNNING:
+//                                    if (game.isValidMove(source.getFigure(), fieldView.getField())) {
+//                                        ((Pane) source.getParent()).getChildren().remove(source);
+//                                        fieldView.getChildren().add(source);
+                                        dragableObject.setVisible(false);
+                                        if(field.getTowerLevel()==0) {
+                                            field.setTowerLevel(1);
+                                        }
+//                                    }
+                                    break;
+                            }
                         }
                     });
                     gridPane.add(fieldView,i, j);
