@@ -45,4 +45,9 @@ public class Main {
         int y = 6;
         game.createBoard(x, y);
     }
+
+    Game.get(pO);
+
+
+
 }

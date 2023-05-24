@@ -13,15 +13,69 @@ public class Game {
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
+    private int levelOneTile;
+    private int levelTwoTile;
+    private int levelThreeTile;
+
 
     /**
      * Constructing an object Game.
      * @param playerOrder
+     * @param amountOfTurns How many turns are completed so far (at beginning 0). It's for the highscore
+     * @param levelOneTile The amount of tiles
+     * @param levelTwoTile The amount of tiles
+     * @param levelThreeTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
+        this.levelOneTile = levelOneTile;
+        this.levelTwoTile = levelTwoTile;
+        this.levelThreeTile = levelThreeTile;
     }
+
+    /**
+     * @return levelOneTile
+     */
+    public int getLevelOneTile() {
+        return levelOneTile;
+    }
+
+    /**
+     * @param levelOneTile replaces old playerOrder
+     */
+    public void setLevelOneTile(int levelOneTile) {
+        this.levelOneTile = levelOneTile;
+    }
+
+    /**
+     * @return levelTwoTile
+     */
+    public int getLevelTwoTile() {
+        return levelTwoTile;
+    }
+
+    /**
+     * @param levelTwoTile replaces old playerOrder
+     */
+    public void setLevelTwoTile(int levelTwoTile) {
+        this.levelOneTile = levelTwoTile;
+    }
+
+    /**
+     * @return levelThreeTile
+     */
+    public int getLevelThreeTile() {
+        return levelThreeTile;
+    }
+
+    /**
+     * @param levelThreeTile replaces old playerOrder
+     */
+    public void setLevelThreeTile(int levelThreeTile) {
+        this.levelThreeTile = levelThreeTile;
+    }
+
 
     /**
      * @return playerOrder
@@ -40,7 +94,6 @@ public class Game {
     /**
      * @param playerOrder replaces old playerOrder
      */
-
     public void setPlayerOrder(ArrayList<Player> playerOrder) {
         this.playerOrder = playerOrder;
     }
