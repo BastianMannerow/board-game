@@ -12,7 +12,6 @@ public class FigureView extends DragableObject {
 
     private Player player;
 
-
     private Figure figure;
 
     public FigureView(Player player) throws IOException {

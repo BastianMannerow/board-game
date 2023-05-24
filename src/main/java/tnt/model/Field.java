@@ -1,5 +1,6 @@
 package tnt.model;
 
+import javafx.scene.Node;
 import tnt.util.Observable;
 
 /**
@@ -11,6 +12,7 @@ public class Field extends Observable {
     private boolean isFigureHere;
     private int towerLevel;
     private boolean towerComplete;
+    private Figure figure;
 
     /**
      * Constructing an empty (not null) Field object
@@ -81,5 +83,13 @@ public class Field extends Observable {
      */
     public int getY() {
         return fieldY;
+    }
+
+    public void setFigure(Figure figure) {
+        this.figure = figure;
+    }
+
+    public Figure getFigure() {
+        return figure;
     }
 }

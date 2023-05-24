@@ -25,7 +25,6 @@ public class ResourceHandler {
     }
 
     private void loadImage(String name, String... extensions) {
-        System.out.println(ResourceHandler.class.getName());
         URL url = null;
         for (String ext : extensions) {
             url = ResourceHandler.class.getResource(name + "." + ext);

@@ -11,6 +11,11 @@ import tnt.model.gods.movement.*;
  */
 public class Game extends Observable {
 
+    public void initGame() {
+        for(Player player: playerOrder){
+            player.initPlayer();
+        }
+    }
 
     public enum GameStatus {
         SELECT_PLAYER,
@@ -282,7 +287,7 @@ public class Game extends Observable {
 //            }
 
             // Spielerwechsel
-            Collections.rotate(playerOrder, -1);
+            nextPlayersTurn();
         }
     }
 
@@ -330,18 +335,14 @@ public class Game extends Observable {
         return gameStatus == GameStatus.PLACE_FIGURES;
     };
 
-    public boolean isValidPlacement(Field field){
-        if (gameStatus!=GameStatus.PLACE_FIGURES){
-            return false;
-        }
-        return !field.getIsFigureHere();
-    }
 
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
-    public boolean isValidMove(Figure figure, Field field) {
-        return !field.getIsFigureHere();
+    public void nextPlayersTurn(){
+        Collections.rotate(playerOrder, -1);
+        notifyObservers();
     }
+
 }

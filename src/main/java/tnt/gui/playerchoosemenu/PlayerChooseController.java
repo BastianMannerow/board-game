@@ -21,6 +21,7 @@ public class PlayerChooseController{
 
     @FXML
     private void runGame() {
+        game.initGame();
         game.startPlaceFigures();
         sceneHandler.loadView("gameView");
     }

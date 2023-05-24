@@ -146,7 +146,7 @@ public class Player {
      */
     public void addFigure(int amount) {
         for (int i = 0; i < amount; i++) {
-            Figure newFigure = new Figure(i, i);
+            Figure newFigure = new Figure();
             this.figures.add(newFigure);
         }
     }
@@ -189,7 +189,8 @@ public class Player {
         figure.setX(field.getX());
         figure.setY(field.getY());
     }
-    public int figuresLeftToSet(){
-        return amountOfFigures - figures.size();
+
+    public void initPlayer() {
+        addFigure(amountOfFigures);
     }
 }
