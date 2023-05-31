@@ -1,14 +1,18 @@
 package tnt.model;
 
+import javafx.scene.Node;
+import tnt.util.Observable;
+
 /**
  * The Field class contains the status of a single field inside a Board object.
  */
-public class Field {
+public class Field extends Observable {
     private int fieldX;
     private int fieldY;
     private boolean isFigureHere;
     private int towerLevel;
     private boolean towerComplete;
+    private Figure figure;
 
     /**
      * Constructing an empty (not null) Field object
@@ -43,6 +47,7 @@ public class Field {
      */
     public void setTowerLevel(int level) {
         this.towerLevel = level;
+        notifyObservers();
     }
 
     /**
@@ -78,5 +83,13 @@ public class Field {
      */
     public int getY() {
         return fieldY;
+    }
+
+    public void setFigure(Figure figure) {
+        this.figure = figure;
+    }
+
+    public Figure getFigure() {
+        return figure;
     }
 }

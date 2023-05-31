@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Figure {
     private int x;
     private int y;
+    private boolean placed;
 
     /**
      * Constructing an object Figure.
@@ -16,6 +17,12 @@ public class Figure {
     public Figure(int x, int y) {
         this.x = x;
         this.y = y;
+        this.placed = true;
+
+    }
+
+    public Figure() {
+        this.placed = false;
     }
 
     /**
@@ -61,17 +68,11 @@ public class Figure {
             for (int j = y-1; j <= y+1; j++) {
 
                 // "Wahlpflichtfeature - Die Welt ist eine Kugel"
-                if(x<0 && y < 0){
-                    reachableFields.add(board.getField(boardX-x, boardY-y));
+                if(true){
+                    reachableFields.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
                 }
-                else if(x < 0 && y >=0){
-                    reachableFields.add(board.getField(boardX-x, y));
-                }
-                else if(y <0 && x >=0){
-                    reachableFields.add(board.getField(x, boardY-y));
-                }
-                else {
-                    reachableFields.add(board.getField(x, y));
+                else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {
+                    reachableFields.add(board.getField(i, j));
                 }
             }
         }
@@ -98,5 +99,13 @@ public class Figure {
         // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind & nur Felder um Figur rum sind buildable.
         ArrayList<Field> validBuilds = new ArrayList<Field>();
         return validBuilds;
+    }
+
+    public boolean isPlaced(){
+        return placed;
+    }
+
+    public void setPlaced() {
+        placed = true;
     }
 }

@@ -1,12 +1,13 @@
 package tnt.model;
+import javafx.scene.paint.Color;
 import tnt.model.interfaces.Gods;
 
 import java.util.Random;
 import java.util.ArrayList;
 
 public class ArtificialPlayer extends Player{
-    public ArtificialPlayer(String levelOfIntelligence, String name, String colour, ArrayList<Figure> figures, ArrayList<Gods> god) {
-        super(levelOfIntelligence, name, colour, figures, god);
+    public ArtificialPlayer(String levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, ArrayList<Gods> god) {
+        super(levelOfIntelligence, name, color, figures, god);
     }
 
     public void artificialPlayerTurn(Board board){
