@@ -86,10 +86,15 @@ public class PlayerChooseView extends VBox implements Observer {
                 });
 
                 TextField countFigures = (TextField) ((VBox) playerAloneChooseView.getChildren().get(3)).getChildren().get(1);
-                nameField.setOnAction(new EventHandler<ActionEvent>() {
+                countFigures.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        player.setAmountOfFigures(Integer.getInteger(nameField.getText()));
+                        try {
+                            player.setAmountOfFigures(Integer.parseInt(countFigures.getText()));
+                        } catch (NumberFormatException e) {
+                            player.setAmountOfFigures(2);
+                        }
+
                     }
                 });
             }

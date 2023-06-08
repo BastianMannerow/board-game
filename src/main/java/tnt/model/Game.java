@@ -310,6 +310,10 @@ public class Game extends Observable {
         return gameStatus == GameStatus.RUNNING;
     }
 
+    public boolean selectingPlayers(){
+        return gameStatus == GameStatus.SELECT_PLAYER;
+    }
+
     public void startPlaceFigures(){
         gameStatus = GameStatus.PLACE_FIGURES;
     }
@@ -343,6 +347,7 @@ public class Game extends Observable {
 
     public void nextPlayersTurn(){
         Collections.rotate(playerOrder, -1);
+//        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
     }
 

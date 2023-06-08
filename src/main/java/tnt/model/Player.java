@@ -207,7 +207,7 @@ public class Player extends Observable {
     }
 
     public void setAmountOfFigures(int i){
-        if (game.placeFigures()) {
+        if (game.selectingPlayers()) {
             this.amountOfFigures = i;
         }
         notifyObservers();
