@@ -1,6 +1,5 @@
 package tnt.model;
 import java.util.ArrayList;
-import java.util.Observable;
 
 import javafx.scene.paint.Color;
 
@@ -14,10 +13,12 @@ import tnt.model.gods.victory.Chronus;
 import tnt.model.gods.victory.Eros;
 import tnt.model.gods.victory.Hera;
 import tnt.model.gods.victory.Pan;
+import tnt.util.Observable;
+
 /**
  * A player with his attributes.
  */
-public class Player {
+public class Player extends Observable {
     private String levelOfIntelligence;
     private Game game;
     private String name;
@@ -69,6 +70,7 @@ public class Player {
      */
     public void setName(String name) {
         this.name = name;
+        notifyObservers();
     }
 
     /**
@@ -83,6 +85,7 @@ public class Player {
      */
     public void setColor(Color color) {
         this.color = color;
+        notifyObservers();
     }
 
     /**
@@ -201,5 +204,12 @@ public class Player {
             }
         }
         return true;
+    }
+
+    public void setAmountOfFigures(int i){
+        if (game.placeFigures()) {
+            this.amountOfFigures = i;
+        }
+        notifyObservers();
     }
 }

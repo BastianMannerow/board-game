@@ -5,13 +5,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observer;
+
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.Map;
 
 public class PlayerChooseView extends VBox implements Observer {
 
-    private Map<Player, HBox> playerHolder = new HashMap<Player, HBox>();
+    private Map<Player, PlayerAloneChooseView> playerHolder = new HashMap<Player, PlayerAloneChooseView>();
     private Game game;
     public PlayerChooseView(SceneHandler sceneHandler, Game game) throws IOException {
         this.game = game;
@@ -50,30 +51,49 @@ public class PlayerChooseView extends VBox implements Observer {
             }
         }
         for(Player player: players){
-            if (playerHolder.containsKey(player)){
-                ((Label) playerHolder.get(player).getChildren().get(1)).setText("Player " + (i + 1));
-            } else {
-                HBox hBox = new HBox();
-                playerHolder.put(player, hBox);
-                playerBox.getChildren().add(hBox);
-                FXMLLoader playerLayout1 = ResourceHandler.getInstance().getFXML("choosePlayer");
-                playerLayout1.setRoot(hBox);
+            i++;
+            if (!playerHolder.containsKey(player)){
+                PlayerAloneChooseView playerAloneChooseView;
                 try {
-                    playerLayout1.load();
+                    playerAloneChooseView = new PlayerAloneChooseView(player);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                ((Label) hBox.getChildren().get(1)).setText("Player " + (i + 1));
-                ((TextField) ((VBox) hBox.getChildren().get(2)).getChildren().get(1)).setPromptText(player.getName());
-                ((ColorPicker) ((VBox) hBox.getChildren().get(4)).getChildren().get(1)).setValue(player.getColor());
-                ((Button) hBox.getChildren().get(0)).setOnAction(new EventHandler<ActionEvent>() {
+                playerHolder.put(player, playerAloneChooseView);
+                playerBox.getChildren().add(playerAloneChooseView);
+
+                ((Button) playerAloneChooseView.getChildren().get(0)).setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         game.removePlayer(player);
                     }
                 });
+
+                ColorPicker colorP = (ColorPicker) ((VBox) playerAloneChooseView.getChildren().get(4)).getChildren().get(1);
+                colorP.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        player.setColor(colorP.getValue());
+                    }
+                });
+
+                TextField nameField = (TextField) ((VBox) playerAloneChooseView.getChildren().get(2)).getChildren().get(1);
+                nameField.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        player.setName(nameField.getText());
+                    }
+                });
+
+                TextField countFigures = (TextField) ((VBox) playerAloneChooseView.getChildren().get(3)).getChildren().get(1);
+                nameField.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        player.setAmountOfFigures(Integer.getInteger(nameField.getText()));
+                    }
+                });
             }
-            i++;
+            playerHolder.get(player).setPlayerNumber(i);
         }
     }
 }

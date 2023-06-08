@@ -331,6 +331,7 @@ public class Game extends Observable {
     public Board getBoard(){
         return this.board;
     }
+
     public boolean placeFigures(){
         return gameStatus == GameStatus.PLACE_FIGURES;
     };
