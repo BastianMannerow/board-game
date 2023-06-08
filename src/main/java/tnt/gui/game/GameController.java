@@ -10,7 +10,7 @@ import tnt.model.Game;
 
 public class GameController{
 
-    //    @FXML
+//    @FXML
 //    private void initialize(){
 //    }
     private Game game;
@@ -33,7 +33,7 @@ public class GameController{
                     figure.setX(field.getX());
                     figure.setY(field.getY());
                     figure.setPlaced();
-//                    field.setIsFigureHere(true);
+                    field.setIsFigureHere(true);
                     field.setFigure(figure);
                     game.nextPlayersTurn();
                     return true;

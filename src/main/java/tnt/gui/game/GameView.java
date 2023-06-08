@@ -144,6 +144,7 @@ public class GameView extends BorderPane implements Observer {
         GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
         for (int i = 0; i < game.getBoard().getXSize(); i++){
             for(int j = 0 ; j < game.getBoard().getYSize() ; j++){
+                System.out.println("B: x: " + i + " y: " + j);
                 Field field = game.getBoard().getField(i, j);
                 int finalI = i;
                 int finalJ = j;
@@ -162,9 +163,8 @@ public class GameView extends BorderPane implements Observer {
                     fieldView.setOnMouseDragReleased(event -> {
                         if (event.getGestureSource() instanceof FigureView) {
                             FigureView source = (FigureView) event.getGestureSource();
-                            if (controller.placeFigure(source.getFigure(), field)){
-                                fieldView.getChildren().add(source);
-                            }
+
+                            controller.placeFigure(source.getFigure(), field);
 
                             dragableObject.setVisible(false);
                             source.setVisible(true);
@@ -201,10 +201,19 @@ public class GameView extends BorderPane implements Observer {
                 GridPane.setConstraints(fieldHolder.get(field), i, j);
 
                 FieldView fieldView = fieldHolder.get(field);
+                System.out.println("fieldv: " + fieldView.hashCode() + " field: " + field.hashCode());
                 ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(1)).setText(" " + field.getTowerLevel());
                 if (field.getIsFigureHere()){
                     ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(0)).setText(" Player here ");
-                    fieldView.getChildren().add(figureHolder.get(field.getFigure()));
+                    System.out.println("fieldv: " + fieldView.hashCode() + " figureview: " + figureHolder.get(field.getFigure()).hashCode());
+                    for(Node n : fieldView.getChildren()){
+                        System.out.println("A: " + n.hashCode());
+                    }
+                    if (!fieldView.getChildren().contains(figureHolder.get(field.getFigure()))) {
+                        fieldView.getChildren().add(figureHolder.get(field.getFigure()));
+                    }
+                    // Do anything what is nececarry
+
                 } else {
                     ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(0)).setText("");
                 }
