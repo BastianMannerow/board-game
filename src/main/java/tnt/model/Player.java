@@ -188,9 +188,19 @@ public class Player {
         field.setIsFigureHere(true);
         figure.setX(field.getX());
         figure.setY(field.getY());
+        field.setFigure(figure);
     }
 
     public void initPlayer() {
         addFigure(amountOfFigures);
+    }
+
+    public boolean allFiguresPlaced() {
+        for (Figure fig: figures) {
+            if (!fig.isPlaced()){
+                return false;
+            }
+        }
+        return true;
     }
 }

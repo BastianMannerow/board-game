@@ -33,22 +33,21 @@ public class GameController{
                     figure.setX(field.getX());
                     figure.setY(field.getY());
                     figure.setPlaced();
-                    field.setIsFigureHere(true);
+                    field.setIsFigureHere(true);    // Todo: handle only the figure
                     field.setFigure(figure);
-                    game.nextPlayersTurn();
+                    if (game.getPlayersTurn().allFiguresPlaced()){
+                        game.nextPlayersTurn();
+                    }
+                    if (game.getPlayersTurn().allFiguresPlaced()){
+                        game.startGame();
+                    }
                     return true;
                 } else {
                     return false;
                 }
             case RUNNING:
                 if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
-//                    game.getBoard().getField(figure.getX(), figure.getY()).setIsFigureHere(false);
                     game.getPlayersTurn().executeMove(field,game.getBoard(),figure);
-                    game.getBoard().getField(figure.getX(), figure.getY()).setFigure(null);
-//                    figure.setX(field.getX());
-//                    figure.setY(field.getY());
-                    field.setFigure(figure);
-//                    field.setIsFigureHere(true);
                     return true;
                 } else {
                     return false;

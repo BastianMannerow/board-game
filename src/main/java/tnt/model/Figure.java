@@ -1,10 +1,12 @@
 package tnt.model;
+import tnt.util.Observable;
+
 import java.util.ArrayList;
 
 /**
  * A figure owned by the Player.
  */
-public class Figure {
+public class Figure extends Observable {
     private int x;
     private int y;
     private boolean placed;

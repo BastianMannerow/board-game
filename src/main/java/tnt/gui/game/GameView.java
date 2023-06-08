@@ -26,8 +26,8 @@ public class GameView extends BorderPane implements Observer {
 
     private Game game;
     private DragableObject dragableObject;
-    private Map<Field, FieldView> fieldHolder = new HashMap<Field, FieldView>();
-    private Map<Figure, FigureView> figureHolder = new HashMap<Figure, FigureView>();
+    static private Map<Field, FieldView> fieldHolder = new HashMap<Field, FieldView>();
+    static private Map<Figure, FigureView> figureHolder = new HashMap<Figure, FigureView>();
     GameController controller;
 
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
@@ -57,6 +57,7 @@ public class GameView extends BorderPane implements Observer {
             dragableObject.setMouseTransparent(true);
             dragableObject.setVisible(false);
 
+            // Todo: dont add the init figures every update anew
             ((VBox) this.getRight()).getChildren().clear();
 
             int leftFigures  = 0;
@@ -78,12 +79,16 @@ public class GameView extends BorderPane implements Observer {
 
                             figureHolder.put(fig, figureView);
 
-
+                            // Drag and drop for figure handling set here
                             figureView.setOnDragDetected(event -> {
-                                this.getChildren().remove(dragableObject);
-                                dragableObject = makeFigure();
-                                ((FigureView) dragableObject).setPlayer(player);
-                                this.getChildren().add(dragableObject);
+                                try {
+                                    FigureView dragFig = finalFigureView.copy();
+                                    this.getChildren().remove(dragableObject);
+                                    dragableObject = dragFig;
+                                    this.getChildren().add(dragableObject);
+                                } catch (IOException e) {
+                                    System.out.println("Copy of figureView didnt work!");
+                                }
                                 finalFigureView.setVisible(false);
                                 dragableObject.setVisible(true);
                                 finalFigureView.startFullDrag();
@@ -104,11 +109,7 @@ public class GameView extends BorderPane implements Observer {
                 }
             }
 
-            if (leftFigures <=0 ){
-                game.startGame();
-            }
-
-            if (game.getGameStatus()== Game.GameStatus.RUNNING){
+            if (game.isRunnung()){
                 BuildingLevel1View buildingLevel1View = null;
                 try {
                     buildingLevel1View = new BuildingLevel1View();
@@ -144,22 +145,19 @@ public class GameView extends BorderPane implements Observer {
         GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
         for (int i = 0; i < game.getBoard().getXSize(); i++){
             for(int j = 0 ; j < game.getBoard().getYSize() ; j++){
-                System.out.println("B: x: " + i + " y: " + j);
                 Field field = game.getBoard().getField(i, j);
                 int finalI = i;
                 int finalJ = j;
-                // delete element before
-                gridPane.getChildren().removeIf(node -> GridPane.getColumnIndex(node) == finalI && GridPane.getRowIndex(node) == finalJ);
                 if (!fieldHolder.containsKey(field)){
-                    FieldView fieldView = new FieldView(field);
-                    fieldHolder.put(field, fieldView);
-                    FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
-                    fieldLayout.setRoot(fieldView);
+                    FieldView fieldView = null;
                     try {
-                        fieldLayout.load();
+                        fieldView = new FieldView(field);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                    fieldHolder.put(field, fieldView);
+
+
                     fieldView.setOnMouseDragReleased(event -> {
                         if (event.getGestureSource() instanceof FigureView) {
                             FigureView source = (FigureView) event.getGestureSource();
@@ -195,32 +193,17 @@ public class GameView extends BorderPane implements Observer {
 //                            }
                         }
                     });
-                }
-
-                gridPane.add(fieldHolder.get(field),i, j);
-                GridPane.setConstraints(fieldHolder.get(field), i, j);
-
-                FieldView fieldView = fieldHolder.get(field);
-                System.out.println("fieldv: " + fieldView.hashCode() + " field: " + field.hashCode());
-                ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(1)).setText(" " + field.getTowerLevel());
-                if (field.getIsFigureHere()){
-                    ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(0)).setText(" Player here ");
-                    System.out.println("fieldv: " + fieldView.hashCode() + " figureview: " + figureHolder.get(field.getFigure()).hashCode());
-                    for(Node n : fieldView.getChildren()){
-                        System.out.println("A: " + n.hashCode());
-                    }
-                    if (!fieldView.getChildren().contains(figureHolder.get(field.getFigure()))) {
-                        fieldView.getChildren().add(figureHolder.get(field.getFigure()));
-                    }
-                    // Do anything what is nececarry
-
-                } else {
-                    ((Label)((VBox)fieldView.getChildren().get(1)).getChildren().get(0)).setText("");
+                    gridPane.add(fieldHolder.get(field),i, j);
+                    GridPane.setConstraints(fieldHolder.get(field), i, j);
                 }
 
             }
         }
     }
+
+
+
+
     private FigureView makeFigure() {
         FigureView figureView;
         try {
@@ -229,6 +212,14 @@ public class GameView extends BorderPane implements Observer {
             throw new RuntimeException(e);
         }
         return figureView;
+    }
+
+    static FigureView getFigureView(Figure fig){
+        return figureHolder.get(fig);
+    }
+
+    static FieldView getFieldView(Field field){
+        return fieldHolder.get(field);
     }
 
 

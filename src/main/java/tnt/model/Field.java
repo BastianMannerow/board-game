@@ -32,6 +32,7 @@ public class Field extends Observable {
      * @param isFigureHere sets the status if the field is occupied by a figure
      */
     public void setIsFigureHere(boolean isFigureHere) {
+        System.out.println("Figure is here now: " + isFigureHere);
         this.isFigureHere = isFigureHere;
     }
 
@@ -87,6 +88,7 @@ public class Field extends Observable {
 
     public void setFigure(Figure figure) {
         this.figure = figure;
+        notifyObservers();
     }
 
     public Figure getFigure() {
