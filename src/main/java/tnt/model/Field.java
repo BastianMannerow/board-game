@@ -9,7 +9,6 @@ import tnt.util.Observable;
 public class Field extends Observable {
     private int fieldX;
     private int fieldY;
-    private boolean isFigureHere;
     private int towerLevel;
     private boolean towerComplete;
     private Figure figure;
@@ -23,24 +22,24 @@ public class Field extends Observable {
     public Field(int x, int y) {
         this.fieldX = x;
         this.fieldY = y;
-        this.isFigureHere = false;
         this.towerLevel = 0;
         this.towerComplete = false;
+        this.figure = null;
     }
 
     /**
-     * @param isFigureHere sets the status if the field is occupied by a figure
+     *
      */
-    public void setIsFigureHere(boolean isFigureHere) {
-        System.out.println("Figure is here now: " + isFigureHere);
-        this.isFigureHere = isFigureHere;
+    public void figureLeft() {
+        this.figure = null;
+        notifyObservers();
     }
 
     /**
      * @return the status if the field is occupied by a figure
      */
     public boolean getIsFigureHere() {
-        return this.isFigureHere;
+        return this.figure != null;
     }
 
     /**

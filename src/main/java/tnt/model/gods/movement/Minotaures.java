@@ -114,7 +114,7 @@ public class Minotaures implements Gods{
      * @param board the board the game is played on
      */
     public static void executeMove(Field field, Figure figure, ArrayList<Player> players, Board board){
-        field.setIsFigureHere(false);
+        field.figureLeft();
         int x = figure.getX();
         int y = figure.getY();
         int newX = field.getX();
@@ -140,42 +140,42 @@ public class Minotaures implements Gods{
                 if(newX > x && newY == y){
                     movingFigure.setX(newX+2);
                     movingFigure.setY(newY);
-                    board.getField(newX+2, newY).setIsFigureHere(true);
+                    board.getField(newX+2, newY).setFigure(movingFigure);
                 }
                 else if(newX < x && newY == y){
                     movingFigure.setX(newX-2);
                     movingFigure.setY(newY);
-                    board.getField(newX-2, newY).setIsFigureHere(true);
+                    board.getField(newX-2, newY).setFigure(movingFigure);
                 }
                 else if(newX == x && newY > y){
                     movingFigure.setX(newX);
                     movingFigure.setY(newY+2);
-                    board.getField(newX, newY+2).setIsFigureHere(true);
+                    board.getField(newX, newY+2).setFigure(movingFigure);
                 }
                 else if(newX == x && newY < y){
                     movingFigure.setX(newX);
                     movingFigure.setY(newY-2);
-                    board.getField(newX, newY-2).setIsFigureHere(true);
+                    board.getField(newX, newY-2).setFigure(movingFigure);
                 }
                 else if(newX < x && newY > y){
                     movingFigure.setX(newX-2);
                     movingFigure.setY(newY+2);
-                    board.getField(newX - 2, newY + 2).setIsFigureHere(true);
+                    board.getField(newX - 2, newY + 2).setFigure(movingFigure);
                 }
                 else if(newX > x && newY < y){
                     movingFigure.setX(newX + 2);
                     movingFigure.setY(newY - 2);
-                    board.getField(newX + 2, newY - 2).setIsFigureHere(true);
+                    board.getField(newX + 2, newY - 2).setFigure(movingFigure);
                 }
                 else if(newX > x && newY > y){
                     movingFigure.setX(newX + 2);
                     movingFigure.setY(newY + 2);
-                    board.getField(newX + 2, newY + 2).setIsFigureHere(true);
+                    board.getField(newX + 2, newY + 2).setFigure(movingFigure);
                 }
                 else{
                     movingFigure.setX(newX-2);
                     movingFigure.setY(newY-2);
-                    board.getField(newX - 2, newY - 2).setIsFigureHere(true);
+                    board.getField(newX - 2, newY - 2).setFigure(movingFigure);
                 }
             }
         }

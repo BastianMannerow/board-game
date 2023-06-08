@@ -43,7 +43,8 @@ public class ArtificialPlayer extends Player{
         Field randomMove = possibleMoves.get(randomFieldNumber);
         int x = randomMove.getX();
         int y = randomMove.getY();
-        randomMove.setIsFigureHere(true);
+//        randomMove.setIsFigureHere(true);
+        randomMove.setFigure(randomFigure);
         randomFigure.setX(x);
         randomFigure.setY(y);
 

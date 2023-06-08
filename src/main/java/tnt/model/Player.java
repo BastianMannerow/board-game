@@ -184,8 +184,7 @@ public class Player {
      * @param board the board which is played on
      */
     public void executeMove(Field field, Board board, Figure figure){
-        board.getField(figure.getX(), figure.getY()).setIsFigureHere(false);
-        field.setIsFigureHere(true);
+        board.getField(figure.getX(), figure.getY()).figureLeft();
         figure.setX(field.getX());
         figure.setY(field.getY());
         field.setFigure(figure);

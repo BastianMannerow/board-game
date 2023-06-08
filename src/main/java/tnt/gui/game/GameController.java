@@ -33,7 +33,6 @@ public class GameController{
                     figure.setX(field.getX());
                     figure.setY(field.getY());
                     figure.setPlaced();
-                    field.setIsFigureHere(true);    // Todo: handle only the figure
                     field.setFigure(figure);
                     if (game.getPlayersTurn().allFiguresPlaced()){
                         game.nextPlayersTurn();
@@ -48,6 +47,9 @@ public class GameController{
             case RUNNING:
                 if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
                     game.getPlayersTurn().executeMove(field,game.getBoard(),figure);
+
+                    // Todo: first handle build stuff
+                    game.nextPlayersTurn();
                     return true;
                 } else {
                     return false;
