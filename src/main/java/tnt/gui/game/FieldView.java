@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.model.Field;
@@ -32,15 +33,16 @@ public class FieldView extends HBox implements Observer {
 
     @Override
     public void update() {
-        ((Label)((VBox) this.getChildren().get(1)).getChildren().get(1)).setText(" " + field.getTowerLevel());
+//        ((Label)((VBox) this.getChildren().get(1)).getChildren().get(1)).setText(" " + field.getTowerLevel());
         if (field.getIsFigureHere()){
-            ((Label)((VBox)this.getChildren().get(1)).getChildren().get(0)).setText(" Player here ");
+//            ((Label)((VBox)this.getChildren().get(1)).getChildren().get(0)).setText(" Player here ");
             if (!this.getChildren().contains(GameView.getFigureView(field.getFigure()))) {
-                this.getChildren().add(GameView.getFigureView(field.getFigure()));
+                ((StackPane) this.getChildren().get(0)).getChildren().add(GameView.getFigureView(field.getFigure()));
             }
         } else {
-            this.getChildren().removeIf(node -> node instanceof FigureView);
-            ((Label)((VBox)this.getChildren().get(1)).getChildren().get(0)).setText("");
+//            this.getChildren().removeIf(node -> node instanceof FigureView);
+            ((StackPane) this.getChildren().get(0)).getChildren().removeIf(node -> node instanceof FigureView);
+//            ((Label)((VBox)this.getChildren().get(1)).getChildren().get(0)).setText("");
         }
     }
 }
