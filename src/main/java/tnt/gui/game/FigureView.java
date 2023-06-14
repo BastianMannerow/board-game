@@ -1,6 +1,7 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.shape.Polygon;
 import tnt.ResourceHandler;
 import tnt.model.Figure;
 import tnt.model.Player;
@@ -20,7 +21,7 @@ public class FigureView extends DragableObject implements Observer{
         FXMLLoader loader = ResourceHandler.getInstance().getFXML("figureView");
         loader.setRoot(this);
         loader.load();
-        this.setFill(player.getColor());
+        ((Polygon) this.getChildren().get(0)).setFill(player.getColor());
     }
 
     public FigureView(Player player, Figure figure) throws IOException {
@@ -29,12 +30,12 @@ public class FigureView extends DragableObject implements Observer{
         FXMLLoader loader = ResourceHandler.getInstance().getFXML("figureView");
         loader.setRoot(this);
         loader.load();
-        this.setFill(player.getColor());
+        ((Polygon) this.getChildren().get(0)).setFill(player.getColor());
     }
 
     public void setPlayer(Player player) {
         this.player = player;
-        this.setFill(player.getColor());
+        ((Polygon) this.getChildren().get(0)).setFill(player.getColor());
     }
 
     public Player getPlayer() {
@@ -57,11 +58,6 @@ public class FigureView extends DragableObject implements Observer{
 
     public FigureView copy() throws IOException
     {
-//        try {
-            return new FigureView(this.player, this.figure);
-//        }
-//        catch (IOException e){
-//            return null;
-//        }
+        return new FigureView(this.player, this.figure);
     }
 }

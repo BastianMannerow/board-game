@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Polygon?>
 
-<fx:root fill="DODGERBLUE" points="8.0, 24.0, 35.0, 18.0, 20.0, 0.0" stroke="BLACK" strokeType="INSIDE" type="Polygon" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" />
+
+<fx:root type="Pane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Polygon fill="DODGERBLUE" points="8.0, 24.0, 35.0, 18.0, 20.0, 0.0" stroke="BLACK" strokeType="INSIDE" />
+   </children>
+</fx:root>

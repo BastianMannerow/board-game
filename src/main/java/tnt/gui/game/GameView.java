@@ -1,9 +1,6 @@
 package tnt.gui.game;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -91,19 +88,20 @@ public class GameView extends BorderPane implements Observer {
                                 }
                                 finalFigureView.setVisible(false);
                                 dragableObject.setVisible(true);
+                                dragableObject.setDisable(true);
+
                                 finalFigureView.startFullDrag();
-                            });
-                            figureView.setOnMouseDragged((MouseEvent event) -> {
-                                dragableObject.setLayoutX(event.getSceneX());
-                                dragableObject.setLayoutY(event.getSceneY());
                             });
                             figureView.setOnMouseReleased(event -> {
                                 dragableObject.setVisible(false);
                                 finalFigureView.setVisible(true);
                             });
+                            figureView.setOnMouseDragged(event -> {
+                                dragableObject.setLayoutX(event.getSceneX());
+                                dragableObject.setLayoutY(event.getSceneY());
+                            });
                         }
 
-//                        System.out.println("Right: " + (figureHolder.get(fig).hashCode()));
                         ((VBox) this.getRight()).getChildren().add(figureHolder.get(fig));
                     }
                 }
@@ -156,7 +154,6 @@ public class GameView extends BorderPane implements Observer {
                         throw new RuntimeException(e);
                     }
                     fieldHolder.put(field, fieldView);
-
 
                     fieldView.setOnMouseDragReleased(event -> {
                         if (event.getGestureSource() instanceof FigureView) {

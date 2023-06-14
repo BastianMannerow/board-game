@@ -1,6 +1,7 @@
 package tnt.gui.game;
 
-import javafx.scene.shape.Polygon;
+import javafx.scene.layout.Pane;
 
-public class DragableObject extends Polygon {
+public abstract class DragableObject extends Pane {
+
 }

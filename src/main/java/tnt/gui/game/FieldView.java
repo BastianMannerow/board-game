@@ -33,16 +33,12 @@ public class FieldView extends HBox implements Observer {
 
     @Override
     public void update() {
-//        ((Label)((VBox) this.getChildren().get(1)).getChildren().get(1)).setText(" " + field.getTowerLevel());
         if (field.getIsFigureHere()){
-//            ((Label)((VBox)this.getChildren().get(1)).getChildren().get(0)).setText(" Player here ");
             if (!this.getChildren().contains(GameView.getFigureView(field.getFigure()))) {
                 ((StackPane) this.getChildren().get(0)).getChildren().add(GameView.getFigureView(field.getFigure()));
             }
         } else {
-//            this.getChildren().removeIf(node -> node instanceof FigureView);
             ((StackPane) this.getChildren().get(0)).getChildren().removeIf(node -> node instanceof FigureView);
-//            ((Label)((VBox)this.getChildren().get(1)).getChildren().get(0)).setText("");
         }
     }
 }
