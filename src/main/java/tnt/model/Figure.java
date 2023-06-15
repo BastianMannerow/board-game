@@ -81,15 +81,17 @@ public class Figure extends Observable {
 
         // Filter the reachable fields, so that only the legal fields remain
         int ownTowerLevel = board.getField(x,y).getTowerLevel();
-        ArrayList<Field> possibleFields = new ArrayList<Field>();
-
-        for (Field field : reachableFields) {
-            if(!field.getIsFigureHere() && !field.getTowerComplete() && field.getTowerLevel() <= ownTowerLevel+1){
-                possibleFields.add(field);
-            }
-        }
-
-        return possibleFields;
+        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel+1);
+//        ArrayList<Field> possibleFields = new ArrayList<Field>();
+//
+//        for (Field field : reachableFields) {
+//            if(!field.getIsFigureHere() && !field.getTowerComplete() && field.getTowerLevel() <= ownTowerLevel+1){
+//                possibleFields.add(field);
+//            }
+//        }
+//
+//        return possibleFields;
+        return reachableFields;
     }
 
     /**
@@ -97,9 +99,29 @@ public class Figure extends Observable {
      *
      * @return valid build positions
      */
-    public ArrayList<Field> getValidBuilds(){
+    public ArrayList<Field> getValidBuilds(Board board){
+
         // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind & nur Felder um Figur rum sind buildable.
         ArrayList<Field> validBuilds = new ArrayList<Field>();
+
+        int boardX = board.getXSize();
+        int boardY = board.getYSize();
+
+        for (int i = x-1; i <= x+1; i++) {
+            for (int j = y-1; j <= y+1; j++) {
+
+                // "Wahlpflichtfeature - Die Welt ist eine Kugel"
+                if(true){
+                    validBuilds.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
+                }
+                else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {
+                    validBuilds.add(board.getField(i, j));
+                }
+            }
+        }
+
+        // Filter the fields, so that only the legal fields remain
+        validBuilds.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete());
         return validBuilds;
     }
 

@@ -15,6 +15,7 @@ public class GameController{
 //    }
     private Game game;
     private SceneHandler sceneHandler;
+    private Figure movedFigure;
 
     public void setGame(Game game) {
         this.game = game;
@@ -46,7 +47,8 @@ public class GameController{
                 }
             case RUNNING:
                 if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
-                    game.getPlayersTurn().executeMove(field,game.getBoard(),figure);
+                    this.movedFigure = figure;
+                    game.getPlayersTurn().executeMove(field,game.getBoard(), figure);
 
                     // Todo: first handle build stuff
                     game.nextPlayersTurn();
@@ -54,6 +56,16 @@ public class GameController{
                 } else {
                     return false;
                 }
+        }
+        return false;
+    }
+
+    public boolean buildObject(int buildLevel, Field field) {
+        if (movedFigure.getValidBuilds(game.getBoard()).contains(field)){
+            if (field.getTowerLevel() == buildLevel -1){
+                field.setTowerLevel(buildLevel);
+                return true;
+            }
         }
         return false;
     }

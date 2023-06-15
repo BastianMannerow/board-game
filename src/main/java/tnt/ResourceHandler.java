@@ -32,6 +32,10 @@ public class ResourceHandler {
                 break;
             }
         }
+
+        Image image = new Image(url.toExternalForm(), true);
+        imgs.put(name, image);
+
     }
 
     public Image getImage(String key) {

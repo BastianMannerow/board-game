@@ -269,7 +269,7 @@ public class Game extends Observable {
 
             // Building
             for(Figure figure2:activeFigures){
-                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds());
+                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds(board));
             }
 
             Field field2 = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
@@ -319,6 +319,7 @@ public class Game extends Observable {
     }
     public void startGame(){
         gameStatus = GameStatus.RUNNING;
+        notifyObservers();
     }
 
 
