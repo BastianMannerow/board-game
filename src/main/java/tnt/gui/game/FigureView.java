@@ -1,6 +1,7 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
@@ -24,6 +25,8 @@ public class FigureView extends DragableObject implements Observer{
         loader.setRoot(this);
         loader.load();
         ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
+        String name = player.getName();
+        ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
     }
 
     public FigureView(Player player, Figure figure) throws IOException {
@@ -33,11 +36,8 @@ public class FigureView extends DragableObject implements Observer{
         loader.setRoot(this);
         loader.load();
         ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-        ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
+        String name = player.getName();
+        ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
     }
 
     public Player getPlayer() {

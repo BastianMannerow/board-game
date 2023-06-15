@@ -42,4 +42,8 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         this.playerNumber = i;
         update();
     }
+
+    public Player getPlayer() {
+        return this.player;
+    }
 }

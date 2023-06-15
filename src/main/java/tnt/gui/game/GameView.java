@@ -97,8 +97,8 @@ public class GameView extends BorderPane implements Observer {
                                 finalFigureView.setVisible(true);
                             });
                             figureView.setOnMouseDragged(event -> {
-                                dragableObject.setLayoutX(event.getSceneX());
-                                dragableObject.setLayoutY(event.getSceneY());
+                                dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
+                                dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
                             });
                         }
 
@@ -144,8 +144,8 @@ public class GameView extends BorderPane implements Observer {
                         //                    finalBuildingLevellevelView.setVisible(true);
                     });
                     buildingLevel.setOnMouseDragged(event -> {
-                        dragableObject.setLayoutX(event.getSceneX());
-                        dragableObject.setLayoutY(event.getSceneY());
+                        dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
+                        dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
                     });
                 }
 
@@ -186,8 +186,8 @@ public class GameView extends BorderPane implements Observer {
                     //                    finalBuildingLevellevelView.setVisible(true);
                 });
                 buildingKuppel.setOnMouseDragged(event -> {
-                    dragableObject.setLayoutX(event.getSceneX());
-                    dragableObject.setLayoutY(event.getSceneY());
+                    dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
+                    dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
                 });
             }
             BuildingLevel buildingLevel = (BuildingLevel) initBuildingHolder.get(-1);

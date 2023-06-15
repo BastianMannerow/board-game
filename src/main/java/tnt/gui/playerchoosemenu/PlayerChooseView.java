@@ -30,6 +30,7 @@ public class PlayerChooseView extends VBox implements Observer {
         choosePlayerMenu.load();
         PlayerChooseController controller = choosePlayerMenu.getController();
         controller.setGame(game);
+        controller.setView(this);
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("playerMenu", this);
         ((ScrollPane) this.getChildren().get(0)).setFitToHeight(true);
