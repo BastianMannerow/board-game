@@ -61,7 +61,20 @@ public class FieldView extends HBox implements Observer {
             // Todo: Remove not supported right now
 //            ((StackPane) this.getChildren().get(0)).getChildren().removeIf(node -> node instanceof FigureView);
         }
-
+        if (field.getTowerComplete()) {
+            if (!buildingHolder.containsKey(-1)) {
+                BuildingLevel buildingLevel = null;
+                try {
+                    buildingLevel = new BuildingLevel(-1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                buildingHolder.put(-1, buildingLevel);
+            }
+            if (!((StackPane) this.getChildren().get(0)).getChildren().contains(buildingHolder.get(-1))) {
+                ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(-1));
+            }
+        }
 
     }
 }

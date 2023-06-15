@@ -62,6 +62,7 @@ public class Field extends Observable {
      */
     public void setTowerComplete(boolean towerComplete) {
         this.towerComplete = towerComplete;
+        notifyObservers();
     }
 
     /**

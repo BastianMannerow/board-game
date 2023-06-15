@@ -123,6 +123,7 @@ public class GameView extends BorderPane implements Observer {
 
                     // Drag and drop for figure handling set here
                     BuildingLevel finalBuildingLevel = buildingLevel;
+                    int finalLevel = level;
                     buildingLevel.setOnDragDetected(event -> {
                         try {
                             BuildingLevel dragFig = (BuildingLevel) finalBuildingLevel.copy();
@@ -130,7 +131,7 @@ public class GameView extends BorderPane implements Observer {
                             dragableObject = dragFig;
                             this.getChildren().add(dragableObject);
                         } catch (IOException e) {
-                            System.out.println("Copy of buildingLevellevelView didnt work!");
+                            System.out.println("Copy of building level " + finalLevel + " didnt work!");
                         }
                         //                    finalBuildingLevellevelView.setVisible(false);
                         dragableObject.setVisible(true);
@@ -152,6 +153,46 @@ public class GameView extends BorderPane implements Observer {
                 if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
                     ((VBox) this.getRight()).getChildren().add(buildingLevel);
                 }
+            }
+            if (!initBuildingHolder.containsKey(-1)) {
+                BuildingLevel buildingKuppel = null;
+                try {
+                    buildingKuppel = new BuildingLevel(-1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                initBuildingHolder.put(-1, buildingKuppel);
+
+                // Drag and drop for figure handling set here
+                BuildingLevel finalBuildingKuppel = buildingKuppel;
+                buildingKuppel.setOnDragDetected(event -> {
+                    try {
+                        BuildingLevel dragFig = (BuildingLevel) finalBuildingKuppel.copy();
+                        this.getChildren().remove(dragableObject);
+                        dragableObject = dragFig;
+                        this.getChildren().add(dragableObject);
+                    } catch (IOException e) {
+                        System.out.println("Copy of building: Kuppel didnt work!");
+                    }
+                    //                    finalBuildingLevellevelView.setVisible(false);
+                    dragableObject.setVisible(true);
+                    dragableObject.setDisable(true);
+
+                    finalBuildingKuppel.startFullDrag();
+                });
+                buildingKuppel.setOnMouseReleased(event -> {
+                    dragableObject.setVisible(false);
+                    //                    finalBuildingLevellevelView.setVisible(true);
+                });
+                buildingKuppel.setOnMouseDragged(event -> {
+                    dragableObject.setLayoutX(event.getSceneX());
+                    dragableObject.setLayoutY(event.getSceneY());
+                });
+            }
+            BuildingLevel buildingLevel = (BuildingLevel) initBuildingHolder.get(-1);
+            if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
+                ((VBox) this.getRight()).getChildren().add(buildingLevel);
             }
         }
 

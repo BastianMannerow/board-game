@@ -62,6 +62,10 @@ public class GameController{
 
     public boolean buildObject(int buildLevel, Field field) {
         if (movedFigure.getValidBuilds(game.getBoard()).contains(field)){
+            if (field.getTowerLevel() == 3 && buildLevel == -1){
+                field.setTowerComplete(true);
+                return true;
+            }
             if (field.getTowerLevel() == buildLevel -1){
                 field.setTowerLevel(buildLevel);
                 return true;
