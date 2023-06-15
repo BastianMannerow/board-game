@@ -16,6 +16,14 @@ public class MainMenuController{
     private void gotoGame() {
         sceneHandler.loadView("playerMenu");
     }
+    @FXML
+    private void gotoSaveMenu() {
+        sceneHandler.loadView("saveMenu");
+    }
+    @FXML
+    private void gotoSettings() {
+        sceneHandler.loadView("settings");
+    }
 
 
     public void setSceneHandler(SceneHandler sceneHandler) {
