@@ -15,7 +15,6 @@ public class GameController{
 //    }
     private Game game;
     private SceneHandler sceneHandler;
-    private Figure movedFigure;
 
     public void setGame(Game game) {
         this.game = game;
@@ -30,7 +29,7 @@ public class GameController{
             case SELECT_PLAYER:
                 return false;
             case PLACE_FIGURES:
-                if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure)){
+                if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure) && !figure.isPlaced()){
                     figure.setX(field.getX());
                     figure.setY(field.getY());
                     figure.setPlaced();
@@ -45,29 +44,35 @@ public class GameController{
                 } else {
                     return false;
                 }
-            case RUNNING:
+            case MOVE_FIGURE:
                 if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
-                    this.movedFigure = figure;
+                    game.setLastMovedFigure(figure);
                     game.getPlayersTurn().executeMove(field,game.getBoard(), figure);
-
-                    // Todo: first handle build stuff
-                    game.nextPlayersTurn();
+                    game.setBuildMode();
                     return true;
                 } else {
                     return false;
                 }
+            case BUILD:
+                return false;
         }
         return false;
     }
 
     public boolean buildObject(int buildLevel, Field field) {
-        if (movedFigure.getValidBuilds(game.getBoard()).contains(field)){
-            if (field.getTowerLevel() == 3 && buildLevel == -1){
-                field.setTowerComplete(true);
-                return true;
-            }
-            if (field.getTowerLevel() == buildLevel -1){
-                field.setTowerLevel(buildLevel);
+        if (game.isBuildMode()) {
+            if (game.getLastMovedFigure().getValidBuilds(game.getBoard()).contains(field)) {
+                if (field.getTowerLevel() > 0 && buildLevel == -1) {
+                    field.setTowerComplete(true);
+                }
+                else if (field.getTowerLevel() == buildLevel - 1) {
+                    field.setTowerLevel(buildLevel);
+                }
+                else {
+                    return false;
+                }
+                game.nextPlayersTurn();
+                game.setMoveMode();
                 return true;
             }
         }

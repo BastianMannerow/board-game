@@ -17,10 +17,12 @@ public class Game extends Observable {
         }
     }
 
+
     public enum GameStatus {
         SELECT_PLAYER,
         PLACE_FIGURES,
-        RUNNING
+        MOVE_FIGURE,
+        BUILD
     }
 
     private Color[] def_colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.PINK};
@@ -29,6 +31,7 @@ public class Game extends Observable {
     private int amountOfTurns;
 
 
+    private Figure lastMovedFigure;
     private GameStatus gameStatus;
 
     /**
@@ -267,6 +270,7 @@ public class Game extends Observable {
 
             activePlayer.executeMove(field, board, figure); //Kann auch zB. Apollo.executeMove sein
 
+
             // Building
             for(Figure figure2:activeFigures){
                 ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds(board));
@@ -307,7 +311,24 @@ public class Game extends Observable {
     }
 
     public boolean isRunnung(){
-        return gameStatus == GameStatus.RUNNING;
+        return gameStatus == GameStatus.BUILD || gameStatus == GameStatus.MOVE_FIGURE;
+    }
+
+    public boolean isMoveMode(){
+        return gameStatus == GameStatus.MOVE_FIGURE;
+    }
+
+
+    public void setBuildMode() {
+        gameStatus = GameStatus.BUILD;
+    }
+
+    public void setMoveMode() {
+        gameStatus = GameStatus.MOVE_FIGURE;
+    }
+
+    public boolean isBuildMode(){
+        return gameStatus == GameStatus.BUILD;
     }
 
     public boolean selectingPlayers(){
@@ -318,7 +339,7 @@ public class Game extends Observable {
         gameStatus = GameStatus.PLACE_FIGURES;
     }
     public void startGame(){
-        gameStatus = GameStatus.RUNNING;
+        gameStatus = GameStatus.MOVE_FIGURE;
         notifyObservers();
     }
 
@@ -350,6 +371,14 @@ public class Game extends Observable {
         Collections.rotate(playerOrder, -1);
 //        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
+    }
+
+    public void setLastMovedFigure(Figure figure) {
+        lastMovedFigure = figure;
+    }
+
+    public Figure getLastMovedFigure() {
+        return lastMovedFigure;
     }
 
 }
