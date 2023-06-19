@@ -45,7 +45,7 @@
    <children>
       <ScrollPane prefHeight="401.0" prefWidth="762.0">
          <content>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox fx:id="playerPaneSingle" prefHeight="200.0" prefWidth="100.0" />
          </content>
       </ScrollPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -56,8 +56,8 @@
                   <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="353.0">
                      <children>
                         <Label prefWidth="100.0" text="Spielfeld size" />
-                        <TextField prefWidth="40.0" />
-                        <TextField prefWidth="40.0" />
+                        <TextField fx:id="fieldSizeX" prefWidth="40.0" />
+                        <TextField fx:id="fieldSizeY" prefWidth="40.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="353.0">

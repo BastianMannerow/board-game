@@ -20,6 +20,13 @@ public class PlayerChooseController{
     @FXML
     CheckBox roundWorld;
 
+    @FXML
+    VBox playerPaneSingle;
+    @FXML
+    TextField fieldSizeX;
+    @FXML
+    TextField fieldSizeY;
+
 //    @FXML
 //    private void initialize(){
 //    }
@@ -28,7 +35,7 @@ public class PlayerChooseController{
     private PlayerChooseView view;
     @FXML
     private void runGame() {
-        for (Node node : ((VBox)((ScrollPane) view.getChildren().get(0)).getContent()).getChildren()){
+        for (Node node : playerPaneSingle.getChildren()){
             if (node instanceof PlayerAloneChooseView){
                 PlayerAloneChooseView playerView = (PlayerAloneChooseView) node;
 
@@ -55,21 +62,22 @@ public class PlayerChooseController{
         int sizeY = 5;
 
         try {
-            int amount = Integer.parseInt(((TextField) ((HBox) ((VBox) ((HBox) view.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(1)).getText());
+            int amount = Integer.parseInt(fieldSizeX.getText());
             sizeX = amount;
         } catch (NumberFormatException e) {
             System.out.println("could not convert the field size x to int " + e);
         }
         try {
-            int amount = Integer.parseInt(((TextField) ((HBox) ((VBox) ((HBox) view.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(2)).getText());
+            int amount = Integer.parseInt(fieldSizeY.getText());
             sizeY = amount;
         } catch (NumberFormatException e) {
             System.out.println("could not convert the field size y to int " + e);
         }
 
+        game.createBoard(sizeX, sizeY);
+
         game.getBoard().setRoundWorld(roundWorld.isSelected());
 
-        game.createBoard(sizeX, sizeY);
         game.initGame();
         game.startPlaceFigures();
         sceneHandler.loadView("gameView");

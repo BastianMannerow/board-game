@@ -39,8 +39,8 @@ public class PlayerChooseView extends VBox implements Observer {
         ((ScrollPane) this.getChildren().get(0)).setFitToWidth(true);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setSpacing(20);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setPadding(new Insets(20,0,5,0));
-        ((TextField) ((HBox) ((VBox) ((HBox) this.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(1)).setPromptText("5"); //Todo: get default size
-        ((TextField) ((HBox) ((VBox) ((HBox) this.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(2)).setPromptText("5"); //Todo: get default size
+        controller.fieldSizeX.setPromptText("5"); //Todo: get default size
+        controller.fieldSizeY.setPromptText("5"); //Todo: get default size
         game.addObserver(this);
         update();
     }
