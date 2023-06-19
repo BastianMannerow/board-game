@@ -32,8 +32,11 @@ public class SceneHandler{
 
     public void loadView(String viewName){
         if (views.containsKey(viewName)){
-            scene.setRoot(views.get(viewName));
-            ((Observer) views.get(viewName)).update();
+            Parent view = views.get(viewName);
+            scene.setRoot(view);
+            if (view instanceof Observer) {
+                ((Observer) views.get(viewName)).update();
+            }
         }
     }
 }

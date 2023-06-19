@@ -25,7 +25,7 @@ public class MainMenuView extends VBox {
         mainMenuLayout.load();
         this.mainMenuController = mainMenuLayout.getController();
         this.mainMenuController.setSceneHandler(sceneHandler);
-
+        sceneHandler.add("mainMenu", this);
         setAlignment(Pos.CENTER);
         setSpacing(10);
         Label lblTitle = new Label("Main Menu!");

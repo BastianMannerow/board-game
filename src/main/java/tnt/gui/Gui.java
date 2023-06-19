@@ -10,6 +10,7 @@ import tnt.gui.game.GameView;
 import tnt.gui.mainmenu.MainMenuController;
 import tnt.gui.mainmenu.MainMenuView;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
+import tnt.gui.settingsmenu.SettingsView;
 import tnt.model.Game;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class Gui extends Application {
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
 
         GameView gameView = new GameView(sceneHandler, game);
+        SettingsView settingsView = new SettingsView(sceneHandler);
 
 
         primaryStage.setScene(sceneHandler.getScene());
