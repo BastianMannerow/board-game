@@ -32,7 +32,13 @@ public class PlayerChooseController{
                 PlayerAloneChooseView playerView = (PlayerAloneChooseView) node;
 
                 Player player = playerView.getPlayer();
-                player.setName(((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getText());
+                String name = ((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getText();
+                if (!(name.length()<1)){
+                    player.setName(name);
+                }
+                else{
+                    player.setName(((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7));
+                }
                 try {
                     int amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
                     player.setAmountOfFigures(amount);
