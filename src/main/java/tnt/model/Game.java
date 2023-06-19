@@ -11,13 +11,6 @@ import tnt.model.gods.movement.*;
  */
 public class Game extends Observable {
 
-    public void initGame() {
-        for(Player player: playerOrder){
-            player.initPlayer();
-        }
-    }
-
-
     public enum GameStatus {
         SELECT_PLAYER,
         PLACE_FIGURES,
@@ -51,10 +44,18 @@ public class Game extends Observable {
     public Game() {
         gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
+        // Todo: get default amount of players
         addPlayer(2);
         addPlayer(2);
-        createBoard(5,6);
+//        createBoard(5,6);
     }
+
+    public void initGame() {
+        for(Player player: playerOrder){
+            player.initPlayer();
+        }
+    }
+
 
     /**
      * @return playerOrder
@@ -123,6 +124,7 @@ public class Game extends Observable {
                 System.out.println(board.getField(i, j));
             }
         }
+        notifyObservers();
     }
 
     /**
@@ -380,5 +382,6 @@ public class Game extends Observable {
     public Figure getLastMovedFigure() {
         return lastMovedFigure;
     }
+
 
 }

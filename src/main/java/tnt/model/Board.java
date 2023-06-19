@@ -9,6 +9,8 @@ public class Board {
     private int xSize;
     private int ySize;
 
+    private boolean roundWorld = false;
+
     /**
      * Constructing an object Board.
      * @param board initial matrix, which contains the single Field objects
@@ -42,5 +44,12 @@ public class Board {
      */
     public int getYSize(){
         return ySize;
+    }
+
+    public void setRoundWorld(boolean selected) {
+        this.roundWorld = selected;
+    }
+    public boolean getRoundWorld() {
+        return this.roundWorld;
     }
 }

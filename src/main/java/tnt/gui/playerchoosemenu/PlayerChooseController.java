@@ -3,10 +3,8 @@ package tnt.gui.playerchoosemenu;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import tnt.gui.SceneHandler;
@@ -18,6 +16,9 @@ import java.util.ArrayList;
 
 
 public class PlayerChooseController{
+
+    @FXML
+    CheckBox roundWorld;
 
 //    @FXML
 //    private void initialize(){
@@ -49,6 +50,26 @@ public class PlayerChooseController{
 
             }
         }
+
+        int sizeX = 5; // Todo: get default size
+        int sizeY = 5;
+
+        try {
+            int amount = Integer.parseInt(((TextField) ((HBox) ((VBox) ((HBox) view.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(1)).getText());
+            sizeX = amount;
+        } catch (NumberFormatException e) {
+            System.out.println("could not convert the field size x to int " + e);
+        }
+        try {
+            int amount = Integer.parseInt(((TextField) ((HBox) ((VBox) ((HBox) view.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(2)).getText());
+            sizeY = amount;
+        } catch (NumberFormatException e) {
+            System.out.println("could not convert the field size y to int " + e);
+        }
+
+        game.getBoard().setRoundWorld(roundWorld.isSelected());
+
+        game.createBoard(sizeX, sizeY);
         game.initGame();
         game.startPlaceFigures();
         sceneHandler.loadView("gameView");
@@ -58,10 +79,6 @@ public class PlayerChooseController{
         game.addPlayer(2);
     }
 
-
-//    public void removePlayer(Player player) {
-//        game.removePlayer(player);
-//    }
 
     public void setGame(Game game) {
         this.game = game;

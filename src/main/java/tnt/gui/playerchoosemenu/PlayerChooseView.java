@@ -2,9 +2,11 @@ package tnt.gui.playerchoosemenu;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
@@ -37,6 +39,8 @@ public class PlayerChooseView extends VBox implements Observer {
         ((ScrollPane) this.getChildren().get(0)).setFitToWidth(true);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setSpacing(20);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setPadding(new Insets(20,0,5,0));
+        ((TextField) ((HBox) ((VBox) ((HBox) this.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(1)).setPromptText("5"); //Todo: get default size
+        ((TextField) ((HBox) ((VBox) ((HBox) this.getChildren().get(1)).getChildren().get(1)).getChildren().get(0)).getChildren().get(2)).setPromptText("5"); //Todo: get default size
         game.addObserver(this);
         update();
     }

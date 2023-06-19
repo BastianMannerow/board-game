@@ -70,7 +70,7 @@ public class Figure extends Observable {
             for (int j = y-1; j <= y+1; j++) {
 
                 // "Wahlpflichtfeature - Die Welt ist eine Kugel"
-                if(true){
+                if(board.getRoundWorld()){
                     reachableFields.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
                 }
                 else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {
@@ -111,7 +111,7 @@ public class Figure extends Observable {
             for (int j = y-1; j <= y+1; j++) {
 
                 // "Wahlpflichtfeature - Die Welt ist eine Kugel"
-                if(true){
+                if(board.getRoundWorld()){
                     validBuilds.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
                 }
                 else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {

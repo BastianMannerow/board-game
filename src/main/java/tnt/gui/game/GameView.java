@@ -196,40 +196,42 @@ public class GameView extends BorderPane implements Observer {
             }
         }
 
-        GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
-        for (int i = 0; i < game.getBoard().getXSize(); i++){
-            for(int j = 0 ; j < game.getBoard().getYSize() ; j++) {
-                Field field = game.getBoard().getField(i, j);
-                int finalI = i;
-                int finalJ = j;
-                if (!fieldHolder.containsKey(field)) {
-                    FieldView fieldView = null;
-                    try {
-                        fieldView = new FieldView(field);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    fieldHolder.put(field, fieldView);
-
-                    fieldView.setOnMouseDragReleased(event -> {
-                        if (event.getGestureSource() instanceof FigureView) {
-                            FigureView source = (FigureView) event.getGestureSource();
-
-                            controller.placeFigure(source.getFigure(), field);
-
-                            dragableObject.setVisible(false);
-                            source.setVisible(true);
-
-                        } else if (event.getGestureSource() instanceof BuildingLevel) {
-                            BuildingLevel source = (BuildingLevel) event.getGestureSource();
-
-                            controller.buildObject(source.getLevel(), field);
-
-                            dragableObject.setVisible(false);
+        if (game.isRunnung() || game.placeFigures()) {
+            GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
+            for (int i = 0; i < game.getBoard().getXSize(); i++) {
+                for (int j = 0; j < game.getBoard().getYSize(); j++) {
+                    Field field = game.getBoard().getField(i, j);
+                    int finalI = i;
+                    int finalJ = j;
+                    if (!fieldHolder.containsKey(field)) {
+                        FieldView fieldView = null;
+                        try {
+                            fieldView = new FieldView(field);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
-                    });
-                    gridPane.add(fieldHolder.get(field), i, j);
-                    GridPane.setConstraints(fieldHolder.get(field), i, j);
+                        fieldHolder.put(field, fieldView);
+
+                        fieldView.setOnMouseDragReleased(event -> {
+                            if (event.getGestureSource() instanceof FigureView) {
+                                FigureView source = (FigureView) event.getGestureSource();
+
+                                controller.placeFigure(source.getFigure(), field);
+
+                                dragableObject.setVisible(false);
+                                source.setVisible(true);
+
+                            } else if (event.getGestureSource() instanceof BuildingLevel) {
+                                BuildingLevel source = (BuildingLevel) event.getGestureSource();
+
+                                controller.buildObject(source.getLevel(), field);
+
+                                dragableObject.setVisible(false);
+                            }
+                        });
+                        gridPane.add(fieldHolder.get(field), i, j);
+                        GridPane.setConstraints(fieldHolder.get(field), i, j);
+                    }
                 }
             }
         }
