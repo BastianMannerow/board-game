@@ -33,8 +33,6 @@
 -->
 
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
@@ -49,13 +47,6 @@
       </ScrollPane>
    </center>
    <right>
-      <VBox prefHeight="200.0" prefWidth="68.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="69.0" fitWidth="69.0">
-               <image>
-                  <Image url="@dog.png" />
-               </image>
-            </ImageView>
-         </children></VBox>
+      <VBox prefHeight="200.0" prefWidth="80.0" BorderPane.alignment="CENTER" />
    </right>
 </fx:root>
