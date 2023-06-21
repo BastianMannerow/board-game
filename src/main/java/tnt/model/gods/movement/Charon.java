@@ -58,9 +58,9 @@ public class Charon implements Gods{
         int boardY = board.getYSize();
         int figureX = playerFigure.getX();
         int figureY = playerFigure.getY();
-        board.getField(opponentFigure.getX(), opponentFigure.getY()).setIsFigureHere(false);
+        board.getField(opponentFigure.getX(), opponentFigure.getY()).figureLeft();
         opponentFigure.setX(boardX - figureX);
         opponentFigure.setY(boardY - figureY);
-        board.getField(boardX - figureX, boardY - figureY).setIsFigureHere(true);
+        board.getField(boardX - figureX, boardY - figureY).setFigure(opponentFigure);
     }
 }

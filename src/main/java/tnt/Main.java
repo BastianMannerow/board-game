@@ -13,6 +13,7 @@ public class Main {
      * von Colour & Cards geändert werden?
      */
     public static void main(String[] args) {
+        /*
         // Kreiiert testweise ein paar Playerobjekte mit zugehörigen Figuren.
         ArrayList<Player> players = new ArrayList<Player>();
         Game game = new Game(players, 0);
@@ -39,15 +40,13 @@ public class Main {
             }
         }
         */
-
+        /*
         // Kreiiert testweise ein Board mit zugehörigen Feldern.
         int x = 6;
         int y = 6;
         game.createBoard(x, y);
+        */
+        int i = 0;
+
     }
-
-    Game.get(pO);
-
-
-
 }
