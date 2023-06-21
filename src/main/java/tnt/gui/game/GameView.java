@@ -27,8 +27,9 @@ public class GameView extends BorderPane implements Observer {
     static private Map<Figure, FigureView> figureHolder = new HashMap<Figure, FigureView>();
     static private HashMap<Integer, BuildingLevel> initBuildingHolder = new HashMap<Integer, BuildingLevel>();
     GameController controller;
-//    ArrayList<ImageView> highlighted
-    private Map<FieldView, ImageView> highlighted = new HashMap<>();
+    ArrayList<ImageView> highlighted = new ArrayList<>();
+    ArrayList<ImageView> highlightedtemp = new ArrayList<>();
+//    private Map<FieldView, ImageView> highlighted = new HashMap<>();
 
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
 
@@ -50,10 +51,11 @@ public class GameView extends BorderPane implements Observer {
 
     @Override
     public void update() {
-        for (FieldView fieldv: highlighted.keySet()){
-            ((StackPane) highlighted.get(fieldv).getParent()).getChildren().remove(highlighted.get(fieldv));
-        }
-        highlighted.clear();
+//        for (FieldView fieldv: highlighted.keySet()){
+//            ((StackPane) highlighted.get(fieldv).getParent()).getChildren().remove(highlighted.get(fieldv));
+//        }
+
+        removeHighlights(highlighted);
 
         if (game.placeFigures()){
 
@@ -91,6 +93,12 @@ public class GameView extends BorderPane implements Observer {
                                     System.out.println("Copy of figureView didnt work!");
                                 }
 
+                                if (game.isMoveMode() && game.getPlayersTurn() == finalFigureView.getPlayer()) {
+                                    for (Field field : finalFigureView.getFigure().getValidMoves(game.getBoard())) {
+                                        makeHighlightField(highlightedtemp, fieldHolder.get(field), "Spielfeld_Highlight");
+                                    }
+                                }
+
                                 finalFigureView.setVisible(false);
                                 dragableObject.setVisible(true);
                                 dragableObject.setDisable(true);
@@ -100,6 +108,7 @@ public class GameView extends BorderPane implements Observer {
                             figureView.setOnMouseReleased(event -> {
                                 dragableObject.setVisible(false);
                                 finalFigureView.setVisible(true);
+                                removeHighlights(highlightedtemp);
                             });
                             figureView.setOnMouseDragged(event -> {
                                 dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
@@ -222,6 +231,7 @@ public class GameView extends BorderPane implements Observer {
 
                         fieldView.setOnMouseDragReleased(event -> {
 
+                            removeHighlights(highlightedtemp);
 
                             if (event.getGestureSource() instanceof FigureView) {
                                 FigureView source = (FigureView) event.getGestureSource();
@@ -254,28 +264,36 @@ public class GameView extends BorderPane implements Observer {
 
             for (Figure fig : game.getPlayersTurn().getFigure()) {
                 FieldView fieldv = fieldHolder.get(game.getBoard().getField(fig.getX(), fig.getY()));
-                makeHighlightField(fieldv, "Spielfeld_Highlight");
+                makeHighlightField(highlighted, fieldv, "Spielfeld_Highlight");
             }
         }
 
         if (game.getGameStatus() == Game.GameStatus.BUILD) {
             for (Field field :game.getLastMovedFigure().getValidBuilds(game.getBoard())){
                 FieldView fieldv = fieldHolder.get(field);
-                makeHighlightField(fieldv, "Spielfeld_Highlight");
+                makeHighlightField(highlighted, fieldv, "Spielfeld_Highlight");
             }
 
         }
     }
 
 
-    private void makeHighlightField(FieldView fieldv, String picture) {
+    private void removeHighlights(ArrayList<ImageView> list) {
+        for (ImageView image: list){
+            ((StackPane) image.getParent()).getChildren().remove(image);
+        }
+        list.clear();
+    }
+
+    private void makeHighlightField(ArrayList list, FieldView fieldv, String picture) {
         try {
             ImageView highlight = new ImageView();
             highlight.setImage(ResourceHandler.getInstance().getImage(picture));
             highlight.setPreserveRatio(true);
             highlight.setFitHeight(80);
             highlight.setDisable(true);
-            highlighted.put(fieldv, highlight);
+//            highlighted.put(fieldv, highlight);
+            list.add(highlight);
             ((StackPane) fieldv.getChildren().get(0)).getChildren().add(highlight);
         } catch (Exception e) {
             System.out.println("Could not load image " + e);
