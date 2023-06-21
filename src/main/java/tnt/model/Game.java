@@ -323,10 +323,12 @@ public class Game extends Observable {
 
     public void setBuildMode() {
         gameStatus = GameStatus.BUILD;
+        notifyObservers();
     }
 
     public void setMoveMode() {
         gameStatus = GameStatus.MOVE_FIGURE;
+        notifyObservers();
     }
 
     public boolean isBuildMode(){

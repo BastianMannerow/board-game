@@ -2,6 +2,7 @@ package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
@@ -26,6 +27,8 @@ public class GameView extends BorderPane implements Observer {
     static private Map<Figure, FigureView> figureHolder = new HashMap<Figure, FigureView>();
     static private HashMap<Integer, BuildingLevel> initBuildingHolder = new HashMap<Integer, BuildingLevel>();
     GameController controller;
+//    ArrayList<ImageView> highlighted
+    private Map<FieldView, ImageView> highlighted = new HashMap<>();
 
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
 
@@ -47,6 +50,10 @@ public class GameView extends BorderPane implements Observer {
 
     @Override
     public void update() {
+        for (FieldView fieldv: highlighted.keySet()){
+            ((StackPane) highlighted.get(fieldv).getParent()).getChildren().remove(highlighted.get(fieldv));
+        }
+        highlighted.clear();
 
         if (game.placeFigures()){
 
@@ -57,13 +64,10 @@ public class GameView extends BorderPane implements Observer {
             // Todo: dont add the init figures every update anew
             ((VBox) this.getRight()).getChildren().clear();
 
-            int leftFigures  = 0;
-
             ArrayList<Player> players = game.getPlayerOrder();
             for (Player player: players) {
                 for (Figure fig : player.getFigure()) {
                     if (!fig.isPlaced()) {
-                        leftFigures++;
                         if (!figureHolder.containsKey(fig)) {
                             FigureView figureView = null;
                             try {
@@ -86,6 +90,7 @@ public class GameView extends BorderPane implements Observer {
                                 } catch (IOException e) {
                                     System.out.println("Copy of figureView didnt work!");
                                 }
+
                                 finalFigureView.setVisible(false);
                                 dragableObject.setVisible(true);
                                 dragableObject.setDisable(true);
@@ -133,7 +138,7 @@ public class GameView extends BorderPane implements Observer {
                         } catch (IOException e) {
                             System.out.println("Copy of building level " + finalLevel + " didnt work!");
                         }
-                        //                    finalBuildingLevellevelView.setVisible(false);
+
                         dragableObject.setVisible(true);
                         dragableObject.setDisable(true);
 
@@ -141,7 +146,7 @@ public class GameView extends BorderPane implements Observer {
                     });
                     buildingLevel.setOnMouseReleased(event -> {
                         dragableObject.setVisible(false);
-                        //                    finalBuildingLevellevelView.setVisible(true);
+
                     });
                     buildingLevel.setOnMouseDragged(event -> {
                         dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
@@ -149,7 +154,7 @@ public class GameView extends BorderPane implements Observer {
                     });
                 }
 
-                BuildingLevel buildingLevel = (BuildingLevel) initBuildingHolder.get(level);
+                BuildingLevel buildingLevel = initBuildingHolder.get(level);
                 if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
                     ((VBox) this.getRight()).getChildren().add(buildingLevel);
                 }
@@ -175,7 +180,7 @@ public class GameView extends BorderPane implements Observer {
                     } catch (IOException e) {
                         System.out.println("Copy of building: Kuppel didnt work!");
                     }
-                    //                    finalBuildingLevellevelView.setVisible(false);
+
                     dragableObject.setVisible(true);
                     dragableObject.setDisable(true);
 
@@ -183,17 +188,20 @@ public class GameView extends BorderPane implements Observer {
                 });
                 buildingKuppel.setOnMouseReleased(event -> {
                     dragableObject.setVisible(false);
-                    //                    finalBuildingLevellevelView.setVisible(true);
+
                 });
                 buildingKuppel.setOnMouseDragged(event -> {
                     dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
                     dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
                 });
             }
-            BuildingLevel buildingLevel = (BuildingLevel) initBuildingHolder.get(-1);
+            BuildingLevel buildingLevel = initBuildingHolder.get(-1);
             if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
                 ((VBox) this.getRight()).getChildren().add(buildingLevel);
             }
+
+
+            makeHighlight();
         }
 
         if (game.isRunnung() || game.placeFigures()) {
@@ -213,10 +221,14 @@ public class GameView extends BorderPane implements Observer {
                         fieldHolder.put(field, fieldView);
 
                         fieldView.setOnMouseDragReleased(event -> {
+
+
                             if (event.getGestureSource() instanceof FigureView) {
                                 FigureView source = (FigureView) event.getGestureSource();
 
-                                controller.placeFigure(source.getFigure(), field);
+                                if (controller.placeFigure(source.getFigure(), field)){
+
+                                }
 
                                 dragableObject.setVisible(false);
                                 source.setVisible(true);
@@ -237,7 +249,39 @@ public class GameView extends BorderPane implements Observer {
         }
     }
 
+    private void makeHighlight() {
+        if (game.getGameStatus() == Game.GameStatus.MOVE_FIGURE) {
 
+            for (Figure fig : game.getPlayersTurn().getFigure()) {
+                FieldView fieldv = fieldHolder.get(game.getBoard().getField(fig.getX(), fig.getY()));
+                makeHighlightField(fieldv, "Spielfeld_Highlight");
+            }
+        }
+
+        if (game.getGameStatus() == Game.GameStatus.BUILD) {
+            for (Field field :game.getLastMovedFigure().getValidBuilds(game.getBoard())){
+                FieldView fieldv = fieldHolder.get(field);
+                makeHighlightField(fieldv, "Spielfeld_Highlight");
+            }
+
+        }
+    }
+
+
+    private void makeHighlightField(FieldView fieldv, String picture) {
+        try {
+            ImageView highlight = new ImageView();
+            highlight.setImage(ResourceHandler.getInstance().getImage(picture));
+            highlight.setPreserveRatio(true);
+            highlight.setFitHeight(80);
+            highlight.setDisable(true);
+            highlighted.put(fieldv, highlight);
+            ((StackPane) fieldv.getChildren().get(0)).getChildren().add(highlight);
+        } catch (Exception e) {
+            System.out.println("Could not load image " + e);
+            e.printStackTrace();
+        }
+    }
 
 
     private FigureView makeFigure() {
