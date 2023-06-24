@@ -27,7 +27,7 @@ public class Game extends Observable {
     private int levelThreeTile;
     private int levelFourTile;
 
-
+    private String gameName;
     private Figure lastMovedFigure;
     private GameStatus gameStatus;
 
@@ -40,13 +40,28 @@ public class Game extends Observable {
      * @param levelThreeTile The amount of tiles
      * @param levelFourTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
         this.levelOneTile = levelOneTile;
         this.levelTwoTile = levelTwoTile;
         this.levelThreeTile = levelThreeTile;
         this.levelFourTile = levelFourTile;
+        this.gameName = gameName;
+    }
+
+    /**
+     * @return gameName
+     */
+    public String getGameName() {
+        return gameName;
+    }
+
+    /**
+     * @param gameName replaces old playerOrder
+     */
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     /**
@@ -556,7 +571,7 @@ public class Game extends Observable {
 
 
     public void addPlayer(int amountOfFigures) {
-        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this));
+        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, 1));
         notifyObservers();
     }
 

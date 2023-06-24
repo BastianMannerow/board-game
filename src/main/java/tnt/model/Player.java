@@ -26,6 +26,7 @@ public class Player extends Observable {
     private int amountOfFigures;
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<Gods> gods;
+    private int team;
 
     /**
      * Constructing an object Player.
@@ -43,12 +44,13 @@ public class Player extends Observable {
         this.gods = gods;
     }
 
-    public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game) {
+    public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, int team) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.amountOfFigures = amountOfFigures;
         this.game = game;
+        this.team = team;
     }
 
     /**
@@ -70,6 +72,21 @@ public class Player extends Observable {
      */
     public void setName(String name) {
         this.name = name;
+        notifyObservers();
+    }
+
+    /**
+     * @return team of the player
+     */
+    public int getTeam() {
+        return team;
+    }
+
+    /**
+     * @param team
+     */
+    public void setTeam(int team) {
+        this.team = team;
         notifyObservers();
     }
 
