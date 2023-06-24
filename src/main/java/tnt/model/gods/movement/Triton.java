@@ -7,6 +7,7 @@ public class Triton  implements Gods{
     public String getName() {
         return "Triton";
     }
+
     //public Triton(int x, int y, Gods god) {
     //    super(x, y, god);
    // }
