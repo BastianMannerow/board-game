@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.FileWriter;
+import java.io.File;
 
 /**
  * The FileManager is responsible for permanent savings as csv-files.
@@ -56,6 +57,26 @@ public class FileManager {
         }
     }
 
+    /**
+     * Helps the frontend to display all saved games.
+     *
+     * @return all saved games.
+     */
+    public ArrayList<String> getSavedGames(){
+        File folder = new File("user.dir\\savings");
+
+        ArrayList<String> savedGames = new ArrayList<>();
+
+        if (folder.isDirectory()) {
+            File[] subfolders = folder.listFiles(File::isDirectory);
+            if (subfolders != null) {
+                for (File subfolder : subfolders) {
+                    savedGames.add(subfolder.getName());
+                }
+            }
+        }
+        return savedGames;
+    }
     public void loadGame(){
         System.out.println("Hallihallo");
     }
