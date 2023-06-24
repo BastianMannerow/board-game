@@ -490,6 +490,7 @@ public class Game extends Observable {
         }
         if (blockedBuilding == player.getFigure().size()){
             setGameOverMode();
+
         }
     }
 
