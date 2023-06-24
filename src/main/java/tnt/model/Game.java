@@ -25,7 +25,7 @@ public class Game extends Observable {
     private int levelOneTile;
     private int levelTwoTile;
     private int levelThreeTile;
-
+    private int levelFourTile;
 
 
     private Figure lastMovedFigure;
@@ -38,13 +38,15 @@ public class Game extends Observable {
      * @param levelOneTile The amount of tiles
      * @param levelTwoTile The amount of tiles
      * @param levelThreeTile The amount of tiles
+     * @param levelFourTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
         this.levelOneTile = levelOneTile;
         this.levelTwoTile = levelTwoTile;
         this.levelThreeTile = levelThreeTile;
+        this.levelFourTile = levelFourTile;
     }
 
     /**
@@ -89,6 +91,19 @@ public class Game extends Observable {
         this.levelThreeTile = levelThreeTile;
     }
 
+    /**
+     * @return levelFourTile
+     */
+    public int getLevelFourTile() {
+        return levelFourTile;
+    }
+
+    /**
+     * @param levelFourTile replaces old playerOrder
+     */
+    public void setLevelFourTile(int levelFourTile) {
+        this.levelFourTile = levelFourTile;
+    }
 
     public Game(int amountOfTurns) {
         this.playerOrder = new ArrayList<Player>();
@@ -490,7 +505,6 @@ public class Game extends Observable {
         }
         if (blockedBuilding == player.getFigure().size()){
             setGameOverMode();
-
         }
     }
 

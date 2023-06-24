@@ -24,7 +24,7 @@ public class Player extends Observable {
     private String name;
     private Color color;
     private int amountOfFigures;
-    private ArrayList<Figure> figures = new ArrayList<Figure>();
+    private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<Gods> gods;
 
     /**
@@ -108,7 +108,7 @@ public class Player extends Observable {
      * Adds all gods into the ArrayList gods
      *
      */
-    public void AddAllGods(){
+    public void addAllGods(){
         addGod(new Ares());
         addGod(new Atlas());
         addGod(new Demeter());
@@ -154,7 +154,7 @@ public class Player extends Observable {
         }
     }
     public void addFigure(int x, int y) {
-        Figure newFigure = new Figure(x, y);
+        Figure newFigure = new Figure(x, y, game);
         this.figures.add(newFigure);
         game.notifyObservers();
     }
@@ -170,13 +170,26 @@ public class Player extends Observable {
      * Increases the height of a field
      *
      * @param field the field chosen by the player
-     * @param board the board which is played on
      */
-    public void executeBuild(Field field, Board board){
+    public void executeBuild(Field field){
         int newLevel = field.getTowerLevel()+1;
         field.setTowerLevel(newLevel);
         if(newLevel == 4){
             field.setTowerComplete(true);
+        }
+        // Remove Tile from game
+        int tile = field.getTowerLevel();
+        if(tile == 0){
+            game.setLevelOneTile(game.getLevelOneTile() - 1);
+        }
+        else if(tile == 1){
+            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
+        }
+        else if(tile == 2){
+            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
+        }
+        else{
+            game.setLevelFourTile(game.getLevelFourTile() - 1);
         }
     }
 

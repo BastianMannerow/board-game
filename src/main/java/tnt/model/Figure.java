@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Figure extends Observable {
     private int x;
     private int y;
+    private Game game;
     private boolean placed;
 
     /**
@@ -16,10 +17,11 @@ public class Figure extends Observable {
      * @param x initial x coordinate
      * @param y initial y coordinate
      */
-    public Figure(int x, int y) {
+    public Figure(int x, int y, Game game) {
         this.x = x;
         this.y = y;
         this.placed = true;
+        this.game = game;
 
     }
 
@@ -100,8 +102,6 @@ public class Figure extends Observable {
      * @return valid build positions
      */
     public ArrayList<Field> getValidBuilds(Board board){
-
-        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind & nur Felder um Figur rum sind buildable.
         ArrayList<Field> validBuilds = new ArrayList<Field>();
 
         int boardX = board.getXSize();
@@ -122,6 +122,23 @@ public class Figure extends Observable {
 
         // Filter the fields, so that only the legal fields remain
         validBuilds.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete());
+        // Check if tiles are available
+        /*
+        for (Field field: validBuilds) {
+            int tile = field.getTowerLevel();
+
+            if (tile == 0 && game.getLevelOneTile() == 0) {
+                validBuilds.remove(field);
+            } else if (tile == 1 && game.getLevelTwoTile() == 0) {
+                validBuilds.remove(field);
+            } else if (tile == 2 && game.getLevelThreeTile() == 0) {
+                validBuilds.remove(field);
+            } else if (tile == 3 && game.getLevelFourTile() == 0){
+                validBuilds.remove(field);
+            }
+        }
+
+         */
         return validBuilds;
     }
 
