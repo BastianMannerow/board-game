@@ -31,7 +31,6 @@ public class GameView extends BorderPane implements Observer {
     GameController controller;
     ArrayList<ImageView> highlighted = new ArrayList<>();
     ArrayList<ImageView> highlightedtemp = new ArrayList<>();
-//    private Map<FieldView, ImageView> highlighted = new HashMap<>();
 
     /**
      * Constructor for the game
@@ -59,10 +58,6 @@ public class GameView extends BorderPane implements Observer {
 
     @Override
     public void update() {
-//        for (FieldView fieldv: highlighted.keySet()){
-//            ((StackPane) highlighted.get(fieldv).getParent()).getChildren().remove(highlighted.get(fieldv));
-//        }
-
         removeHighlights(highlighted);
 
         if (game.placeFigures()){
@@ -85,42 +80,11 @@ public class GameView extends BorderPane implements Observer {
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            FigureView finalFigureView = figureView;
+                            DragableObject finalFigureView = figureView;
 
                             figureHolder.put(fig, figureView);
 
-                            // Drag and drop for figure handling set here
-                            figureView.setOnDragDetected(event -> {
-                                try {
-                                    FigureView dragFig = finalFigureView.copy();
-                                    this.getChildren().remove(dragableObject);
-                                    dragableObject = dragFig;
-                                    this.getChildren().add(dragableObject);
-                                } catch (IOException e) {
-                                    System.out.println("Copy of figureView didnt work!");
-                                }
-
-                                if (game.isMoveMode() && game.getPlayersTurn() == finalFigureView.getPlayer()) {
-                                    for (Field field : finalFigureView.getFigure().getValidMoves(game.getBoard())) {
-                                        makeHighlightField(highlightedtemp, fieldHolder.get(field), "Spielfeld_Highlight");
-                                    }
-                                }
-
-                                finalFigureView.setVisible(false);
-                                dragableObject.setVisible(true);
-                                dragableObject.setDisable(true);
-
-                                finalFigureView.startFullDrag();
-                            });
-                            figureView.setOnMouseReleased(event -> {
-                                dragableObject.setVisible(false);
-                                finalFigureView.setVisible(true);
-                                removeHighlights(highlightedtemp);
-                            });
-                            figureView.setOnMouseDragged(event -> {
-                                dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
-                                dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
-                            });
+                            setDragableEvents(figureView, false);
                         }
 
                         ((VBox) this.getRight()).getChildren().add(figureHolder.get(fig));
@@ -141,33 +105,7 @@ public class GameView extends BorderPane implements Observer {
                     }
 
                     initBuildingHolder.put(level, buildingLevel);
-
-                    // Drag and drop for figure handling set here
-                    BuildingLevel finalBuildingLevel = buildingLevel;
-                    int finalLevel = level;
-                    buildingLevel.setOnDragDetected(event -> {
-                        try {
-                            BuildingLevel dragFig = (BuildingLevel) finalBuildingLevel.copy();
-                            this.getChildren().remove(dragableObject);
-                            dragableObject = dragFig;
-                            this.getChildren().add(dragableObject);
-                        } catch (IOException e) {
-                            System.out.println("Copy of building level " + finalLevel + " didnt work!");
-                        }
-
-                        dragableObject.setVisible(true);
-                        dragableObject.setDisable(true);
-
-                        finalBuildingLevel.startFullDrag();
-                    });
-                    buildingLevel.setOnMouseReleased(event -> {
-                        dragableObject.setVisible(false);
-
-                    });
-                    buildingLevel.setOnMouseDragged(event -> {
-                        dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
-                        dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
-                    });
+                    setDragableEvents(buildingLevel, true);
                 }
 
                 BuildingLevel buildingLevel = initBuildingHolder.get(level);
@@ -176,40 +114,15 @@ public class GameView extends BorderPane implements Observer {
                 }
             }
             if (!initBuildingHolder.containsKey(-1)) {
-                BuildingLevel buildingKuppel = null;
+                BuildingLevel buildingDome = null;
                 try {
-                    buildingKuppel = new BuildingLevel(-1);
+                    buildingDome = new BuildingLevel(-1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
-                initBuildingHolder.put(-1, buildingKuppel);
-
-                // Drag and drop for figure handling set here
-                BuildingLevel finalBuildingKuppel = buildingKuppel;
-                buildingKuppel.setOnDragDetected(event -> {
-                    try {
-                        BuildingLevel dragFig = (BuildingLevel) finalBuildingKuppel.copy();
-                        this.getChildren().remove(dragableObject);
-                        dragableObject = dragFig;
-                        this.getChildren().add(dragableObject);
-                    } catch (IOException e) {
-                        System.out.println("Copy of building: Kuppel didnt work!");
-                    }
-
-                    dragableObject.setVisible(true);
-                    dragableObject.setDisable(true);
-
-                    finalBuildingKuppel.startFullDrag();
-                });
-                buildingKuppel.setOnMouseReleased(event -> {
-                    dragableObject.setVisible(false);
-
-                });
-                buildingKuppel.setOnMouseDragged(event -> {
-                    dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
-                    dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
-                });
+                initBuildingHolder.put(-1, buildingDome);
+                setDragableEvents(buildingDome, true);
             }
             BuildingLevel buildingLevel = initBuildingHolder.get(-1);
             if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
@@ -243,9 +156,7 @@ public class GameView extends BorderPane implements Observer {
                             if (event.getGestureSource() instanceof FigureView) {
                                 FigureView source = (FigureView) event.getGestureSource();
 
-                                if (controller.placeFigure(source.getFigure(), field)){
-
-                                }
+                                controller.placeFigure(source.getFigure(), field);
 
                                 dragableObject.setVisible(false);
                                 source.setVisible(true);
@@ -264,6 +175,51 @@ public class GameView extends BorderPane implements Observer {
                 }
             }
         }
+    }
+
+    /**
+     * Sets the events for a dragable object
+     * @param sourceObject the object where the events should be registered
+     * @param oldNodeVisible define if the old node should be visible if it gets dragged
+     */
+    private void setDragableEvents(DragableObject sourceObject, boolean oldNodeVisible) {
+        sourceObject.setOnDragDetected(event -> {
+            try {
+                DragableObject dragFig = sourceObject.copy();
+                this.getChildren().remove(dragableObject);
+                dragableObject = dragFig;
+                this.getChildren().add(dragableObject);
+            } catch (IOException e) {
+                System.out.println("Copy of dragableObject didnt work");
+            }
+
+            if (sourceObject instanceof FigureView) {
+                FigureView figureViewF = (FigureView) sourceObject;
+                if (game.isMoveMode() && game.getPlayersTurn() == figureViewF.getPlayer()) {
+                    for (Field field : figureViewF.getFigure().getValidMoves(game.getBoard())) {
+                        makeHighlightField(highlightedtemp, fieldHolder.get(field), "Spielfeld_Highlight");
+                    }
+                }
+            }
+
+            dragableObject.setDisable(true);
+            dragableObject.setLayoutX(event.getSceneX() - dragableObject.getBoundsInParent().getWidth()/2);
+            dragableObject.setLayoutY(event.getSceneY() - dragableObject.getBoundsInParent().getHeight()/2);
+            sourceObject.setVisible(oldNodeVisible);
+            dragableObject.setVisible(true);
+
+            sourceObject.startFullDrag();
+        });
+        sourceObject.setOnMouseReleased(event -> {
+            this.dragableObject.setVisible(false);
+            sourceObject.setVisible(true);
+            removeHighlights(highlightedtemp);
+
+        });
+        sourceObject.setOnMouseDragged(event -> {
+            this.dragableObject.setLayoutX(event.getSceneX() - this.dragableObject.getBoundsInParent().getWidth()/2);
+            this.dragableObject.setLayoutY(event.getSceneY() - this.dragableObject.getBoundsInParent().getHeight()/2);
+        });
     }
 
     /**
@@ -286,7 +242,6 @@ public class GameView extends BorderPane implements Observer {
 
         }
     }
-
 
     /**
      * remove higlights (temporary or a little bit more static)
