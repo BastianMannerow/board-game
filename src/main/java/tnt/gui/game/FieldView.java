@@ -13,6 +13,9 @@ import tnt.util.Observer;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * The view for each field
+ */
 public class FieldView extends HBox implements Observer {
 
     private Field field;
@@ -21,6 +24,11 @@ public class FieldView extends HBox implements Observer {
 
     private HashMap<Integer, BuildingLevel> buildingHolder = new HashMap<Integer, BuildingLevel>();
 
+    /**
+     * Constructor for the vield view
+     * @param field the field belonging to the view
+     * @throws IOException Exception when the fxml file has an error / does not exist
+     */
     public FieldView(Field field) throws IOException {
         FXMLLoader fieldLayout = ResourceHandler.getInstance().getFXML("field");
         fieldLayout.setRoot(this);
@@ -30,6 +38,10 @@ public class FieldView extends HBox implements Observer {
         update();
     }
 
+    /**
+     * Getter for the field
+     * @return the field belonging to the veiw
+     */
     public Field getField() {
         return field;
     }

@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * The view of the game
+ */
 public class GameView extends BorderPane implements Observer {
 
     private Game game;
@@ -31,10 +33,16 @@ public class GameView extends BorderPane implements Observer {
     ArrayList<ImageView> highlightedtemp = new ArrayList<>();
 //    private Map<FieldView, ImageView> highlighted = new HashMap<>();
 
+    /**
+     * Constructor for the game
+     * @param sceneHandler the scenehandler holding all the scenes
+     * @param game the whole game
+     * @throws IOException Exception when the fxml file has an error / does not exist
+     */
     public GameView(SceneHandler sceneHandler, Game game) throws IOException {
 
         this.game = game;
-        dragableObject = makeFigure();
+        dragableObject = makeBuilding();
         FXMLLoader gameLoader = ResourceHandler.getInstance().getFXML("game");
         gameLoader.setRoot(this);
         gameLoader.load();
@@ -73,11 +81,10 @@ public class GameView extends BorderPane implements Observer {
                         if (!figureHolder.containsKey(fig)) {
                             FigureView figureView = null;
                             try {
-                                figureView = new FigureView(player);
+                                figureView = new FigureView(player, fig);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
-                            figureView.setFigure(fig);
                             FigureView finalFigureView = figureView;
 
                             figureHolder.put(fig, figureView);
@@ -259,6 +266,9 @@ public class GameView extends BorderPane implements Observer {
         }
     }
 
+    /**
+     * highlight the fields with figures could get moved/ where the dragged figure could get placed / where a building could be placed
+     */
     private void makeHighlight() {
         if (game.getGameStatus() == Game.GameStatus.MOVE_FIGURE) {
 
@@ -278,6 +288,10 @@ public class GameView extends BorderPane implements Observer {
     }
 
 
+    /**
+     * remove higlights (temporary or a little bit more static)
+     * @param list the list holding highlight to be removed
+     */
     private void removeHighlights(ArrayList<ImageView> list) {
         for (ImageView image: list){
             ((StackPane) image.getParent()).getChildren().remove(image);
@@ -285,6 +299,12 @@ public class GameView extends BorderPane implements Observer {
         list.clear();
     }
 
+    /**
+     * Highlights a specific field with the given layout
+     * @param list the list (temporary or not) where the highlight should be added (for removal)
+     * @param fieldv the field view which should be highlighted
+     * @param picture the name of the picture, which is used to highlight the field
+     */
     private void makeHighlightField(ArrayList list, FieldView fieldv, String picture) {
         try {
             ImageView highlight = new ImageView();
@@ -302,23 +322,26 @@ public class GameView extends BorderPane implements Observer {
     }
 
 
-    private FigureView makeFigure() {
-        FigureView figureView;
+    /**
+     * making a building level 1 (only for initializing the dragable object)
+     * @return the building level
+     */
+    private BuildingLevel makeBuilding() {
+        BuildingLevel buildingView;
         try {
-            figureView = new FigureView(game.getPlayersTurn());
+            buildingView = new BuildingLevel(1);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return figureView;
+        return buildingView;
     }
 
+    /**
+     * getting the view of the given field
+     * @param fig the figure the view is looked for
+     * @return the view of the figure
+     */
     static FigureView getFigureView(Figure fig){
         return figureHolder.get(fig);
     }
-
-    static FieldView getFieldView(Field field){
-        return fieldHolder.get(field);
-    }
-
-
 }

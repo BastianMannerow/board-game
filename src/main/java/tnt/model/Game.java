@@ -134,6 +134,9 @@ public class Game extends Observable {
 //        createBoard(5,6);
     }
 
+    /**
+     * initialize the game
+     */
     public void initGame() {
         for(Player player: playerOrder){
             player.initPlayer();
@@ -182,10 +185,6 @@ public class Game extends Observable {
         }
     }
     */
-    public void addPlayer(Player player) {
-        playerOrder.add(player);
-        System.out.println("added Player");
-    }
 
     /**
      * Creates Board and containing Field objects.
@@ -530,79 +529,134 @@ public class Game extends Observable {
         return playerOrder.get(0);
     }
 
+    /**
+     * Checks if the game is in run mode
+     */
     public boolean isRunnung(){
         return gameStatus == GameStatus.BUILD || gameStatus == GameStatus.MOVE_FIGURE;
     }
 
+    /**
+     * Checks if the actual player has to move
+     */
     public boolean isMoveMode(){
         return gameStatus == GameStatus.MOVE_FIGURE;
     }
 
-
+    /**
+     * Set the gamemode to build, so the actual player has to build
+     */
     public void setBuildMode() {
         gameStatus = GameStatus.BUILD;
         notifyObservers();
     }
 
+    /**
+     * Set the gamemode to move, so the player (should be the next one) has to move
+     */
     public void setMoveMode() {
         gameStatus = GameStatus.MOVE_FIGURE;
         notifyObservers();
     }
+
+    /**
+     * Set the gamemode to gameover
+     */
     public void setGameOverMode() {
         gameStatus = GameStatus.GAME_OVER;
         notifyObservers();
     }
-
+    /**
+     * Checks if the game player has to build
+     */
     public boolean isBuildMode(){
         return gameStatus == GameStatus.BUILD;
     }
 
+    /**
+     * Checks if the game is in a mode, where the number of players etc gets set
+     */
     public boolean selectingPlayers(){
         return gameStatus == GameStatus.SELECT_PLAYER;
     }
 
+    /**
+     * Sets the gamemode in a mode, where the player can choose their positions
+     */
     public void startPlaceFigures(){
         gameStatus = GameStatus.PLACE_FIGURES;
     }
+
+    /**
+     * Sets the gamemode to move, so the actual player has to move a figure
+     */
     public void startGame(){
         gameStatus = GameStatus.MOVE_FIGURE;
         notifyObservers();
     }
 
-
+    /**
+     * Adds a player to the game
+     * @param amountOfFigures the number of figures this player should have
+     */
     public void addPlayer(int amountOfFigures) {
         playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, 1));
         notifyObservers();
     }
 
+    /**
+     * Removes the player of the game
+     * @param player the player to remove
+     */
     public void removePlayer(Player player) {
         playerOrder.remove(player);
         notifyObservers();
     }
 
+    /**
+     * Getter for the board
+     * @return the board of the game
+     */
     public Board getBoard(){
         return this.board;
     }
 
+    /**
+     * Checks if the player should place their figures
+     */
     public boolean placeFigures(){
         return gameStatus == GameStatus.PLACE_FIGURES;
     };
 
-
+    /**
+     * Getter for the Gamestatus
+     * @return the gamestatus of the game
+     */
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
+    /**
+     * Change the player, who's turn is
+     */
     public void nextPlayersTurn(){
         Collections.rotate(playerOrder, -1);
 //        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
     }
 
+    /**
+     * Sets the last moved figure (important for the building possibility)
+     * @param figure the figure moved latest
+     */
     public void setLastMovedFigure(Figure figure) {
         lastMovedFigure = figure;
     }
 
+    /**
+     * Get the latest moved figure
+     * @return the latest moved figure
+     */
     public Figure getLastMovedFigure() {
         return lastMovedFigure;
     }

@@ -84,15 +84,6 @@ public class Figure extends Observable {
         // Filter the reachable fields, so that only the legal fields remain
         int ownTowerLevel = board.getField(x,y).getTowerLevel();
         reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel+1);
-//        ArrayList<Field> possibleFields = new ArrayList<Field>();
-//
-//        for (Field field : reachableFields) {
-//            if(!field.getIsFigureHere() && !field.getTowerComplete() && field.getTowerLevel() <= ownTowerLevel+1){
-//                possibleFields.add(field);
-//            }
-//        }
-//
-//        return possibleFields;
         return reachableFields;
     }
 
@@ -142,10 +133,16 @@ public class Figure extends Observable {
         return validBuilds;
     }
 
+    /**
+     * checks if the figure is placed on the board
+     */
     public boolean isPlaced(){
         return placed;
     }
 
+    /**
+     * set the figure to be placed on the board
+     */
     public void setPlaced() {
         placed = true;
     }

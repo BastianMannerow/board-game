@@ -20,8 +20,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The view of the settings menu
+ */
 public class SettingsView extends VBox implements Observer {
 
+    /**
+     * Constructor for the view
+     * @param sceneHandler the scenehandler holding all the scenes
+     * @throws IOException Exception, when fxml file could not get loaded (the file of the scenebuilder)
+     */
     public SettingsView(SceneHandler sceneHandler) throws IOException {
         FXMLLoader settingsMenu = ResourceHandler.getInstance().getFXML("settings");
         settingsMenu.setRoot(this);

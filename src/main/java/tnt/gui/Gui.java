@@ -28,20 +28,28 @@ public class Gui extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
 
+        // generating the game
         Game game = new Game();
 
+        // create a scene handler, which holds all scenes, so that we can change between them
         SceneHandler sceneHandler = new SceneHandler();
 
+        // generate the playerchoose menu
         Parent choosePlayerMenu = new PlayerChooseView(sceneHandler, game);
 
-        MainMenuView mainView = new MainMenuView(sceneHandler, choosePlayerMenu);
+        // generate the main menu
+        MainMenuView mainView = new MainMenuView(sceneHandler);
 
+        // adding the main menu to the scenehandler
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
 
+        // generating the gameview
         GameView gameView = new GameView(sceneHandler, game);
+
+        // creating the settingsmenu
         SettingsView settingsView = new SettingsView(sceneHandler);
 
-
+        // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
         primaryStage.show();
     }

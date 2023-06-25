@@ -21,10 +21,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The view where the player can be choosen
+ */
 public class PlayerChooseView extends VBox implements Observer {
 
     private Map<Player, PlayerAloneChooseView> playerHolder = new HashMap<Player, PlayerAloneChooseView>();
     private Game game;
+
+    /**
+     * The constructor for the view
+     * @param sceneHandler the scenehandler holding all views
+     * @param game the actual game
+     * @throws IOException Exception when the fxml file has an error / does not exist
+     */
     public PlayerChooseView(SceneHandler sceneHandler, Game game) throws IOException {
         this.game = game;
         FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("choosePlayerMenu");
@@ -32,7 +42,6 @@ public class PlayerChooseView extends VBox implements Observer {
         choosePlayerMenu.load();
         PlayerChooseController controller = choosePlayerMenu.getController();
         controller.setGame(game);
-        controller.setView(this);
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("playerMenu", this);
         ((ScrollPane) this.getChildren().get(0)).setFitToHeight(true);

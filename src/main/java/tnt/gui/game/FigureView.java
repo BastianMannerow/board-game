@@ -12,23 +12,21 @@ import tnt.util.Observer;
 
 import java.io.IOException;
 
-
+/**
+ * The view for the figure
+ */
 public class FigureView extends DragableObject implements Observer{
 
     private Player player;
 
     private Figure figure;
 
-    public FigureView(Player player) throws IOException {
-        this.player = player;
-        FXMLLoader loader = ResourceHandler.getInstance().getFXML("figureView");
-        loader.setRoot(this);
-        loader.load();
-        ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
-        String name = player.getName();
-        ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
-    }
-
+    /**
+     * Contructor for the view
+     * @param player the player belonging to the figure
+     * @param figure the figure belonging to the view
+     * @throws IOException Exception when the fxml file has an error / does not exist
+     */
     public FigureView(Player player, Figure figure) throws IOException {
         this.player = player;
         this.figure = figure;
@@ -38,16 +36,21 @@ public class FigureView extends DragableObject implements Observer{
         ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
         String name = player.getName();
         ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
+        figure.addObserver(this);
     }
 
+    /**
+     * Getter for the player
+     * @return the player belonging to the figure
+     */
     public Player getPlayer() {
         return player;
     }
 
-    public void setFigure(Figure figure) {
-        this.figure = figure;
-        figure.addObserver(this);
-    }
+    /**
+     * Getter for the figure
+     * @return the figure belonging to the view
+     */
 
     public Figure getFigure() {
         return figure;
@@ -58,6 +61,7 @@ public class FigureView extends DragableObject implements Observer{
         // Todo: check figure for updates
     }
 
+    @Override
     public FigureView copy() throws IOException
     {
         return new FigureView(this.player, this.figure);

@@ -6,10 +6,18 @@ import tnt.ResourceHandler;
 
 import java.io.IOException;
 
-
+/**
+ * The view for all building levels
+ */
 public class BuildingLevel extends DragableObject {
 
     private int level;
+
+    /**
+     * Constructor for the building level
+     * @param level the level of the building
+     * @throws IOException Exception when the given level does not exist
+     */
     public BuildingLevel(int level) throws IOException {
 //        FXMLLoader loader;
         ImageView imageView = new ImageView();
@@ -34,8 +42,6 @@ public class BuildingLevel extends DragableObject {
         imageView.setPreserveRatio(true);
         imageView.setFitHeight(80);
         this.getChildren().add(imageView);
-//        loader.setRoot(this);
-//        loader.load();
     }
 
     @Override
@@ -43,6 +49,10 @@ public class BuildingLevel extends DragableObject {
         return new BuildingLevel(level);
     }
 
+    /**
+     * getter for the level
+     * @return the level
+     */
     public int getLevel() {
         return this.level;
     }

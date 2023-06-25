@@ -14,7 +14,9 @@ import tnt.util.Observable;
 
 import java.util.ArrayList;
 
-
+/**
+ * The controller for the view where the player can be choosen
+ */
 public class PlayerChooseController{
 
     @FXML
@@ -27,12 +29,12 @@ public class PlayerChooseController{
     @FXML
     TextField fieldSizeY;
 
-//    @FXML
-//    private void initialize(){
-//    }
     private Game game;
     private SceneHandler sceneHandler;
-    private PlayerChooseView view;
+
+    /**
+     * The method getting called, when user pressed the play button
+     */
     @FXML
     private void runGame() {
         for (Node node : playerPaneSingle.getChildren()){
@@ -82,21 +84,29 @@ public class PlayerChooseController{
         game.startPlaceFigures();
         sceneHandler.loadView("gameView");
     }
+
+    /**
+     * The method getting called, when user pressed the add player button
+     */
     @FXML
     private void addPlayer() {
         game.addPlayer(2);
     }
 
-
+    /**
+     * the setter for the game, so the controller knows its model
+     * @param game the actual game
+     */
     public void setGame(Game game) {
         this.game = game;
     }
 
+    /**
+     * Setter for the scene handler, so the controller can change the view
+     * @param sceneHandler the scenehandler, for changing views
+     */
     public void setSceneHandler(SceneHandler sceneHandler) {
         this.sceneHandler = sceneHandler;
     }
 
-    public void setView(PlayerChooseView view) {
-        this.view = view;
-    }
 }

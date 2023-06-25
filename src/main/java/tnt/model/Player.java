@@ -170,11 +170,6 @@ public class Player extends Observable {
             this.figures.add(newFigure);
         }
     }
-    public void addFigure(int x, int y) {
-        Figure newFigure = new Figure(x, y, game);
-        this.figures.add(newFigure);
-        game.notifyObservers();
-    }
 
     /**
      * @return card god/demon card, which belongs to the player
@@ -228,10 +223,16 @@ public class Player extends Observable {
         }
     }
 
+    /**
+     * initialize the player
+     */
     public void initPlayer() {
         addFigure(amountOfFigures);
     }
 
+    /**
+     * checks if all players are placed on the board
+     */
     public boolean allFiguresPlaced() {
         for (Figure fig: figures) {
             if (!fig.isPlaced()){
@@ -241,6 +242,10 @@ public class Player extends Observable {
         return true;
     }
 
+    /**
+     * sets the number of figures of the player
+     * @param i the number of figures
+     */
     public void setAmountOfFigures(int i){
         if (game.selectingPlayers()) {
             this.amountOfFigures = i;

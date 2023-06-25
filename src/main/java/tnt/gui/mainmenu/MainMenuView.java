@@ -12,6 +12,9 @@ import tnt.gui.SceneHandler;
 
 import java.io.IOException;
 
+/**
+ * The view for the main menu
+ */
 public class MainMenuView extends VBox {
 
     @FXML
@@ -19,7 +22,13 @@ public class MainMenuView extends VBox {
     private MainMenuController mainMenuController;
 
     // Todo: Maybe hold the scenebuilder in another class extending FXMLLoader and load every scene with that (than you dont have to call setScenebuilder each time)
-    public MainMenuView(SceneHandler sceneHandler, Parent choosePlayerMenu) throws IOException {
+
+    /**
+     * Constructor for the main menu view
+     * @param sceneHandler the scene handler holding all scenes
+     * @throws IOException Exception when the fxml file has an error / does not exist
+     */
+    public MainMenuView(SceneHandler sceneHandler) throws IOException {
         FXMLLoader mainMenuLayout = ResourceHandler.getInstance().getFXML("mainMenu");
         mainMenuLayout.setRoot(this);
         mainMenuLayout.load();
@@ -30,9 +39,4 @@ public class MainMenuView extends VBox {
         setSpacing(10);
         Label lblTitle = new Label("Main Menu!");
     }
-
-    public Button getPlayButton() {
-        return playButton;
-    }
-
 }
