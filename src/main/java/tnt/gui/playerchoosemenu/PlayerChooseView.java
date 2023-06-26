@@ -117,10 +117,18 @@ public class PlayerChooseView extends VBox implements Observer {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         try {
-                            player.setTeam(Integer.parseInt(countFigures.getText()));
+                            player.setTeam(Integer.parseInt(team.getText()));
                         } catch (NumberFormatException e) {
                             player.setTeam(2);
                         }
+                    }
+                });
+
+                ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
+                playerType.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
                     }
                 });
             }

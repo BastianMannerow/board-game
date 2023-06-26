@@ -142,11 +142,11 @@ public class FileManager {
         for (Player player: playerList){
             String name = player.getName();
             String color = player.getColor().toString();
-            String levelOfIntelligence = player.getLevelOfIntelligence();
+            Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
             String gods = "Nobody"; // Muss gelöscht werden
             // String gods = player.getGods(); Muss angepasst werden.
             String team = Integer.toString(player.getTeam());
-            playerData.add(new String[]{name, color, levelOfIntelligence, gods, team});
+            playerData.add(new String[]{name, color, String.valueOf(levelOfIntelligence), gods, team});
         }
 
         filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "player.csv";
@@ -207,13 +207,13 @@ public class FileManager {
         // Getting the data
         String playerOneName = playerList.get(0).getName();
         String playerTwoName = playerList.get(1).getName();
-        String playerOneIntelligence = playerList.get(0).getLevelOfIntelligence();
-        String playerTwoIntelligence = playerList.get(1).getLevelOfIntelligence();
+        Player.PlayerType playerOneIntelligence = playerList.get(0).getLevelOfIntelligence();
+        Player.PlayerType playerTwoIntelligence = playerList.get(1).getLevelOfIntelligence();
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
 
         // Saving in rows
-        data.add(new String[]{playerOneName, playerOneIntelligence});
-        data.add(new String[]{playerTwoName, playerTwoIntelligence});
+        data.add(new String[]{playerOneName, String.valueOf(playerOneIntelligence)});
+        data.add(new String[]{playerTwoName, String.valueOf(playerTwoIntelligence)});
         data.add(new String[]{amountOfTurns, ""});
         saveCSV(filepath, data);
     }

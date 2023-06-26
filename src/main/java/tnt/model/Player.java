@@ -19,7 +19,15 @@ import tnt.util.Observable;
  * A player with his attributes.
  */
 public class Player extends Observable {
-    private String levelOfIntelligence;
+
+    public enum PlayerType {
+        HUMAN,
+        REMOTE,
+        AI_1,
+        AI_2,
+        AI_3,
+    }
+    private PlayerType levelOfIntelligence;
     private Game game;
     private String name;
     private Color color;
@@ -36,7 +44,7 @@ public class Player extends Observable {
      * @param figures ArrayList of figures, which belongs to the player
      * @param gods the cards, which affect the players abilities
      */
-    public Player(String levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, ArrayList<Gods> gods) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, ArrayList<Gods> gods) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
@@ -44,7 +52,7 @@ public class Player extends Observable {
         this.gods = gods;
     }
 
-    public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, int team) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, int team) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
@@ -54,10 +62,19 @@ public class Player extends Observable {
     }
 
     /**
-     * @return name of the player
+     * Getter for the player type
+     * @return the type of the player
      */
-    public String getLevelOfIntelligence() {
+    public PlayerType getLevelOfIntelligence() {
         return levelOfIntelligence;
+    }
+
+    /**
+     * Setter for the player type
+     * @param levelOfIntelligence the player type to be set
+     */
+    public void setLevelOfIntelligence(PlayerType levelOfIntelligence) {
+        this.levelOfIntelligence = levelOfIntelligence;
     }
 
     /**

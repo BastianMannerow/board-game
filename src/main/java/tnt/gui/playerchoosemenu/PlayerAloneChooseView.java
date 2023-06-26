@@ -1,7 +1,10 @@
 package tnt.gui.playerchoosemenu;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -26,6 +29,9 @@ public class PlayerAloneChooseView extends HBox implements Observer {
     private int playerNumber = 0;
     private Player player;
 
+    private ObservableList<Object> playerTypeList;
+
+
     /**
      * The constructor for the view
      * @param player the player belonging to this view
@@ -37,28 +43,35 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         playerLayout.setRoot(this);
         playerLayout.load();
         player.addObserver(this);
+        playerTypeList = FXCollections.observableArrayList(Player.PlayerType.values());
+        ChoiceBox playerType = (ChoiceBox) ((VBox) this.getChildren().get(6)).getChildren().get(1);
+        playerType.setItems(playerTypeList);
     }
 
     @Override
     public void update() {
         ((Label) this.getChildren().get(1)).setText("Player " + playerNumber);
-        if (((TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1)).getText().equals("")){
-            ((TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1)).setPromptText(player.getName());
+        TextField name = (TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1);
+        if (name.getText().equals("")){
+            name.setPromptText(player.getName());
         } else {
-            ((TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1)).setText(player.getName());
+            name.setText(player.getName());
         }
         ((ColorPicker) ((VBox) this.getChildren().get(4)).getChildren().get(1)).setValue(player.getColor());
-        if (((TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1)).getText().equals("")){
-            ((TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1)).setPromptText(Integer.toString(player.getTeam()));
+        TextField team = (TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1);
+        if (team.getText().equals("")){
+            team.setPromptText(Integer.toString(player.getTeam()));
         } else {
-            ((TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1)).setText(Integer.toString(player.getTeam()));
+            team.setText(Integer.toString(player.getTeam()));
         }
-        if (((TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1)).getText().equals("")){
-            ((TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1)).setPromptText(Integer.toString(player.getAmountOfFigures()));
+        TextField amountOfFigures = (TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1);
+        if (amountOfFigures.getText().equals("")){
+            amountOfFigures.setPromptText(Integer.toString(player.getAmountOfFigures()));
         } else {
-            ((TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1)).setText(Integer.toString(player.getAmountOfFigures()));
+            amountOfFigures.setText(Integer.toString(player.getAmountOfFigures()));
         }
-
+        ChoiceBox playerType = (ChoiceBox) ((VBox) this.getChildren().get(6)).getChildren().get(1);
+        playerType.setValue(player.getLevelOfIntelligence());
     }
 
     /**
