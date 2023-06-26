@@ -205,7 +205,7 @@ public class GameView extends BorderPane implements Observer {
                 dragableObject = dragFig;
                 this.getChildren().add(dragableObject);
             } catch (IOException e) {
-                System.out.println("Copy of dragableObject didnt work");
+                System.err.println("Copy of dragableObject didnt work");
             }
 
             if (sourceObject instanceof FigureView) {
@@ -286,7 +286,7 @@ public class GameView extends BorderPane implements Observer {
             list.add(highlight);
             ((StackPane) fieldv.getChildren().get(0)).getChildren().add(highlight);
         } catch (Exception e) {
-            System.out.println("Could not load image " + e);
+            System.err.println("Could not load image " + e);
             e.printStackTrace();
         }
     }

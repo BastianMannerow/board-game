@@ -91,7 +91,6 @@ public class FieldView extends HBox implements Observer {
             }
         }
         this.setPrefSize(StaticSizeHandler.getPrefSize(), StaticSizeHandler.getPrefSize());
-//        int size = Math.min(StaticSizeHandler.getPrefSize(), 100);
         int size =StaticSizeHandler.getPrefSize();
         ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitHeight(size);
         ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitWidth(size);

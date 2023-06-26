@@ -2,6 +2,7 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.paint.Color;
+import tnt.gui.Settings;
 import tnt.gui.StaticSizeHandler;
 import tnt.util.Observable;
 import tnt.model.gods.movement.*;
@@ -129,10 +130,9 @@ public class Game extends Observable {
     public Game() {
         gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
-        // Todo: get default amount of players
-        addPlayer(2);
-        addPlayer(2);
-//        createBoard(5,6);
+        for (int i = 0; i< Settings.getDefaultPlayer(); i++) {
+            addPlayer(2);
+         }
     }
 
     /**

@@ -4,6 +4,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import tnt.util.Observable;
 
+import java.util.Set;
+
 /**
  * Starting point of the JavaFX GUI
  */
@@ -11,8 +13,8 @@ public class StaticSizeHandler extends Observable {
 
     private static StaticSizeHandler instance;
     private static int prefSize;
-    private static int fieldX = 1;
-    private static int fieldY = 1;
+    private static int fieldX;
+    private static int fieldY;
 
     private StaticSizeHandler() {
     }
@@ -20,6 +22,8 @@ public class StaticSizeHandler extends Observable {
     public static StaticSizeHandler getInstance() {
         if (instance == null) {
             instance = new StaticSizeHandler();
+            fieldX = Settings.fieldSizeX;
+            fieldY = Settings.fieldSizeY;
         }
         return instance;
     }

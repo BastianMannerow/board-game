@@ -65,7 +65,6 @@ public class FigureView extends DragableObject implements Observer{
 
     @Override
     public void update() {
-        // Todo: check figure for updates
         ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
         String name = player.getName();
         ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));

@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
+import tnt.gui.StaticSizeHandler;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observer;
@@ -48,8 +49,8 @@ public class PlayerChooseView extends VBox implements Observer {
         ((ScrollPane) this.getChildren().get(0)).setFitToWidth(true);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setSpacing(20);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setPadding(new Insets(20,0,5,0));
-        controller.fieldSizeX.setPromptText("5"); //Todo: get default size
-        controller.fieldSizeY.setPromptText("5"); //Todo: get default size
+        controller.fieldSizeX.setPromptText(Integer.toString(StaticSizeHandler.getNrFieldsX()));
+        controller.fieldSizeY.setPromptText(Integer.toString(StaticSizeHandler.getNrFieldsX()));
         game.addObserver(this);
         update();
     }

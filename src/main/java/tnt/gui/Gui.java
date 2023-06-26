@@ -27,13 +27,14 @@ public class Gui extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
+        StaticSizeHandler.getInstance();
         primaryStage.setTitle("TNT");
 
         // generating the game
         Game game = new Game();
 
         // create a scene handler, which holds all scenes, so that we can change between them
-        SceneHandler sceneHandler = new SceneHandler();
+        SceneHandler sceneHandler = new SceneHandler(primaryStage);
 
         // generate the playerchoose menu
         Parent choosePlayerMenu = new PlayerChooseView(sceneHandler, game);

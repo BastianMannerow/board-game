@@ -7,7 +7,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
+import tnt.gui.Settings;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observable;
@@ -38,6 +40,7 @@ public class PlayerChooseController{
      */
     @FXML
     private void runGame() {
+        int nrOfFigures = 0;
         for (Node node : playerPaneSingle.getChildren()){
             if (node instanceof PlayerAloneChooseView){
                 PlayerAloneChooseView playerView = (PlayerAloneChooseView) node;
@@ -54,27 +57,37 @@ public class PlayerChooseController{
                     int amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
                     player.setAmountOfFigures(amount);
                 } catch (NumberFormatException e) {
-                    System.out.println("could not convert the amount of figures to int: " + ((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText() + " Error: " + e);
+                    System.err.println("could not convert the amount of figures to int: " + ((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText() + " Error: " + e);
                 }
                 player.setColor(((ColorPicker) ((VBox) playerView.getChildren().get(4)).getChildren().get(1)).getValue());
-
+                nrOfFigures += player.getAmountOfFigures();
             }
         }
 
-        int sizeX = 5; // Todo: get default size
-        int sizeY = 5;
+        int sizeX = Settings.getFieldSizeX();
+        int sizeY = Settings.getFieldSizeY();
 
         try {
             int amount = Integer.parseInt(fieldSizeX.getText());
             sizeX = amount;
         } catch (NumberFormatException e) {
-            System.out.println("could not convert the field size x to int " + e);
+            System.err.println("could not convert the field size x to int " + e);
         }
         try {
             int amount = Integer.parseInt(fieldSizeY.getText());
             sizeY = amount;
         } catch (NumberFormatException e) {
-            System.out.println("could not convert the field size y to int " + e);
+            System.err.println("could not convert the field size y to int " + e);
+        }
+
+        if (sizeX * sizeY <= nrOfFigures){
+            System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
+            return;
+        }
+
+        if (sizeX * sizeY <= Settings.maxFieldcount){
+            System.err.println("Too many fields, the amount of field is limited by " + Settings.maxFieldcount);
+            return;
         }
 
         game.createBoard(sizeX, sizeY);
@@ -103,7 +116,7 @@ public class PlayerChooseController{
         try {
             amountOfFigures = Integer.parseInt(amountOfFiguresAll.getText());
         } catch (NumberFormatException e){
-            System.out.println("could not convert the amount of figures to int: " + amountOfFiguresAll.getText() + " Error: " + e);
+            System.err.println("could not convert the amount of figures to int: " + amountOfFiguresAll.getText() + " Error: " + e);
         }
         for (Player player: game.getPlayerOrder()) {
             player.setAmountOfFigures(amountOfFigures);
