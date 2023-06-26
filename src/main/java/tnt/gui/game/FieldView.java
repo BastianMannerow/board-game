@@ -3,10 +3,12 @@ package tnt.gui.game;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
+import tnt.gui.StaticSizeHandler;
 import tnt.model.Field;
 import tnt.util.Observer;
 
@@ -35,6 +37,7 @@ public class FieldView extends HBox implements Observer {
         fieldLayout.load();
         this.field = field;
         field.addObserver(this);
+        StaticSizeHandler.getInstance().addObserver(this);
         update();
     }
 
@@ -87,6 +90,11 @@ public class FieldView extends HBox implements Observer {
                 ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(-1));
             }
         }
+        this.setPrefSize(StaticSizeHandler.getPrefSize(), StaticSizeHandler.getPrefSize());
+//        int size = Math.min(StaticSizeHandler.getPrefSize(), 100);
+        int size =StaticSizeHandler.getPrefSize();
+        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitHeight(size);
+        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitWidth(size);
 
     }
 }

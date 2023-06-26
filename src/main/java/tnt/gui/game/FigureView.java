@@ -1,11 +1,14 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import tnt.ResourceHandler;
+import tnt.gui.StaticSizeHandler;
 import tnt.model.Figure;
 import tnt.model.Player;
 import tnt.util.Observer;
@@ -21,12 +24,14 @@ public class FigureView extends DragableObject implements Observer{
 
     private Figure figure;
 
+
     /**
      * Contructor for the view
      * @param player the player belonging to the figure
      * @param figure the figure belonging to the view
      * @throws IOException Exception when the fxml file has an error / does not exist
      */
+
     public FigureView(Player player, Figure figure) throws IOException {
         this.player = player;
         this.figure = figure;
@@ -37,6 +42,8 @@ public class FigureView extends DragableObject implements Observer{
         String name = player.getName();
         ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
         figure.addObserver(this);
+        StaticSizeHandler.getInstance().addObserver(this);
+        update();
     }
 
     /**
@@ -59,6 +66,13 @@ public class FigureView extends DragableObject implements Observer{
     @Override
     public void update() {
         // Todo: check figure for updates
+        ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
+        String name = player.getName();
+        ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
+        this.setLayoutX(0);
+        ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setRadius(StaticSizeHandler.getPrefSize()/4);
+        ((StackPane) this.getChildren().get(0)).setPrefHeight(StaticSizeHandler.getPrefSize());
+        ((StackPane) this.getChildren().get(0)).setPrefWidth(StaticSizeHandler.getPrefSize());
     }
 
     @Override

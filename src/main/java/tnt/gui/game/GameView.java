@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
+import tnt.gui.Settings;
+import tnt.gui.StaticSizeHandler;
 import tnt.model.Field;
 import tnt.model.Figure;
 import tnt.model.Game;
@@ -52,6 +54,7 @@ public class GameView extends BorderPane implements Observer {
 
         this.getChildren().add(dragableObject);
 
+        StaticSizeHandler.getInstance().addObserver(this);
         game.addObserver(this);
         update();
     }
@@ -59,6 +62,9 @@ public class GameView extends BorderPane implements Observer {
     @Override
     public void update() {
         removeHighlights(highlighted);
+
+        ((ScrollPane) this.getCenter()).setFitToHeight(true);
+
 
         if (game.placeFigures()){
 
@@ -135,6 +141,8 @@ public class GameView extends BorderPane implements Observer {
 
         if (game.isRunnung() || game.placeFigures()) {
             GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
+//            gridPane.setPrefWidth(StaticSizeHandler.getNrFieldsX() * StaticSizeHandler.getPrefSize());
+            gridPane.setPrefHeight(StaticSizeHandler.getPrefSize() * StaticSizeHandler.getNrFieldsY());
             for (int i = 0; i < game.getBoard().getXSize(); i++) {
                 for (int j = 0; j < game.getBoard().getYSize(); j++) {
                     Field field = game.getBoard().getField(i, j);
@@ -158,6 +166,7 @@ public class GameView extends BorderPane implements Observer {
 
                                 controller.placeFigure(source.getFigure(), field);
 
+
                                 dragableObject.setVisible(false);
                                 source.setVisible(true);
 
@@ -170,10 +179,16 @@ public class GameView extends BorderPane implements Observer {
                             }
                         });
                         gridPane.add(fieldHolder.get(field), i, j);
-                        GridPane.setConstraints(fieldHolder.get(field), i, j);
                     }
                 }
             }
+        }
+        ((VBox) this.getRight()).setPrefWidth(StaticSizeHandler.getPrefSize());
+        for(ImageView img : highlighted){
+            img.setFitHeight(StaticSizeHandler.getPrefSize());
+        }
+        for(ImageView img : highlightedtemp){
+            img.setFitHeight(StaticSizeHandler.getPrefSize());
         }
     }
 
@@ -265,8 +280,8 @@ public class GameView extends BorderPane implements Observer {
             ImageView highlight = new ImageView();
             highlight.setImage(ResourceHandler.getInstance().getImage(picture));
             highlight.setPreserveRatio(true);
-            highlight.setFitHeight(80);
             highlight.setDisable(true);
+            highlight.setFitHeight(StaticSizeHandler.getPrefSize());
 //            highlighted.put(fieldv, highlight);
             list.add(highlight);
             ((StackPane) fieldv.getChildren().get(0)).getChildren().add(highlight);
