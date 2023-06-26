@@ -252,4 +252,8 @@ public class Player extends Observable {
         }
         notifyObservers();
     }
+
+    public int getAmountOfFigures() {
+        return this.amountOfFigures;
+    }
 }

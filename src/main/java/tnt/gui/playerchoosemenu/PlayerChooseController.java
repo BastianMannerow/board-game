@@ -21,13 +21,14 @@ public class PlayerChooseController{
 
     @FXML
     CheckBox roundWorld;
-
     @FXML
     VBox playerPaneSingle;
     @FXML
     TextField fieldSizeX;
     @FXML
     TextField fieldSizeY;
+    @FXML
+    TextField amountOfFiguresAll;
 
     private Game game;
     private SceneHandler sceneHandler;
@@ -53,7 +54,7 @@ public class PlayerChooseController{
                     int amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
                     player.setAmountOfFigures(amount);
                 } catch (NumberFormatException e) {
-                    System.out.println("could not convert the amount of figures to int " + e);
+                    System.out.println("could not convert the amount of figures to int: " + ((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText() + " Error: " + e);
                 }
                 player.setColor(((ColorPicker) ((VBox) playerView.getChildren().get(4)).getChildren().get(1)).getValue());
 
@@ -91,6 +92,22 @@ public class PlayerChooseController{
     @FXML
     private void addPlayer() {
         game.addPlayer(2);
+    }
+
+    /**
+     * The method getting called, when user pressed the add player button
+     */
+    @FXML
+    private void setAmountOfFigures() {
+        int amountOfFigures = 2;
+        try {
+            amountOfFigures = Integer.parseInt(amountOfFiguresAll.getText());
+        } catch (NumberFormatException e){
+            System.out.println("could not convert the amount of figures to int: " + amountOfFiguresAll.getText() + " Error: " + e);
+        }
+        for (Player player: game.getPlayerOrder()) {
+            player.setAmountOfFigures(amountOfFigures);
+        }
     }
 
     /**

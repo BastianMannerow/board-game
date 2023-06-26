@@ -42,8 +42,23 @@ public class PlayerAloneChooseView extends HBox implements Observer {
     @Override
     public void update() {
         ((Label) this.getChildren().get(1)).setText("Player " + playerNumber);
-        ((TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1)).setPromptText(player.getName());
+        if (((TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1)).getText().equals("")){
+            ((TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1)).setPromptText(player.getName());
+        } else {
+            ((TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1)).setText(player.getName());
+        }
         ((ColorPicker) ((VBox) this.getChildren().get(4)).getChildren().get(1)).setValue(player.getColor());
+        if (((TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1)).getText().equals("")){
+            ((TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1)).setPromptText(Integer.toString(player.getTeam()));
+        } else {
+            ((TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1)).setText(Integer.toString(player.getTeam()));
+        }
+        if (((TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1)).getText().equals("")){
+            ((TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1)).setPromptText(Integer.toString(player.getAmountOfFigures()));
+        } else {
+            ((TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1)).setText(Integer.toString(player.getAmountOfFigures()));
+        }
+
     }
 
     /**

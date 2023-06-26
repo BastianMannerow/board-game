@@ -111,6 +111,18 @@ public class PlayerChooseView extends VBox implements Observer {
 
                     }
                 });
+
+                TextField team = (TextField) ((VBox) playerAloneChooseView.getChildren().get(5)).getChildren().get(1);
+                team.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        try {
+                            player.setTeam(Integer.parseInt(countFigures.getText()));
+                        } catch (NumberFormatException e) {
+                            player.setTeam(2);
+                        }
+                    }
+                });
             }
             playerHolder.get(player).setPlayerNumber(i);
         }

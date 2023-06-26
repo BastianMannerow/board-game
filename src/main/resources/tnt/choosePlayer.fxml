@@ -67,6 +67,12 @@
        </ColorPicker>
     </children>
  </VBox>
+      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+         <children>
+            <Label fx:id="labelPlayerFigures1" text="Team" />
+            <TextField fx:id="tfPlayerFigures1" />
+         </children>
+      </VBox>
 </children>
 <VBox.margin>
  <Insets />
