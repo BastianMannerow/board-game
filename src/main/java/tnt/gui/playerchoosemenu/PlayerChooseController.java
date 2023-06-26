@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
 import tnt.gui.Settings;
@@ -47,19 +48,20 @@ public class PlayerChooseController{
 
                 Player player = playerView.getPlayer();
                 String name = ((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getText();
-                if (!(name.length()<1)){
-                    player.setName(name);
+
+                if ((name.length()<1)){
+                    name = (((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7));
                 }
-                else{
-                    player.setName(((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7));
-                }
+                int amount = player.getAmountOfFigures();
                 try {
-                    int amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
-                    player.setAmountOfFigures(amount);
+                    amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
                 } catch (NumberFormatException e) {
                     System.err.println("could not convert the amount of figures to int: " + ((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText() + " Error: " + e);
                 }
+
                 player.setColor(((ColorPicker) ((VBox) playerView.getChildren().get(4)).getChildren().get(1)).getValue());
+                player.setName(name);
+                player.setAmountOfFigures(amount);
                 nrOfFigures += player.getAmountOfFigures();
             }
         }
@@ -82,11 +84,21 @@ public class PlayerChooseController{
 
         if (sizeX * sizeY <= nrOfFigures){
             System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
+//            final Popup popup = new Popup();
+//            popup.setX(300);
+//            popup.setY(200);
+//            popup.getContent().addAll(new Circle(25, 25, 50, Color.RED));
+//            popup.show(sceneHandler.getStage());
             return;
         }
 
-        if (sizeX * sizeY <= Settings.maxFieldcount){
-            System.err.println("Too many fields, the amount of field is limited by " + Settings.maxFieldcount);
+        if (sizeX * sizeY > Settings.maxFieldcount){
+            System.err.println("Too many fields, the amount of field is limited by " + Settings.maxFieldcount + " but you entered " + sizeX * sizeY);
+//            final Popup popup = new Popup();
+//            popup.setX(300);
+//            popup.setY(200);
+//            popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
+//            popup.show(sceneHandler.getStage());
             return;
         }
 

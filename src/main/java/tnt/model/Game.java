@@ -603,7 +603,7 @@ public class Game extends Observable {
      * @param amountOfFigures the number of figures this player should have
      */
     public void addPlayer(int amountOfFigures) {
-        playerOrder.add(new Player(Player.PlayerType.HUMAN , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, playerOrder.size()+1));
+        playerOrder.add(new Player(Player.PlayerType.HUMAN , "" + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, playerOrder.size()+1));
         notifyObservers();
     }
 

@@ -53,7 +53,7 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         ((Label) this.getChildren().get(1)).setText("Player " + playerNumber);
         TextField name = (TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1);
         if (name.getText().equals("")){
-            name.setPromptText(player.getName());
+            name.setPromptText("Player " + player.getName());
         } else {
             name.setText(player.getName());
         }
