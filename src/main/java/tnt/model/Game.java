@@ -2,6 +2,7 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.paint.Color;
+import tnt.gui.StaticSizeHandler;
 import tnt.util.Observable;
 import tnt.model.interfaces.Gods;
 import tnt.model.gods.movement.*;
@@ -170,6 +171,8 @@ public class Game extends Observable {
                 fields[i][j] = field;
             }
         }
+        StaticSizeHandler.setNrFieldsX(boardX);
+        StaticSizeHandler.setNrFieldsY(boardY);
         Board board = new Board(fields, boardX, boardY);
         this.board = board;
 

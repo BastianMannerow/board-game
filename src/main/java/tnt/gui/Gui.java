@@ -1,6 +1,7 @@
 package tnt.gui;
 
 import javafx.application.Application;
+import javafx.beans.InvalidationListener;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.TilePane;
@@ -43,6 +44,11 @@ public class Gui extends Application {
 
 
         primaryStage.setScene(sceneHandler.getScene());
+
+        SizeHandler width = new SizeHandler(false);
+        primaryStage.widthProperty().addListener(width);
+        SizeHandler height = new SizeHandler(true);
+        primaryStage.heightProperty().addListener(height);
         primaryStage.show();
     }
 
