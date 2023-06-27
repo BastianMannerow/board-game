@@ -41,7 +41,7 @@ public class Gui extends Application {
         Parent choosePlayerMenu = new PlayerChooseView(sceneHandler, game);
 
         //generate the SaveLoadMenu
-        SaveLoadMenuView SaveLoadView = new SaveLoadMenuView(sceneHandler);
+        SaveLoadMenuView SaveLoadView = new SaveLoadMenuView(sceneHandler,game);
 
         // generate the main menu
         MainMenuView mainView = new MainMenuView(sceneHandler);
