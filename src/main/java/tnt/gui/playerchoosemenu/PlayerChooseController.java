@@ -12,10 +12,13 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
 import tnt.gui.Settings;
+import tnt.gui.game.GameView;
+import tnt.gui.game3d.GameView3D;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.util.Observable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +36,8 @@ public class PlayerChooseController{
     TextField fieldSizeY;
     @FXML
     TextField amountOfFiguresAll;
+    @FXML
+    CheckBox enable3d;
 
     private Game game;
     private SceneHandler sceneHandler;
@@ -105,7 +110,23 @@ public class PlayerChooseController{
 
         game.initGame();
         game.startPlaceFigures();
-        sceneHandler.loadView("gameView");
+
+        // generating the gameview
+        if (enable3d.isSelected()){
+//            try {
+            GameView3D gameView = new GameView3D(sceneHandler, game);
+//            } catch (IOException e) {
+//                throw new RuntimeException("Could not create 3D gameview " + e);
+//            }
+            sceneHandler.loadView("gameView3D");
+        } else {
+            try {
+                GameView gameView = new GameView(sceneHandler, game);
+                sceneHandler.loadView("gameView");
+            } catch (IOException e) {
+                throw new RuntimeException("Could not create 2D gameview " + e);
+            }
+        }
     }
 
     /**

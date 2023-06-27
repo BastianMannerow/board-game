@@ -56,12 +56,14 @@ public class SceneHandler{
      * @param viewName the name of the view to be loaded
      */
     public void loadView(String viewName){
-        if (views.containsKey(viewName)){
+        if (views.containsKey(viewName)) {
             Parent view = views.get(viewName);
             scene.setRoot(view);
             if (view instanceof Observer) {
                 ((Observer) views.get(viewName)).update();
             }
+        } else {
+            System.err.println("Could find the view + " + viewName + " for loading");
         }
     }
 

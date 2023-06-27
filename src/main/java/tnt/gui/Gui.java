@@ -45,9 +45,6 @@ public class Gui extends Application {
         // adding the main menu to the scenehandler
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
 
-        // generating the gameview
-        GameView gameView = new GameView(sceneHandler, game);
-
         // creating the settingsmenu
         SettingsView settingsView = new SettingsView(sceneHandler);
 
