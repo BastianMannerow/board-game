@@ -51,6 +51,6 @@
       <VBox prefHeight="200.0" prefWidth="80.0" BorderPane.alignment="CENTER" />
    </right>
    <left>
-      <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#goToMenu" text="Menu" BorderPane.alignment="CENTER" />
    </left>
 </fx:root>

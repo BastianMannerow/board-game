@@ -100,4 +100,8 @@ public class GameController{
         }
         return false;
     }
+
+    public void goToMenu(){
+        sceneHandler.loadView("mainMenu");
+    }
 }

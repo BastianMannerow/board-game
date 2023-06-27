@@ -33,6 +33,7 @@ public class Gui extends Application {
 
         // generating the game
         Game game = new Game();
+        game.setGameName("newGame");
 
         // create a scene handler, which holds all scenes, so that we can change between them
         SceneHandler sceneHandler = new SceneHandler(primaryStage);
