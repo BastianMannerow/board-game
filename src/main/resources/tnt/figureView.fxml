@@ -9,7 +9,7 @@
    <children>
       <StackPane prefHeight="80.0" prefWidth="80.0">
          <children>
-            <Circle centerX="20.0" centerY="20.0" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
             <Label text="P" textFill="WHITE" />
          </children>
       </StackPane>

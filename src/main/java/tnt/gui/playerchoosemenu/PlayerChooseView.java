@@ -53,6 +53,11 @@ public class PlayerChooseView extends VBox implements Observer {
         controller.fieldSizeY.setPromptText(Integer.toString(StaticSizeHandler.getNrFieldsX()));
         game.addObserver(this);
         update();
+        VBox popup = new VBox();
+        FXMLLoader popup_loader = ResourceHandler.getInstance().getFXML("error");
+        popup_loader.setRoot(popup);
+        popup_loader.load();
+        controller.setPopup(popup);
     }
 
     @Override

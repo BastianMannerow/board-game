@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -35,6 +36,8 @@ public class PlayerChooseController{
 
     private Game game;
     private SceneHandler sceneHandler;
+    final Popup popup = new Popup();
+
 
     /**
      * The method getting called, when user pressed the play button
@@ -84,21 +87,15 @@ public class PlayerChooseController{
 
         if (sizeX * sizeY <= nrOfFigures){
             System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
-//            final Popup popup = new Popup();
-//            popup.setX(300);
-//            popup.setY(200);
-//            popup.getContent().addAll(new Circle(25, 25, 50, Color.RED));
-//            popup.show(sceneHandler.getStage());
+            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many figures for that board size");
+            popup.show(sceneHandler.getStage());
             return;
         }
 
         if (sizeX * sizeY > Settings.maxFieldcount){
             System.err.println("Too many fields, the amount of field is limited by " + Settings.maxFieldcount + " but you entered " + sizeX * sizeY);
-//            final Popup popup = new Popup();
-//            popup.setX(300);
-//            popup.setY(200);
-//            popup.getContent().addAll(new Circle(25, 25, 50, Color.AQUAMARINE));
-//            popup.show(sceneHandler.getStage());
+            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fieldss");
+            popup.show(sceneHandler.getStage());
             return;
         }
 
@@ -151,4 +148,13 @@ public class PlayerChooseController{
         this.sceneHandler = sceneHandler;
     }
 
+    public void setPopup(VBox vbox) {
+        this.popup.setX(300);
+        vbox.setStyle("-fx-background-color: white");
+        popup.setY(200);
+        ((Button) vbox.getChildren().get(1)).setOnAction(event -> {
+            popup.hide();
+        });
+        popup.getContent().add(vbox);
+    }
 }
