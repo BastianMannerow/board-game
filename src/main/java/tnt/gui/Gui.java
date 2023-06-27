@@ -11,6 +11,7 @@ import tnt.gui.game.GameView;
 import tnt.gui.mainmenu.MainMenuController;
 import tnt.gui.mainmenu.MainMenuView;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
+import tnt.gui.saveloadmenu.SaveLoadMenuView;
 import tnt.gui.settingsmenu.SettingsView;
 import tnt.model.Game;
 
@@ -55,6 +56,7 @@ public class Gui extends Application {
         primaryStage.setScene(sceneHandler.getScene());
 
         //generate the SaveLoadMenu
+        SaveLoadMenuView SaveLoadView = new SaveLoadMenuView(sceneHandler);
 
 
         SizeHandler width = new SizeHandler(false);
