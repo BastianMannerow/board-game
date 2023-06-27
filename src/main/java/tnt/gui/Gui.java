@@ -54,6 +54,9 @@ public class Gui extends Application {
         // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
 
+        //generate the SaveLoadMenu
+
+
         SizeHandler width = new SizeHandler(false);
         primaryStage.widthProperty().addListener(width);
         SizeHandler height = new SizeHandler(true);
