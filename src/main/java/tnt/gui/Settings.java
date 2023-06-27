@@ -7,7 +7,7 @@ public class Settings {
     static int maxFieldsize = 100;
     static int minFieldsize = 40;
     static int defaultPlayer = 2;
-    public static int maxFieldcount = 1000;
+    public static int maxFieldcount = 500;
 
 
     public static int getFieldSizeX() {

@@ -52,6 +52,7 @@ public class GameController{
                     }
                     if (game.getPlayersTurn().allFiguresPlaced()){
                         game.startGame();
+                        game.checkBlockedMovement(game.getPlayersTurn());
                     }
                     return true;
                 } else {
@@ -62,6 +63,7 @@ public class GameController{
                     game.setLastMovedFigure(figure);
                     game.getPlayersTurn().executeMove(field,game.getBoard(), figure);
                     game.setBuildMode();
+                    game.checkBlockedBuilding(game.getPlayersTurn());
                     return true;
                 } else {
                     return false;
@@ -92,6 +94,7 @@ public class GameController{
                 }
                 game.nextPlayersTurn();
                 game.setMoveMode();
+                game.checkBlockedMovement(game.getPlayersTurn());
                 return true;
             }
         }
