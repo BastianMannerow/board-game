@@ -6,6 +6,12 @@ import tnt.gui.SceneHandler;
 public class SaveLoadMenuController {
     private SceneHandler sceneHandler;
 
+
+    @FXML
+    private void goToMenu() {
+        sceneHandler.loadView("mainMenu");
+    }
+
     /**
      * Setter for the scene handler, so the controller can change the view
      * @param sceneHandler the scenehandler, for changing views

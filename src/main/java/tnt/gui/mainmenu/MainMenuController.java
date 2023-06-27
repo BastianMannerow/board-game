@@ -29,7 +29,7 @@ public class MainMenuController{
      */
     @FXML
     private void gotoSaveMenu() {
-        sceneHandler.loadView("saveMenu");
+        sceneHandler.loadView("SaveLoad");
     }
 
 

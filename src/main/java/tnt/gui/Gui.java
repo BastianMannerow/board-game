@@ -40,6 +40,9 @@ public class Gui extends Application {
         // generate the playerchoose menu
         Parent choosePlayerMenu = new PlayerChooseView(sceneHandler, game);
 
+        //generate the SaveLoadMenu
+        SaveLoadMenuView SaveLoadView = new SaveLoadMenuView(sceneHandler);
+
         // generate the main menu
         MainMenuView mainView = new MainMenuView(sceneHandler);
 
@@ -55,8 +58,7 @@ public class Gui extends Application {
         // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
 
-        //generate the SaveLoadMenu
-        SaveLoadMenuView SaveLoadView = new SaveLoadMenuView(sceneHandler);
+
 
 
         SizeHandler width = new SizeHandler(false);
