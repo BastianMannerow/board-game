@@ -1,12 +1,15 @@
 package tnt.model;
+import tnt.util.Observable;
+
 import java.util.ArrayList;
 
 /**
  * A figure owned by the Player.
  */
-public class Figure {
+public class Figure extends Observable {
     private int x;
     private int y;
+    private Game game;
     private boolean placed;
 
     /**
@@ -14,10 +17,11 @@ public class Figure {
      * @param x initial x coordinate
      * @param y initial y coordinate
      */
-    public Figure(int x, int y) {
+    public Figure(int x, int y, Game game) {
         this.x = x;
         this.y = y;
         this.placed = true;
+        this.game = game;
 
     }
 
@@ -68,7 +72,7 @@ public class Figure {
             for (int j = y-1; j <= y+1; j++) {
 
                 // "Wahlpflichtfeature - Die Welt ist eine Kugel"
-                if(true){
+                if(board.getRoundWorld()){
                     reachableFields.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
                 }
                 else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {
@@ -79,15 +83,8 @@ public class Figure {
 
         // Filter the reachable fields, so that only the legal fields remain
         int ownTowerLevel = board.getField(x,y).getTowerLevel();
-        ArrayList<Field> possibleFields = new ArrayList<Field>();
-
-        for (Field field : reachableFields) {
-            if(!field.getIsFigureHere() && !field.getTowerComplete() && field.getTowerLevel() <= ownTowerLevel+1){
-                possibleFields.add(field);
-            }
-        }
-
-        return possibleFields;
+        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel+1);
+        return reachableFields;
     }
 
     /**
@@ -95,16 +92,57 @@ public class Figure {
      *
      * @return valid build positions
      */
-    public ArrayList<Field> getValidBuilds(){
-        // Daran denken, dass man nicht auf Feldern bauen darf, wo Figuren sind & nur Felder um Figur rum sind buildable.
+    public ArrayList<Field> getValidBuilds(Board board){
         ArrayList<Field> validBuilds = new ArrayList<Field>();
+
+        int boardX = board.getXSize();
+        int boardY = board.getYSize();
+
+        for (int i = x-1; i <= x+1; i++) {
+            for (int j = y-1; j <= y+1; j++) {
+
+                // "Wahlpflichtfeature - Die Welt ist eine Kugel"
+                if(board.getRoundWorld()){
+                    validBuilds.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
+                }
+                else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {
+                    validBuilds.add(board.getField(i, j));
+                }
+            }
+        }
+
+        // Filter the fields, so that only the legal fields remain
+        validBuilds.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete());
+        // Check if tiles are available
+        /*
+        for (Field field: validBuilds) {
+            int tile = field.getTowerLevel();
+
+            if (tile == 0 && game.getLevelOneTile() == 0) {
+                validBuilds.remove(field);
+            } else if (tile == 1 && game.getLevelTwoTile() == 0) {
+                validBuilds.remove(field);
+            } else if (tile == 2 && game.getLevelThreeTile() == 0) {
+                validBuilds.remove(field);
+            } else if (tile == 3 && game.getLevelFourTile() == 0){
+                validBuilds.remove(field);
+            }
+        }
+
+         */
         return validBuilds;
     }
 
+    /**
+     * checks if the figure is placed on the board
+     */
     public boolean isPlaced(){
         return placed;
     }
 
+    /**
+     * set the figure to be placed on the board
+     */
     public void setPlaced() {
         placed = true;
     }

@@ -1,6 +1,5 @@
 package tnt.model;
 import java.util.ArrayList;
-import java.util.Observable;
 
 import javafx.scene.paint.Color;
 
@@ -14,17 +13,20 @@ import tnt.model.gods.victory.Chronus;
 import tnt.model.gods.victory.Eros;
 import tnt.model.gods.victory.Hera;
 import tnt.model.gods.victory.Pan;
+import tnt.util.Observable;
+
 /**
  * A player with his attributes.
  */
-public class Player {
+public class Player extends Observable {
     private String levelOfIntelligence;
     private Game game;
     private String name;
     private Color color;
     private int amountOfFigures;
-    private ArrayList<Figure> figures = new ArrayList<Figure>();
+    private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<Gods> gods;
+    private int team;
 
     /**
      * Constructing an object Player.
@@ -42,12 +44,13 @@ public class Player {
         this.gods = gods;
     }
 
-    public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game) {
+    public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, int team) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.amountOfFigures = amountOfFigures;
         this.game = game;
+        this.team = team;
     }
 
     /**
@@ -69,6 +72,22 @@ public class Player {
      */
     public void setName(String name) {
         this.name = name;
+        notifyObservers();
+    }
+
+    /**
+     * @return team of the player
+     */
+    public int getTeam() {
+        return team;
+    }
+
+    /**
+     * @param team
+     */
+    public void setTeam(int team) {
+        this.team = team;
+        notifyObservers();
     }
 
     /**
@@ -83,6 +102,7 @@ public class Player {
      */
     public void setColor(Color color) {
         this.color = color;
+        notifyObservers();
     }
 
     /**
@@ -105,7 +125,7 @@ public class Player {
      * Adds all gods into the ArrayList gods
      *
      */
-    public void AddAllGods(){
+    public void addAllGods(){
         addGod(new Ares());
         addGod(new Atlas());
         addGod(new Demeter());
@@ -150,11 +170,6 @@ public class Player {
             this.figures.add(newFigure);
         }
     }
-    public void addFigure(int x, int y) {
-        Figure newFigure = new Figure(x, y);
-        this.figures.add(newFigure);
-        game.notifyObservers();
-    }
 
     /**
      * @return card god/demon card, which belongs to the player
@@ -167,13 +182,26 @@ public class Player {
      * Increases the height of a field
      *
      * @param field the field chosen by the player
-     * @param board the board which is played on
      */
-    public void executeBuild(Field field, Board board){
+    public void executeBuild(Field field){
         int newLevel = field.getTowerLevel()+1;
         field.setTowerLevel(newLevel);
         if(newLevel == 4){
             field.setTowerComplete(true);
+        }
+        // Remove Tile from game
+        int tile = field.getTowerLevel();
+        if(tile == 0){
+            game.setLevelOneTile(game.getLevelOneTile() - 1);
+        }
+        else if(tile == 1){
+            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
+        }
+        else if(tile == 2){
+            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
+        }
+        else{
+            game.setLevelFourTile(game.getLevelFourTile() - 1);
         }
     }
 
@@ -184,13 +212,44 @@ public class Player {
      * @param board the board which is played on
      */
     public void executeMove(Field field, Board board, Figure figure){
-        board.getField(figure.getX(), figure.getY()).setIsFigureHere(false);
-        field.setIsFigureHere(true);
+        board.getField(figure.getX(), figure.getY()).figureLeft();
         figure.setX(field.getX());
         figure.setY(field.getY());
+        field.setFigure(figure);
+
+        // Check if game is already over
+        if(field.getTowerLevel() == 3){
+            game.setGameOverMode();
+        }
     }
 
+    /**
+     * initialize the player
+     */
     public void initPlayer() {
         addFigure(amountOfFigures);
+    }
+
+    /**
+     * checks if all players are placed on the board
+     */
+    public boolean allFiguresPlaced() {
+        for (Figure fig: figures) {
+            if (!fig.isPlaced()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * sets the number of figures of the player
+     * @param i the number of figures
+     */
+    public void setAmountOfFigures(int i){
+        if (game.selectingPlayers()) {
+            this.amountOfFigures = i;
+        }
+        notifyObservers();
     }
 }

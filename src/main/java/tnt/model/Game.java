@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.paint.Color;
 import tnt.util.Observable;
-import tnt.model.interfaces.Gods;
 import tnt.model.gods.movement.*;
 
 /**
@@ -11,33 +10,114 @@ import tnt.model.gods.movement.*;
  */
 public class Game extends Observable {
 
-    public void initGame() {
-        for(Player player: playerOrder){
-            player.initPlayer();
-        }
-    }
-
     public enum GameStatus {
         SELECT_PLAYER,
         PLACE_FIGURES,
-        RUNNING
+        MOVE_FIGURE,
+        BUILD,
+        GAME_OVER
     }
 
     private Color[] def_colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.BLACK, Color.PINK};
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
+    private int levelOneTile;
+    private int levelTwoTile;
+    private int levelThreeTile;
+    private int levelFourTile;
 
-
+    private String gameName;
+    private Figure lastMovedFigure;
     private GameStatus gameStatus;
 
     /**
      * Constructing an object Game.
      * @param playerOrder
+     * @param amountOfTurns How many turns are completed so far (at beginning 0). It's for the highscore
+     * @param levelOneTile The amount of tiles
+     * @param levelTwoTile The amount of tiles
+     * @param levelThreeTile The amount of tiles
+     * @param levelFourTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
+        this.levelOneTile = levelOneTile;
+        this.levelTwoTile = levelTwoTile;
+        this.levelThreeTile = levelThreeTile;
+        this.levelFourTile = levelFourTile;
+        this.gameName = gameName;
+    }
+
+    /**
+     * @return gameName
+     */
+    public String getGameName() {
+        return gameName;
+    }
+
+    /**
+     * @param gameName replaces old playerOrder
+     */
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    /**
+     * @return levelOneTile
+     */
+    public int getLevelOneTile() {
+        return levelOneTile;
+    }
+
+    /**
+     * @param levelOneTile replaces old playerOrder
+     */
+    public void setLevelOneTile(int levelOneTile) {
+        this.levelOneTile = levelOneTile;
+    }
+
+    /**
+     * @return levelTwoTile
+     */
+    public int getLevelTwoTile() {
+        return levelTwoTile;
+    }
+
+    /**
+     * @param levelTwoTile replaces old playerOrder
+     */
+    public void setLevelTwoTile(int levelTwoTile) {
+        this.levelOneTile = levelTwoTile;
+    }
+
+    /**
+     * @return levelThreeTile
+     */
+    public int getLevelThreeTile() {
+        return levelThreeTile;
+    }
+
+    /**
+     * @param levelThreeTile replaces old playerOrder
+     */
+    public void setLevelThreeTile(int levelThreeTile) {
+        this.levelThreeTile = levelThreeTile;
+    }
+
+    /**
+     * @return levelFourTile
+     */
+    public int getLevelFourTile() {
+        return levelFourTile;
+    }
+
+    /**
+     * @param levelFourTile replaces old playerOrder
+     */
+    public void setLevelFourTile(int levelFourTile) {
+        this.levelFourTile = levelFourTile;
     }
 
     public Game(int amountOfTurns) {
@@ -48,9 +128,19 @@ public class Game extends Observable {
     public Game() {
         gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
+        // Todo: get default amount of players
         addPlayer(2);
         addPlayer(2);
-        createBoard(5,6);
+//        createBoard(5,6);
+    }
+
+    /**
+     * initialize the game
+     */
+    public void initGame() {
+        for(Player player: playerOrder){
+            player.initPlayer();
+        }
     }
 
     /**
@@ -68,9 +158,15 @@ public class Game extends Observable {
     }
 
     /**
+     * @param amountOfTurns The amount of turns the game has already taken
+     */
+    public void setAmountOfTurns(int amountOfTurns) {
+        this.amountOfTurns = amountOfTurns;
+    }
+
+    /**
      * @param playerOrder replaces old playerOrder
      */
-
     public void setPlayerOrder(ArrayList<Player> playerOrder) {
         this.playerOrder = playerOrder;
     }
@@ -82,20 +178,20 @@ public class Game extends Observable {
      * @param names the names of the new players
      * @param colour the colours of the new players
      * @param figureAmount the amount of figures on the players disposal
-     */
-    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names, ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods) {
+
+    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names,
+                             ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods)                  {
         for (int i = 0; i < playerAmount; i++) {
+
             Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), Color.RED, new ArrayList<Figure>(), gods);
-            newPlayer.addFigure(figureAmount);
+
+            newPlayer.addFigure(figureAmount, gods.get(i));
             ArrayList<Player> newPlayerOrder = getPlayerOrder();
             newPlayerOrder.add(newPlayer);
             setPlayerOrder(newPlayerOrder);
         }
     }
-    public void addPlayer(Player player) {
-        playerOrder.add(player);
-        System.out.println("added Player");
-    }
+    */
 
     /**
      * Creates Board and containing Field objects.
@@ -120,6 +216,7 @@ public class Game extends Observable {
                 System.out.println(board.getField(i, j));
             }
         }
+        notifyObservers();
     }
 
     /**
@@ -136,30 +233,35 @@ public class Game extends Observable {
      *
      * @return boardY the Height of the board
      */
+//<<<<<<< HEAD
 //    public boolean checkSpecialEnding() {
 //        boolean gameEnded = false;
 //        for (int i = 1; i < playerOrder.size(); i++) {
 //            Player player = playerOrder.get(i);
 //            ArrayList<Gods> allGods = player.getGods();
-//
+//            if(allGods.contains(new Chronus())){
+//                if(Chronus.checkSpecialEnding()){
+//                    gameEnded = true;
+//                }
+//            }
 //            for (Gods god : allGods) {
-//                switch (god) {
-//                    case Chronus:
+//                switch (god.getName()) {
+//                    case "Chronus":
 //                        if (Chronus.checkSpecialEnding()) {
 //                            gameEnded = true;
 //                            break;
 //                        }
-//                    case Eros:
+//                    case "Eros":
 //                        if (Eros.checkSpecialEnding()) {
 //                            gameEnded = true;
 //                            break;
 //                        }
-//                    case Hera:
+//                    case "Hera":
 //                        if (Hera.checkSpecialEnding()) {
 //                            gameEnded = true;
 //                            break;
 //                        }
-//                    case Pan:
+//                    case "Pan":
 //                        if (Pan.checkSpecialEnding()) {
 //                            gameEnded = true;
 //                            break;
@@ -171,6 +273,43 @@ public class Game extends Observable {
 //        }
 //        return gameEnded;
 //    }
+//=======
+////    public boolean checkSpecialEnding() {
+////        boolean gameEnded = false;
+////        for (int i = 1; i < playerOrder.size(); i++) {
+////            Player player = playerOrder.get(i);
+////            ArrayList<Gods> allGods = player.getGods();
+////
+////            for (Gods god : allGods) {
+////                switch (god) {
+////                    case Chronus:
+////                        if (Chronus.checkSpecialEnding()) {
+////                            gameEnded = true;
+////                            break;
+////                        }
+////                    case Eros:
+////                        if (Eros.checkSpecialEnding()) {
+////                            gameEnded = true;
+////                            break;
+////                        }
+////                    case Hera:
+////                        if (Hera.checkSpecialEnding()) {
+////                            gameEnded = true;
+////                            break;
+////                        }
+////                    case Pan:
+////                        if (Pan.checkSpecialEnding()) {
+////                            gameEnded = true;
+////                            break;
+////                        }
+////                    default:
+////                        continue;
+////                }
+////            }
+////        }
+////        return gameEnded;
+////    }
+//>>>>>>> scenebuilder
 
     /**
      * Sabotage of the players movement abilities by other players gods.
@@ -181,24 +320,45 @@ public class Game extends Observable {
      * @return the List of fields, which are reachable after sabotage
      */
     public ArrayList<Field> sabotageMovement(Figure figure, ArrayList<Field> possibleMovement){
+//<<<<<<< HEAD
 //        for (int i = 1; i < playerOrder.size(); i++) {
 //            Player passivePlayer = playerOrder.get(i);
 //            ArrayList<Gods> passiveGods = passivePlayer.getGods();
 //            for(Gods god:passiveGods) {
-//                switch (god) {
-//                    case Aphrodite:
+//                switch (god.getName()) {
+//                    case "Aphrodite":
 //                        possibleMovement = Aphrodite.sabotage(figure, possibleMovement);
-//                    case Athena:
+//                    case "Athena":
 //                        possibleMovement = Athena.sabotage(figure, possibleMovement);
-//                    case Hypnus:
+//                    case "Hypnus":
 //                        possibleMovement = Hypnus.sabotage(figure, possibleMovement);
-//                    case Persephone:
+//                    case "Persephone":
 //                        possibleMovement = Persephone.sabotage(figure, possibleMovement);
 //                    default:
 //                        continue;
 //                }
 //            }
 //        }
+//=======
+////        for (int i = 1; i < playerOrder.size(); i++) {
+////            Player passivePlayer = playerOrder.get(i);
+////            ArrayList<Gods> passiveGods = passivePlayer.getGods();
+////            for(Gods god:passiveGods) {
+////                switch (god) {
+////                    case Aphrodite:
+////                        possibleMovement = Aphrodite.sabotage(figure, possibleMovement);
+////                    case Athena:
+////                        possibleMovement = Athena.sabotage(figure, possibleMovement);
+////                    case Hypnus:
+////                        possibleMovement = Hypnus.sabotage(figure, possibleMovement);
+////                    case Persephone:
+////                        possibleMovement = Persephone.sabotage(figure, possibleMovement);
+////                    default:
+////                        continue;
+////                }
+////            }
+////        }
+//>>>>>>> scenebuilder
         return possibleMovement;
     }
 
@@ -213,15 +373,26 @@ public class Game extends Observable {
     public ArrayList<Field> sabotageBuilds(Figure figure, ArrayList<Field> possibleBuilds){
         for (int i = 1; i < playerOrder.size(); i++) {
             Player passivePlayer = playerOrder.get(i);
-            ArrayList<Gods> passiveGods = passivePlayer.getGods();
+            // ArrayList<Gods> passiveGods = passivePlayer.getGods();
+//<<<<<<< HEAD
 //            for (Gods god : passiveGods) {
-//                switch (god) {
-//                    case Limus:
+//                switch (god.getName()) {
+//                    case "Limus":
 //                        possibleBuilds = Limus.sabotage(figure, possibleBuilds);
 //                    default:
 //                        continue;
 //                }
 //            }
+//=======
+////            for (Gods god : passiveGods) {
+////                switch (god) {
+////                    case Limus:
+////                        possibleBuilds = Limus.sabotage(figure, possibleBuilds);
+////                    default:
+////                        continue;
+////                }
+////            }
+//>>>>>>> scenebuilder
         }
         return possibleBuilds;
     }
@@ -231,72 +402,131 @@ public class Game extends Observable {
      */
     public void runGame() {
         boolean gameEnded = false;
-        while(gameEnded == false){
+        while(gameEnded == false) {
             Player activePlayer = playerOrder.get(0);
 
             // Checks the active players resources
-            ArrayList<Gods> activeGods = activePlayer.getGods();
+            // ArrayList<Gods> activeGods = activePlayer.getGods();
             ArrayList<Figure> activeFigures = activePlayer.getFigure();
 
             // Movement
             boolean artemisIsAvailable = false;
+//<<<<<<< HEAD
 //            for(Figure figure:activeFigures){
 //                ArrayList<Field> regularFields = sabotageMovement(figure, figure.getValidMoves(board));
 //                for(Gods god:activeGods) {
-//                    switch (god) {
-//                        case Apollo:
-//                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
+//                    switch (god.getName()) {
+//                        case "Apollo":
+//                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder,figure, board);
 //                            apolloFields = sabotageMovement(figure, apolloFields);
-//                        case Artemis:
+//                        case "Artemis":
 //                            artemisIsAvailable = true;
-//                        case Charon:
-//                        case Hermes:
-//                        case Minotaures:
-//                        case Triton:
+//                        case "Charon":
+//                        case "Hermes":
+//                        case "Minotaures":
+//                        case "Triton":
 //                    }
 //                }
 //            }
-            Field field = board.getField(0, 0);// es ist zweimal dieses stück code hier bitte eins entfernen
+//=======
+////            for(Figure figure:activeFigures){
+////                ArrayList<Field> regularFields = sabotageMovement(figure, figure.getValidMoves(board));
+////                for(Gods god:activeGods) {
+////                    switch (god) {
+////                        case Apollo:
+////                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
+////                            apolloFields = sabotageMovement(figure, apolloFields);
+////                        case Artemis:
+////                            artemisIsAvailable = true;
+////                        case Charon:
+////                        case Hermes:
+////                        case Minotaures:
+////                        case Triton:
+////                    }
+////                }
+////            }
+//>>>>>>> scenebuilder
+            Field field = board.getField(0, 0);
             Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
-            // Artemis
-            if(artemisIsAvailable){
+            // Artemis !!!!!!!!! muss noch angepasst werden für getvalid move
+            if (artemisIsAvailable) {
                 int originalFigureX = figure.getX();
                 int originalFigureY = figure.getY();
-                Artemis.getValidMove(figure, originalFigureX, originalFigureY);
+                // Artemis.getValidMove(figure, originalFigureX, originalFigureY);
             }
 
             activePlayer.executeMove(field, board, figure); //Kann auch zB. Apollo.executeMove sein
 
+
             // Building
-            for(Figure figure2:activeFigures){
-                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds());
-            }
+            for (Figure figure2 : activeFigures) {
+//<<<<<<< HEAD
+//                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds());
+//            }
+//            //Testweise dieses Stück rausgenommen
+//            //Field field = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
+//            activePlayer.executeBuild(field, board); // Kann auch zB. BuildingGod.executeBuild sein
+//=======
+//                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds(board));
+//            }
+//
+//            Field field2 = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
+//            activePlayer.executeBuild(field2, board); // Kann auch zB. BuildingGod.executeBuild sein
+//>>>>>>> scenebuilder
 
-            Field field2 = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
-            activePlayer.executeBuild(field2, board); // Kann auch zB. BuildingGod.executeBuild sein
-
-            // Checks if the game is over
-            this.amountOfTurns ++;
-            if(checkRegularEnding()){
-                gameEnded = true;
-                break;
-            }
+                // Checks if the game is over
+                this.amountOfTurns++;
+                if (checkRegularEnding()) {
+                    gameEnded = true;
+                    break;
+                }
 //            if(checkSpecialEnding()){
 //                gameEnded = true;
 //                break;
 //            }
 
-            // Spielerwechsel
-            nextPlayersTurn();
+                // Spielerwechsel
+                nextPlayersTurn();
+            }
         }
     }
 
     /**
-     * Checks if the Game is over
+     * Checks if the player is unable to move.
+     *
+     * @param player the player object the method is checking on
      */
-    public boolean checkEnd(boolean gameEnded){
-        // Differenzierung 2 oder 4 Spieler einbauen.
-        return gameEnded;
+    public void checkBlockedMovement(Player player){
+        int blockedMovement = 0;
+
+        for (Figure figure: player.getFigure()){
+            ArrayList<Field> possibleMovement = figure.getValidMoves(board);
+            if(possibleMovement.isEmpty()){
+                blockedMovement++;
+            }
+        }
+        if (blockedMovement == player.getFigure().size()){
+            setGameOverMode();
+        }
+    }
+
+    /**
+     * Checks if the player is unable to build.
+     *
+     * @param player the player object the method is checking on
+     */
+    public void checkBlockedBuilding(Player player){
+        int blockedBuilding = 0;
+
+        for (Figure figure: player.getFigure()){
+            ArrayList<Field> possibleBuilding = figure.getValidBuilds(board);
+            if(possibleBuilding.isEmpty()){
+                blockedBuilding++;
+            }
+        }
+        if (blockedBuilding == player.getFigure().size()){
+            setGameOverMode();
+        }
     }
 
     public Player getPlayersTurn(){
@@ -306,43 +536,137 @@ public class Game extends Observable {
         return playerOrder.get(0);
     }
 
+    /**
+     * Checks if the game is in run mode
+     */
     public boolean isRunnung(){
-        return gameStatus == GameStatus.RUNNING;
+        return gameStatus == GameStatus.BUILD || gameStatus == GameStatus.MOVE_FIGURE;
     }
 
-    public void startPlaceFigures(){
-        gameStatus = GameStatus.PLACE_FIGURES;
-    }
-    public void startGame(){
-        gameStatus = GameStatus.RUNNING;
+    /**
+     * Checks if the actual player has to move
+     */
+    public boolean isMoveMode(){
+        return gameStatus == GameStatus.MOVE_FIGURE;
     }
 
-
-    public void addPlayer(int amountOfFigures) {
-        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this));
+    /**
+     * Set the gamemode to build, so the actual player has to build
+     */
+    public void setBuildMode() {
+        gameStatus = GameStatus.BUILD;
         notifyObservers();
     }
 
+    /**
+     * Set the gamemode to move, so the player (should be the next one) has to move
+     */
+    public void setMoveMode() {
+        gameStatus = GameStatus.MOVE_FIGURE;
+        notifyObservers();
+    }
+
+    /**
+     * Set the gamemode to gameover
+     */
+    public void setGameOverMode() {
+        gameStatus = GameStatus.GAME_OVER;
+        notifyObservers();
+    }
+    /**
+     * Checks if the game player has to build
+     */
+    public boolean isBuildMode(){
+        return gameStatus == GameStatus.BUILD;
+    }
+
+    /**
+     * Checks if the game is in a mode, where the number of players etc gets set
+     */
+    public boolean selectingPlayers(){
+        return gameStatus == GameStatus.SELECT_PLAYER;
+    }
+
+    /**
+     * Sets the gamemode in a mode, where the player can choose their positions
+     */
+    public void startPlaceFigures(){
+        gameStatus = GameStatus.PLACE_FIGURES;
+    }
+
+    /**
+     * Sets the gamemode to move, so the actual player has to move a figure
+     */
+    public void startGame(){
+        gameStatus = GameStatus.MOVE_FIGURE;
+        notifyObservers();
+    }
+
+    /**
+     * Adds a player to the game
+     * @param amountOfFigures the number of figures this player should have
+     */
+    public void addPlayer(int amountOfFigures) {
+        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, 1));
+        notifyObservers();
+    }
+
+    /**
+     * Removes the player of the game
+     * @param player the player to remove
+     */
     public void removePlayer(Player player) {
         playerOrder.remove(player);
         notifyObservers();
     }
 
+    /**
+     * Getter for the board
+     * @return the board of the game
+     */
     public Board getBoard(){
         return this.board;
     }
+
+    /**
+     * Checks if the player should place their figures
+     */
     public boolean placeFigures(){
         return gameStatus == GameStatus.PLACE_FIGURES;
     };
 
-
+    /**
+     * Getter for the Gamestatus
+     * @return the gamestatus of the game
+     */
     public GameStatus getGameStatus() {
         return gameStatus;
     }
 
+    /**
+     * Change the player, who's turn is
+     */
     public void nextPlayersTurn(){
         Collections.rotate(playerOrder, -1);
+//        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
     }
+
+    /**
+     * Sets the last moved figure (important for the building possibility)
+     * @param figure the figure moved latest
+     */
+    public void setLastMovedFigure(Figure figure) {
+        lastMovedFigure = figure;
+    }
+
+    /**
+     * Get the latest moved figure
+     * @return the latest moved figure
+     */
+    public Figure getLastMovedFigure() {
+        return lastMovedFigure;
+    }
+
 
 }

@@ -10,6 +10,7 @@ import tnt.gui.game.GameView;
 import tnt.gui.mainmenu.MainMenuController;
 import tnt.gui.mainmenu.MainMenuView;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
+import tnt.gui.settingsmenu.SettingsView;
 import tnt.model.Game;
 
 import java.io.IOException;
@@ -27,35 +28,28 @@ public class Gui extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("TNT");
 
-//        Parent scene = new TilePane();
-
+        // generating the game
         Game game = new Game();
 
+        // create a scene handler, which holds all scenes, so that we can change between them
         SceneHandler sceneHandler = new SceneHandler();
 
+        // generate the playerchoose menu
         Parent choosePlayerMenu = new PlayerChooseView(sceneHandler, game);
 
-        MainMenuController mainMenuController = new MainMenuController(sceneHandler, choosePlayerMenu);
-        MainMenuView mainView = new MainMenuView(mainMenuController);
+        // generate the main menu
+        MainMenuView mainView = new MainMenuView(sceneHandler);
 
+        // adding the main menu to the scenehandler
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
-        mainMenuController.setMainView(mainView);
 
+        // generating the gameview
         GameView gameView = new GameView(sceneHandler, game);
 
-//        mainMenuController.setPlayerChoose(choosePlayerMenu);
+        // creating the settingsmenu
+        SettingsView settingsView = new SettingsView(sceneHandler);
 
-//        mainScene.setRoot(choosePlayerMenu);
-//        Game g = new Game(1);
-//        GameView gameView = new GameView(g);
-//        gameView.setGame(g);
-
-
-//        MainMenuController mainController = new MainMenuController();
-
-//        GameController gameController = new GameController(gameView, mainView, mainScene);
-
-
+        // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
         primaryStage.show();
     }

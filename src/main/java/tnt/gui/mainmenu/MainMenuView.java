@@ -3,38 +3,40 @@ package tnt.gui.mainmenu;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
-import tnt.gui.playerchoosemenu.PlayerChooseController;
+import tnt.gui.SceneHandler;
 
 import java.io.IOException;
 
+/**
+ * The view for the main menu
+ */
 public class MainMenuView extends VBox {
 
     @FXML
     private Button playButton;
+    private MainMenuController mainMenuController;
 
-    public MainMenuView(MainMenuController mainMenuController) throws IOException {
+    // Todo: Maybe hold the scenebuilder in another class extending FXMLLoader and load every scene with that (than you dont have to call setScenebuilder each time)
+
+    /**
+     * Constructor for the main menu view
+     * @param sceneHandler the scene handler holding all scenes
+     * @throws IOException Exception when the fxml file has an error / does not exist
+     */
+    public MainMenuView(SceneHandler sceneHandler) throws IOException {
         FXMLLoader mainMenuLayout = ResourceHandler.getInstance().getFXML("mainMenu");
         mainMenuLayout.setRoot(this);
-        mainMenuLayout.setController(mainMenuController);
-//        ((MainMenuController) mainMenuLayout.getController()).setMainScene(mainScene);
-//        ((MainMenuController) mainMenuLayout.getController()).setChoosePlayerMenu(choosePlayerMenu);
-        VBox mainMenu = mainMenuLayout.load();
-
+        mainMenuLayout.load();
+        this.mainMenuController = mainMenuLayout.getController();
+        this.mainMenuController.setSceneHandler(sceneHandler);
+        sceneHandler.add("mainMenu", this);
         setAlignment(Pos.CENTER);
         setSpacing(10);
         Label lblTitle = new Label("Main Menu!");
     }
-
-    public Button getPlayButton() {
-        return playButton;
-    }
-
 }

@@ -1,20 +1,18 @@
 package tnt.model;
-import javafx.scene.paint.Color;
 import tnt.model.interfaces.Gods;
 
 import java.util.Random;
 import java.util.ArrayList;
 
-public class ArtificialPlayer extends Player{
-    public ArtificialPlayer(String levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, ArrayList<Gods> god) {
-        super(levelOfIntelligence, name, color, figures, god);
-    }
+public class ArtificialPlayer{
 
-    public void artificialPlayerTurn(Board board){
-        if(getLevelOfIntelligence().equals("Easy")){
-            easyAI(board);
+
+    public void artificialPlayerTurn(Board board, Player player){
+        if(player.getLevelOfIntelligence().equals("Easy")){
+            //easyAI(board);
+            int i = 9;
         }
-        else if(getLevelOfIntelligence().equals("Medium")){
+        else if(player.getLevelOfIntelligence().equals("Medium")){
             mediumAI(board);
         }
         else{
@@ -27,10 +25,10 @@ public class ArtificialPlayer extends Player{
      *
      * @param board the current status of the board
      */
-    public void easyAI(Board board){
+    public void easyAI(Board board, Player player){
 
         // Execute random Movement
-        ArrayList<Figure> figureList = getFigure();
+        ArrayList<Figure> figureList = player.getFigure();
         ArrayList<Field>  possibleMoves = new ArrayList<>();
         for (Figure figure : figureList) {
             possibleMoves.addAll(figure.getValidMoves(board));
@@ -43,7 +41,6 @@ public class ArtificialPlayer extends Player{
         Field randomMove = possibleMoves.get(randomFieldNumber);
         int x = randomMove.getX();
         int y = randomMove.getY();
-        randomMove.setIsFigureHere(true);
         randomFigure.setX(x);
         randomFigure.setY(y);
 

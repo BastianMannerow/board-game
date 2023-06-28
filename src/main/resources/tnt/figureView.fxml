@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
 
-<fx:root fill="DODGERBLUE" points="8.0, 24.0, 35.0, 18.0, 20.0, 0.0" stroke="BLACK" strokeType="INSIDE" type="Polygon" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" />
+<fx:root type="Pane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane prefHeight="80.0" prefWidth="80.0">
+         <children>
+            <Circle centerX="20.0" centerY="20.0" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label text="P" textFill="WHITE" />
+         </children>
+      </StackPane>
+   </children>
+</fx:root>

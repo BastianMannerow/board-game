@@ -1,51 +1,51 @@
 package tnt.gui.mainmenu;
 
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import tnt.gui.SceneHandler;
 
-public class MainMenuController {
 
-    Parent playerChooseMenu;
-    Parent mainMenu;
-    SceneHandler sceneHandler;
-    @FXML
-    private HBox wholeMenu;
-    @FXML
-    private Button gotoGame;
+/**
+ * The controller for the main menu
+ */
+public class MainMenuController{
 
-    public MainMenuController(SceneHandler sceneHandler, Parent playerChooseMenu) {
+    private SceneHandler sceneHandler;
 
-        this.playerChooseMenu = playerChooseMenu;
-        this.sceneHandler = sceneHandler;
-    }
-
-    @FXML
-    private void initialize(){
-    }
-
-    @FXML
-    private void gotoGame() {
-        sceneHandler.getScene().setRoot(playerChooseMenu);
-    }
-    public Parent getPlayerChoose() {
-        return this.playerChooseMenu;
-
-    }
-
-    public void setMainView(MainMenuView mainView) {
-        mainMenu = mainView;
-        sceneHandler.getScene().setRoot(mainMenu);
-    }
-
-//    public void setMainScene(Scene mainScene) {
-//        this.sceneHandler.getScene() = mainScene;
+    //    @FXML
+//    private void initialize(){
 //    }
 
-    public void setChoosePlayerMenu(Parent choosePlayerMenu) {
-        this.playerChooseMenu = choosePlayerMenu;
+    /**
+     * method to get called when goto game is pressed
+     */
+    @FXML
+    private void gotoGame() {
+        sceneHandler.loadView("playerMenu");
+    }
+
+
+    /**
+     * method to get called when load/save game is pressed
+     */
+    @FXML
+    private void gotoSaveMenu() {
+        sceneHandler.loadView("saveMenu");
+    }
+
+
+    /**
+     * method to get called when settings is pressed
+     */
+    @FXML
+    private void gotoSettings() {
+        sceneHandler.loadView("settings");
+    }
+
+    /**
+     * Setter for the scene handler, so the controller can change the view
+     * @param sceneHandler the scenehandler, for changing views
+     */
+    public void setSceneHandler(SceneHandler sceneHandler) {
+        this.sceneHandler = sceneHandler;
     }
 }
