@@ -24,4 +24,6 @@ public class Observable {
         }
     }
 
+    public void addObserver(java.util.Observer observer) {
+    }
 }
