@@ -34,14 +34,12 @@ public class Player extends Observable {
      * @param name initial name
      * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
-     * @param gods the cards, which affect the players abilities
      */
-    public Player(String levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, ArrayList<Gods> gods) {
+    public Player(String levelOfIntelligence, String name, Color color, ArrayList<Figure> figures) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.figures = figures;
-        this.gods = gods;
     }
 
     public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, int team) {
@@ -182,8 +180,9 @@ public class Player extends Observable {
      * Increases the height of a field
      *
      * @param field the field chosen by the player
+     * @param board
      */
-    public void executeBuild(Field field){
+    public void executeBuild(Field field, Board board){
         int newLevel = field.getTowerLevel()+1;
         field.setTowerLevel(newLevel);
         if(newLevel == 4){
