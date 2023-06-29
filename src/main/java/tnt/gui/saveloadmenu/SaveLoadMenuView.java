@@ -13,8 +13,10 @@ import tnt.gui.saveloadmenu.SaveLoadMenuController;
 import javafx.scene.layout.VBox;
 import tnt.model.Game;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static javafx.scene.layout.StackPane.setAlignment;
 
@@ -23,6 +25,7 @@ public class SaveLoadMenuView extends VBox{
     @FXML
     private SaveLoadMenuController SaveLoadMenuController;
     private Game game;
+    private HashMap<Button,String> saveHolder;
 
     public SaveLoadMenuView(SceneHandler sceneHandler,Game game) throws IOException {
         FXMLLoader SaveLoadMenuLayout = ResourceHandler.getInstance().getFXML("saveLoadMenu");
@@ -34,6 +37,7 @@ public class SaveLoadMenuView extends VBox{
         Label lblTitle = new Label("SaveLoad");
         this.game =game;
         SaveLoadMenuController.setGame(game);
+        this.getSaves();
     }
 
     private void getSaves(){
@@ -41,7 +45,15 @@ public class SaveLoadMenuView extends VBox{
         for (String save: saves) {
              Label label= new Label();
              label.setText(save);
-            ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().add(label);
+             Button loadButton = new Button("load");
+             loadButton.setOnMouseClicked(event-> {
+                 Button button = (Button) event.getSource();
+                 SaveLoadMenuController.Load(saveHolder.get(button));
+             });
+             saveHolder.put(loadButton,save);
+             HBox saved = new HBox();
+             saved.getChildren().addAll(label,loadButton);
+             ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().add(saved);
         }
     }
 

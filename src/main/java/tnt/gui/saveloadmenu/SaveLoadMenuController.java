@@ -38,4 +38,6 @@ public class SaveLoadMenuController {
         fileManager.saveGame(game);
     }
 
+    public void Load(String save) { fileManager.loadGame(save);}
+
 }

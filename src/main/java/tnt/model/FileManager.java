@@ -92,7 +92,7 @@ public class FileManager {
         }
         return savedGames;
     }
-    public void loadGame(){
+    public void loadGame(String save){
         // Sette das Game als loaded
         System.out.println("Hallihallo");
     }
