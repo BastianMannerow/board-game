@@ -57,6 +57,9 @@ public class PlayerChooseController{
                 }
 
                 String team = ((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getText();
+                if ((team.length()<1)){
+                    team = (((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getPromptText());
+                }
                 Player.PlayerType playerType = (Player.PlayerType) ((ChoiceBox) ((VBox) playerView.getChildren().get(6)).getChildren().get(1)).getValue();
 
                 player.setColor(((ColorPicker) ((VBox) playerView.getChildren().get(4)).getChildren().get(1)).getValue());

@@ -602,8 +602,10 @@ public class Game extends Observable {
      * @param amountOfFigures the number of figures this player should have
      */
     public void addPlayer(int amountOfFigures) {
-        playerOrder.add(new Player(Player.PlayerType.HUMAN , "" + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, String.valueOf(playerOrder.size()+1)));
-        notifyObservers();
+        if (selectingPlayers()) {
+            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, String.valueOf(playerOrder.size() + 1)));
+            notifyObservers();
+        }
     }
 
     /**
@@ -611,8 +613,10 @@ public class Game extends Observable {
      * @param player the player to remove
      */
     public void removePlayer(Player player) {
-        playerOrder.remove(player);
-        notifyObservers();
+        if (selectingPlayers()) {
+            playerOrder.remove(player);
+            notifyObservers();
+        }
     }
 
     /**

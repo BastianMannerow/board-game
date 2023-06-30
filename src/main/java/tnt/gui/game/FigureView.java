@@ -42,6 +42,7 @@ public class FigureView extends DragableObject implements Observer{
         String name = player.getName();
         ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
         figure.addObserver(this);
+        player.addObserver(this);
         StaticSizeHandler.getInstance().addObserver(this);
         update();
     }
