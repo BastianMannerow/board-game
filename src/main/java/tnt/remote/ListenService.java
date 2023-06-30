@@ -23,7 +23,7 @@ public class ListenService extends Service<Socket> {
             protected Socket call() throws IOException {
                 serverSocket = new ServerSocket(port);
                 Socket socket = serverSocket.accept();
-                serverSocket.close();
+                serverSocket.close(); // Todo: dont close the socket or recrate it?
                 return socket;
             }
 
