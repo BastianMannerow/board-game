@@ -22,7 +22,9 @@ public class ListenService extends Service<Socket> {
             @Override
             protected Socket call() throws IOException {
                 serverSocket = new ServerSocket(port);
+                System.out.println("waiting for clinet");
                 Socket socket = serverSocket.accept();
+                System.out.println("client connected oho");
                 serverSocket.close(); // Todo: dont close the socket or recrate it?
                 return socket;
             }

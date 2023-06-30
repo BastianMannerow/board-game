@@ -13,11 +13,12 @@ public class NetworkHandler {
 
     private PrintWriter networkPrinter;
 
-    private void listen() {
+    public void listen() {
         ListenService listenService = new ListenService();
         listenService.setPort(PORT_NUMBER);
         Button cancelButton = new Button("Cancel");
         listenService.setOnFailed(failedEvent -> {
+            System.out.println("Unable to start the server." );
 //            Throwable e = failedEvent.getSource().getException();
 //            error("Unable to start the server.", e.getMessage());
 //            toolbar.getItems().remove(cancelButton);
@@ -40,6 +41,7 @@ public class NetworkHandler {
 
     private void startServer(Socket socket) {
 //        statusBar.setText("Server: Client connected");
+        System.out.println("Server: Client connected");
         try {
             initConnection(socket);
         } catch (IOException e) {
@@ -78,6 +80,19 @@ public class NetworkHandler {
         });
 
         readLineService.start();
+    }
+
+    public void startClient(String s) {
+//        hideDefaultButtons();
+//        statusBar.setText("Client: Connected to server");
+        try {
+            Socket socket = new Socket("localhost", PORT_NUMBER);
+            initConnection(socket);
+        } catch (IOException e) {
+            System.out.println("Error connecting to the server");
+//            error("Error connecting to the server", e.getMessage());
+//            reset();
+        }
     }
 
     private void sendMsg(String msg) {
