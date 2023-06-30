@@ -6,7 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
-import tnt.gui.Settings;
 import tnt.gui.StaticSizeHandler;
 import tnt.model.Field;
 import tnt.model.Figure;

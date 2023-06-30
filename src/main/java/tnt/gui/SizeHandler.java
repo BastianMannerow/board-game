@@ -22,10 +22,11 @@ public class SizeHandler implements ChangeListener{
 
         if (isheight) {
             int height = ((int) (double) t1 - 50) / StaticSizeHandler.getNrFieldsY();
-            StaticSizeHandler.getInstance().setPrefSize(height);
+            StaticSizeHandler.getInstance().setPrefSizeY(height);
         }
-//        else {
-//            int width  = ((int) (double) t1) / (StaticSizeHandler.getNrFieldsY() + 2);
-//        }
+        else {
+            int width = ((int) (double) t1 - 100) / (StaticSizeHandler.getNrFieldsX()+1);
+            StaticSizeHandler.getInstance().setPrefSizeX(width);
+        }
     }
 }

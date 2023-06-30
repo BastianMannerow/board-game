@@ -2,10 +2,9 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.paint.Color;
-import tnt.gui.Settings;
+import tnt.gui.GUISettings;
 import tnt.gui.StaticSizeHandler;
 import tnt.util.Observable;
-import tnt.model.gods.movement.*;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.

@@ -1,18 +1,15 @@
 package tnt.gui;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import tnt.util.Observable;
-
-import java.util.Set;
-
+import tnt.model.Settings;
 /**
  * Starting point of the JavaFX GUI
  */
 public class StaticSizeHandler extends Observable {
 
     private static StaticSizeHandler instance;
-    private static int prefSize;
+    private static int prefSizeX;
+    private static int prefSizeY;
     private static int fieldX;
     private static int fieldY;
 
@@ -22,15 +19,15 @@ public class StaticSizeHandler extends Observable {
     public static StaticSizeHandler getInstance() {
         if (instance == null) {
             instance = new StaticSizeHandler();
-            fieldX = Settings.fieldSizeX;
-            fieldY = Settings.fieldSizeY;
+            fieldX = Settings.getFieldSizeX();
+            fieldY = Settings.getFieldSizeY();
         }
         return instance;
     }
 
 
     public static int getPrefSize(){
-        return prefSize;
+        return Math.min(prefSizeX, prefSizeY);
     }
 
     public static void setNrFieldsX(int boardX) {
@@ -49,8 +46,13 @@ public class StaticSizeHandler extends Observable {
         return fieldY;
     }
 
-    public void setPrefSize(int prefSizeNew) {
-        prefSize = Math.max(Math.min(prefSizeNew, Settings.getMaxFieldsize()), Settings.getMinFieldsize());
+    public void setPrefSizeX(int prefSizeNew) {
+        prefSizeX = Math.max(Math.min(prefSizeNew, GUISettings.getMaxFieldsize()), GUISettings.getMinFieldsize());
+        notifyObservers();
+    }
+
+    public void setPrefSizeY(int prefSizeNew) {
+        prefSizeY = Math.max(Math.min(prefSizeNew, GUISettings.getMaxFieldsize()), GUISettings.getMinFieldsize());
         notifyObservers();
     }
 }

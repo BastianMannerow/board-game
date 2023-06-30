@@ -2,21 +2,14 @@ package tnt.gui.playerchoosemenu;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
-import tnt.gui.Settings;
+import tnt.gui.GUISettings;
 import tnt.model.Game;
 import tnt.model.Player;
-import tnt.util.Observable;
-
-import java.util.ArrayList;
+import tnt.model.Settings;
 
 /**
  * The controller for the view where the player can be choosen
@@ -92,8 +85,8 @@ public class PlayerChooseController{
             return;
         }
 
-        if (sizeX * sizeY > Settings.maxFieldcount){
-            System.err.println("Too many fields, the amount of field is limited by " + Settings.maxFieldcount + " but you entered " + sizeX * sizeY);
+        if (sizeX * sizeY > GUISettings.maxFieldcount){
+            System.err.println("Too many fields, the amount of field is limited by " + GUISettings.maxFieldcount + " but you entered " + sizeX * sizeY);
             ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fieldss");
             popup.show(sceneHandler.getStage());
             return;
