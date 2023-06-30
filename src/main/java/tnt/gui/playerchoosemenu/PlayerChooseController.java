@@ -48,6 +48,7 @@ public class PlayerChooseController{
                 if ((name.length()<1)){
                     name = (((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7));
                 }
+
                 int amount = player.getAmountOfFigures();
                 try {
                     amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
@@ -55,9 +56,18 @@ public class PlayerChooseController{
                     System.err.println("could not convert the amount of figures to int: " + ((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText() + " Error: " + e);
                 }
 
+                String team = ((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getText();
+                Player.PlayerType playerType = (Player.PlayerType) ((ChoiceBox) ((VBox) playerView.getChildren().get(6)).getChildren().get(1)).getValue();
+
                 player.setColor(((ColorPicker) ((VBox) playerView.getChildren().get(4)).getChildren().get(1)).getValue());
+                player.setTeam(team);
+                player.setLevelOfIntelligence(playerType);
                 player.setName(name);
-                player.setAmountOfFigures(amount);
+
+                if (game.selectingPlayers()){
+                    player.setAmountOfFigures(amount);
+                    // Todo: set Team and playertype (or outside this condition)
+                }
                 nrOfFigures += player.getAmountOfFigures();
             }
         }

@@ -109,10 +109,12 @@ public class PlayerChooseView extends VBox implements Observer {
                 countFigures.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        try {
-                            player.setAmountOfFigures(Integer.parseInt(countFigures.getText()));
-                        } catch (NumberFormatException e) {
-                            player.setAmountOfFigures(2);
+                        if (game.selectingPlayers()) {
+                            try {
+                                player.setAmountOfFigures(Integer.parseInt(countFigures.getText()));
+                            } catch (NumberFormatException e) {
+                                player.setAmountOfFigures(2);
+                            }
                         }
 
                     }
@@ -122,11 +124,7 @@ public class PlayerChooseView extends VBox implements Observer {
                 team.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        try {
-                            player.setTeam(Integer.parseInt(team.getText()));
-                        } catch (NumberFormatException e) {
-                            player.setTeam(2);
-                        }
+                        player.setTeam(team.getText());
                     }
                 });
 

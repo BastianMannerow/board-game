@@ -60,9 +60,9 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         ((ColorPicker) ((VBox) this.getChildren().get(4)).getChildren().get(1)).setValue(player.getColor());
         TextField team = (TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1);
         if (team.getText().equals("")){
-            team.setPromptText(Integer.toString(player.getTeam()));
+            team.setPromptText(player.getTeam());
         } else {
-            team.setText(Integer.toString(player.getTeam()));
+            team.setText(player.getTeam());
         }
         TextField amountOfFigures = (TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1);
         if (amountOfFigures.getText().equals("")){

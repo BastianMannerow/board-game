@@ -145,7 +145,7 @@ public class FileManager {
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
             String gods = "Nobody"; // Muss gelöscht werden
             // String gods = player.getGods(); Muss angepasst werden.
-            String team = Integer.toString(player.getTeam());
+            String team = player.getTeam();
             playerData.add(new String[]{name, color, String.valueOf(levelOfIntelligence), gods, team});
         }
 
