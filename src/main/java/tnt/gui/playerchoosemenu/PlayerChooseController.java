@@ -92,12 +92,14 @@ public class PlayerChooseController{
             return;
         }
 
-        game.createBoard(sizeX, sizeY);
+        if (game.selectingPlayers()){
+            game.createBoard(sizeX, sizeY);
 
-        game.getBoard().setRoundWorld(roundWorld.isSelected());
+            game.getBoard().setRoundWorld(roundWorld.isSelected());
 
-        game.initGame();
-        game.startPlaceFigures();
+            game.initGame();
+            game.startPlaceFigures();
+        }
         sceneHandler.loadView("gameView");
     }
 
