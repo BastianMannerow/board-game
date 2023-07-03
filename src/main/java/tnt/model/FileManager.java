@@ -1,7 +1,4 @@
 package tnt.model;
-import javafx.scene.paint.Color;
-import tnt.model.interfaces.Gods;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,7 +14,7 @@ public class FileManager {
     /**
      * loads a csv and parses it by using a comma
      *
-     * @param filepath
+     * @param filepath The filepath you want to load
      * @return the csv as rows and columns
      */
     public List<String[]> loadCSV(String filepath) {
@@ -38,8 +35,8 @@ public class FileManager {
     /**
      * saves a csv and parses it by using a comma
      *
-     * @param filepath
-     * @param data
+     * @param filepath Where and how you want to save your files
+     * @param data The content of the file
      */
     public void saveCSV(String filepath, List<String[]> data){
         try (FileWriter writer = new FileWriter(filepath)) {
@@ -60,6 +57,11 @@ public class FileManager {
         }
     }
 
+    /**
+     * Deletes a folder and its content
+     *
+     * @param filepath The folder you want to delete
+     */
     public static void deleteFolder(File filepath) {
         if (filepath.isDirectory()) {
             File[] files = filepath.listFiles();
@@ -92,9 +94,34 @@ public class FileManager {
         }
         return savedGames;
     }
-    public void loadGame(){
-        // Sette das Game als loaded
-        System.out.println("Hallihallo");
+
+    /**
+     * Loads a saved game from their csv files
+     *
+     * @param savedGame The name of the game
+     */
+    public void loadGame(String savedGame, Game game){
+        String filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + savedGame;
+
+        // Load Game
+        List<String[]> gameData = loadCSV(filepath + File.separator + "game.csv");
+        // gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
+        // game.setPlayerOrder(gameData.get(0)[1]); // Muss noch anders gesaved werden!
+        game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
+        game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
+        game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));
+        game.setLevelThreeTile(Integer.parseInt(gameData.get(0)[5]));
+        game.setLevelFourTile(Integer.parseInt(gameData.get(0)[6]));
+
+        // Load Player
+        List<String[]> playerData = loadCSV(filepath + File.separator + "player.csv");
+
+        // Load Figure
+        List<String[]> figureData = loadCSV(filepath + File.separator + "figure.csv");
+
+        // Load Fields
+        List<String[]> fieldsData = loadCSV(filepath + File.separator + "fields.csv");
+
     }
 
     /**
@@ -125,7 +152,7 @@ public class FileManager {
         if (game.getBoard().getRoundWorld()) {
             roundWorld = "True";
         }
-        String playerOrder = game.getPlayerOrder().toString();
+        String playerOrder = Integer.toString(game.getPlayerOrder().size());
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
         String levelOneTile = Integer.toString(game.getLevelOneTile());
         String levelTwoTile = Integer.toString(game.getLevelTwoTile());

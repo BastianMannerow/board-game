@@ -158,6 +158,13 @@ public class Game extends Observable {
     }
 
     /**
+     * @param amountOfTurns The amount of turns the game has already taken
+     */
+    public void setAmountOfTurns(int amountOfTurns) {
+        this.amountOfTurns = amountOfTurns;
+    }
+
+    /**
      * @param playerOrder replaces old playerOrder
      */
     public void setPlayerOrder(ArrayList<Player> playerOrder) {
