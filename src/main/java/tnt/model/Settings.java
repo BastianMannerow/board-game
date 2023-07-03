@@ -1,11 +1,13 @@
 package tnt.model;
 
+import tnt.remote.NetworkHandler;
+
 public class Settings {
     static int fieldSizeX = 5;
     static int fieldSizeY = 5;
     static int defaultPlayer = 2;
 
-
+    static NetworkHandler networkHandler = new NetworkHandler();
 
     static Game actualGame;
 
@@ -26,6 +28,10 @@ public class Settings {
 
     public static void setActualGame(Game actualGame) {
         Settings.actualGame = actualGame;
+    }
+
+    public static NetworkHandler getNetworkHandler() {
+        return networkHandler;
     }
 
 }

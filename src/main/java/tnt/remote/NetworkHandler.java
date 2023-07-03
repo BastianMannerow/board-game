@@ -1,9 +1,7 @@
 package tnt.remote;
 
 import javafx.scene.control.Button;
-import tnt.model.FileManager;
-import tnt.model.Game;
-import tnt.model.Settings;
+import tnt.model.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +9,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
-import java.util.Set;
 
 public class NetworkHandler {
     private static final int PORT_NUMBER = 4444;
@@ -107,19 +104,130 @@ public class NetworkHandler {
 
     private void receiveMsg(String line) {
         String msg = line.replace("\\n", "\n");
-//        System.out.println("Received: " + line.replace("\\n", "\n"));
-//        System.out.println("Received: " + line);
-        FileManager fm= new FileManager();
-        List<String[]> gameData = fm.readString(msg);
-        Game game = new Game();
-        game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
-        game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
-        game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));
-        game.setLevelThreeTile(Integer.parseInt(gameData.get(0)[5]));
-        game.setLevelFourTile(Integer.parseInt(gameData.get(0)[6]));
-        Settings.setActualGame(game);
+        FileManager fm = new FileManager();
+        switch (msg.substring(0,4)){
+            case "game":
+                List<String[]> gameData = fm.readString(msg.substring(4));
+                Game game = new Game();
+                game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
+                game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
+                game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));
+                game.setLevelThreeTile(Integer.parseInt(gameData.get(0)[5]));
+                game.setLevelFourTile(Integer.parseInt(gameData.get(0)[6]));
+                Settings.setActualGame(game);
+                break;
+            case "play":
+                break;
+            case "fiel":
+                break;
+            case "move":
+                String[] moveData = msg.substring(4).split(",");
+                try {
+                    Figure figure = null;
+                    if (Boolean.parseBoolean(moveData[2])) {
+                        Field fieldSrc = Settings.getActualGame().getBoard().getField(Integer.parseInt(moveData[0]), Integer.parseInt(moveData[1]));
+                        figure = fieldSrc.getFigure();
+                    } else {
+                        for (Figure fig: Settings.getActualGame().getPlayersTurn().getFigure()){
+                            if (!fig.isPlaced()){
+                                figure = fig;
+                                break;
+                            }
+                        }
+                    }
+                    Field fieldDest = Settings.getActualGame().getBoard().getField(Integer.parseInt(moveData[3]), Integer.parseInt(moveData[4]));
+                    if (figure != null) {
+                        placeFigure(figure, fieldDest);
+                    }
+                } catch (NumberFormatException e) {
+                    System.err.println("Could not build object, because integer could not get parsed: " + moveData[0] + ", " + moveData[1] + ", " + moveData[2] + ", " + e);
+//                    throw new RuntimeException(e);
+                }
+                break;
+            case "buil":
+                String[] buildData = msg.substring(4).split(",");
+                try {
+                    Field field = Settings.getActualGame().getBoard().getField(Integer.parseInt(buildData[1]), Integer.parseInt(buildData[2]));
+                    buildObject(Integer.parseInt(buildData[0]), field);
+                } catch (NumberFormatException e) {
+                    System.err.println("Could not build object, because integer could not get parsed: " + buildData[0] + ", " + buildData[1] + ", " + buildData[2] + ", " + e);
+//                    throw new RuntimeException(e);
+                }
+                break;
+            default:
+
+        }
     }
 
+
+    public void place(Figure figure, Field field) {
+        String msg = "move" + figure.getX() + "," + figure.getY() + "," + figure.isPlaced() + "," + field.getX() + "," + field.getY();
+        sendMsg(msg);
+    }
+    public void build(int buildLevel, Field field) {
+        String msg = "buil" + buildLevel + "," + field.getX() + "," + field.getY();
+        sendMsg(msg);
+    }
+
+    public boolean placeFigure(Figure figure, Field field) {
+        Game game = Settings.getActualGame();
+        switch (game.getGameStatus()) {
+            case SELECT_PLAYER:
+                return false;
+            case PLACE_FIGURES:
+                if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure) && !figure.isPlaced()){
+                    figure.setX(field.getX());
+                    figure.setY(field.getY());
+                    figure.setPlaced();
+                    field.setFigure(figure);
+                    if (game.getPlayersTurn().allFiguresPlaced()){
+                        game.nextPlayersTurn();
+                    }
+                    if (game.getPlayersTurn().allFiguresPlaced()){
+                        game.startGame();
+                        game.checkBlockedMovement(game.getPlayersTurn());
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            case MOVE_FIGURE:
+                if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
+                    game.setLastMovedFigure(figure);
+                    game.getPlayersTurn().executeMove(field,game.getBoard(), figure);
+                    game.setBuildMode();
+                    game.checkBlockedBuilding(game.getPlayersTurn());
+                    return true;
+                } else {
+                    return false;
+                }
+            case BUILD:
+                return false;
+        }
+        return false;
+    }
+
+    public boolean buildObject(int buildLevel, Field field) {
+        Game game = Settings.getActualGame();
+        if (game.isBuildMode()) {
+            if (game.getLastMovedFigure().getValidBuilds(game.getBoard()).contains(field)) {
+                if (field.getTowerLevel() > 0 && buildLevel == -1) {
+                    field.setTowerComplete(true);
+                }
+                else if (field.getTowerLevel() == buildLevel - 1) {
+                    field.setTowerLevel(buildLevel);
+                }
+                else {
+                    return false;
+                }
+                game.nextPlayersTurn();
+                game.setMoveMode();
+                game.checkBlockedMovement(game.getPlayersTurn());
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

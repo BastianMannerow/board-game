@@ -10,12 +10,10 @@ import tnt.gui.StaticSizeHandler;
 import tnt.model.*;
 import tnt.util.Observer;
 
-//import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * The view of the game
@@ -59,6 +57,9 @@ public class GameView extends BorderPane implements Observer {
             game.removeObserver(this);
             game = Settings.getActualGame();
             game.addObserver(this);
+            fieldHolder.clear();
+            figureHolder.clear();
+            initBuildingHolder.clear();
         }
         removeHighlights(highlighted);
 

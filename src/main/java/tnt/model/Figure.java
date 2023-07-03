@@ -7,8 +7,8 @@ import java.util.ArrayList;
  * A figure owned by the Player.
  */
 public class Figure extends Observable {
-    private int x;
-    private int y;
+    private int x = 0;
+    private int y = 0;
     private Game game;
     private boolean placed;
 

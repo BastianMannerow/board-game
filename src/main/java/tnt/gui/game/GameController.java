@@ -1,7 +1,5 @@
 package tnt.gui.game;
 
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import tnt.gui.SceneHandler;
 import tnt.model.Field;
 import tnt.model.Figure;
@@ -37,6 +35,7 @@ public class GameController{
                 return false;
             case PLACE_FIGURES:
                 if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure) && !figure.isPlaced()){
+                    Settings.getNetworkHandler().place(figure, field);
                     figure.setX(field.getX());
                     figure.setY(field.getY());
                     figure.setPlaced();
@@ -54,6 +53,7 @@ public class GameController{
                 }
             case MOVE_FIGURE:
                 if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
+                    Settings.getNetworkHandler().place(figure, field);
                     game.setLastMovedFigure(figure);
                     game.getPlayersTurn().executeMove(field,game.getBoard(), figure);
                     game.setBuildMode();
@@ -78,6 +78,7 @@ public class GameController{
         Game game = Settings.getActualGame();
         if (game.isBuildMode()) {
             if (game.getLastMovedFigure().getValidBuilds(game.getBoard()).contains(field)) {
+                Settings.getNetworkHandler().build(buildLevel, field);
                 if (field.getTowerLevel() > 0 && buildLevel == -1) {
                     field.setTowerComplete(true);
                 }
