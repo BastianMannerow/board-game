@@ -40,6 +40,7 @@ public class NetworkHandler {
 //        });
 //        listenService.start();
         MainListener mainListener = new MainListener();
+        mainListener.setPort(PORT_NUMBER);
         mainListener.setNetworkHandler(this);
         mainListener.setOnFailed(failedEvent -> {
             System.out.println("Failed server socket thread" );
