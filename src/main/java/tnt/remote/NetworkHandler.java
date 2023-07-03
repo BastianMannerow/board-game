@@ -1,12 +1,17 @@
 package tnt.remote;
 
 import javafx.scene.control.Button;
+import tnt.model.FileManager;
+import tnt.model.Game;
+import tnt.model.Settings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.Set;
 
 public class NetworkHandler {
     private static final int PORT_NUMBER = 4444;
@@ -95,12 +100,24 @@ public class NetworkHandler {
         }
     }
 
-    private void sendMsg(String msg) {
-        networkPrinter.println(msg);
+    public void sendMsg(String msg) {
+        networkPrinter.println(msg.replace("\n", "\\n"));
+//        networkPrinter.println(msg);
     }
 
     private void receiveMsg(String line) {
-        System.out.println("Received: " + line);
+        String msg = line.replace("\\n", "\n");
+//        System.out.println("Received: " + line.replace("\\n", "\n"));
+//        System.out.println("Received: " + line);
+        FileManager fm= new FileManager();
+        List<String[]> gameData = fm.readString(msg);
+        Game game = new Game();
+        game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
+        game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
+        game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));
+        game.setLevelThreeTile(Integer.parseInt(gameData.get(0)[5]));
+        game.setLevelFourTile(Integer.parseInt(gameData.get(0)[6]));
+        Settings.setActualGame(game);
     }
 
 

@@ -23,7 +23,4 @@ public class Observable {
             o.update();
         }
     }
-
-    public void addObserver(java.util.Observer observer) {
-    }
 }

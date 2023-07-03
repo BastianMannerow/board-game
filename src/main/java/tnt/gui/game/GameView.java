@@ -7,10 +7,7 @@ import javafx.scene.layout.*;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
 import tnt.gui.StaticSizeHandler;
-import tnt.model.Field;
-import tnt.model.Figure;
-import tnt.model.Game;
-import tnt.model.Player;
+import tnt.model.*;
 import tnt.util.Observer;
 
 //import java.awt.*;
@@ -18,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The view of the game
@@ -36,18 +34,15 @@ public class GameView extends BorderPane implements Observer {
     /**
      * Constructor for the game
      * @param sceneHandler the scenehandler holding all the scenes
-     * @param game the whole game
      * @throws IOException Exception when the fxml file has an error / does not exist
      */
-    public GameView(SceneHandler sceneHandler, Game game) throws IOException {
-
-        this.game = game;
+    public GameView(SceneHandler sceneHandler) throws IOException {
+        game = Settings.getActualGame();
         dragableObject = makeBuilding();
         FXMLLoader gameLoader = ResourceHandler.getInstance().getFXML("game");
         gameLoader.setRoot(this);
         gameLoader.load();
         this.controller = gameLoader.getController();
-        controller.setGame(game);
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("gameView", this);
 
@@ -60,6 +55,11 @@ public class GameView extends BorderPane implements Observer {
 
     @Override
     public void update() {
+        if (game != Settings.getActualGame()){
+            game.removeObserver(this);
+            game = Settings.getActualGame();
+            game.addObserver(this);
+        }
         removeHighlights(highlighted);
 
         ((ScrollPane) this.getCenter()).setFitToHeight(true);

@@ -49,6 +49,15 @@ public class Game extends Observable {
         this.levelThreeTile = levelThreeTile;
         this.levelFourTile = levelFourTile;
         this.gameName = gameName;
+        createBoard(1,1);
+    }
+    public Game() {
+        gameStatus = GameStatus.SELECT_PLAYER;
+        this.playerOrder = new ArrayList<Player>();
+        for (int i = 0; i< Settings.getDefaultPlayer(); i++) {
+            addPlayer(2);
+        }
+        createBoard(1,1);
     }
 
     /**
@@ -124,14 +133,6 @@ public class Game extends Observable {
     public Game(int amountOfTurns) {
         this.playerOrder = new ArrayList<Player>();
         this.amountOfTurns = amountOfTurns;
-    }
-
-    public Game() {
-        gameStatus = GameStatus.SELECT_PLAYER;
-        this.playerOrder = new ArrayList<Player>();
-        for (int i = 0; i< Settings.getDefaultPlayer(); i++) {
-            addPlayer(2);
-         }
     }
 
     /**

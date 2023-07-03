@@ -32,6 +32,16 @@ public class FileManager {
         return data;
     }
 
+    public List<String[]> readString(String str) {
+        List<String[]> data = new ArrayList<>();
+        String[] rows = str.split("\n");
+        for(String line : rows){
+            String[] row = line.split(",");
+            data.add(row);
+        }
+        return data;
+    }
+
     /**
      * saves a csv and parses it by using a comma
      *
@@ -55,6 +65,20 @@ public class FileManager {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String makeString(List<String[]> data){
+        StringBuilder csvLine = new StringBuilder();
+        for (String[] row : data) {
+            for (int i = 0; i < row.length; i++) {
+                csvLine.append(row[i]);
+                if (i < row.length - 1) {
+                    csvLine.append(",");
+                }
+            }
+            csvLine.append(System.lineSeparator());
+        }
+        return csvLine.toString();
     }
 
     /**
@@ -146,6 +170,74 @@ public class FileManager {
         }
 
         // Save Game Information
+        List<String[]> gameData = getGameData(game);
+
+        String filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "game.csv";
+        saveCSV(filepath, gameData);
+
+        // Save Player Information
+        ArrayList<Player> playerList = game.getPlayerOrder();
+        List<String[]> playerData = getPlayersData(playerList);
+
+
+        filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "player.csv";
+        saveCSV(filepath, playerData);
+
+        // Save Figure Information
+        List<String[]> figureData = getFiguresData(playerList);
+
+        filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "figure.csv";
+        saveCSV(filepath, figureData);
+
+        // Save Field Information
+        List<String[]> fieldsData = getFieldsData(game);
+
+        filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "fields.csv";
+        saveCSV(filepath, fieldsData);
+    }
+
+    public List<String[]> getFieldsData(Game game){
+        List<String[]> fieldsData = new ArrayList<>();
+        for (int i = 0; i < game.getBoard().getXSize(); i++) {
+            for (int j = 0; j < game.getBoard().getYSize(); j++) {
+                String towerLevel = Integer.toString(game.getBoard().getField(i, j).getTowerLevel());
+                String towerComplete = "False";
+                if (game.getBoard().getField(i, j).getTowerComplete()) {
+                    towerComplete = "True";
+                }
+                fieldsData.add(new String[]{Integer.toString(i), Integer.toString(j), towerLevel, towerComplete});
+            }
+        }
+        return fieldsData;
+    }
+
+    public List<String[]> getFiguresData(ArrayList<Player> playerList){
+        List<String[]> figureData = new ArrayList<>();
+
+        for (Player player: playerList){
+            ArrayList<Figure> figureList = player.getFigure();
+            for (Figure figure: figureList){
+                figureData.add(new String[]{Integer.toString(figure.getX()), Integer.toString(figure.getY())});
+            }
+        }
+        return figureData;
+    }
+
+    public List<String[]> getPlayersData(ArrayList<Player> playerList){
+        List<String[]> playerData = new ArrayList<>();
+        for (Player player: playerList){
+            String name = player.getName();
+            String color = player.getColor().toString();
+            Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
+            String gods = "Nobody"; // Muss gelöscht werden
+            // String gods = player.getGods(); Muss angepasst werden.
+            String team = player.getTeam();
+            playerData.add(new String[]{name, color, String.valueOf(levelOfIntelligence), gods, team});
+        }
+        return playerData;
+    }
+
+    public List<String[]> getGameData(Game game){
         List<String[]> gameData = new ArrayList<>();
         String roundWorld = "False";
         if (game.getBoard().getRoundWorld()) {
@@ -158,54 +250,7 @@ public class FileManager {
         String levelThreeTile = Integer.toString(game.getLevelThreeTile());
         String levelFourTile = Integer.toString(game.getLevelFourTile());
         gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
-
-        String filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "game.csv";
-        saveCSV(filepath, gameData);
-
-        // Save Player Information
-        List<String[]> playerData = new ArrayList<>();
-        ArrayList<Player> playerList = game.getPlayerOrder();
-        for (Player player: playerList){
-            String name = player.getName();
-            String color = player.getColor().toString();
-            Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
-            String gods = "Nobody"; // Muss gelöscht werden
-            // String gods = player.getGods(); Muss angepasst werden.
-            String team = player.getTeam();
-            playerData.add(new String[]{name, color, String.valueOf(levelOfIntelligence), gods, team});
-        }
-
-        filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "player.csv";
-        saveCSV(filepath, playerData);
-
-        // Save Figure Information
-        List<String[]> figureData = new ArrayList<>();
-
-        for (Player player: playerList){
-            ArrayList<Figure> figureList = player.getFigure();
-            for (Figure figure: figureList){
-                figureData.add(new String[]{Integer.toString(figure.getX()), Integer.toString(figure.getY())});
-            }
-        }
-
-        filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "figure.csv";
-        saveCSV(filepath, figureData);
-
-        // Save Field Information
-        List<String[]> fieldsData = new ArrayList<>();
-        for (int i = 0; i < game.getBoard().getXSize(); i++) {
-            for (int j = 0; j < game.getBoard().getYSize(); j++) {
-                String towerLevel = Integer.toString(game.getBoard().getField(i, j).getTowerLevel());
-                String towerComplete = "False";
-                if (game.getBoard().getField(i, j).getTowerComplete()) {
-                    towerComplete = "True";
-                }
-                fieldsData.add(new String[]{Integer.toString(i), Integer.toString(j), towerLevel, towerComplete});
-            }
-        }
-
-        filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "fields.csv";
-        saveCSV(filepath, fieldsData);
+        return gameData;
     }
 
     /**

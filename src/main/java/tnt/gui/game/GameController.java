@@ -6,22 +6,15 @@ import tnt.gui.SceneHandler;
 import tnt.model.Field;
 import tnt.model.Figure;
 import tnt.model.Game;
+import tnt.model.Settings;
 
 /**
  * The controller for the game
  */
 public class GameController{
 
-    private Game game;
     private SceneHandler sceneHandler;
 
-    /**
-     * Setter for the game / model
-     * @param game the game controlled by this controller
-     */
-    public void setGame(Game game) {
-        this.game = game;
-    }
 
     /**
      * Setter for the scene handler, so the controller can change the view
@@ -38,6 +31,7 @@ public class GameController{
      * @return if the placing was successful
      */
     public boolean placeFigure(Figure figure, Field field) {
+        Game game = Settings.getActualGame();
         switch (game.getGameStatus()) {
             case SELECT_PLAYER:
                 return false;
@@ -81,6 +75,7 @@ public class GameController{
      * @return if the build was successful
      */
     public boolean buildObject(int buildLevel, Field field) {
+        Game game = Settings.getActualGame();
         if (game.isBuildMode()) {
             if (game.getLastMovedFigure().getValidBuilds(game.getBoard()).contains(field)) {
                 if (field.getTowerLevel() > 0 && buildLevel == -1) {

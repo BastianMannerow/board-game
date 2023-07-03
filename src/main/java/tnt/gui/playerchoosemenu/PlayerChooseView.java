@@ -13,6 +13,7 @@ import tnt.gui.SceneHandler;
 import tnt.gui.StaticSizeHandler;
 import tnt.model.Game;
 import tnt.model.Player;
+import tnt.model.Settings;
 import tnt.util.Observer;
 
 import javafx.scene.paint.Color;
@@ -33,16 +34,14 @@ public class PlayerChooseView extends VBox implements Observer {
     /**
      * The constructor for the view
      * @param sceneHandler the scenehandler holding all views
-     * @param game the actual game
      * @throws IOException Exception when the fxml file has an error / does not exist
      */
-    public PlayerChooseView(SceneHandler sceneHandler, Game game) throws IOException {
-        this.game = game;
+    public PlayerChooseView(SceneHandler sceneHandler) throws IOException {
+        game = Settings.getActualGame();
         FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("choosePlayerMenu");
         choosePlayerMenu.setRoot(this);
         choosePlayerMenu.load();
         PlayerChooseController controller = choosePlayerMenu.getController();
-        controller.setGame(game);
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("playerMenu", this);
         ((ScrollPane) this.getChildren().get(0)).setFitToHeight(true);
@@ -62,6 +61,11 @@ public class PlayerChooseView extends VBox implements Observer {
 
     @Override
     public void update() {
+        if (game != Settings.getActualGame()){
+            game.removeObserver(this);
+            game = Settings.getActualGame();
+            game.addObserver(this);
+        }
         ArrayList<Player> players = game.getPlayerOrder();
         VBox playerBox = (VBox) ((ScrollPane) this.getChildren().get(0)).getContent();
         int i = 0;

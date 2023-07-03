@@ -15,7 +15,7 @@
       <HBox alignment="CENTER" prefHeight="126.0" prefWidth="600.0">
          <children>
             <Button mnemonicParsing="false" onAction="#goToMenu" text="back" />
-            <Button mnemonicParsing="false" onAction="#Save" text="Save">
+            <Button mnemonicParsing="false" onAction="#save" text="Save">
                <HBox.margin>
                   <Insets left="50.0" />
                </HBox.margin>

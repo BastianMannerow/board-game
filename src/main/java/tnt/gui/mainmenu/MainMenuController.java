@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import tnt.gui.SceneHandler;
+import tnt.model.FileManager;
+import tnt.model.Game;
+import tnt.model.Settings;
 import tnt.remote.NetworkHandler;
 
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ import java.util.ArrayList;
 public class MainMenuController{
 
     private SceneHandler sceneHandler;
+
+    private NetworkHandler networkHandler = new NetworkHandler();
 
     @FXML
     private ChoiceBox defaultConfig;
@@ -62,7 +67,6 @@ public class MainMenuController{
     @FXML
     private void startServer() {
         System.out.println("about to start the server");
-        NetworkHandler networkHandler = new NetworkHandler();
         networkHandler.listen();
         System.out.println("startet start the server");
     }
@@ -73,9 +77,17 @@ public class MainMenuController{
     @FXML
     private void connectToServer() {
         System.out.println("about to connect as client to server");
-        NetworkHandler networkHandler = new NetworkHandler();
         networkHandler.startClient("");
         System.out.println("connected to server");
+    }
+
+    @FXML
+    private void sendToPartner() {
+//        networkHandler.sendMsg("Hello\nabc");
+        FileManager fileManager = new FileManager();
+        String data = FileManager.makeString(fileManager.getGameData(Settings.getActualGame()));
+        networkHandler.sendMsg(data);
+
     }
 
     /**

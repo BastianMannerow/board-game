@@ -27,7 +27,6 @@ public class PlayerChooseController{
     @FXML
     TextField amountOfFiguresAll;
 
-    private Game game;
     private SceneHandler sceneHandler;
     final Popup popup = new Popup();
 
@@ -37,6 +36,7 @@ public class PlayerChooseController{
      */
     @FXML
     private void runGame() {
+        Game game = Settings.getActualGame();
         int nrOfFigures = 0;
         for (Node node : playerPaneSingle.getChildren()){
             if (node instanceof PlayerAloneChooseView){
@@ -121,7 +121,7 @@ public class PlayerChooseController{
      */
     @FXML
     private void addPlayer() {
-        game.addPlayer(2);
+        Settings.getActualGame().addPlayer(2);
     }
 
     /**
@@ -135,17 +135,9 @@ public class PlayerChooseController{
         } catch (NumberFormatException e){
             System.err.println("could not convert the amount of figures to int: " + amountOfFiguresAll.getText() + " Error: " + e);
         }
-        for (Player player: game.getPlayerOrder()) {
+        for (Player player: Settings.getActualGame().getPlayerOrder()) {
             player.setAmountOfFigures(amountOfFigures);
         }
-    }
-
-    /**
-     * the setter for the game, so the controller knows its model
-     * @param game the actual game
-     */
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     /**
