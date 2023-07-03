@@ -121,7 +121,6 @@ public class FileManager {
 
         // Load Fields
         List<String[]> fieldsData = loadCSV(filepath + File.separator + "fields.csv");
-
     }
 
     /**
