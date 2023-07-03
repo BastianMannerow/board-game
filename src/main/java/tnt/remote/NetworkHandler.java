@@ -1,6 +1,5 @@
 package tnt.remote;
 
-import javafx.scene.control.Button;
 import tnt.model.*;
 
 import java.io.BufferedReader;
@@ -17,32 +16,44 @@ public class NetworkHandler {
 //    private PrintWriter networkPrinter;
     private ArrayList<PrintWriter> networkPrinter = new ArrayList<>();
     public void listen() {
-        ListenService listenService = new ListenService();
-        listenService.setPort(PORT_NUMBER);
-        Button cancelButton = new Button("Cancel");
-        listenService.setOnFailed(failedEvent -> {
-            System.out.println("Unable to start the server." );
-//            Throwable e = failedEvent.getSource().getException();
-//            error("Unable to start the server.", e.getMessage());
-//            toolbar.getItems().remove(cancelButton);
-//            reset();
-        });
-//        statusBar.setText("Waiting for client to connect");
-//        cancelButton.setOnMouseClicked(event -> {
-//            listenService.cancel();
-//            toolbar.getItems().remove(cancelButton);
-//            reset();
+//        ListenService listenService = new ListenService();
+//        listenService.setPort(PORT_NUMBER);
+//        Button cancelButton = new Button("Cancel");
+//        listenService.setOnFailed(failedEvent -> {
+//            System.out.println("Unable to start the server." );
+////            Throwable e = failedEvent.getSource().getException();
+////            error("Unable to start the server.", e.getMessage());
+////            toolbar.getItems().remove(cancelButton);
+////            reset();
 //        });
-//        toolbar.getItems().add(cancelButton);
-        listenService.setOnSucceeded(succeededEvent -> {
-            Socket socket = (Socket) succeededEvent.getSource().getValue();
-//            toolbar.getItems().remove(cancelButton);
-            startServer(socket);
+////        statusBar.setText("Waiting for client to connect");
+////        cancelButton.setOnMouseClicked(event -> {
+////            listenService.cancel();
+////            toolbar.getItems().remove(cancelButton);
+////            reset();
+////        });
+////        toolbar.getItems().add(cancelButton);
+//        listenService.setOnSucceeded(succeededEvent -> {
+//            Socket socket = (Socket) succeededEvent.getSource().getValue();
+////            toolbar.getItems().remove(cancelButton);
+//            startServer(socket);
+//        });
+//        listenService.start();
+        MainListener mainListener = new MainListener();
+        mainListener.setNetworkHandler(this);
+        mainListener.setOnFailed(failedEvent -> {
+            System.out.println("Failed server socket thread" );
         });
-        listenService.start();
+        mainListener.setOnSucceeded(succeededEvent -> {
+            System.out.println("Closed server thread");
+        });
+        System.out.println("1");
+        mainListener.start();
+        System.out.println("2");
+
     }
 
-    private void startServer(Socket socket) {
+    void startServer(Socket socket) {
 //        statusBar.setText("Server: Client connected");
         System.out.println("Server: Client connected");
         try {

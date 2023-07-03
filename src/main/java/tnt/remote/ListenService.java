@@ -7,26 +7,19 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ListenService extends Service<Socket> {
-    private int port;
-
-    public void setPort(int port) {
-        this.port = port;
-    }
+public class ListenService extends Service<Integer> {
+    private NetworkHandler networkHandler;
+    private Socket socket;
 
     @Override
-    protected Task<Socket> createTask() {
-        return new Task<Socket>() {
+    protected Task<Integer> createTask() {
+        return new Task<Integer>() {
             private ServerSocket serverSocket;
 
             @Override
-            protected Socket call() throws IOException {
-                serverSocket = new ServerSocket(port);
-                System.out.println("waiting for clinet");
-                Socket socket = serverSocket.accept();
-                System.out.println("client connected oho");
-                serverSocket.close(); // Todo: dont close the socket or recrate it?
-                return socket;
+            protected Integer call() throws IOException {
+                networkHandler.startServer(socket);
+                return 0;
             }
 
             @Override
@@ -38,5 +31,12 @@ public class ListenService extends Service<Socket> {
                 }
             }
         };
+    }
+
+    public void setNetworkHandler(NetworkHandler networkHandler) {
+        this.networkHandler = networkHandler;
+    }
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 }
