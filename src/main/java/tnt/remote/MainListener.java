@@ -25,10 +25,9 @@ public class MainListener extends Service<Integer> {
 
             @Override
             protected Integer call() throws IOException {
-                System.out.println("test");
                 try {
                     serverSocket = new ServerSocket(port);
-                    System.out.println("test2");
+                    networkHandler.clear();
                 } catch (IOException e) {
                     System.out.println("could not start server");
                     e.printStackTrace();
@@ -37,7 +36,7 @@ public class MainListener extends Service<Integer> {
                     try {
                         System.out.println("waiting for client");
                         Socket socket = serverSocket.accept();
-                        System.out.println("client connected oho");
+//                        System.out.println("client connected oho");
 
                         ListenService listenService = new ListenService();
                         listenService.setNetworkHandler(networkHandler);

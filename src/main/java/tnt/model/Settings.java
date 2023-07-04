@@ -3,10 +3,15 @@ package tnt.model;
 import tnt.remote.NetworkHandler;
 
 public class Settings {
-    static int fieldSizeX = 5;
-    static int fieldSizeY = 5;
-    static int defaultPlayer = 2;
+    public enum RemoteMode {
+        SERVER,
+        CLIENT
+    }
+    private static int fieldSizeX = 5;
+    private static int fieldSizeY = 5;
+    private static int defaultPlayer = 2;
 
+    private static RemoteMode remoteMode = RemoteMode.SERVER;
     static NetworkHandler networkHandler = new NetworkHandler();
 
     static Game actualGame;
@@ -28,10 +33,28 @@ public class Settings {
 
     public static void setActualGame(Game actualGame) {
         Settings.actualGame = actualGame;
+        if (isServerMode()){
+            networkHandler.sendGame(actualGame);
+        }
     }
 
     public static NetworkHandler getNetworkHandler() {
         return networkHandler;
     }
 
+    public static boolean isServerMode() {
+        return remoteMode == RemoteMode.SERVER;
+    }
+
+    public static void setServerMode(boolean serverMode) {
+        if (serverMode) {
+            Settings.remoteMode = RemoteMode.SERVER;
+        } else {
+            Settings.remoteMode = RemoteMode.CLIENT;
+        }
+    }
+
+    public static void setClientMode() {
+        Settings.remoteMode = RemoteMode.CLIENT;
+    }
 }

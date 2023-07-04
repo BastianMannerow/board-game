@@ -64,7 +64,7 @@ public class MainMenuController{
     private void startServer() {
         System.out.println("about to start the server");
         Settings.getNetworkHandler().listen();
-        System.out.println("startet start the server");
+        System.out.println("startet the server");
     }
 
     /**
@@ -73,7 +73,9 @@ public class MainMenuController{
     @FXML
     private void connectToServer() {
         System.out.println("about to connect as client to server");
-        Settings.getNetworkHandler().startClient("");
+//        Settings.getNetworkHandler().startClient("localhost");
+        Settings.getNetworkHandler().askForHost().ifPresent(Settings.getNetworkHandler()::startClient);
+//        Settings.setClientMode();
         System.out.println("connected to server");
     }
 

@@ -18,7 +18,7 @@ public class ListenService extends Service<Integer> {
 
             @Override
             protected Integer call() throws IOException {
-                networkHandler.startServer(socket);
+                networkHandler.startServerClientConection(socket);
                 return 0;
             }
 

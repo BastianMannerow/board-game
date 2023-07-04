@@ -1,5 +1,6 @@
 package tnt.remote;
 
+import javafx.scene.control.TextInputDialog;
 import tnt.model.*;
 
 import java.io.BufferedReader;
@@ -9,6 +10,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 
 public class NetworkHandler {
     private static final int PORT_NUMBER = 4444;
@@ -48,17 +51,16 @@ public class NetworkHandler {
         mainListener.setOnSucceeded(succeededEvent -> {
             System.out.println("Closed server thread");
         });
-        System.out.println("1");
         mainListener.start();
-        System.out.println("2");
 
     }
 
-    void startServer(Socket socket) {
+    void startServerClientConection(Socket socket) {
 //        statusBar.setText("Server: Client connected");
         System.out.println("Server: Client connected");
         try {
             initConnection(socket);
+            Settings.setServerMode(true);
         } catch (IOException e) {
 //            error("Server: Error opening connecting", e.getMessage());
 //            reset();
@@ -97,12 +99,13 @@ public class NetworkHandler {
         readLineService.start();
     }
 
-    public void startClient(String s) {
+    public void startClient(String url) {
 //        hideDefaultButtons();
 //        statusBar.setText("Client: Connected to server");
         try {
-            Socket socket = new Socket("localhost", PORT_NUMBER);
+            Socket socket = new Socket(url, PORT_NUMBER);
             initConnection(socket);
+            Settings.setServerMode(false);
         } catch (IOException e) {
             System.out.println("Error connecting to the server");
 //            error("Error connecting to the server", e.getMessage());
@@ -182,5 +185,24 @@ public class NetworkHandler {
     public void build(int buildLevel, Field field) {
         String msg = "buil" + buildLevel + "," + field.getX() + "," + field.getY();
         sendMsg(msg);
+    }
+
+    public void sendGame(Game actualGame) {
+        System.out.println("Sending here the game");
+    }
+
+    public Optional<String> askForHost() {
+        TextInputDialog dialog = new TextInputDialog("localhost");
+        dialog.setTitle("Network Demo");
+        dialog.setHeaderText("Connecting to a Server");
+        dialog.setContentText("Enter the servers' IP address or host name:");
+        return dialog.showAndWait();
+    }
+
+    public void clear() {
+        for (PrintWriter pw: networkPrinter) {
+            pw.close();
+        }
+        networkPrinter.clear();
     }
 }
