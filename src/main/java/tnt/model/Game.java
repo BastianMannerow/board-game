@@ -50,13 +50,17 @@ public class Game extends Observable {
         this.gameName = gameName;
         createBoard(1,1);
     }
-    public Game() {
+    public Game(int defaultAmountPlayer) {
         gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
-        for (int i = 0; i< Settings.getDefaultPlayer(); i++) {
-            addPlayer(2);
+        int amountFigures = 2;
+        if (defaultAmountPlayer > 3){
+            amountFigures = 1;
         }
-        createBoard(1,1);
+        for (int i = 0; i< defaultAmountPlayer; i++) {
+            addPlayer(amountFigures, String.valueOf((i%(1+ amountFigures))+1));
+        }
+        createBoard(Settings.getFieldSizeX(),Settings.getFieldSizeY());
     }
 
     /**
@@ -133,11 +137,6 @@ public class Game extends Observable {
      */
     public void setLevelFourTile(int levelFourTile) {
         this.levelFourTile = levelFourTile;
-    }
-
-    public Game(int amountOfTurns) {
-        this.playerOrder = new ArrayList<Player>();
-        this.amountOfTurns = amountOfTurns;
     }
 
     /**
@@ -614,9 +613,9 @@ public class Game extends Observable {
      * Adds a player to the game
      * @param amountOfFigures the number of figures this player should have
      */
-    public void addPlayer(int amountOfFigures) {
+    public void addPlayer(int amountOfFigures, String team) {
         if (selectingPlayers()) {
-            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, String.valueOf(playerOrder.size() + 1)));
+            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team));
             notifyObservers();
         }
     }

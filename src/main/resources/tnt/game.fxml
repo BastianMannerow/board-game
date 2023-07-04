@@ -40,7 +40,7 @@
 
 <fx:root type="BorderPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tnt.gui.game.GameController">
    <center>
-      <ScrollPane prefHeight="200.0" prefWidth="186.0" BorderPane.alignment="CENTER">
+      <ScrollPane BorderPane.alignment="CENTER">
          <content>
             <GridPane alignment="CENTER">
       </GridPane>
@@ -51,6 +51,11 @@
       <VBox prefHeight="200.0" prefWidth="80.0" BorderPane.alignment="CENTER" />
    </right>
    <left>
-      <Button mnemonicParsing="false" onAction="#goToMenu" text="Menu" BorderPane.alignment="CENTER" />
+      <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goToMenu" text="Menu" />
+            <Button mnemonicParsing="false" onAction="#playerMenu" text="Player" />
+         </children>
+      </VBox>
    </left>
 </fx:root>

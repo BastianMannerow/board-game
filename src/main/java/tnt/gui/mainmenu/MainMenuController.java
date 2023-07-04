@@ -5,9 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import tnt.gui.SceneHandler;
+import tnt.gui.playerchoosemenu.PlayerChooseView;
 import tnt.model.FileManager;
+import tnt.model.Game;
 import tnt.model.Settings;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -29,6 +32,7 @@ public class MainMenuController{
         list.add("3 Spieler");
         list.add("4 Spieler");
         ObservableList<String> defaults = FXCollections.observableArrayList(list);
+        defaultConfig.setValue("2 Spieler");
         defaultConfig.setItems(defaults);
     }
     /**
@@ -36,7 +40,36 @@ public class MainMenuController{
      */
     @FXML
     private void gotoGame() {
+        if (Settings.getActualGame() == null) {
+            // generating the game
+            String defaultConf = (String) defaultConfig.getValue();
+            int def = 2;
+            switch (defaultConf) {
+                case "2 Spieler":
+                    def = 2;
+                    break;
+                case "3 Spieler":
+                    def = 3;
+                    break;
+                case "4 Spieler":
+                    def = 4;
+                    break;
+                default:
+                    def = 2;
+                    break;
+            }
+            Game game = new Game(def);
+            Settings.setActualGame(game);
+            game.setGameName("newGame");
+        }
         sceneHandler.loadView("playerMenu");
+    }
+
+    @FXML
+    private void newGame() {
+        Settings.setActualGame(null);
+        System.out.println(Settings.getActualGame());
+        gotoGame();
     }
 
 

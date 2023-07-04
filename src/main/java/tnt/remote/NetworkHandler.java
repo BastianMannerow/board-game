@@ -86,7 +86,7 @@ public class NetworkHandler {
         switch (msg.substring(0,4)){
             case "game":
                 List<String[]> gameData = fm.readString(msg.substring(4));
-                Game game = new Game();
+                Game game = new Game(0);
                 game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
                 game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
                 game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));

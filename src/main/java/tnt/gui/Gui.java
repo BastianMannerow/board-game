@@ -3,13 +3,10 @@ package tnt.gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tnt.gui.game.GameView;
 import tnt.gui.mainmenu.MainMenuView;
-import tnt.gui.playerchoosemenu.PlayerChooseView;
 import tnt.gui.saveloadmenu.SaveLoadMenuView;
 import tnt.gui.settingsmenu.SettingsView;
-import tnt.model.Game;
-import tnt.model.Settings;
+
 
 import java.io.IOException;
 
@@ -27,17 +24,10 @@ public class Gui extends Application {
         SizeHandler.getInstance();
         primaryStage.setTitle("TNT");
 
-        // generating the game
-        Game game = new Game();
-        Settings.setActualGame(game);
-        game.setGameName("newGame");
-
         // create a scene handler, which holds all scenes, so that we can change between them
         SceneHandler sceneHandler = new SceneHandler(primaryStage);
 
-        // generate the playerchoose menu
-//        Parent choosePlayerMenu =
-        new PlayerChooseView(sceneHandler);
+
 
         //generate the SaveLoadMenu
 //        SaveLoadMenuView SaveLoadView =
@@ -48,10 +38,6 @@ public class Gui extends Application {
 
         // adding the main menu to the scenehandler
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
-
-        // generating the gameview
-//        GameView gameView =
-        new GameView(sceneHandler);
 
         // creating the settingsmenu
 //        SettingsView settingsView =

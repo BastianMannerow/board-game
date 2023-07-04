@@ -44,4 +44,8 @@ public class GameController{
     private void goToMenu(){
         sceneHandler.loadView("mainMenu");
     }
+    @FXML
+    private void playerMenu(){
+        sceneHandler.loadView("playerMenu");
+    }
 }

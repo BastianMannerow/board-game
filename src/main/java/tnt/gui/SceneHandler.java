@@ -4,8 +4,12 @@ package tnt.gui;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tnt.gui.game.GameView;
+import tnt.gui.playerchoosemenu.PlayerChooseView;
+import tnt.model.Settings;
 import tnt.util.Observer;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,6 +63,30 @@ public class SceneHandler{
      * @param viewName the name of the view to be loaded
      */
     public void loadView(String viewName){
+        if (Settings.getActualGame() == null){
+
+        }
+        if (!views.containsKey(viewName)){
+            if (viewName.equals("gameView")){
+                // generating the gameview
+//        GameView gameView =
+                try {
+                    new GameView(this);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // generate the playerchoose menu
+//        Parent choosePlayerMenu =
+            if (viewName.equals("playerMenu")) {
+                try {
+                    new PlayerChooseView(this);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         if (views.containsKey(viewName)){
             Parent view = views.get(viewName);
             scene.setRoot(view);

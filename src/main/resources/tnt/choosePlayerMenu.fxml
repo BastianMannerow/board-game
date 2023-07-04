@@ -43,7 +43,41 @@
 
 <fx:root alignment="CENTER" prefHeight="400.0" prefWidth="640.0" spacing="10.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tnt.gui.playerchoosemenu.PlayerChooseController">
    <children>
-      <ScrollPane prefHeight="401.0" prefWidth="762.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#gotoHome" text="Home" />
+            <VBox alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label prefHeight="16.0" prefWidth="110.0" text="Max step up:" />
+                        <TextField fx:id="maxStepUp" prefWidth="40.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label prefHeight="16.0" prefWidth="110.0" text="Max step down:" />
+                        <TextField fx:id="maxStepDown" prefWidth="40.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label prefHeight="16.0" prefWidth="145.0" text="Max building height:" />
+                        <TextField fx:id="maxBuildingHeight" prefWidth="40.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
+      <ScrollPane fx:id="playerPane" prefHeight="401.0" prefWidth="762.0">
          <content>
             <VBox fx:id="playerPaneSingle" prefHeight="200.0" prefWidth="100.0" />
          </content>

@@ -26,6 +26,7 @@ public class PlayerChooseView extends VBox implements Observer {
 
     private Map<Player, PlayerAloneChooseView> playerHolder = new HashMap<Player, PlayerAloneChooseView>();
     private Game game;
+    private PlayerChooseController controller;
 
     /**
      * The constructor for the view
@@ -37,13 +38,13 @@ public class PlayerChooseView extends VBox implements Observer {
         FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("choosePlayerMenu");
         choosePlayerMenu.setRoot(this);
         choosePlayerMenu.load();
-        PlayerChooseController controller = choosePlayerMenu.getController();
+        this.controller = choosePlayerMenu.getController();
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("playerMenu", this);
-        ((ScrollPane) this.getChildren().get(0)).setFitToHeight(true);
-        ((ScrollPane) this.getChildren().get(0)).setFitToWidth(true);
-        ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setSpacing(20);
-        ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setPadding(new Insets(20,0,5,0));
+        controller.playerPane.setFitToHeight(true);
+        controller.playerPane.setFitToWidth(true);
+        controller.playerPaneSingle.setSpacing(20);
+        controller.playerPaneSingle.setPadding(new Insets(20,0,5,0));
         controller.fieldSizeX.setPromptText(Integer.toString(SizeHandler.getNrFieldsX()));
         controller.fieldSizeY.setPromptText(Integer.toString(SizeHandler.getNrFieldsX()));
         game.addObserver(this);
@@ -63,11 +64,10 @@ public class PlayerChooseView extends VBox implements Observer {
             game.addObserver(this);
         }
         ArrayList<Player> players = game.getPlayerOrder();
-        VBox playerBox = (VBox) ((ScrollPane) this.getChildren().get(0)).getContent();
         int i = 0;
         for (Player playerHere: playerHolder.keySet()){
             if (!players.contains(playerHere)){
-                playerBox.getChildren().remove(playerHolder.get(playerHere));
+                controller.playerPaneSingle.getChildren().remove(playerHolder.get(playerHere));
             }
         }
         for(Player player: players){
@@ -80,7 +80,7 @@ public class PlayerChooseView extends VBox implements Observer {
                     throw new RuntimeException(e);
                 }
                 playerHolder.put(player, playerAloneChooseView);
-                playerBox.getChildren().add(playerAloneChooseView);
+                controller.playerPaneSingle.getChildren().add(playerAloneChooseView);
 
                 ((Button) playerAloneChooseView.getChildren().get(0)).setOnAction(new EventHandler<ActionEvent>() {
                     @Override

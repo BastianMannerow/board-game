@@ -44,7 +44,12 @@
          <children>
             <Label fx:id="defaultlabel" text="Choose default config:" />
             <ChoiceBox fx:id="defaultConfig" prefWidth="150.0" />
-            <Button fx:id="playButton" mnemonicParsing="false" onAction="#gotoGame" text="Go to Game" />
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <Button fx:id="playButton" mnemonicParsing="false" onAction="#gotoGame" text="Go to Game" />
+                  <Button fx:id="newGameButton" mnemonicParsing="false" onAction="#newGame" text="New Game" />
+               </children>
+            </VBox>
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">

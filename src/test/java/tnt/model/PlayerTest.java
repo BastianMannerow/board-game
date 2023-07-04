@@ -136,7 +136,7 @@ public class PlayerTest {
      */
     @Test
     public void testAddFigureWithCoordinates() {
-        Game game = new Game();
+        Game game = new Game(Settings.getDefaultPlayer());
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures);
         player.addFigure(1);
         ArrayList<Figure> figures = player.getFigure();
@@ -185,7 +185,7 @@ public class PlayerTest {
     public void testExecuteMove() {
         // Set up the necessary objects for the test
         Field field = board.getField(1, 1);
-        Figure figure = new Figure(0, 0, new Game());
+        Figure figure = new Figure(0, 0, new Game(Settings.getDefaultPlayer()));
         board.getField(0, 0).setFigure(figure);
 
         // Execute the move action

@@ -4,7 +4,7 @@ package tnt.gui;
  * Settings of the max and min size of the field
  */
 public class GUISettings {
-    static int maxFieldsize = 100;
+    static int maxFieldsize = 150;
     static int minFieldsize = 40;
 
     /**

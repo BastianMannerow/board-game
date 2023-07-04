@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
-import tnt.gui.GUISettings;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
@@ -26,6 +25,8 @@ public class PlayerChooseController{
     TextField fieldSizeY;
     @FXML
     TextField amountOfFiguresAll;
+    @FXML
+    ScrollPane playerPane;
 
     private SceneHandler sceneHandler;
     final Popup popup = new Popup();
@@ -100,7 +101,7 @@ public class PlayerChooseController{
 
         if (sizeX * sizeY > Settings.getMaxFieldcount()){
             System.err.println("Too many fields, the amount of field is limited by " + Settings.getMaxFieldcount() + " but you entered " + sizeX * sizeY);
-            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fieldss");
+            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fields");
             popup.show(sceneHandler.getStage());
             return;
         }
@@ -121,7 +122,7 @@ public class PlayerChooseController{
      */
     @FXML
     private void addPlayer() {
-        Settings.getActualGame().addPlayer(2);
+        Settings.getActualGame().addPlayer(2, String.valueOf(Settings.getActualGame().getPlayerOrder().size()));
     }
 
     /**
@@ -138,6 +139,16 @@ public class PlayerChooseController{
         for (Player player: Settings.getActualGame().getPlayerOrder()) {
             player.setAmountOfFigures(amountOfFigures);
         }
+    }
+
+    @FXML
+    private void setMaxStepUp() {
+//        Settings.getActualGame().set
+    }
+
+    @FXML
+    private void gotoHome(){
+        sceneHandler.loadView("mainMenu");
     }
 
     /**

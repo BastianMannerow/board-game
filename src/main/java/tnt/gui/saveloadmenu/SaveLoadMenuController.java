@@ -37,7 +37,7 @@ public class SaveLoadMenuController {
 
 
     public void load(String save) {
-        Game game = new Game();
+        Game game = new Game(0);
         fileManager.loadGame(save, Settings.getActualGame());
         Settings.setActualGame(game);
     }
