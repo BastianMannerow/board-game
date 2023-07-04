@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import tnt.ResourceHandler;
-import tnt.gui.StaticSizeHandler;
+import tnt.gui.SizeHandler;
 import tnt.model.Figure;
 import tnt.model.Player;
 import tnt.util.Observer;
@@ -40,7 +40,7 @@ public class FigureView extends DragableObject implements Observer{
         ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
         figure.addObserver(this);
         player.addObserver(this);
-        StaticSizeHandler.getInstance().addObserver(this);
+        SizeHandler.getInstance().addObserver(this);
         update();
     }
 
@@ -67,9 +67,9 @@ public class FigureView extends DragableObject implements Observer{
         String name = player.getName();
         ((Label)((StackPane) this.getChildren().get(0)).getChildren().get(1)).setText(name.substring(0,Math.min(5, name.length())));
         this.setLayoutX(0);
-        ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setRadius(StaticSizeHandler.getPrefSize()/4);
-        ((StackPane) this.getChildren().get(0)).setPrefHeight(StaticSizeHandler.getPrefSize());
-        ((StackPane) this.getChildren().get(0)).setPrefWidth(StaticSizeHandler.getPrefSize());
+        ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setRadius(SizeHandler.getPrefSize()/4);
+        ((StackPane) this.getChildren().get(0)).setPrefHeight(SizeHandler.getPrefSize());
+        ((StackPane) this.getChildren().get(0)).setPrefWidth(SizeHandler.getPrefSize());
     }
 
     @Override

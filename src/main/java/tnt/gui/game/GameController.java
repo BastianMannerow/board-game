@@ -1,5 +1,6 @@
 package tnt.gui.game;
 
+import javafx.fxml.FXML;
 import tnt.gui.SceneHandler;
 import tnt.model.*;
 
@@ -39,7 +40,8 @@ public class GameController{
         return ExecuteGameInputs.buildObject(buildLevel, field);
     }
 
-    public void goToMenu(){
+    @FXML
+    private void goToMenu(){
         sceneHandler.loadView("mainMenu");
     }
 }

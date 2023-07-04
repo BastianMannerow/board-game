@@ -20,6 +20,10 @@ public class SceneHandler{
 
     Map<String, Parent> views = new HashMap<>();
 
+    /**
+     * Constructor of the scenehandler, holding all the scenes
+     * @param primaryStage the stage where the scenes are presented
+     */
     public SceneHandler(Stage primaryStage) {
         this.stage = primaryStage;
     }
@@ -64,6 +68,10 @@ public class SceneHandler{
         }
     }
 
+    /**
+     * getter for the stage
+     * @return the stage
+     */
     public Stage getStage(){
         return stage;
     }

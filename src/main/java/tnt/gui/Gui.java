@@ -1,7 +1,6 @@
 package tnt.gui;
 
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tnt.gui.game.GameView;
@@ -25,7 +24,7 @@ public class Gui extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        StaticSizeHandler.getInstance();
+        SizeHandler.getInstance();
         primaryStage.setTitle("TNT");
 
         // generating the game
@@ -37,10 +36,12 @@ public class Gui extends Application {
         SceneHandler sceneHandler = new SceneHandler(primaryStage);
 
         // generate the playerchoose menu
-        Parent choosePlayerMenu = new PlayerChooseView(sceneHandler);
+//        Parent choosePlayerMenu =
+        new PlayerChooseView(sceneHandler);
 
         //generate the SaveLoadMenu
-        SaveLoadMenuView SaveLoadView = new SaveLoadMenuView(sceneHandler);
+//        SaveLoadMenuView SaveLoadView =
+        new SaveLoadMenuView(sceneHandler);
 
         // generate the main menu
         MainMenuView mainView = new MainMenuView(sceneHandler);
@@ -49,10 +50,12 @@ public class Gui extends Application {
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
 
         // generating the gameview
-        GameView gameView = new GameView(sceneHandler);
+//        GameView gameView =
+        new GameView(sceneHandler);
 
         // creating the settingsmenu
-        SettingsView settingsView = new SettingsView(sceneHandler);
+//        SettingsView settingsView =
+        new SettingsView(sceneHandler);
 
         // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
@@ -60,9 +63,9 @@ public class Gui extends Application {
 
 
 
-        SizeHandler width = new SizeHandler(false);
+        SizeListener width = new SizeListener(false);
         primaryStage.widthProperty().addListener(width);
-        SizeHandler height = new SizeHandler(true);
+        SizeListener height = new SizeListener(true);
         primaryStage.heightProperty().addListener(height);
         primaryStage.show();
     }

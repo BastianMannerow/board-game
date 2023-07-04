@@ -22,9 +22,11 @@ public class Figure extends Observable {
         this.y = y;
         this.placed = true;
         this.game = game;
-
     }
 
+    /**
+     * Constructor for a figure
+     */
     public Figure() {
         this.placed = false;
     }

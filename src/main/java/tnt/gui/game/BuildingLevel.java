@@ -2,7 +2,7 @@ package tnt.gui.game;
 
 import javafx.scene.image.ImageView;
 import tnt.ResourceHandler;
-import tnt.gui.StaticSizeHandler;
+import tnt.gui.SizeHandler;
 import tnt.util.Observer;
 
 import java.io.IOException;
@@ -44,8 +44,8 @@ public class BuildingLevel extends DragableObject implements Observer {
         }
         this.level = level;
         imageView.setPreserveRatio(true);
-        StaticSizeHandler.getInstance().addObserver(this);
-        imageView.setFitHeight(StaticSizeHandler.getPrefSize());
+        SizeHandler.getInstance().addObserver(this);
+        imageView.setFitHeight(SizeHandler.getPrefSize());
         this.getChildren().add(imageView);
     }
 
@@ -64,6 +64,6 @@ public class BuildingLevel extends DragableObject implements Observer {
 
     @Override
     public void update() {
-        ((ImageView) this.getChildren().get(0)).setFitHeight(StaticSizeHandler.getPrefSize());
+        ((ImageView) this.getChildren().get(0)).setFitHeight(SizeHandler.getPrefSize());
     }
 }

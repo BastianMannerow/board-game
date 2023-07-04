@@ -2,7 +2,7 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.paint.Color;
-import tnt.gui.StaticSizeHandler;
+import tnt.gui.SizeHandler;
 import tnt.util.Observable;
 
 /**
@@ -207,8 +207,8 @@ public class Game extends Observable {
                 fields[i][j] = field;
             }
         }
-        StaticSizeHandler.setNrFieldsX(boardX);
-        StaticSizeHandler.setNrFieldsY(boardY);
+        SizeHandler.setNrFieldsX(boardX);
+        SizeHandler.setNrFieldsY(boardY);
         Board board = new Board(fields, boardX, boardY);
         this.board = board;
 

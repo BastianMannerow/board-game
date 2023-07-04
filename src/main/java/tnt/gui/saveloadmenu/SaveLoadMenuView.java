@@ -14,12 +14,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * menu for saving and loading games
+ */
 public class SaveLoadMenuView extends VBox{
 
     @FXML
     private SaveLoadMenuController SaveLoadMenuController;
     private HashMap<Button,String> saveHolder;
 
+    /**
+     * Constructor for the save load menu
+     * @param sceneHandler the scenehandler holding all the scenes
+     * @throws IOException Exception when the fxml file has an error / does not exist
+     */
     public SaveLoadMenuView(SceneHandler sceneHandler) throws IOException {
         FXMLLoader SaveLoadMenuLayout = ResourceHandler.getInstance().getFXML("saveLoadMenu");
         SaveLoadMenuLayout.setRoot(this);

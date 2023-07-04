@@ -1,6 +1,16 @@
 package tnt.model;
 
+/**
+ * Class for checking and executing the movements/builds
+ */
 public class ExecuteGameInputs {
+
+    /**
+     * placed the figure on the field (in the actual game)
+     * @param figure the figure to get moved
+     * @param field the field the figure should be moved to
+     * @return if the movement was successful
+     */
     public static boolean placeFigure(Figure figure, Field field){
         Game game = Settings.getActualGame();
         switch (game.getGameStatus()) {
@@ -41,6 +51,12 @@ public class ExecuteGameInputs {
         return false;
     }
 
+    /**
+     * build a buildung with given level on the field
+     * @param buildLevel the level of the building
+     * @param field the field where the building should be set
+     * @return if build has finished successfully
+     */
     public static boolean buildObject(int buildLevel, Field field) {
         Game game = Settings.getActualGame();
         if (game.isBuildMode()) {

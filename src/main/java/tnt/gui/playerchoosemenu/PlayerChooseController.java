@@ -98,8 +98,8 @@ public class PlayerChooseController{
             return;
         }
 
-        if (sizeX * sizeY > GUISettings.maxFieldcount){
-            System.err.println("Too many fields, the amount of field is limited by " + GUISettings.maxFieldcount + " but you entered " + sizeX * sizeY);
+        if (sizeX * sizeY > Settings.getMaxFieldcount()){
+            System.err.println("Too many fields, the amount of field is limited by " + Settings.getMaxFieldcount() + " but you entered " + sizeX * sizeY);
             ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fieldss");
             popup.show(sceneHandler.getStage());
             return;
