@@ -13,6 +13,7 @@ import tnt.util.Observer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,10 +25,10 @@ public class GameView extends BorderPane implements Observer {
     private DragableObject dragableObject;
     static private Map<Field, FieldView> fieldHolder = new HashMap<Field, FieldView>();
     static private Map<Figure, FigureView> figureHolder = new HashMap<Figure, FigureView>();
-    static private HashMap<Integer, BuildingLevel> initBuildingHolder = new HashMap<Integer, BuildingLevel>();
+    static private Map<Integer, BuildingLevel> initBuildingHolder = new HashMap<Integer, BuildingLevel>();
     GameController controller;
-    ArrayList<ImageView> highlighted = new ArrayList<>();
-    ArrayList<ImageView> highlightedtemp = new ArrayList<>();
+    private List<ImageView> highlighted = new ArrayList<>();
+    private List<ImageView> highlightedtemp = new ArrayList<>();
 
     /**
      * Constructor for the game
@@ -258,7 +259,7 @@ public class GameView extends BorderPane implements Observer {
      * remove higlights (temporary or a little bit more static)
      * @param list the list holding highlight to be removed
      */
-    private void removeHighlights(ArrayList<ImageView> list) {
+    private void removeHighlights(List<ImageView> list) {
         for (ImageView image: list){
             ((StackPane) image.getParent()).getChildren().remove(image);
         }
@@ -271,7 +272,7 @@ public class GameView extends BorderPane implements Observer {
      * @param highlightImages The list of highlight images to be removed.
      * @param fieldView The FieldView from which the highlight images should be removed.
      */
-    public void callRemoveHighlights(ArrayList<ImageView> highlightImages, FieldView fieldView) {
+    public void callRemoveHighlights(List<ImageView> highlightImages, FieldView fieldView) {
         removeHighlights(highlightImages);
         fieldView.getChildren().removeAll(highlightImages);
     }
@@ -283,7 +284,7 @@ public class GameView extends BorderPane implements Observer {
      * @param fieldv the field view which should be highlighted
      * @param picture the name of the picture, which is used to highlight the field
      */
-    private void makeHighlightField(ArrayList list, FieldView fieldv, String picture) {
+    private void makeHighlightField(List list, FieldView fieldv, String picture) {
         try {
             ImageView highlight = new ImageView();
             highlight.setImage(ResourceHandler.getInstance().getImage(picture));

@@ -11,6 +11,7 @@ import tnt.util.Observer;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The view for each field
@@ -19,7 +20,7 @@ public class FieldView extends HBox implements Observer {
 
     private Field field;
 
-    private HashMap<Integer, BuildingLevel> buildingHolder = new HashMap<Integer, BuildingLevel>();
+    private Map<Integer, BuildingLevel> buildingHolder = new HashMap<Integer, BuildingLevel>();
 
     /**
      * Constructor for the vield view
