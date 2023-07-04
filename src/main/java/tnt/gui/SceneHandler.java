@@ -63,9 +63,6 @@ public class SceneHandler{
      * @param viewName the name of the view to be loaded
      */
     public void loadView(String viewName){
-        if (Settings.getActualGame() == null){
-
-        }
         if (!views.containsKey(viewName)){
             if (viewName.equals("gameView")){
                 // generating the gameview

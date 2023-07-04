@@ -35,7 +35,6 @@ public class SaveLoadMenuView extends VBox{
         this.SaveLoadMenuController = SaveLoadMenuLayout.getController();
         this.SaveLoadMenuController.setSceneHandler(sceneHandler);
         sceneHandler.add("SaveLoad", this);
-        Label lblTitle = new Label("SaveLoad");
         this.getSaves();
     }
 

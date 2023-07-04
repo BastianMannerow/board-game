@@ -22,7 +22,7 @@ public class FigureTest implements Observer {
     @BeforeEach
     public void setup() {
         board = new Board(new Field[5][5], 5, 5);
-        figure = new Figure(2, 2, new Game());
+        figure = new Figure(2, 2, new Game(0));
     }
 
     /**
