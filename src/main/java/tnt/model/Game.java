@@ -2,8 +2,8 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.paint.Color;
+import tnt.gui.SizeHandler;
 import tnt.util.Observable;
-import tnt.model.gods.movement.*;
 
 /**
  * The Game class, which is responsible for general mechanics during the Game.
@@ -51,13 +51,22 @@ public class Game extends Observable {
         this.levelThreeTile = levelThreeTile;
         this.levelFourTile = levelFourTile;
         this.gameName = gameName;
+        createBoard(1,1);
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
     }
 
-    /**
-     * @return Maximum height to step up
-     */
+    public Game() {
+        gameStatus = GameStatus.SELECT_PLAYER;
+        this.playerOrder = new ArrayList<Player>();
+        for (int i = 0; i < Settings.getDefaultPlayer(); i++) {
+            addPlayer(2);
+        }
+        createBoard(1, 1);
+    }
+        /**
+         * @return Maximum height to step up
+         */
     public int getMaxStepUpHeight() {
         return maxStepUpHeight;
     }
@@ -232,6 +241,8 @@ public class Game extends Observable {
                 fields[i][j] = field;
             }
         }
+        SizeHandler.setNrFieldsX(boardX);
+        SizeHandler.setNrFieldsY(boardY);
         Board board = new Board(fields, boardX, boardY);
         this.board = board;
 
@@ -632,8 +643,10 @@ public class Game extends Observable {
      * @param amountOfFigures the number of figures this player should have
      */
     public void addPlayer(int amountOfFigures) {
-        playerOrder.add(new Player("" , "Player " + (playerOrder.size()+1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, 1));
-        notifyObservers();
+        if (selectingPlayers()) {
+            playerOrder.add(new Player("", "Player " + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, 1));
+            notifyObservers();
+        }
     }
 
     /**
@@ -641,6 +654,10 @@ public class Game extends Observable {
      * @param player the player to remove
      */
     public void removePlayer(Player player) {
+        if (selectingPlayers()) {
+            playerOrder.remove(player);
+            notifyObservers();
+        }
         playerOrder.remove(player);
         notifyObservers();
     }
@@ -675,6 +692,30 @@ public class Game extends Observable {
         Collections.rotate(playerOrder, -1);
 //        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
+        switch (getPlayersTurn().getLevelOfIntelligence()){
+            case HUMAN:
+                break;
+//            case REMOTE:
+//
+//                ExecuteStuff ex = new ExecuteStuff();
+//                TestThread tt = new TestThread(ex);
+//                tt.setOnSucceeded(e -> {
+//                    Integer test = (Integer) e.getSource().getValue();
+//                    System.out.println("int " + test.toString());
+//                });
+//                tt.start();
+//                System.out.println("should have started");
+//                break;
+            case AI_1:
+                break;
+            case AI_2:
+                break;
+            case AI_3:
+                break;
+            default:
+                System.err.println("This player type does not exist: " + getPlayersTurn().getLevelOfIntelligence());
+        }
+
     }
 
     /**
