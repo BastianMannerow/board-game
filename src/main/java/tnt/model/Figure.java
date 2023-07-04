@@ -83,7 +83,8 @@ public class Figure extends Observable {
 
         // Filter the reachable fields, so that only the legal fields remain
         int ownTowerLevel = board.getField(x,y).getTowerLevel();
-        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel+1);
+        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel + game.getMaxStepUpHeight()
+                || field.getTowerLevel() < ownTowerLevel - game.getMaxStepDownHeight());
         return reachableFields;
     }
 
