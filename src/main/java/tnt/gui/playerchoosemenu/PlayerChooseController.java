@@ -45,8 +45,8 @@ public class PlayerChooseController{
                 Player player = playerView.getPlayer();
                 String name = ((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getText();
 
-                if ((name.length()<1)){
-                    name = (((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7));
+                if (name.length()<1){
+                    name = ((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7);
                 }
 
                 int amount = player.getAmountOfFigures();
@@ -57,8 +57,8 @@ public class PlayerChooseController{
                 }
 
                 String team = ((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getText();
-                if ((team.length()<1)){
-                    team = (((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getPromptText());
+                if (team.length()<1){
+                    team = ((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getPromptText();
                 }
                 Player.PlayerType playerType = (Player.PlayerType) ((ChoiceBox) ((VBox) playerView.getChildren().get(6)).getChildren().get(1)).getValue();
 

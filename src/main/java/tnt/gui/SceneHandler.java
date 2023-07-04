@@ -4,7 +4,6 @@ package tnt.gui;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tnt.gui.playerchoosemenu.PlayerChooseView;
 import tnt.util.Observer;
 
 import java.util.HashMap;

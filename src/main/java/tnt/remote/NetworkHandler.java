@@ -15,33 +15,8 @@ import java.util.Optional;
 
 public class NetworkHandler {
     private static final int PORT_NUMBER = 4444;
-
-//    private PrintWriter networkPrinter;
     private ArrayList<PrintWriter> networkPrinter = new ArrayList<>();
     public void listen() {
-//        ListenService listenService = new ListenService();
-//        listenService.setPort(PORT_NUMBER);
-//        Button cancelButton = new Button("Cancel");
-//        listenService.setOnFailed(failedEvent -> {
-//            System.out.println("Unable to start the server." );
-////            Throwable e = failedEvent.getSource().getException();
-////            error("Unable to start the server.", e.getMessage());
-////            toolbar.getItems().remove(cancelButton);
-////            reset();
-//        });
-////        statusBar.setText("Waiting for client to connect");
-////        cancelButton.setOnMouseClicked(event -> {
-////            listenService.cancel();
-////            toolbar.getItems().remove(cancelButton);
-////            reset();
-////        });
-////        toolbar.getItems().add(cancelButton);
-//        listenService.setOnSucceeded(succeededEvent -> {
-//            Socket socket = (Socket) succeededEvent.getSource().getValue();
-////            toolbar.getItems().remove(cancelButton);
-//            startServer(socket);
-//        });
-//        listenService.start();
         MainListener mainListener = new MainListener();
         mainListener.setPort(PORT_NUMBER);
         mainListener.setNetworkHandler(this);
@@ -55,8 +30,7 @@ public class NetworkHandler {
 
     }
 
-    void startServerClientConection(Socket socket) {
-//        statusBar.setText("Server: Client connected");
+    void startServerClientConnection(Socket socket) {
         System.out.println("Server: Client connected");
         try {
             initConnection(socket);
@@ -73,19 +47,7 @@ public class NetworkHandler {
         ReadLineService readLineService = new ReadLineService();
         readLineService.setBufferedReader(bufferedReader);
 
-//        Button closeButton = new Button("Close Connection");
-//        closeButton.setOnMouseClicked(event -> {
-//            try {
-//                socket.close();
-//            } catch (IOException e) {
-//                // ignore
-//            }
-//        });
-//        toolbar.getItems().add(closeButton);
-
         networkPrinter.add(new PrintWriter(socket.getOutputStream(), true));
-//        connected = true;
-//        updateCircles();
 
         readLineService.setOnFailed(failedEvent -> {
 //            reset();
@@ -100,8 +62,6 @@ public class NetworkHandler {
     }
 
     public void startClient(String url) {
-//        hideDefaultButtons();
-//        statusBar.setText("Client: Connected to server");
         try {
             Socket socket = new Socket(url, PORT_NUMBER);
             initConnection(socket);
@@ -193,8 +153,8 @@ public class NetworkHandler {
 
     public Optional<String> askForHost() {
         TextInputDialog dialog = new TextInputDialog("localhost");
-        dialog.setTitle("Network Demo");
-        dialog.setHeaderText("Connecting to a Server");
+        dialog.setTitle("Network address");
+        dialog.setHeaderText("Connecting to a TNT server");
         dialog.setContentText("Enter the servers' IP address or host name:");
         return dialog.showAndWait();
     }

@@ -1,14 +1,10 @@
 package tnt.gui;
 
 import javafx.application.Application;
-import javafx.beans.InvalidationListener;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
-import tnt.gui.game.GameController;
 import tnt.gui.game.GameView;
-import tnt.gui.mainmenu.MainMenuController;
 import tnt.gui.mainmenu.MainMenuView;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
 import tnt.gui.saveloadmenu.SaveLoadMenuView;

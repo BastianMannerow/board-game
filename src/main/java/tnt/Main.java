@@ -1,12 +1,5 @@
 package tnt;
-import javafx.scene.image.Image;
 import tnt.gui.Gui;
-
-import java.util.Arrays;
-import java.util.ArrayList;
-import tnt.model.Player;
-import tnt.model.Game;
-import tnt.model.interfaces.Gods;
 
 public class Main {
     /**

@@ -1,9 +1,7 @@
 package tnt.gui.game;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 import tnt.ResourceHandler;
-import tnt.gui.SizeHandler;
 import tnt.gui.StaticSizeHandler;
 import tnt.util.Observer;
 

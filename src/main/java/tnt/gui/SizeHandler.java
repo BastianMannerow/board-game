@@ -2,7 +2,6 @@ package tnt.gui;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import tnt.util.Observable;
 
 /**
  * Starting point of the JavaFX GUI

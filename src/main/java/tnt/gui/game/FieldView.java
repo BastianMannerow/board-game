@@ -1,12 +1,9 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.StaticSizeHandler;
 import tnt.model.Field;

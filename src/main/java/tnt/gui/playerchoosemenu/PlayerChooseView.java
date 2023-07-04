@@ -2,11 +2,9 @@ package tnt.gui.playerchoosemenu;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
@@ -15,8 +13,6 @@ import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
 import tnt.util.Observer;
-
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;

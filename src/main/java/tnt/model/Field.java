@@ -1,6 +1,5 @@
 package tnt.model;
 
-import javafx.scene.Node;
 import tnt.util.Observable;
 
 /**

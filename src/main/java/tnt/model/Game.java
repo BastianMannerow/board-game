@@ -2,7 +2,6 @@ package tnt.model;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.scene.paint.Color;
-import tnt.gui.GUISettings;
 import tnt.gui.StaticSizeHandler;
 import tnt.util.Observable;
 
