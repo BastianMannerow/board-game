@@ -63,6 +63,21 @@ public class PlayerChooseView extends VBox implements Observer {
             game = Settings.getActualGame();
             game.addObserver(this);
         }
+        if (controller.maxBuildingHeight.getText().equals("")){
+            controller.maxBuildingHeight.setPromptText(String.valueOf(3));
+        } else {
+            controller.maxBuildingHeight.setText(String.valueOf(3));
+        }
+        if (controller.maxStepUp.getText().equals("")){
+            controller.maxStepUp.setPromptText(String.valueOf(game.getMaxStepUpHeight()));
+        } else {
+            controller.maxStepUp.setText(String.valueOf(game.getMaxStepUpHeight()));
+        }
+        if (controller.maxStepDown.getText().equals("")){
+            controller.maxStepDown.setPromptText(String.valueOf(game.getMaxStepDownHeight()));
+        } else {
+            controller.maxStepDown.setText(String.valueOf(game.getMaxStepDownHeight()));
+        }
         ArrayList<Player> players = game.getPlayerOrder();
         int i = 0;
         for (Player playerHere: playerHolder.keySet()){

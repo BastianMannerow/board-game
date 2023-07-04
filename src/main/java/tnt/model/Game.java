@@ -26,6 +26,7 @@ public class Game extends Observable {
     private int levelTwoTile;
     private int levelThreeTile;
     private int levelFourTile;
+
     private int maxStepUpHeight;
     private int maxStepDownHeight;
 
@@ -54,6 +55,7 @@ public class Game extends Observable {
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
     }
+
     public Game(int defaultAmountPlayer) {
         gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
@@ -64,6 +66,8 @@ public class Game extends Observable {
         for (int i = 0; i < defaultAmountPlayer; i++) {
             addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1));
         }
+        maxStepUpHeight = Settings.getMaxStepUp();
+        maxStepDownHeight = Settings.getMaxStepDown();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
     }
     /**
@@ -721,6 +725,14 @@ public class Game extends Observable {
      */
     public Figure getLastMovedFigure() {
         return lastMovedFigure;
+    }
+
+    public void setMaxStepUpHeight(int maxStepUpHeight) {
+        this.maxStepUpHeight = maxStepUpHeight;
+    }
+
+    public void setMaxStepDownHeight(int maxStepDownHeight) {
+        this.maxStepDownHeight = maxStepDownHeight;
     }
 
 

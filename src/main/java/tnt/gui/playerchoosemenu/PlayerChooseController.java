@@ -27,10 +27,22 @@ public class PlayerChooseController{
     TextField amountOfFiguresAll;
     @FXML
     ScrollPane playerPane;
+    @FXML
+    TextField maxStepUp;
+    @FXML
+    TextField maxStepDown;
+    @FXML
+    TextField maxBuildingHeight;
 
     private SceneHandler sceneHandler;
     final Popup popup = new Popup();
 
+//    @FXML
+//    private void initialize(){
+//        maxStepUp.setPromptText(String.valueOf(Settings.getMaxStepUp()));
+//        maxStepDown.setPromptText(String.valueOf(Settings.getMaxStepDown()));
+//        maxBuildingHeight.setPromptText(String.valueOf(Settings.getMaxBuildingLevel()));
+//    }
 
     /**
      * The method getting called, when user pressed the play button
@@ -75,6 +87,26 @@ public class PlayerChooseController{
                 nrOfFigures += player.getAmountOfFigures();
             }
         }
+        // Todo: get the other fields
+
+        int maxStepUp = game.getMaxStepUpHeight();
+        int maxStepDown = game.getMaxStepDownHeight();
+//        int maxBuildingHeight
+        try {
+            maxStepUp = Integer.parseInt(this.maxStepUp.getText());
+        } catch (NumberFormatException e) {
+            System.err.println("could not convert maxStepUp: " + this.maxStepUp.getText() + " Error: " + e);
+        }
+        try {
+            maxStepDown = Integer.parseInt(this.maxStepDown.getText());
+        } catch (NumberFormatException e) {
+            System.err.println("could not convert maxStepDown: " + this.maxStepDown.getText() + " Error: " + e);
+        }
+//        try {
+//            maxBuildingHeight = Integer.parseInt(this.maxBuildingHeight.getText());
+//        } catch (NumberFormatException e) {
+//            System.err.println("could not convert maxBuildingHeight: " + this.maxBuildingHeight.getText() + " Error: " + e);
+//        }
 
         int sizeX = Settings.getFieldSizeX();
         int sizeY = Settings.getFieldSizeY();
@@ -108,11 +140,11 @@ public class PlayerChooseController{
 
         if (game.selectingPlayers()){
             game.createBoard(sizeX, sizeY);
-
             game.getBoard().setRoundWorld(roundWorld.isSelected());
-
             game.initGame();
             game.startPlaceFigures();
+            game.setMaxStepUpHeight(maxStepUp);
+            game.setMaxStepDownHeight(maxStepDown);
         }
         sceneHandler.loadView("gameView");
     }
