@@ -266,6 +266,18 @@ public class GameView extends BorderPane implements Observer {
     }
 
     /**
+     * Removes the given highlight images and their display from the FieldView.
+     *
+     * @param highlightImages The list of highlight images to be removed.
+     * @param fieldView The FieldView from which the highlight images should be removed.
+     */
+    public void callRemoveHighlights(ArrayList<ImageView> highlightImages, FieldView fieldView) {
+        removeHighlights(highlightImages);
+        fieldView.getChildren().removeAll(highlightImages);
+    }
+
+
+    /**
      * Highlights a specific field with the given layout
      * @param list the list (temporary or not) where the highlight should be added (for removal)
      * @param fieldv the field view which should be highlighted

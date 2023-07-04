@@ -67,6 +67,12 @@ public class Game extends Observable {
     }
 
     /**
+     * @return GameStatus
+     */
+    public void setGameStatus(GameStatus placeFigures) {
+    }
+
+    /**
      * @param gameName replaces old playerOrder
      */
     public void setGameName(String gameName) {

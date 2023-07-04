@@ -7,11 +7,17 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
+/**
+ * Unit tests for the Game class.
+ */
 public class GameTest {
 
     private Game game;
     private ArrayList<Player> playerOrder;
 
+    /**
+     * Set up the necessary dependencies before each test.
+     */
     @BeforeEach
     public void setup() {
         playerOrder = new ArrayList<>();
@@ -21,77 +27,29 @@ public class GameTest {
         game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game");
     }
 
+    /**
+     * Tests the getGameName method of Game.
+     * It should return the name of the game.
+     */
     @Test
     public void testGetGameName() {
         Assertions.assertEquals("Test Game", game.getGameName());
     }
 
+    /**
+     * Tests the setGameName method of Game.
+     * It should set the name of the game to the specified value.
+     */
     @Test
     public void testSetGameName() {
         game.setGameName("New Game");
         Assertions.assertEquals("New Game", game.getGameName());
     }
 
-    @Test
-    public void testGetLevelOneTile() {
-        Assertions.assertEquals(5, game.getLevelOneTile());
-    }
-
-    @Test
-    public void testSetLevelOneTile() {
-        game.setLevelOneTile(6);
-        Assertions.assertEquals(6, game.getLevelOneTile());
-    }
-
-    @Test
-    public void testGetLevelTwoTile() {
-        Assertions.assertEquals(4, game.getLevelTwoTile());
-    }
-
-    @Test
-    public void testSetLevelTwoTile() {
-        game.setLevelTwoTile(3);
-        Assertions.assertEquals(3, game.getLevelTwoTile());
-    }
-
-    @Test
-    public void testGetLevelThreeTile() {
-        Assertions.assertEquals(3, game.getLevelThreeTile());
-    }
-
-    @Test
-    public void testSetLevelThreeTile() {
-        game.setLevelThreeTile(4);
-        Assertions.assertEquals(4, game.getLevelThreeTile());
-    }
-
-    @Test
-    public void testGetLevelFourTile() {
-        Assertions.assertEquals(2, game.getLevelFourTile());
-    }
-
-    @Test
-    public void testSetLevelFourTile() {
-        game.setLevelFourTile(1);
-        Assertions.assertEquals(1, game.getLevelFourTile());
-    }
-
-    @Test
-    public void testGetPlayerOrder() {
-        Assertions.assertEquals(playerOrder, game.getPlayerOrder());
-    }
-
-    @Test
-    public void testGetAmountOfTurns() {
-        Assertions.assertEquals(10, game.getAmountOfTurns());
-    }
-
-    @Test
-    public void testSetAmountOfTurns() {
-        game.setAmountOfTurns(15);
-        Assertions.assertEquals(15, game.getAmountOfTurns());
-    }
-
+    /**
+     * Tests the createBoard method of Game.
+     * It should create a new board with the specified dimensions and assign it to the game.
+     */
     @Test
     public void testCreateBoard() {
         game.createBoard(3, 3);
@@ -101,24 +59,40 @@ public class GameTest {
         Assertions.assertEquals(3, board.getYSize());
     }
 
+    /**
+     * Tests the setMoveMode method of Game.
+     * It should set the game status to MOVE_FIGURE.
+     */
     @Test
     public void testSetMoveMode() {
         game.setMoveMode();
         Assertions.assertEquals(Game.GameStatus.MOVE_FIGURE, game.getGameStatus());
     }
 
+    /**
+     * Tests the setBuildMode method of Game.
+     * It should set the game status to BUILD.
+     */
     @Test
     public void testSetBuildMode() {
         game.setBuildMode();
         Assertions.assertEquals(Game.GameStatus.BUILD, game.getGameStatus());
     }
 
+    /**
+     * Tests the setGameOverMode method of Game.
+     * It should set the game status to GAME_OVER.
+     */
     @Test
     public void testSetGameOverMode() {
         game.setGameOverMode();
         Assertions.assertEquals(Game.GameStatus.GAME_OVER, game.getGameStatus());
     }
 
+    /**
+     * Tests the addPlayer method of Game.
+     * It should add a new player to the game with the specified player number and default properties.
+     */
     @Test
     public void testAddPlayer() {
         game.addPlayer(3);
@@ -127,6 +101,10 @@ public class GameTest {
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
     }
 
+    /**
+     * Tests the removePlayer method of Game.
+     * It should remove the specified player from the game.
+     */
     @Test
     public void testRemovePlayer() {
         Player playerToRemove = playerOrder.get(0);

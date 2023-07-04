@@ -7,8 +7,9 @@ import org.junit.jupiter.api.Test;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
+
 /**
- * Testing the Example class with its arbitrary arithmetical computations
+ * Unit tests for the Player class.
  */
 public class PlayerTest {
     private Player player;
@@ -16,6 +17,9 @@ public class PlayerTest {
     private ArrayList<Object> gods;
     private Board board;
 
+    /**
+     * Set up the necessary dependencies before each test.
+     */
     @BeforeEach
     public void setup() {
         Player.PlayerType levelOfIntelligence = Player.PlayerType.HUMAN;
@@ -35,18 +39,30 @@ public class PlayerTest {
         board = new Board(fields, 3, 3);
     }
 
+    /**
+     * Tests the getLevelOfIntelligence method of Player.
+     * It should return the level of intelligence of the player.
+     */
     @Test
     public void testGetLevelOfIntelligence() {
         Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
         Assertions.assertEquals(Player.PlayerType.HUMAN, levelOfIntelligence);
     }
 
+    /**
+     * Tests the getName method of Player.
+     * It should return the name of the player.
+     */
     @Test
     public void testGetName() {
         String name = player.getName();
         Assertions.assertEquals("John", name);
     }
 
+    /**
+     * Tests the setName method of Player.
+     * It should set the name of the player to the specified value.
+     */
     @Test
     public void testSetName() {
         player.setName("Jane");
@@ -54,12 +70,20 @@ public class PlayerTest {
         Assertions.assertEquals("Jane", name);
     }
 
+    /**
+     * Tests the getColor method of Player.
+     * It should return the color of the player.
+     */
     @Test
     public void testGetColor() {
         Color color = player.getColor();
         Assertions.assertEquals(Color.RED, color);
     }
 
+    /**
+     * Tests the setColor method of Player.
+     * It should set the color of the player to the specified value.
+     */
     @Test
     public void testSetColor() {
         player.setColor(Color.BLUE);
@@ -67,6 +91,10 @@ public class PlayerTest {
         Assertions.assertEquals(Color.BLUE, color);
     }
 
+    /**
+     * Tests the getFigures method of Player.
+     * It should return the list of figures owned by the player.
+     */
     @Test
     public void testGetFigures() {
         ArrayList<Figure> figures = player.getFigure();
@@ -91,6 +119,10 @@ public class PlayerTest {
     }
     */
 
+    /**
+     * Tests the addFigure method of Player with the amount parameter.
+     * It should add the specified number of figures to the player's collection.
+     */
     @Test
     public void testAddFigureWithAmount() {
         player.addFigure(3);
@@ -98,6 +130,10 @@ public class PlayerTest {
         Assertions.assertEquals(3, figures.size());
     }
 
+    /**
+     * Tests the addFigure method of Player with coordinates.
+     * It should add a figure to the player's collection with the specified coordinates.
+     */
     @Test
     public void testAddFigureWithCoordinates() {
         Game game = new Game();
@@ -118,6 +154,10 @@ public class PlayerTest {
     }
     */
 
+    /**
+     * Tests the executeBuild method of Player.
+     * It should execute the build action on the specified field and update its tower level and completion status.
+     */
     @Test
     public void testExecuteBuild() {
         Field field = new Field(0, 0);
@@ -137,6 +177,10 @@ public class PlayerTest {
         Assertions.assertFalse(field.getTowerComplete());
     }
 
+    /**
+     * Tests the executeMove method of Player.
+     * It should execute the move action, moving the specified figure to the specified field on the board.
+     */
     @Test
     public void testExecuteMove() {
         // Set up the necessary objects for the test
@@ -154,6 +198,10 @@ public class PlayerTest {
         Assertions.assertSame(figure, field.getFigure());
     }
 
+    /**
+     * Tests the initPlayer method of Player.
+     * It should initialize the player by adding two figures to their collection.
+     */
     @Test
     public void testInitPlayer() {
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures);
