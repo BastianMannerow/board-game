@@ -9,6 +9,7 @@ import tnt.gui.game.GameView;
 import tnt.model.Field;
 import tnt.model.Figure;
 import tnt.model.Game;
+import tnt.model.Settings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,9 +33,10 @@ class GameViewTest {
      */
     @BeforeEach
     void setUp() throws IOException {
-        sceneHandler = new SceneHandler();
-        game = new Game();
-        gameView = new GameView(sceneHandler, game);
+//        sceneHandler = new SceneHandler();
+//        game = new Game();
+//        Settings.setActualGame(game);
+//        gameView = new GameView(sceneHandler);
     }
 
     /**
