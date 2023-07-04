@@ -1,12 +1,11 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
+import tnt.gui.SizeHandler;
 import tnt.model.Field;
 import tnt.util.Observer;
 
@@ -19,8 +18,6 @@ import java.util.HashMap;
 public class FieldView extends HBox implements Observer {
 
     private Field field;
-
-    private FigureView figureView;
 
     private HashMap<Integer, BuildingLevel> buildingHolder = new HashMap<Integer, BuildingLevel>();
 
@@ -35,6 +32,7 @@ public class FieldView extends HBox implements Observer {
         fieldLayout.load();
         this.field = field;
         field.addObserver(this);
+        SizeHandler.getInstance().addObserver(this);
         update();
     }
 
@@ -87,6 +85,10 @@ public class FieldView extends HBox implements Observer {
                 ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(-1));
             }
         }
+        this.setPrefSize(SizeHandler.getPrefSize(), SizeHandler.getPrefSize());
+        int size = SizeHandler.getPrefSize();
+        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitHeight(size);
+        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitWidth(size);
 
     }
 }

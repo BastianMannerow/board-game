@@ -1,15 +1,19 @@
 package tnt.gui.game;
 
-import javafx.fxml.FXMLLoader;
 import javafx.scene.image.ImageView;
 import tnt.ResourceHandler;
+import tnt.gui.SizeHandler;
+import tnt.util.Observer;
 
 import java.io.IOException;
+
 
 /**
  * The view for all building levels
  */
-public class BuildingLevel extends DragableObject {
+
+public class BuildingLevel extends DragableObject implements Observer {
+
 
     private int level;
 
@@ -40,7 +44,8 @@ public class BuildingLevel extends DragableObject {
         }
         this.level = level;
         imageView.setPreserveRatio(true);
-        imageView.setFitHeight(80);
+        SizeHandler.getInstance().addObserver(this);
+        imageView.setFitHeight(SizeHandler.getPrefSize());
         this.getChildren().add(imageView);
     }
 
@@ -55,5 +60,10 @@ public class BuildingLevel extends DragableObject {
      */
     public int getLevel() {
         return this.level;
+    }
+
+    @Override
+    public void update() {
+        ((ImageView) this.getChildren().get(0)).setFitHeight(SizeHandler.getPrefSize());
     }
 }

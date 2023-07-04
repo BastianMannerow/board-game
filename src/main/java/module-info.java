@@ -11,4 +11,5 @@ module tnt {
     opens tnt.gui.mainmenu to javafx.fxml;
     opens tnt.gui.game to javafx.fxml;
     opens tnt.gui.settingsmenu to javafx.fxml;
+    opens tnt.gui.saveloadmenu to javafx.fxml;
 }

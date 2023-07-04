@@ -10,7 +10,7 @@ import java.util.Observer;
 /**
  * Unit tests for the Field class.
  */
-public class FieldTest {
+public class FieldTest implements tnt.util.Observer {
 
     private Field field;
     private boolean observerNotified;
@@ -42,12 +42,7 @@ public class FieldTest {
     @Test
     public void testFigureLeft() {
         field.setFigure(new Figure());
-        field.addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                observerNotified = true;
-            }
-        });
+        field.addObserver(this);
 
         field.figureLeft();
 
@@ -115,11 +110,16 @@ public class FieldTest {
     @Test
     public void testSetFigure() {
         Figure figure = new Figure();
-        field.addObserver((Observable o, Object arg) -> observerNotified = true);
+        field.addObserver(this);
 
         field.setFigure(figure);
 
         Assertions.assertEquals(figure, field.getFigure());
         Assertions.assertTrue(observerNotified);
+    }
+
+    @Override
+    public void update() {
+        this.observerNotified = true;
     }
 }

@@ -3,7 +3,7 @@ package tnt.gui;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import tnt.gui.playerchoosemenu.PlayerChooseView;
+import javafx.stage.Stage;
 import tnt.util.Observer;
 
 import java.util.HashMap;
@@ -14,9 +14,20 @@ import java.util.Map;
  */
 public class SceneHandler{
 
+    Stage stage;
+
     Scene scene;
 
     Map<String, Parent> views = new HashMap<>();
+
+    /**
+     * Constructor of the scenehandler, holding all the scenes
+     * @param primaryStage the stage where the scenes are presented
+     */
+    public SceneHandler(Stage primaryStage) {
+        this.stage = primaryStage;
+    }
+
 
     /**
      * Getter for the whole scene
@@ -55,5 +66,13 @@ public class SceneHandler{
                 ((Observer) views.get(viewName)).update();
             }
         }
+    }
+
+    /**
+     * getter for the stage
+     * @return the stage
+     */
+    public Stage getStage(){
+        return stage;
     }
 }

@@ -22,7 +22,7 @@ public class PlayerTest {
      */
     @BeforeEach
     public void setup() {
-        String levelOfIntelligence = "Human";
+        Player.PlayerType levelOfIntelligence = Player.PlayerType.HUMAN;
         String name = "John";
         Color color = Color.RED;
         ArrayList<Figure> figures = new ArrayList<>();
@@ -45,8 +45,8 @@ public class PlayerTest {
      */
     @Test
     public void testGetLevelOfIntelligence() {
-        String levelOfIntelligence = player.getLevelOfIntelligence();
-        Assertions.assertEquals("Human", levelOfIntelligence);
+        Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
+        Assertions.assertEquals(Player.PlayerType.HUMAN, levelOfIntelligence);
     }
 
     /**
@@ -137,7 +137,7 @@ public class PlayerTest {
     @Test
     public void testAddFigureWithCoordinates() {
         Game game = new Game();
-        player = new Player("Human", "John", Color.RED, figures);
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures);
         player.addFigure(1);
         ArrayList<Figure> figures = player.getFigure();
         Assertions.assertEquals(1, figures.size());
@@ -204,7 +204,7 @@ public class PlayerTest {
      */
     @Test
     public void testInitPlayer() {
-        player = new Player("Human", "John", Color.RED, figures);
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures);
         player.initPlayer();
         ArrayList<Figure> figures = player.getFigure();
         Assertions.assertEquals(2, figures.size());

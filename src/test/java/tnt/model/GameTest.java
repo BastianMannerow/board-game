@@ -21,8 +21,8 @@ public class GameTest {
     @BeforeEach
     public void setup() {
         playerOrder = new ArrayList<>();
-        playerOrder.add(new Player("", "Player 1", Color.RED, 2, null, 1));
-        playerOrder.add(new Player("", "Player 2", Color.BLUE, 2, null, 1));
+        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.RED, 2, null, "1"));
+        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "2"));
 
         game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game");
     }
@@ -97,7 +97,7 @@ public class GameTest {
     public void testAddPlayer() {
         game.addPlayer(3);
         ArrayList<Player> expectedPlayerOrder = new ArrayList<>(playerOrder);
-        expectedPlayerOrder.add(new Player("", "Player 3", Color.GREEN, 3, null, 1));
+        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 3", Color.GREEN, 3, null, "1"));
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
     }
 
@@ -110,7 +110,7 @@ public class GameTest {
         Player playerToRemove = playerOrder.get(0);
         game.removePlayer(playerToRemove);
         ArrayList<Player> expectedPlayerOrder = new ArrayList<>();
-        expectedPlayerOrder.add(new Player("", "Player 2", Color.BLUE, 2, null, 1));
+        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "1"));
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
     }
 }

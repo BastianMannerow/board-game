@@ -2,19 +2,17 @@ package tnt.gui.playerchoosemenu;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
+import tnt.gui.SizeHandler;
 import tnt.model.Game;
 import tnt.model.Player;
+import tnt.model.Settings;
 import tnt.util.Observer;
-
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,30 +30,38 @@ public class PlayerChooseView extends VBox implements Observer {
     /**
      * The constructor for the view
      * @param sceneHandler the scenehandler holding all views
-     * @param game the actual game
      * @throws IOException Exception when the fxml file has an error / does not exist
      */
-    public PlayerChooseView(SceneHandler sceneHandler, Game game) throws IOException {
-        this.game = game;
+    public PlayerChooseView(SceneHandler sceneHandler) throws IOException {
+        game = Settings.getActualGame();
         FXMLLoader choosePlayerMenu = ResourceHandler.getInstance().getFXML("choosePlayerMenu");
         choosePlayerMenu.setRoot(this);
         choosePlayerMenu.load();
         PlayerChooseController controller = choosePlayerMenu.getController();
-        controller.setGame(game);
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("playerMenu", this);
         ((ScrollPane) this.getChildren().get(0)).setFitToHeight(true);
         ((ScrollPane) this.getChildren().get(0)).setFitToWidth(true);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setSpacing(20);
         ((VBox)((ScrollPane) this.getChildren().get(0)).getContent()).setPadding(new Insets(20,0,5,0));
-        controller.fieldSizeX.setPromptText("5"); //Todo: get default size
-        controller.fieldSizeY.setPromptText("5"); //Todo: get default size
+        controller.fieldSizeX.setPromptText(Integer.toString(SizeHandler.getNrFieldsX()));
+        controller.fieldSizeY.setPromptText(Integer.toString(SizeHandler.getNrFieldsX()));
         game.addObserver(this);
         update();
+        VBox popup = new VBox();
+        FXMLLoader popup_loader = ResourceHandler.getInstance().getFXML("error");
+        popup_loader.setRoot(popup);
+        popup_loader.load();
+        controller.setPopup(popup);
     }
 
     @Override
     public void update() {
+        if (game != Settings.getActualGame()){
+            game.removeObserver(this);
+            game = Settings.getActualGame();
+            game.addObserver(this);
+        }
         ArrayList<Player> players = game.getPlayerOrder();
         VBox playerBox = (VBox) ((ScrollPane) this.getChildren().get(0)).getContent();
         int i = 0;
@@ -103,12 +109,30 @@ public class PlayerChooseView extends VBox implements Observer {
                 countFigures.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        try {
-                            player.setAmountOfFigures(Integer.parseInt(countFigures.getText()));
-                        } catch (NumberFormatException e) {
-                            player.setAmountOfFigures(2);
+                        if (game.selectingPlayers()) {
+                            try {
+                                player.setAmountOfFigures(Integer.parseInt(countFigures.getText()));
+                            } catch (NumberFormatException e) {
+                                player.setAmountOfFigures(2);
+                            }
                         }
 
+                    }
+                });
+
+                TextField team = (TextField) ((VBox) playerAloneChooseView.getChildren().get(5)).getChildren().get(1);
+                team.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        player.setTeam(team.getText());
+                    }
+                });
+
+                ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
+                playerType.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
                     }
                 });
             }

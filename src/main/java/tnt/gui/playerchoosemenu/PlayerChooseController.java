@@ -2,17 +2,14 @@ package tnt.gui.playerchoosemenu;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
+import tnt.gui.GUISettings;
 import tnt.model.Game;
 import tnt.model.Player;
-import tnt.util.Observable;
-
-import java.util.ArrayList;
+import tnt.model.Settings;
 
 /**
  * The controller for the view where the player can be choosen
@@ -21,67 +18,101 @@ public class PlayerChooseController{
 
     @FXML
     CheckBox roundWorld;
-
     @FXML
     VBox playerPaneSingle;
     @FXML
     TextField fieldSizeX;
     @FXML
     TextField fieldSizeY;
+    @FXML
+    TextField amountOfFiguresAll;
 
-    private Game game;
     private SceneHandler sceneHandler;
+    final Popup popup = new Popup();
+
 
     /**
      * The method getting called, when user pressed the play button
      */
     @FXML
     private void runGame() {
+        Game game = Settings.getActualGame();
+        int nrOfFigures = 0;
         for (Node node : playerPaneSingle.getChildren()){
             if (node instanceof PlayerAloneChooseView){
                 PlayerAloneChooseView playerView = (PlayerAloneChooseView) node;
 
                 Player player = playerView.getPlayer();
                 String name = ((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getText();
-                if (!(name.length()<1)){
-                    player.setName(name);
-                }
-                else{
-                    player.setName(((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7));
-                }
-                try {
-                    int amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
-                    player.setAmountOfFigures(amount);
-                } catch (NumberFormatException e) {
-                    System.out.println("could not convert the amount of figures to int " + e);
-                }
-                player.setColor(((ColorPicker) ((VBox) playerView.getChildren().get(4)).getChildren().get(1)).getValue());
 
+                if (name.length()<1){
+                    name = ((TextField) ((VBox) playerView.getChildren().get(2)).getChildren().get(1)).getPromptText().substring(7);
+                }
+
+                int amount = player.getAmountOfFigures();
+                try {
+                    amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
+                } catch (NumberFormatException e) {
+                    System.err.println("could not convert the amount of figures to int: " + ((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText() + " Error: " + e);
+                }
+
+                String team = ((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getText();
+                if (team.length()<1){
+                    team = ((TextField) ((VBox) playerView.getChildren().get(5)).getChildren().get(1)).getPromptText();
+                }
+                Player.PlayerType playerType = (Player.PlayerType) ((ChoiceBox) ((VBox) playerView.getChildren().get(6)).getChildren().get(1)).getValue();
+
+                player.setColor(((ColorPicker) ((VBox) playerView.getChildren().get(4)).getChildren().get(1)).getValue());
+                player.setTeam(team);
+                player.setLevelOfIntelligence(playerType);
+                player.setName(name);
+
+                if (game.selectingPlayers()){
+                    player.setAmountOfFigures(amount);
+                    // Todo: set Team and playertype (or outside this condition)
+                }
+                nrOfFigures += player.getAmountOfFigures();
             }
         }
 
-        int sizeX = 5; // Todo: get default size
-        int sizeY = 5;
+        int sizeX = Settings.getFieldSizeX();
+        int sizeY = Settings.getFieldSizeY();
 
         try {
             int amount = Integer.parseInt(fieldSizeX.getText());
             sizeX = amount;
         } catch (NumberFormatException e) {
-            System.out.println("could not convert the field size x to int " + e);
+            System.err.println("could not convert the field size x to int " + e);
         }
         try {
             int amount = Integer.parseInt(fieldSizeY.getText());
             sizeY = amount;
         } catch (NumberFormatException e) {
-            System.out.println("could not convert the field size y to int " + e);
+            System.err.println("could not convert the field size y to int " + e);
         }
 
-        game.createBoard(sizeX, sizeY);
+        if (sizeX * sizeY <= nrOfFigures){
+            System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
+            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many figures for that board size");
+            popup.show(sceneHandler.getStage());
+            return;
+        }
 
-        game.getBoard().setRoundWorld(roundWorld.isSelected());
+        if (sizeX * sizeY > Settings.getMaxFieldcount()){
+            System.err.println("Too many fields, the amount of field is limited by " + Settings.getMaxFieldcount() + " but you entered " + sizeX * sizeY);
+            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fieldss");
+            popup.show(sceneHandler.getStage());
+            return;
+        }
 
-        game.initGame();
-        game.startPlaceFigures();
+        if (game.selectingPlayers()){
+            game.createBoard(sizeX, sizeY);
+
+            game.getBoard().setRoundWorld(roundWorld.isSelected());
+
+            game.initGame();
+            game.startPlaceFigures();
+        }
         sceneHandler.loadView("gameView");
     }
 
@@ -90,15 +121,23 @@ public class PlayerChooseController{
      */
     @FXML
     private void addPlayer() {
-        game.addPlayer(2);
+        Settings.getActualGame().addPlayer(2);
     }
 
     /**
-     * the setter for the game, so the controller knows its model
-     * @param game the actual game
+     * The method getting called, when user pressed the add player button
      */
-    public void setGame(Game game) {
-        this.game = game;
+    @FXML
+    private void setAmountOfFigures() {
+        int amountOfFigures = 2;
+        try {
+            amountOfFigures = Integer.parseInt(amountOfFiguresAll.getText());
+        } catch (NumberFormatException e){
+            System.err.println("could not convert the amount of figures to int: " + amountOfFiguresAll.getText() + " Error: " + e);
+        }
+        for (Player player: Settings.getActualGame().getPlayerOrder()) {
+            player.setAmountOfFigures(amountOfFigures);
+        }
     }
 
     /**
@@ -109,4 +148,13 @@ public class PlayerChooseController{
         this.sceneHandler = sceneHandler;
     }
 
+    public void setPopup(VBox vbox) {
+        this.popup.setX(300);
+        vbox.setStyle("-fx-background-color: white");
+        popup.setY(200);
+        ((Button) vbox.getChildren().get(1)).setOnAction(event -> {
+            popup.hide();
+        });
+        popup.getContent().add(vbox);
+    }
 }

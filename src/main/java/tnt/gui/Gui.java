@@ -1,17 +1,15 @@
 package tnt.gui;
 
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Stage;
-import tnt.gui.game.GameController;
 import tnt.gui.game.GameView;
-import tnt.gui.mainmenu.MainMenuController;
 import tnt.gui.mainmenu.MainMenuView;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
+import tnt.gui.saveloadmenu.SaveLoadMenuView;
 import tnt.gui.settingsmenu.SettingsView;
 import tnt.model.Game;
+import tnt.model.Settings;
 
 import java.io.IOException;
 
@@ -26,16 +24,24 @@ public class Gui extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws IOException {
+        SizeHandler.getInstance();
         primaryStage.setTitle("TNT");
 
         // generating the game
         Game game = new Game();
+        Settings.setActualGame(game);
+        game.setGameName("newGame");
 
         // create a scene handler, which holds all scenes, so that we can change between them
-        SceneHandler sceneHandler = new SceneHandler();
+        SceneHandler sceneHandler = new SceneHandler(primaryStage);
 
         // generate the playerchoose menu
-        Parent choosePlayerMenu = new PlayerChooseView(sceneHandler, game);
+//        Parent choosePlayerMenu =
+        new PlayerChooseView(sceneHandler);
+
+        //generate the SaveLoadMenu
+//        SaveLoadMenuView SaveLoadView =
+        new SaveLoadMenuView(sceneHandler);
 
         // generate the main menu
         MainMenuView mainView = new MainMenuView(sceneHandler);
@@ -44,13 +50,23 @@ public class Gui extends Application {
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
 
         // generating the gameview
-        GameView gameView = new GameView(sceneHandler, game);
+//        GameView gameView =
+        new GameView(sceneHandler);
 
         // creating the settingsmenu
-        SettingsView settingsView = new SettingsView(sceneHandler);
+//        SettingsView settingsView =
+        new SettingsView(sceneHandler);
 
         // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
+
+
+
+
+        SizeListener width = new SizeListener(false);
+        primaryStage.widthProperty().addListener(width);
+        SizeListener height = new SizeListener(true);
+        primaryStage.heightProperty().addListener(height);
         primaryStage.show();
     }
 

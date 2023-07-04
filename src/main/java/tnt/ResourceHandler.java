@@ -7,6 +7,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Hold the resources needed by the game and view
+ */
 public class ResourceHandler {
     private static ResourceHandler instance;
 
@@ -17,6 +20,10 @@ public class ResourceHandler {
 
     }
 
+    /**
+     * Getter for the only one instance of the resource handler
+     * @return the only one resource handler
+     */
     public static ResourceHandler getInstance() {
         if (instance == null) {
             instance = new ResourceHandler();
@@ -38,6 +45,11 @@ public class ResourceHandler {
 
     }
 
+    /**
+     * getter for the image identified by the name
+     * @param key the filename of the picture without extension
+     * @return the requested image
+     */
     public Image getImage(String key) {
         if (imgs.get(key) == null) {
             loadImage(key, "jpg", "png", "bmp", "gif");
@@ -45,6 +57,11 @@ public class ResourceHandler {
         return imgs.get(key);
     }
 
+    /**
+     * getter for an fxml file
+     * @param key the filename of the fxml
+     * @return the loader of the needed fxml
+     */
     public FXMLLoader getFXML(String key) {
         if (fxmls.get(key) == null) {
             loadFXML(key);

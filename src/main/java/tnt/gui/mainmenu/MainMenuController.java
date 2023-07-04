@@ -1,7 +1,14 @@
 package tnt.gui.mainmenu;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import tnt.gui.SceneHandler;
+import tnt.model.FileManager;
+import tnt.model.Settings;
+
+import java.util.ArrayList;
 
 
 /**
@@ -11,10 +18,19 @@ public class MainMenuController{
 
     private SceneHandler sceneHandler;
 
-    //    @FXML
-//    private void initialize(){
-//    }
+    @FXML
+    private ChoiceBox defaultConfig;
 
+
+    @FXML
+    private void initialize(){
+        ArrayList<String> list = new ArrayList<>();
+        list.add("2 Spieler");
+        list.add("3 Spieler");
+        list.add("4 Spieler");
+        ObservableList<String> defaults = FXCollections.observableArrayList(list);
+        defaultConfig.setItems(defaults);
+    }
     /**
      * method to get called when goto game is pressed
      */
@@ -29,7 +45,7 @@ public class MainMenuController{
      */
     @FXML
     private void gotoSaveMenu() {
-        sceneHandler.loadView("saveMenu");
+        sceneHandler.loadView("SaveLoad");
     }
 
 
@@ -39,6 +55,37 @@ public class MainMenuController{
     @FXML
     private void gotoSettings() {
         sceneHandler.loadView("settings");
+    }
+
+    /**
+     * method to get called when start server is pressed
+     */
+    @FXML
+    private void startServer() {
+        System.out.println("about to start the server");
+        Settings.getNetworkHandler().listen();
+        System.out.println("startet the server");
+    }
+
+    /**
+     * method to get called when connect to server is pressed
+     */
+    @FXML
+    private void connectToServer() {
+        System.out.println("about to connect as client to server");
+//        Settings.getNetworkHandler().startClient("localhost");
+        Settings.getNetworkHandler().askForHost().ifPresent(Settings.getNetworkHandler()::startClient);
+//        Settings.setClientMode();
+        System.out.println("connected to server");
+    }
+
+    @FXML
+    private void sendToPartner() {
+//        networkHandler.sendMsg("Hello\nabc");
+        FileManager fileManager = new FileManager();
+        String data = FileManager.makeString(fileManager.getGameData(Settings.getActualGame()));
+        Settings.getNetworkHandler().sendMsg("game" + data);
+
     }
 
     /**

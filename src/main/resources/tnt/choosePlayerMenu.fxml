@@ -48,37 +48,46 @@
             <VBox fx:id="playerPaneSingle" prefHeight="200.0" prefWidth="100.0" />
          </content>
       </ScrollPane>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button fx:id="addPlayer" mnemonicParsing="false" onAction="#addPlayer" prefHeight="24.0" prefWidth="157.0" text="Add Player" />
-            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="500.0">
+            <Button fx:id="addPlayer" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
+            <VBox alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="353.0">
+                  <HBox alignment="CENTER">
                      <children>
                         <Label prefWidth="100.0" text="Spielfeld size" />
                         <TextField fx:id="fieldSizeX" prefWidth="40.0" />
                         <TextField fx:id="fieldSizeY" prefWidth="40.0" />
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="353.0">
+                  <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="142.0" text="Enable sphere world" />
+                        <Label text="Enable sphere world" />
                         <CheckBox fx:id="roundWorld" mnemonicParsing="false" />
                      </children>
                   </HBox>
                </children>
-               <padding>
-                  <Insets left="50.0" right="50.0" />
-               </padding>
             </VBox>
-            <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#runGame" prefHeight="24.0" prefWidth="117.0" text="Play" />
+            <VBox alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label text="Set nr of figures for all players" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <TextField fx:id="amountOfFiguresAll" onAction="#setAmountOfFigures" prefWidth="40.0" text="2" />
+                              <Button mnemonicParsing="false" onAction="#setAmountOfFigures" text="Set amount of figures" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#runGame" prefHeight="24.0" prefWidth="77.0" text="Play" />
          </children>
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
-         <padding>
-            <Insets left="20.0" right="20.0" />
-         </padding>
       </HBox>
    </children>
 </fx:root>

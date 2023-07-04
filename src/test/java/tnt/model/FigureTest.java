@@ -3,15 +3,15 @@ package tnt.model;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tnt.util.Observer;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
+
 
 /**
  * Unit tests for the Figure class.
  */
-public class FigureTest {
+public class FigureTest implements Observer {
 
     private Figure figure;
     private Board board;
@@ -72,12 +72,7 @@ public class FigureTest {
      */
     @Test
     public void testGetValidMoves() {
-        figure.addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-            }
-        });
-
+        figure.addObserver(this);
         ArrayList<Field> validMoves = figure.getValidMoves(board);
     }
 
@@ -87,12 +82,7 @@ public class FigureTest {
      */
     @Test
     public void testGetValidBuilds() {
-        figure.addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-            }
-        });
-
+        figure.addObserver(this);
         ArrayList<Field> validBuilds = figure.getValidBuilds(board);
     }
 
@@ -113,6 +103,11 @@ public class FigureTest {
     public void testSetPlaced() {
         figure.setPlaced();
         Assertions.assertTrue(figure.isPlaced());
+    }
+
+    @Override
+    public void update() {
+        // Do Nothing
     }
 }
 

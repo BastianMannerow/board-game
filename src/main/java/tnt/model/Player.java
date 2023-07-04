@@ -19,14 +19,22 @@ import tnt.util.Observable;
  * A player with his attributes.
  */
 public class Player extends Observable {
-    private String levelOfIntelligence;
+
+    public enum PlayerType {
+        HUMAN,
+//        REMOTE,
+        AI_1,
+        AI_2,
+        AI_3,
+    }
+    private PlayerType levelOfIntelligence;
     private Game game;
     private String name;
     private Color color;
     private int amountOfFigures;
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<Gods> gods;
-    private int team;
+    private String team;
 
     /**
      * Constructing an object Player.
@@ -35,14 +43,14 @@ public class Player extends Observable {
      * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
      */
-    public Player(String levelOfIntelligence, String name, Color color, ArrayList<Figure> figures) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.figures = figures;
     }
 
-    public Player(String levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, int team) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
@@ -52,10 +60,19 @@ public class Player extends Observable {
     }
 
     /**
-     * @return name of the player
+     * Getter for the player type
+     * @return the type of the player
      */
-    public String getLevelOfIntelligence() {
+    public PlayerType getLevelOfIntelligence() {
         return levelOfIntelligence;
+    }
+
+    /**
+     * Setter for the player type
+     * @param levelOfIntelligence the player type to be set
+     */
+    public void setLevelOfIntelligence(PlayerType levelOfIntelligence) {
+        this.levelOfIntelligence = levelOfIntelligence;
     }
 
     /**
@@ -76,14 +93,14 @@ public class Player extends Observable {
     /**
      * @return team of the player
      */
-    public int getTeam() {
+    public String getTeam() {
         return team;
     }
 
     /**
      * @param team
      */
-    public void setTeam(int team) {
+    public void setTeam(String team) {
         this.team = team;
         notifyObservers();
     }
@@ -250,5 +267,9 @@ public class Player extends Observable {
             this.amountOfFigures = i;
         }
         notifyObservers();
+    }
+
+    public int getAmountOfFigures() {
+        return this.amountOfFigures;
     }
 }
