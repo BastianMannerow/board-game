@@ -154,20 +154,6 @@ public class Game extends Observable {
         this.levelFourTile = levelFourTile;
     }
 
-    public Game(int amountOfTurns) {
-        this.playerOrder = new ArrayList<Player>();
-        this.amountOfTurns = amountOfTurns;
-    }
-
-    public Game() {
-        gameStatus = GameStatus.SELECT_PLAYER;
-        this.playerOrder = new ArrayList<Player>();
-        // Todo: get default amount of players
-        addPlayer(2);
-        addPlayer(2);
-//        createBoard(5,6);
-    }
-
     /**
      * initialize the game
      */
@@ -644,7 +630,7 @@ public class Game extends Observable {
      */
     public void addPlayer(int amountOfFigures) {
         if (selectingPlayers()) {
-            playerOrder.add(new Player("", "Player " + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, 1));
+            playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player " + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, String.valueOf(1)));
             notifyObservers();
         }
     }
