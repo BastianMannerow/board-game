@@ -43,22 +43,22 @@ public class MainMenuController{
         if (Settings.getActualGame() == null) {
             // generating the game
             String defaultConf = (String) defaultConfig.getValue();
-            int def = 2;
+            int defaultNrPlayer = 2;
             switch (defaultConf) {
                 case "2 Spieler":
-                    def = 2;
+                    defaultNrPlayer = 2;
                     break;
                 case "3 Spieler":
-                    def = 3;
+                    defaultNrPlayer = 3;
                     break;
                 case "4 Spieler":
-                    def = 4;
+                    defaultNrPlayer = 4;
                     break;
                 default:
-                    def = 2;
+                    defaultNrPlayer = 2;
                     break;
             }
-            Game game = new Game(def);
+            Game game = new Game(defaultNrPlayer);
             Settings.setActualGame(game);
             game.setGameName("newGame");
         }

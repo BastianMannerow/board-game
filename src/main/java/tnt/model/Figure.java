@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Figure extends Observable {
     private int x = 0;
     private int y = 0;
-    private Game game;
+    private Game game; //Todo: delete?
     private boolean placed;
 
     /**
@@ -85,7 +85,8 @@ public class Figure extends Observable {
 
         // Filter the reachable fields, so that only the legal fields remain
         int ownTowerLevel = board.getField(x,y).getTowerLevel();
-        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel+1);
+        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel + Settings.getActualGame().getMaxStepUpHeight()
+                || field.getTowerLevel() < ownTowerLevel - Settings.getActualGame().getMaxStepDownHeight());
         return reachableFields;
     }
 

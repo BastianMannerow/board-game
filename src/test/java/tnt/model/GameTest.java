@@ -24,7 +24,7 @@ public class GameTest {
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.RED, 2, null, "1"));
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "2"));
 
-        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game");
+        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3);
     }
 
     /**
@@ -95,7 +95,7 @@ public class GameTest {
      */
     @Test
     public void testAddPlayer() {
-        game.addPlayer(3);
+        game.addPlayer(3,"1");
         ArrayList<Player> expectedPlayerOrder = new ArrayList<>(playerOrder);
         expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 3", Color.GREEN, 3, null, "1"));
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());

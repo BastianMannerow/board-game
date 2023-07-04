@@ -26,6 +26,8 @@ public class Game extends Observable {
     private int levelTwoTile;
     private int levelThreeTile;
     private int levelFourTile;
+    private int maxStepUpHeight;
+    private int maxStepDownHeight;
 
     private String gameName;
     private Figure lastMovedFigure;
@@ -40,7 +42,7 @@ public class Game extends Observable {
      * @param levelThreeTile The amount of tiles
      * @param levelFourTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName, int maxStepUpHeight, int maxStepDownHeight) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
         this.levelOneTile = levelOneTile;
@@ -49,19 +51,35 @@ public class Game extends Observable {
         this.levelFourTile = levelFourTile;
         this.gameName = gameName;
         createBoard(1,1);
+        this.maxStepUpHeight = maxStepUpHeight;
+        this.maxStepDownHeight = maxStepDownHeight;
     }
     public Game(int defaultAmountPlayer) {
         gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
         int amountFigures = 2;
-        if (defaultAmountPlayer > 3){
+        if (defaultAmountPlayer > 3) {
             amountFigures = 1;
         }
-        for (int i = 0; i< defaultAmountPlayer; i++) {
-            addPlayer(amountFigures, String.valueOf((i%(1+ amountFigures))+1));
+        for (int i = 0; i < defaultAmountPlayer; i++) {
+            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1));
         }
-        createBoard(Settings.getFieldSizeX(),Settings.getFieldSizeY());
+        createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
     }
+    /**
+     * @return Maximum height to step up
+     */
+    public int getMaxStepUpHeight() {
+        return maxStepUpHeight;
+    }
+
+    /**
+     * @return Maximum height to step down
+     */
+    public int getMaxStepDownHeight() {
+        return maxStepDownHeight;
+    }
+
 
     /**
      * @return gameName
@@ -629,6 +647,8 @@ public class Game extends Observable {
             playerOrder.remove(player);
             notifyObservers();
         }
+        playerOrder.remove(player);
+        notifyObservers();
     }
 
     /**
