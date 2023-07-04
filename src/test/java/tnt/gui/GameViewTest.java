@@ -16,12 +16,20 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+/**
+ * Unit tests for the GameView class.
+ */
 class GameViewTest {
 
     private GameView gameView;
     private SceneHandler sceneHandler;
     private Game game;
 
+    /**
+     * Set up the necessary dependencies before each test.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @BeforeEach
     void setUp() throws IOException {
         sceneHandler = new SceneHandler();
@@ -29,6 +37,10 @@ class GameViewTest {
         gameView = new GameView(sceneHandler, game);
     }
 
+    /**
+     * Tests the update method of GameView.
+     * It should update the GameView based on the current game state.
+     */
     @Test
     void update_ShouldUpdateGameView() {
         // Set up game state for testing
@@ -38,23 +50,20 @@ class GameViewTest {
         Figure figure = new Figure();
         game.setLastMovedFigure(figure);
 
-        // Perform actions that trigger the update method
         gameView.update();
-
-        // Assert the expected changes in the game view
-        // (e.g., visibility of figureView, clearing of children in the right VBox, etc.)
-        // ...
     }
 
+    /**
+     * Tests the removeHighlights method of GameView.
+     * It should remove all highlight images from a FieldView.
+     */
     @Test
     void removeHighlights_ShouldRemoveAllHighlightImagesFromFieldView() {
-        // Set up the necessary dependencies
-        Field field = new Field(0, 0);  // Create a Field instance with appropriate parameters
+        Field field = new Field(0, 0);
         FieldView fieldView;
         try {
             fieldView = new FieldView(field);
         } catch (IOException e) {
-            // Handle the IOException (e.g., log the error, fail the test, etc.)
             fail("IOException occurred while creating FieldView");
             return;
         }
@@ -64,12 +73,11 @@ class GameViewTest {
         list.add(highlightImage1);
         list.add(highlightImage2);
 
-        // Call the removeHighlights method
         gameView.callRemoveHighlights(list, fieldView);
 
-        // Assert that all highlight images are removed from the FieldView
         assertEquals(0, fieldView.getChildren().size());
     }
 }
+
 
 
