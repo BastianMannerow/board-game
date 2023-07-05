@@ -584,15 +584,7 @@ public class Game extends Observable {
      * @param player the player object the method is checking on
      */
     public void checkBlockedBuilding(Player player){
-        int blockedBuilding = 0;
-
-        for (Figure figure: player.getFigure()){
-            ArrayList<Field> possibleBuilding = figure.getValidBuilds(board);
-            if(possibleBuilding.isEmpty()){
-                blockedBuilding++;
-            }
-        }
-        if (blockedBuilding == player.getFigure().size()){
+        if (this.lastMovedFigure.getValidBuilds(this.board).isEmpty(){
             setGameOverMode();
         }
     }
