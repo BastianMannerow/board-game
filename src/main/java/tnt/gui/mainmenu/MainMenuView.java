@@ -1,14 +1,17 @@
 package tnt.gui.mainmenu;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
+import tnt.model.DefaultConfiguration;
 import tnt.util.Observer;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * The view for the main menu
@@ -46,9 +49,7 @@ public class MainMenuView extends VBox implements Observer {
         mainMenuController.connectButton.setText(Language.getConnectAsClientLabel());
         mainMenuController.loadSaveButton.setText(Language.loadSaveMenu());
         mainMenuController.settingsButton.setText(Language.settingsButton());
-//        mainMenuController.defaultConfigs;
-//        mainMenuController.defaultConfig.setItems(FXCollections.observableArrayList(DefaultConfiguration.getDefaultConfig()));
-        mainMenuController.defaultConfig.setItems(null);
+        mainMenuController.defaultConfig.setItems(FXCollections.observableArrayList()); // set emtpy list
         mainMenuController.defaultConfig.setItems(mainMenuController.defaultConfigs);
         mainMenuController.defaultConfig.getSelectionModel().selectFirst();
     }

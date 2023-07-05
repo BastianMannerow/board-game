@@ -4,7 +4,7 @@ import tnt.gui.Language;
 import tnt.util.Observable;
 import tnt.util.Observer;
 
-public class DefaultConfiguration extends Observable implements Observer {
+public class DefaultConfiguration {
 
     public enum Default_Config {
         PLAYER_2,
@@ -26,7 +26,6 @@ public class DefaultConfiguration extends Observable implements Observer {
 
     public DefaultConfiguration(Default_Config defaultConfig){
         this.defaultConfig = defaultConfig;
-        Language.getInstance().addObserver(this);
     }
     @Override
     public String toString() {
@@ -53,9 +52,14 @@ public class DefaultConfiguration extends Observable implements Observer {
     }
 
 
-    @Override
-    public void update() {
-        notifyObservers();
+    public int getAmountOfPlayer() {
+        switch (defaultConfig){
+            case PLAYER_3:
+                return 3;
+            case PLAYER_4:
+                return 4;
+            default:
+                return 2;
+        }
     }
-
 }

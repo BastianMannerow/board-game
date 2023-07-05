@@ -42,7 +42,6 @@ public class MainMenuController{
     @FXML
     private void initialize(){
         defaultConfigs = FXCollections.observableArrayList(DefaultConfiguration.getDefaultConfig());
-//        defaultConfigs.notify();d
 
     }
     /**
@@ -51,24 +50,8 @@ public class MainMenuController{
     @FXML
     private void gotoGame() {
         if (Settings.getActualGame() == null) {
-            // generating the game
-            String defaultConf = (String) defaultConfig.getValue();
-            int defaultNrPlayer = 2;
-            switch (defaultConf) {
-                case "2 Spieler":
-                    defaultNrPlayer = 2;
-                    break;
-                case "3 Spieler":
-                    defaultNrPlayer = 3;
-                    break;
-                case "4 Spieler":
-                    defaultNrPlayer = 4;
-                    break;
-                default:
-                    defaultNrPlayer = 2;
-                    break;
-            }
-            Game game = new Game(defaultNrPlayer);
+            DefaultConfiguration defaultConf = (DefaultConfiguration) defaultConfig.getValue();
+            Game game = new Game(defaultConf.getAmountOfPlayer());
             Settings.setActualGame(game);
             game.setGameName("newGame");
         }
