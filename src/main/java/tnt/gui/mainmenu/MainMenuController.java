@@ -3,15 +3,14 @@ package tnt.gui.mainmenu;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import tnt.gui.SceneHandler;
-import tnt.gui.playerchoosemenu.PlayerChooseView;
+import tnt.model.DefaultConfiguration;
 import tnt.model.FileManager;
 import tnt.model.Game;
 import tnt.model.Settings;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 
 /**
@@ -20,20 +19,31 @@ import java.util.ArrayList;
 public class MainMenuController{
 
     private SceneHandler sceneHandler;
+    ObservableList<DefaultConfiguration> defaultConfigs;
+    @FXML
+    ChoiceBox defaultConfig;
 
     @FXML
-    private ChoiceBox defaultConfig;
+    Label defaultlabel;
+    @FXML
+    Button playButton;
+    @FXML
+    Button newGameButton;
+    @FXML
+    Button loadSaveButton;
+    @FXML
+    Button settingsButton;
+    @FXML
+    Button connectButton;
+    @FXML
+    Button serverButton;
 
 
     @FXML
     private void initialize(){
-        ArrayList<String> list = new ArrayList<>();
-        list.add("2 Spieler");
-        list.add("3 Spieler");
-        list.add("4 Spieler");
-        ObservableList<String> defaults = FXCollections.observableArrayList(list);
-        defaultConfig.setValue("2 Spieler");
-        defaultConfig.setItems(defaults);
+        defaultConfigs = FXCollections.observableArrayList(DefaultConfiguration.getDefaultConfig());
+//        defaultConfigs.notify();d
+
     }
     /**
      * method to get called when goto game is pressed

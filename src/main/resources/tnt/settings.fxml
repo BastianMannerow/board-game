@@ -60,8 +60,8 @@
             <Label text="Sprache:" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1">
                <children>
-                  <Button mnemonicParsing="false" text="Deutsch" />
-                  <Button mnemonicParsing="false" text="English" />
+                  <Button mnemonicParsing="false" onAction="#chooseGerman" text="Deutsch" />
+                  <Button mnemonicParsing="false" onAction="#chooseEnglish" text="English" />
                </children>
             </HBox>
             <Label text="Thema:" GridPane.rowIndex="1" />

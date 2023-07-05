@@ -54,19 +54,19 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#startServer" text="Start Server" />
-            <Button mnemonicParsing="false" onAction="#connectToServer" text="Connect as Client" />
+            <Button fx:id="serverButton" mnemonicParsing="false" onAction="#startServer" text="Start Server" />
+            <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectToServer" text="Connect as Client" />
             <Button mnemonicParsing="false" onAction="#sendToPartner" text="Send something" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#gotoSaveMenu" text="Load/Save Game" />
+            <Button fx:id="loadSaveButton" mnemonicParsing="false" onAction="#gotoSaveMenu" text="Load/Save Game" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#gotoSettings" text="Settings" />
+            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#gotoSettings" text="Settings" />
          </children>
       </HBox>
   </children>

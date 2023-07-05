@@ -1,6 +1,7 @@
 package tnt.gui.settingsmenu;
 
 import javafx.fxml.FXML;
+import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 
 /**
@@ -18,6 +19,14 @@ public class SettingsController {
         sceneHandler.loadView("mainMenu");
     }
 
+    @FXML
+    private void chooseEnglish(){
+        Language.getInstance().setLanguage(Language.Languages.ENGLISH);
+    }
+    @FXML
+    private void chooseGerman(){
+        Language.getInstance().setLanguage(Language.Languages.GERMAN);
+    }
     /**
      * Setter for the scene handler, so the controller can change the view
      * @param sceneHandler the scenehandler, for changing views
