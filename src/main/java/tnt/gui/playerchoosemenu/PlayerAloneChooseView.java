@@ -6,7 +6,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import tnt.ResourceHandler;
+import tnt.gui.Language;
 import tnt.model.Player;
 import tnt.util.Observer;
 
@@ -37,18 +39,27 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         playerTypeList = FXCollections.observableArrayList(Player.PlayerType.values());
         ChoiceBox playerType = (ChoiceBox) ((VBox) this.getChildren().get(6)).getChildren().get(1);
         playerType.setItems(playerTypeList);
+        Language.getInstance().addObserver(this);
     }
 
     @Override
     public void update() {
-        ((Label) this.getChildren().get(1)).setText("Player " + playerNumber);
+        ((Label) this.getChildren().get(1)).setText(Language.player() + " " + playerNumber);
         TextField name = (TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1);
         if (name.getText().equals("")){
-            name.setPromptText("Player " + player.getName());
+            name.setPromptText(Language.player() + " " + player.getName());
         } else {
             name.setText(player.getName());
         }
-        ((ColorPicker) ((VBox) this.getChildren().get(4)).getChildren().get(1)).setValue(player.getColor());
+        ColorPicker cp = (ColorPicker) ((VBox) this.getChildren().get(4)).getChildren().get(1);
+        ((VBox) cp.getParent()).getChildren().remove(cp);
+        System.out.println("color: " + player.getColor().toString());
+        Color x = new Color(player.getColor().getRed(),player.getColor().getGreen(),player.getColor().getBlue(), player.getColor().getOpacity());
+//        Color x = Color.BLUE;
+        ColorPicker y = new ColorPicker();
+        ((VBox) this.getChildren().get(4)).getChildren().add(y);
+        y.setValue(x);
+
         TextField team = (TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1);
         if (team.getText().equals("")){
             team.setPromptText(player.getTeam());

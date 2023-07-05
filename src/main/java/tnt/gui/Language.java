@@ -3,157 +3,184 @@ package tnt.gui;
 import tnt.model.Settings;
 import tnt.util.Observable;
 
+import java.util.Locale;
+
+import static java.util.Locale.*;
+
 /**
  * Class for handling multiple languages
  */
 public class Language extends Observable {
 
     public static String getDefaultLabel() {
-        switch (language){
-            case GERMAN:
-                return "Wählen Sie bitte ein Preset:";
-            case ENGLISH:
-            default:
-                return "Please choose default config:";
+        if (language.equals(GERMAN)) {
+            return "Wählen Sie bitte ein Preset:";
         }
+        return "Please choose default config:";
     }
 
     public static String getStartServerLabel() {
-        switch (language){
-            case GERMAN:
-                return "Starte Server";
-            case ENGLISH:
-            default:
-                return "start server";
+        if (language.equals(GERMAN)) {
+            return "Starte Server";
         }
+        return "start server";
     }
 
     public static String getConnectAsClientLabel() {
-        switch (language){
-            case GERMAN:
-                return "Verbinde zu Server";
-            case ENGLISH:
-            default:
-                return "connect as client";
+        if (language.equals(GERMAN)) {
+            return "Verbinde zu Server";
         }
+        return "connect as client";
     }
 
     public static String gotoGame() {
-        switch (language){
-            case GERMAN:
-                return "Zum Spiel";
-            case ENGLISH:
-            default:
-                return "goto game";
+        if (language.equals(GERMAN)) {
+            return "Zum Spiel";
         }
+        return "goto game";
     }
 
     public static String newGame() {
-        switch (language){
-            case GERMAN:
-                return "Starte neues Spiel";
-            case ENGLISH:
-            default:
-                return "start new game";
+        if (language.equals(GERMAN)) {
+            return "Starte neues Spiel";
         }
+        return "start new game";
     }
 
     public static String loadSaveMenu() {
-        switch (language){
-            case GERMAN:
-                return "Laden und speichern";
-            case ENGLISH:
-            default:
-                return "load and save";
+        if (language.equals(GERMAN)) {
+            return "Laden und speichern";
         }
+        return "load and save";
     }
 
     public static String settingsButton() {
-        switch (language){
-            case GERMAN:
-                return "Einstellungen";
-            case ENGLISH:
-            default:
-                return "settings";
+        if (language.equals(GERMAN)) {
+            return "Einstellungen";
         }
+        return "settings";
     }
 
     public static String language() {
-        switch (language){
-            case GERMAN:
-                return "Sprache";
-            case ENGLISH:
-            default:
-                return "language";
+        if (language.equals(GERMAN)) {
+            return "Sprache";
         }
+        return "language";
     }
 
     public static String languageGerman() {
-        switch (language){
-            case GERMAN:
-                return "Deutsch";
-            case ENGLISH:
-            default:
-                return "german";
+        if (language.equals(GERMAN)) {
+            return "Deutsch";
         }
+        return "german";
     }
 
     public static String languageEnglish() {
-        switch (language){
-            case GERMAN:
-                return "Englisch";
-            case ENGLISH:
-            default:
-                return "english";
+        if (language.equals(GERMAN)) {
+            return "Englisch";
         }
+        return "english";
     }
 
     public static String theme() {
-        switch (language){
-            case GERMAN:
-                return "Thema";
-            case ENGLISH:
-            default:
-                return "theme";
+        if (language.equals(GERMAN)) {
+            return "Thema";
         }
+        return "theme";
     }
 
     public static String themeBlood() {
-        switch (language){
-            case GERMAN:
-                return "Blut";
-            case ENGLISH:
-            default:
-                return "blood";
+        if (language.equals(GERMAN)) {
+            return "Blut";
         }
+        return "blood";
     }
 
     public static String themeZombie() {
-        switch (language){
-            case GERMAN:
-                return "Zombies";
-            case ENGLISH:
-            default:
-                return "zombies";
+        if (language.equals(GERMAN)) {
+            return "Zombies";
         }
+        return "zombies";
     }
 
     public static String mainMenu() {
-        switch (language){
-            case GERMAN:
-                return "Main Menu";
-            case ENGLISH:
-            default:
-                return "main menu";
+        if (language.equals(GERMAN)) {
+            return "Hauptmenü";
         }
+        return "main menu";
     }
 
-
-    public enum Languages {
-        GERMAN,
-        ENGLISH
+    public static String addPlayer() {
+        if (language.equals(GERMAN)) {
+            return "Spieler hinzufügen";
+        }
+        return "add a player";
     }
-    private static Languages language = Languages.GERMAN;
+
+    public static String maxStepUp() {
+        if (language.equals(GERMAN)) {
+            return "Max. Anzahl Stufen hochsteigen";
+        }
+        return "max height for step up";
+    }
+
+    public static String maxStepDown() {
+        if (language.equals(GERMAN)) {
+            return "Max. Anzahl Stufen runtersteigen";
+        }
+        return "max height for step down";
+    }
+
+    public static String maxHeightOfBuilding() {
+        if (language.equals(GERMAN)) {
+            return "Max. Gebäude Höhe";
+        }
+        return "max height for buildings";
+    }
+
+    public static String boardSize() {
+        if (language.equals(GERMAN)) {
+            return "Spielfeldgröße";
+        }
+        return "board size";
+    }
+
+    public static String sphereWorld() {
+        if (language.equals(GERMAN)) {
+            return "Aktive Welt als Kugel";
+        }
+        return "enable sphere world";
+    }
+
+    public static String setNrOfFiguresLabel() {
+        if (language.equals(GERMAN)) {
+            return "Setze Figurenanzahl aller Spieler";
+        }
+        return "set nr of figures for all players";
+    }
+
+    public static String setNrOfFiguresButton() {
+        if (language.equals(GERMAN)) {
+            return "Setze Figurenanzahl";
+        }
+        return "set amount of figures";
+    }
+
+    public static String playButton() {
+        if (language.equals(GERMAN)) {
+            return "Spiel Starten";
+        }
+        return "play";
+    }
+
+    public static String player() {
+        if (language.equals(GERMAN)) {
+            return "Spieler";
+        }
+        return "player";
+    }
+
+    private static Locale language = GERMAN;
     private static Language instance;
 
 
@@ -161,7 +188,7 @@ public class Language extends Observable {
      * getter for the actual language set
      * @return the acutal language
      */
-    public static Languages getLanguage() {
+    public static Locale getLanguage() {
         return language;
     }
 
@@ -180,8 +207,9 @@ public class Language extends Observable {
      * Setter for the actual language
      * @param language the language to be set
      */
-    public void setLanguage(Languages language) {
+    public void setLanguage(Locale language) {
         Language.language = language;
+        Locale.setDefault(language);
         notifyObservers();
     }
 

@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
+import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.gui.SizeHandler;
 import tnt.model.Game;
@@ -54,6 +55,7 @@ public class PlayerChooseView extends VBox implements Observer {
         popup_loader.setRoot(popup);
         popup_loader.load();
         controller.setPopup(popup);
+        Language.getInstance().addObserver(this);
     }
 
     @Override
@@ -74,6 +76,20 @@ public class PlayerChooseView extends VBox implements Observer {
             i++;
             updatePlayer(player, i);
         }
+        updateLabels();
+    }
+
+    private void updateLabels() {
+        controller.mainMenu.setText(Language.mainMenu());
+        controller.maxStepUpHeight.setText(Language.maxStepUp());
+        controller.maxStepDownHeight.setText(Language.maxStepDown());
+        controller.maxBuildingHeightLabel.setText(Language.maxHeightOfBuilding());
+        controller.addPlayer.setText(Language.addPlayer());
+        controller.boardSize.setText(Language.boardSize());
+        controller.sphereWorldLabel.setText(Language.sphereWorld());
+        controller.setAmountOfFiguresLabel.setText(Language.setNrOfFiguresLabel());
+        controller.amountFiguresButton.setText(Language.setNrOfFiguresButton());
+        controller.btnPlay.setText(Language.playButton());
     }
 
     private void updatePlayer(Player player, int i) {

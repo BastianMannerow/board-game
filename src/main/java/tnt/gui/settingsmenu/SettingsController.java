@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 
+import java.util.Locale;
+
 /**
  * The controller for the settings view
  */
@@ -37,11 +39,11 @@ public class SettingsController {
 
     @FXML
     private void chooseEnglish(){
-        Language.getInstance().setLanguage(Language.Languages.ENGLISH);
+        Language.getInstance().setLanguage(Locale.ENGLISH);
     }
     @FXML
     private void chooseGerman(){
-        Language.getInstance().setLanguage(Language.Languages.GERMAN);
+        Language.getInstance().setLanguage(Locale.GERMAN);
     }
     /**
      * Setter for the scene handler, so the controller can change the view

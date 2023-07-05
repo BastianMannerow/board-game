@@ -1,9 +1,6 @@
 package tnt.model;
 
 import tnt.gui.Language;
-import tnt.util.Observable;
-import tnt.util.Observer;
-
 public class DefaultConfiguration {
 
     public enum Default_Config {
@@ -40,14 +37,7 @@ public class DefaultConfiguration {
             case PLAYER_4:
                 str.append("4");
         }
-        switch (Language.getLanguage()) {
-            case GERMAN:
-                str.append(" Spieler");
-                break;
-            case ENGLISH:
-            default:
-                str.append(" player");
-        }
+        str.append(" ").append(Language.player());
         return str.toString();
     }
 

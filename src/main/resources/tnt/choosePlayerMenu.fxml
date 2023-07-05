@@ -45,18 +45,18 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#gotoHome" text="Home" />
+            <Button fx:id="mainMenu" mnemonicParsing="false" onAction="#gotoHome" text="Home" />
             <VBox alignment="CENTER">
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="110.0" text="Max step up:" />
+                        <Label fx:id="maxStepUpHeight" text="Max step up:" />
                         <TextField fx:id="maxStepUp" prefWidth="40.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="110.0" text="Max step down:" />
+                        <Label fx:id="maxStepDownHeight" text="Max step down:" />
                         <TextField fx:id="maxStepDown" prefWidth="40.0" />
                      </children>
                   </HBox>
@@ -66,7 +66,7 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="145.0" text="Max building height:" />
+                        <Label fx:id="maxBuildingHeightLabel" prefHeight="16.0" prefWidth="145.0" text="Max building height:" />
                         <TextField fx:id="maxBuildingHeight" prefWidth="40.0" />
                      </children>
                   </HBox>
@@ -89,14 +89,14 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Label prefWidth="100.0" text="Spielfeld size" />
+                        <Label fx:id="boardSize" prefWidth="100.0" text="Spielfeld size" />
                         <TextField fx:id="fieldSizeX" prefWidth="40.0" />
                         <TextField fx:id="fieldSizeY" prefWidth="40.0" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT">
                      <children>
-                        <Label text="Enable sphere world" />
+                        <Label fx:id="sphereWorldLabel" text="Enable sphere world" />
                         <CheckBox fx:id="roundWorld" mnemonicParsing="false" />
                      </children>
                   </HBox>
@@ -106,11 +106,11 @@
                <children>
                   <VBox alignment="CENTER">
                      <children>
-                        <Label text="Set nr of figures for all players" />
+                        <Label fx:id="setAmountOfFiguresLabel" text="Set nr of figures for all players" />
                         <HBox alignment="CENTER">
                            <children>
                               <TextField fx:id="amountOfFiguresAll" onAction="#setAmountOfFigures" prefWidth="40.0" text="2" />
-                              <Button mnemonicParsing="false" onAction="#setAmountOfFigures" text="Set amount of figures" />
+                              <Button fx:id="amountFiguresButton" mnemonicParsing="false" onAction="#setAmountOfFigures" text="Set amount of figures" />
                            </children>
                         </HBox>
                      </children>

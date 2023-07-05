@@ -33,6 +33,26 @@ public class PlayerChooseController{
     TextField maxStepDown;
     @FXML
     TextField maxBuildingHeight;
+    @FXML
+    Button mainMenu;
+    @FXML
+    Label maxStepUpHeight;
+    @FXML
+    Label maxStepDownHeight;
+    @FXML
+    Label maxBuildingHeightLabel;
+    @FXML
+    Button addPlayer;
+    @FXML
+    Label boardSize;
+    @FXML
+    Label sphereWorldLabel;
+    @FXML
+    Label setAmountOfFiguresLabel;
+    @FXML
+    Button amountFiguresButton;
+    @FXML
+    Button btnPlay;
 
     private SceneHandler sceneHandler;
     final Popup popup = new Popup();
