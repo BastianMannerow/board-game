@@ -15,6 +15,7 @@ public class ExecuteGameInputs {
         Game game = Settings.getActualGame();
         switch (game.getGameStatus()) {
             case SELECT_PLAYER:
+            case BUILD:
                 return false;
             case PLACE_FIGURES:
                 if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure) && !figure.isPlaced()){
@@ -45,8 +46,6 @@ public class ExecuteGameInputs {
                 } else {
                     return false;
                 }
-            case BUILD:
-                return false;
         }
         return false;
     }
@@ -61,7 +60,9 @@ public class ExecuteGameInputs {
         Game game = Settings.getActualGame();
         if (game.isBuildMode() && game.getLastMovedFigure().getValidBuilds(game.getBoard()).contains(field)) {
             Settings.getNetworkHandler().build(buildLevel, field);
-            if (field.getTowerLevel() > 0 && buildLevel == -1) {
+
+            // Here you can change where it is possible to build a dome
+            if (field.getTowerLevel() == game.getMaxBuildingLevel() && buildLevel == -1) {
                 field.setTowerComplete(true);
             }
             else if (field.getTowerLevel() == buildLevel - 1) {

@@ -101,7 +101,7 @@ public class GameView extends BorderPane implements Observer {
         }
 
         if (game.isRunnung()){
-            for (int level = 1; level <=3 ; level++) {
+            for (int level = 1; level <= game.getMaxBuildingLevel() ; level++) {
                 if (!initBuildingHolder.containsKey(level)) {
                     BuildingLevel buildingLevel = null;
                     try {

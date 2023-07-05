@@ -64,9 +64,9 @@ public class PlayerChooseView extends VBox implements Observer {
             game.addObserver(this);
         }
         if (controller.maxBuildingHeight.getText().equals("")){
-            controller.maxBuildingHeight.setPromptText(String.valueOf(3));
+            controller.maxBuildingHeight.setPromptText(String.valueOf(game.getMaxBuildingLevel()));
         } else {
-            controller.maxBuildingHeight.setText(String.valueOf(3));
+            controller.maxBuildingHeight.setText(String.valueOf(game.getMaxBuildingLevel()));
         }
         if (controller.maxStepUp.getText().equals("")){
             controller.maxStepUp.setPromptText(String.valueOf(game.getMaxStepUpHeight()));

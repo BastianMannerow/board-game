@@ -29,6 +29,7 @@ public class Game extends Observable {
 
     private int maxStepUpHeight;
     private int maxStepDownHeight;
+    private int maxBuildingLevel;
 
     private String gameName;
     private Figure lastMovedFigure;
@@ -54,10 +55,15 @@ public class Game extends Observable {
         createBoard(1,1);
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
+        this.maxBuildingLevel = Settings.getMaxBuildingLevel();
     }
 
+    /**
+     * Constructor for the game
+     * @param defaultAmountPlayer the number of player, the game should get initialized with
+     */
     public Game(int defaultAmountPlayer) {
-        gameStatus = GameStatus.SELECT_PLAYER;
+        this.gameStatus = GameStatus.SELECT_PLAYER;
         this.playerOrder = new ArrayList<Player>();
         int amountFigures = 2;
         if (defaultAmountPlayer > 3) {
@@ -66,8 +72,9 @@ public class Game extends Observable {
         for (int i = 0; i < defaultAmountPlayer; i++) {
             addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1));
         }
-        maxStepUpHeight = Settings.getMaxStepUp();
-        maxStepDownHeight = Settings.getMaxStepDown();
+        this.maxStepUpHeight = Settings.getMaxStepUp();
+        this.maxStepDownHeight = Settings.getMaxStepDown();
+        this.maxBuildingLevel = Settings.getMaxBuildingLevel();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
     }
     /**
@@ -82,6 +89,38 @@ public class Game extends Observable {
      */
     public int getMaxStepDownHeight() {
         return maxStepDownHeight;
+    }
+
+    /**
+     * Setter for the possible step height up
+     * @param maxStepUpHeight the maximum height to step up
+     */
+    public void setMaxStepUpHeight(int maxStepUpHeight) {
+        this.maxStepUpHeight = maxStepUpHeight;
+    }
+
+    /**
+     * Setter for the possible step height down
+     * @param maxStepDownHeight the maximum height to step down
+     */
+    public void setMaxStepDownHeight(int maxStepDownHeight) {
+        this.maxStepDownHeight = maxStepDownHeight;
+    }
+
+    /**
+     * Getter for the maximum building level
+     * @return the max building level
+     */
+    public int getMaxBuildingLevel() {
+        return maxBuildingLevel;
+    }
+
+    /**
+     * Setter for the maximum building level
+     * @param maxBuildingLevel the maximum building level
+     */
+    public void setMaxBuildingLevel(int maxBuildingLevel) {
+        this.maxBuildingLevel = maxBuildingLevel;
     }
 
 
@@ -726,14 +765,4 @@ public class Game extends Observable {
     public Figure getLastMovedFigure() {
         return lastMovedFigure;
     }
-
-    public void setMaxStepUpHeight(int maxStepUpHeight) {
-        this.maxStepUpHeight = maxStepUpHeight;
-    }
-
-    public void setMaxStepDownHeight(int maxStepDownHeight) {
-        this.maxStepDownHeight = maxStepDownHeight;
-    }
-
-
 }

@@ -91,7 +91,8 @@ public class PlayerChooseController{
 
         int maxStepUp = game.getMaxStepUpHeight();
         int maxStepDown = game.getMaxStepDownHeight();
-//        int maxBuildingHeight
+        int maxBuildingHeight = game.getMaxBuildingLevel();
+
         try {
             maxStepUp = Integer.parseInt(this.maxStepUp.getText());
         } catch (NumberFormatException e) {
@@ -102,11 +103,11 @@ public class PlayerChooseController{
         } catch (NumberFormatException e) {
             System.err.println("could not convert maxStepDown: " + this.maxStepDown.getText() + " Error: " + e);
         }
-//        try {
-//            maxBuildingHeight = Integer.parseInt(this.maxBuildingHeight.getText());
-//        } catch (NumberFormatException e) {
-//            System.err.println("could not convert maxBuildingHeight: " + this.maxBuildingHeight.getText() + " Error: " + e);
-//        }
+        try {
+            maxBuildingHeight = Integer.parseInt(this.maxBuildingHeight.getText());
+        } catch (NumberFormatException e) {
+            System.err.println("could not convert maxBuildingHeight: " + this.maxBuildingHeight.getText() + " Error: " + e);
+        }
 
         int sizeX = Settings.getFieldSizeX();
         int sizeY = Settings.getFieldSizeY();
@@ -145,6 +146,7 @@ public class PlayerChooseController{
             game.startPlaceFigures();
             game.setMaxStepUpHeight(maxStepUp);
             game.setMaxStepDownHeight(maxStepDown);
+            game.setMaxBuildingLevel(maxBuildingHeight);
         }
         sceneHandler.loadView("gameView");
     }
