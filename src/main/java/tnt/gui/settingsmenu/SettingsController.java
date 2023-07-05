@@ -1,6 +1,8 @@
 package tnt.gui.settingsmenu;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 
@@ -11,6 +13,20 @@ public class SettingsController {
 
     private SceneHandler sceneHandler;
 
+    @FXML
+    Button mainMenu;
+    @FXML
+    Button german;
+    @FXML
+    Button english;
+    @FXML
+    Button blood;
+    @FXML
+    Button zombies;
+    @FXML
+    Label language;
+    @FXML
+    Label theme;
     /**
      * The method getting called, when user pressed the back to main menu button
      */

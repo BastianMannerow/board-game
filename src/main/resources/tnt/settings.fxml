@@ -57,22 +57,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Sprache:" />
+            <Label fx:id="language" text="Sprache:" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1">
                <children>
-                  <Button mnemonicParsing="false" onAction="#chooseGerman" text="Deutsch" />
-                  <Button mnemonicParsing="false" onAction="#chooseEnglish" text="English" />
+                  <Button fx:id="german" mnemonicParsing="false" onAction="#chooseGerman" text="Deutsch" />
+                  <Button fx:id="english" mnemonicParsing="false" onAction="#chooseEnglish" text="English" />
                </children>
             </HBox>
-            <Label text="Thema:" GridPane.rowIndex="1" />
+            <Label fx:id="theme" text="Thema:" GridPane.rowIndex="1" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
-                  <Button mnemonicParsing="false" text="Blut" />
-                  <Button mnemonicParsing="false" text="Zombies" />
+                  <Button fx:id="blood" mnemonicParsing="false" text="Blut" />
+                  <Button fx:id="zombies" mnemonicParsing="false" text="Zombies" />
                </children>
             </HBox>
          </children>
       </GridPane>
-      <Button mnemonicParsing="false" onAction="#gotoMainMenu" text="Back To Main Menu" />
+      <Button fx:id="mainMenu" mnemonicParsing="false" onAction="#gotoMainMenu" text="Back To Main Menu" />
    </children>
 </fx:root>
