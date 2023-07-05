@@ -6,7 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.util.StringConverter;
 import tnt.ResourceHandler;
 import tnt.gui.Language;
 import tnt.model.Player;
@@ -39,11 +39,34 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         playerTypeList = FXCollections.observableArrayList(Player.PlayerType.values());
         ChoiceBox playerType = (ChoiceBox) ((VBox) this.getChildren().get(6)).getChildren().get(1);
         playerType.setItems(playerTypeList);
+        StringConverter<Player.PlayerType> stringConverter = new StringConverter<Player.PlayerType>() {
+            @Override
+            public String toString(Player.PlayerType playerType) {
+                if (playerType == null){
+                    return "";
+                }
+                return Language.playerType(playerType);
+            }
+
+            @Override
+            public Player.PlayerType fromString(String s) {
+                return null;
+            }
+        };
+        playerType.setConverter(stringConverter);
         Language.getInstance().addObserver(this);
     }
 
     @Override
     public void update() {
+
+
+        ((Label) ((VBox) this.getChildren().get(2)).getChildren().get(0)).setText(Language.name());
+        ((Label) ((VBox) this.getChildren().get(3)).getChildren().get(0)).setText(Language.amountFigures());
+        ((Label) ((VBox) this.getChildren().get(4)).getChildren().get(0)).setText(Language.color());
+        ((Label) ((VBox) this.getChildren().get(5)).getChildren().get(0)).setText(Language.team());
+        ((Label) ((VBox) this.getChildren().get(6)).getChildren().get(0)).setText(Language.playertype());
+
         ((Label) this.getChildren().get(1)).setText(Language.player() + " " + playerNumber);
         TextField name = (TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1);
         if (name.getText().equals("")){
@@ -53,12 +76,12 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         }
         ColorPicker cp = (ColorPicker) ((VBox) this.getChildren().get(4)).getChildren().get(1);
         ((VBox) cp.getParent()).getChildren().remove(cp);
-        System.out.println("color: " + player.getColor().toString());
-        Color x = new Color(player.getColor().getRed(),player.getColor().getGreen(),player.getColor().getBlue(), player.getColor().getOpacity());
-//        Color x = Color.BLUE;
-        ColorPicker y = new ColorPicker();
-        ((VBox) this.getChildren().get(4)).getChildren().add(y);
-        y.setValue(x);
+//        Color x = new Color(player.getColor().getRed(),player.getColor().getGreen(),player.getColor().getBlue(), player.getColor().getOpacity());
+//        Color x = Color.GREEN;
+//        ColorPicker y = new ColorPicker();
+//        y.setValue(x);
+        ((VBox) this.getChildren().get(4)).getChildren().add(new ColorPicker(player.getColor()));
+
 
         TextField team = (TextField) ((VBox) this.getChildren().get(5)).getChildren().get(1);
         if (team.getText().equals("")){
@@ -73,6 +96,9 @@ public class PlayerAloneChooseView extends HBox implements Observer {
             amountOfFigures.setText(Integer.toString(player.getAmountOfFigures()));
         }
         ChoiceBox playerType = (ChoiceBox) ((VBox) this.getChildren().get(6)).getChildren().get(1);
+        playerType.setItems(FXCollections.observableArrayList()); // set emtpy list());
+        playerType.setItems(playerTypeList);
+        playerType.setValue(Player.PlayerType.HUMAN);
         playerType.setValue(player.getLevelOfIntelligence());
     }
 

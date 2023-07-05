@@ -1,5 +1,6 @@
 package tnt.gui;
 
+import tnt.model.Player;
 import tnt.model.Settings;
 import tnt.util.Observable;
 
@@ -168,7 +169,7 @@ public class Language extends Observable {
 
     public static String playButton() {
         if (language.equals(GERMAN)) {
-            return "Spiel Starten";
+            return "Spiel starten";
         }
         return "play";
     }
@@ -178,6 +179,100 @@ public class Language extends Observable {
             return "Spieler";
         }
         return "player";
+    }
+
+    public static String name() {
+        if (language.equals(GERMAN)) {
+            return "Name";
+        }
+        return "name";
+    }
+    public static String amountFigures() {
+        if (language.equals(GERMAN)) {
+            return "Anzahl Figuren";
+        }
+        return "amount of figures";
+    }
+    public static String color() {
+        if (language.equals(GERMAN)) {
+            return "Farbe";
+        }
+        return "color";
+    }
+    public static String team() {
+        if (language.equals(GERMAN)) {
+            return "Team";
+        }
+        return "team";
+    }
+    public static String playertype() {
+        if (language.equals(GERMAN)) {
+            return "Art des Spielers";
+        }
+        return "player type";
+    }
+
+    public static String playerMenu() {
+        if (language.equals(GERMAN)) {
+            return "Spieler Menü";
+        }
+        return "player menu";
+    }
+
+    public static String playerType(Player.PlayerType playerType) {
+        StringBuilder str = new StringBuilder();
+        if (language.equals(GERMAN)) {
+            str.append("KI ");
+        } else {
+            str.append("AI");
+        }
+        str.append(" ");
+        switch (playerType){
+            case AI_1:
+                str.append(difficulty(1));
+                break;
+            case AI_2:
+                str.append(difficulty(2));
+                break;
+            case AI_3:
+                str.append(difficulty(3));
+                break;
+            default:
+                return human();
+        }
+        return str.toString();
+    }
+
+    public static String difficulty(int i) {
+        if (language.equals(GERMAN)) {
+            switch (i){
+                case 1:
+                    return "Einfach";
+                case 2:
+                    return "Mittel";
+                case 3:
+                    return "Schwer";
+                default:
+                    return "Suuper Schwer";
+            }
+        }
+        switch (i){
+            case 1:
+                return "easy";
+            case 2:
+                return "medium";
+            case 3:
+                return "hard";
+            default:
+                return "super hard";
+        }
+    }
+
+    public static String human() {
+        if (language.equals(GERMAN)) {
+            return "Mensch";
+        }
+        return "human";
     }
 
     private static Locale language = GERMAN;

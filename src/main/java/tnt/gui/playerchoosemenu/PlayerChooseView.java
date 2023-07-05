@@ -10,6 +10,7 @@ import tnt.ResourceHandler;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.gui.SizeHandler;
+import tnt.gui.mainmenu.MainMenuController;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;

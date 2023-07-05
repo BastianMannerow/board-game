@@ -5,6 +5,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import tnt.ResourceHandler;
+import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.gui.SizeHandler;
 import tnt.model.*;
@@ -54,6 +55,9 @@ public class GameView extends BorderPane implements Observer {
 
     @Override
     public void update() {
+
+        updateLabels();
+
         if (game != Settings.getActualGame()){
             game.removeObserver(this);
             game = Settings.getActualGame();
@@ -78,6 +82,11 @@ public class GameView extends BorderPane implements Observer {
         for(ImageView img : highlightedtemp){
             img.setFitHeight(SizeHandler.getPrefSize());
         }
+    }
+
+    private void updateLabels() {
+        controller.mainMenu.setText(Language.mainMenu());
+        controller.playerMenu.setText(Language.playerMenu());
     }
 
     private void updateFields() {

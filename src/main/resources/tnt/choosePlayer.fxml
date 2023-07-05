@@ -42,23 +42,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 
-<fx:root alignment="CENTER" prefHeight="393.0" prefWidth="545.0" spacing="50.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root alignment="CENTER" prefHeight="393.0" prefWidth="545.0" spacing="20.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
 <children>
       <Button mnemonicParsing="false" text="-" />
  <Label fx:id="labelPlayer" text="Player" />
- <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+ <VBox alignment="CENTER_LEFT" spacing="10.0">
     <children>
        <Label fx:id="labelPlayerName" text="Name:" />
        <TextField fx:id="tfPlayerName" promptText="Player" />
     </children>
  </VBox>
- <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+ <VBox alignment="CENTER_LEFT" spacing="10.0">
     <children>
        <Label fx:id="labelPlayerFigures" text="Anzahl Figuren" />
        <TextField fx:id="tfPlayerFigures" text="2" />
     </children>
  </VBox>
- <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+ <VBox alignment="CENTER_LEFT" spacing="10.0">
     <children>
        <Label fx:id="labelPlayerColor" text="Farbe:" />
        <ColorPicker fx:id="cpPlayerColor">
@@ -68,13 +68,13 @@
        </ColorPicker>
     </children>
  </VBox>
-      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+      <VBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
             <Label fx:id="labelPlayerFigures1" text="Team" />
             <TextField fx:id="tfPlayerFigures1" />
          </children>
       </VBox>
-      <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+      <VBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
             <Label fx:id="labelPlayerFigures11" text="Spieler Art" />
             <ChoiceBox prefWidth="150.0" />
@@ -84,4 +84,7 @@
 <VBox.margin>
  <Insets />
 </VBox.margin>
+   <padding>
+      <Insets left="10.0" right="10.0" />
+   </padding>
 </fx:root>

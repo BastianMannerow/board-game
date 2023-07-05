@@ -117,7 +117,7 @@
                   </VBox>
                </children>
             </VBox>
-            <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#runGame" prefHeight="24.0" prefWidth="77.0" text="Play" />
+            <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#runGame" text="Play" />
          </children>
          <opaqueInsets>
             <Insets />

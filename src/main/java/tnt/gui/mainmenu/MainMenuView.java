@@ -7,11 +7,8 @@ import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
-import tnt.model.DefaultConfiguration;
 import tnt.util.Observer;
-
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * The view for the main menu
