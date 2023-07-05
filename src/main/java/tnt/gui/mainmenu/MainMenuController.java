@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.util.StringConverter;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.model.FileManager;
@@ -18,46 +19,13 @@ import tnt.model.Settings;
  */
 public class MainMenuController{
     public static class DefaultConfiguration {
-        public enum Default_Config {
+        public enum DefaultConfig {
             PLAYER_2,
             PLAYER_3,
             PLAYER_4
         }
 
-        private Default_Config defaultConfig;
-
-        public static DefaultConfiguration[] getDefaultConfig() {
-            return defaults;
-        }
-
-        private static final DefaultConfiguration[] defaults = {
-                new DefaultConfiguration(Default_Config.PLAYER_2),
-                new DefaultConfiguration(Default_Config.PLAYER_3),
-                new DefaultConfiguration(Default_Config.PLAYER_4)
-        };
-
-        public DefaultConfiguration(Default_Config defaultConfig){
-            this.defaultConfig = defaultConfig;
-        }
-        @Override
-        public String toString() {
-            StringBuilder str = new StringBuilder();
-            switch (defaultConfig) {
-                case PLAYER_2:
-                    str.append("2");
-                    break;
-                case PLAYER_3:
-                    str.append("3");
-                    break;
-                case PLAYER_4:
-                    str.append("4");
-            }
-            str.append(" ").append(Language.player());
-            return str.toString();
-        }
-
-
-        public int getAmountOfPlayer() {
+        public static int getAmountOfPlayer(DefaultConfig defaultConfig) {
             switch (defaultConfig){
                 case PLAYER_3:
                     return 3;
@@ -70,7 +38,7 @@ public class MainMenuController{
     }
 
     private SceneHandler sceneHandler;
-    ObservableList<DefaultConfiguration> defaultConfigs;
+    ObservableList<DefaultConfiguration.DefaultConfig> defaultConfigs;
     @FXML
     ChoiceBox defaultConfig;
 
@@ -92,7 +60,30 @@ public class MainMenuController{
 
     @FXML
     private void initialize(){
-        defaultConfigs = FXCollections.observableArrayList(DefaultConfiguration.getDefaultConfig());
+        defaultConfigs = FXCollections.observableArrayList(DefaultConfiguration.DefaultConfig.values());
+        defaultConfig.setConverter(new StringConverter<DefaultConfiguration.DefaultConfig>() {
+            @Override
+            public String toString(DefaultConfiguration.DefaultConfig defaultConfig) {
+                StringBuilder str = new StringBuilder();
+                switch (defaultConfig) {
+                    case PLAYER_2:
+                        str.append("2");
+                        break;
+                    case PLAYER_3:
+                        str.append("3");
+                        break;
+                    case PLAYER_4:
+                        str.append("4");
+                }
+                str.append(" ").append(Language.player());
+                return str.toString();
+            }
+
+            @Override
+            public DefaultConfiguration.DefaultConfig fromString(String s) {
+                return null;
+            }
+        });
 
     }
     /**
@@ -101,8 +92,8 @@ public class MainMenuController{
     @FXML
     private void gotoGame() {
         if (Settings.getActualGame() == null) {
-            DefaultConfiguration defaultConf = (DefaultConfiguration) defaultConfig.getValue();
-            Game game = new Game(defaultConf.getAmountOfPlayer());
+            DefaultConfiguration.DefaultConfig defaultConf = (DefaultConfiguration.DefaultConfig) defaultConfig.getValue();
+            Game game = new Game(DefaultConfiguration.getAmountOfPlayer(defaultConf));
             Settings.setActualGame(game);
             game.setGameName("newGame");
         }
