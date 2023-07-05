@@ -64,6 +64,9 @@ public class MainMenuController{
         defaultConfig.setConverter(new StringConverter<DefaultConfiguration.DefaultConfig>() {
             @Override
             public String toString(DefaultConfiguration.DefaultConfig defaultConfig) {
+                if (defaultConfig==null){
+                    return "";
+                }
                 StringBuilder str = new StringBuilder();
                 switch (defaultConfig) {
                     case PLAYER_2:
