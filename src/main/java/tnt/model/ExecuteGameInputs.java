@@ -18,36 +18,44 @@ public class ExecuteGameInputs {
             case BUILD:
                 return false;
             case PLACE_FIGURES:
-                if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure) && !figure.isPlaced()){
-                    Settings.getNetworkHandler().place(figure, field);
-                    figure.setX(field.getX());
-                    figure.setY(field.getY());
-                    figure.setPlaced();
-                    field.setFigure(figure);
-                    if (game.getPlayersTurn().allFiguresPlaced()){
-                        game.nextPlayersTurn();
-                    }
-                    if (game.getPlayersTurn().allFiguresPlaced()){
-                        game.startGame();
-                        game.checkBlockedMovement(game.getPlayersTurn());
-                    }
-                    return true;
-                } else {
-                    return false;
-                }
+                return checkPlaceFig(game, figure, field);
             case MOVE_FIGURE:
-                if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
-                    Settings.getNetworkHandler().place(figure, field);
-                    game.setLastMovedFigure(figure);
-                    game.getPlayersTurn().executeMove(field,game.getBoard(), figure);
-                    game.setBuildMode();
-                    game.checkBlockedBuilding(game.getPlayersTurn());
-                    return true;
-                } else {
-                    return false;
-                }
+                return checkMoveFig(game, figure, field);
         }
         return false;
+    }
+
+    private static boolean checkMoveFig(Game game, Figure figure, Field field) {
+        if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
+            Settings.getNetworkHandler().place(figure, field);
+            game.setLastMovedFigure(figure);
+            game.getPlayersTurn().executeMove(field,game.getBoard(), figure);
+            game.setBuildMode();
+            game.checkBlockedBuilding(game.getPlayersTurn());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean checkPlaceFig(Game game, Figure figure, Field field) {
+        if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure) && !figure.isPlaced()){
+            Settings.getNetworkHandler().place(figure, field);
+            figure.setX(field.getX());
+            figure.setY(field.getY());
+            figure.setPlaced();
+            field.setFigure(figure);
+            if (game.getPlayersTurn().allFiguresPlaced()){
+                game.nextPlayersTurn();
+            }
+            if (game.getPlayersTurn().allFiguresPlaced()){
+                game.startGame();
+                game.checkBlockedMovement(game.getPlayersTurn());
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

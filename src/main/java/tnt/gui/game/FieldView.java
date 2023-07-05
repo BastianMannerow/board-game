@@ -47,14 +47,35 @@ public class FieldView extends HBox implements Observer {
 
     @Override
     public void update() {
-        if (field.getIsFigureHere()){
-            if (!((StackPane) this.getChildren().get(0)).getChildren().contains(GameView.getFigureView(field.getFigure()))) {
-                ((StackPane) this.getChildren().get(0)).getChildren().add(GameView.getFigureView(field.getFigure()));
-            }
-        } else {
-            ((StackPane) this.getChildren().get(0)).getChildren().removeIf(node -> node instanceof FigureView);
-        }
+        updateFigure();
+        updateTowerLevel();
+        updateTowerComplete();
 
+        this.setPrefSize(SizeHandler.getPrefSize(), SizeHandler.getPrefSize());
+        int size = SizeHandler.getPrefSize();
+        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitHeight(size);
+        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitWidth(size);
+
+    }
+
+    private void updateTowerComplete() {
+        if (field.getTowerComplete()) {
+            if (!buildingHolder.containsKey(-1)) {
+                BuildingLevel buildingLevel = null;
+                try {
+                    buildingLevel = new BuildingLevel(-1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                buildingHolder.put(-1, buildingLevel);
+            }
+            if (!((StackPane) this.getChildren().get(0)).getChildren().contains(buildingHolder.get(-1))) {
+                ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(-1));
+            }
+        }
+    }
+
+    private void updateTowerLevel() {
         for (int level = 1; level <= field.getTowerLevel(); level++) {
             if (!buildingHolder.containsKey(level)) {
                 BuildingLevel buildingLevel = null;
@@ -72,24 +93,15 @@ public class FieldView extends HBox implements Observer {
             // Todo: Remove not supported right now
 //            ((StackPane) this.getChildren().get(0)).getChildren().removeIf(node -> node instanceof FigureView);
         }
-        if (field.getTowerComplete()) {
-            if (!buildingHolder.containsKey(-1)) {
-                BuildingLevel buildingLevel = null;
-                try {
-                    buildingLevel = new BuildingLevel(-1);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                buildingHolder.put(-1, buildingLevel);
-            }
-            if (!((StackPane) this.getChildren().get(0)).getChildren().contains(buildingHolder.get(-1))) {
-                ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(-1));
-            }
-        }
-        this.setPrefSize(SizeHandler.getPrefSize(), SizeHandler.getPrefSize());
-        int size = SizeHandler.getPrefSize();
-        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitHeight(size);
-        ((ImageView)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFitWidth(size);
+    }
 
+    private void updateFigure() {
+        if (field.getIsFigureHere()){
+            if (!((StackPane) this.getChildren().get(0)).getChildren().contains(GameView.getFigureView(field.getFigure()))) {
+                ((StackPane) this.getChildren().get(0)).getChildren().add(GameView.getFigureView(field.getFigure()));
+            }
+        } else {
+            ((StackPane) this.getChildren().get(0)).getChildren().removeIf(node -> node instanceof FigureView);
+        }
     }
 }

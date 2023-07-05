@@ -66,10 +66,101 @@ public class GameView extends BorderPane implements Observer {
 
         ((ScrollPane) this.getCenter()).setFitToHeight(true);
 
+        updateFiguresRightBar();
 
+        updateBuildings();
+
+        updateFields();
+
+        for(ImageView img : highlighted){
+            img.setFitHeight(SizeHandler.getPrefSize());
+        }
+        for(ImageView img : highlightedtemp){
+            img.setFitHeight(SizeHandler.getPrefSize());
+        }
+    }
+
+    private void updateFields() {
+
+        if (game.isRunnung() || game.placeFigures()) {
+            GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
+            gridPane.setPrefHeight(SizeHandler.getPrefSize() * SizeHandler.getNrFieldsY());
+            for (int i = 0; i < game.getBoard().getXSize(); i++) {
+                for (int j = 0; j < game.getBoard().getYSize(); j++) {
+                    updateField(gridPane ,i, j);
+                }
+            }
+        }
+    }
+
+    private void updateField(GridPane gridPane, int i, int j) {
+        Field field = game.getBoard().getField(i, j);
+        if (!fieldHolder.containsKey(field)) {
+            FieldView fieldView = null;
+            try {
+                fieldView = new FieldView(field);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            fieldHolder.put(field, fieldView);
+
+            fieldView.setOnMouseDragReleased(event -> {
+
+                removeHighlights(highlightedtemp);
+
+                if (event.getGestureSource() instanceof FigureView) {
+                    FigureView source = (FigureView) event.getGestureSource();
+
+                    controller.placeFigure(source.getFigure(), field);
+
+
+                    dragableObject.setVisible(false);
+                    source.setVisible(true);
+
+                } else if (event.getGestureSource() instanceof BuildingLevel) {
+                    BuildingLevel source = (BuildingLevel) event.getGestureSource();
+
+                    controller.buildObject(source.getLevel(), field);
+
+                    dragableObject.setVisible(false);
+                }
+            });
+            gridPane.add(fieldHolder.get(field), i, j);
+        }
+    }
+
+    private void updateBuildings() {
+        if (game.isRunnung()){
+            for (int level = 1; level <= game.getMaxBuildingLevel() ; level++) {
+                updateBuilding(level);
+            }
+            updateBuilding(-1);
+
+            makeHighlight();
+        }
+    }
+
+    private void updateBuilding(int level) {
+        if (!initBuildingHolder.containsKey(level)) {
+            BuildingLevel buildingLevel = null;
+            try {
+                buildingLevel = new BuildingLevel(level);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            initBuildingHolder.put(level, buildingLevel);
+            setDragableEvents(buildingLevel, true);
+        }
+
+        BuildingLevel buildingLevel = initBuildingHolder.get(level);
+        if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
+            ((VBox) this.getRight()).getChildren().add(buildingLevel);
+        }
+    }
+
+    private void updateFiguresRightBar() {
         if (game.placeFigures()){
-
-
             dragableObject.setMouseTransparent(true);
             dragableObject.setVisible(false);
 
@@ -99,94 +190,7 @@ public class GameView extends BorderPane implements Observer {
             }
 
         }
-
-        if (game.isRunnung()){
-            for (int level = 1; level <= game.getMaxBuildingLevel() ; level++) {
-                if (!initBuildingHolder.containsKey(level)) {
-                    BuildingLevel buildingLevel = null;
-                    try {
-                        buildingLevel = new BuildingLevel(level);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    initBuildingHolder.put(level, buildingLevel);
-                    setDragableEvents(buildingLevel, true);
-                }
-
-                BuildingLevel buildingLevel = initBuildingHolder.get(level);
-                if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
-                    ((VBox) this.getRight()).getChildren().add(buildingLevel);
-                }
-            }
-            if (!initBuildingHolder.containsKey(-1)) {
-                BuildingLevel buildingDome = null;
-                try {
-                    buildingDome = new BuildingLevel(-1);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                initBuildingHolder.put(-1, buildingDome);
-                setDragableEvents(buildingDome, true);
-            }
-            BuildingLevel buildingLevel = initBuildingHolder.get(-1);
-            if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
-                ((VBox) this.getRight()).getChildren().add(buildingLevel);
-            }
-
-
-            makeHighlight();
-        }
-
-        if (game.isRunnung() || game.placeFigures()) {
-            GridPane gridPane = (GridPane) ((ScrollPane) this.getCenter()).getContent();
-            gridPane.setPrefHeight(SizeHandler.getPrefSize() * SizeHandler.getNrFieldsY());
-            for (int i = 0; i < game.getBoard().getXSize(); i++) {
-                for (int j = 0; j < game.getBoard().getYSize(); j++) {
-                    Field field = game.getBoard().getField(i, j);
-                    if (!fieldHolder.containsKey(field)) {
-                        FieldView fieldView = null;
-                        try {
-                            fieldView = new FieldView(field);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        fieldHolder.put(field, fieldView);
-
-                        fieldView.setOnMouseDragReleased(event -> {
-
-                            removeHighlights(highlightedtemp);
-
-                            if (event.getGestureSource() instanceof FigureView) {
-                                FigureView source = (FigureView) event.getGestureSource();
-
-                                controller.placeFigure(source.getFigure(), field);
-
-
-                                dragableObject.setVisible(false);
-                                source.setVisible(true);
-
-                            } else if (event.getGestureSource() instanceof BuildingLevel) {
-                                BuildingLevel source = (BuildingLevel) event.getGestureSource();
-
-                                controller.buildObject(source.getLevel(), field);
-
-                                dragableObject.setVisible(false);
-                            }
-                        });
-                        gridPane.add(fieldHolder.get(field), i, j);
-                    }
-                }
-            }
-        }
         ((VBox) this.getRight()).setPrefWidth(SizeHandler.getPrefSize());
-        for(ImageView img : highlighted){
-            img.setFitHeight(SizeHandler.getPrefSize());
-        }
-        for(ImageView img : highlightedtemp){
-            img.setFitHeight(SizeHandler.getPrefSize());
-        }
     }
 
     /**

@@ -58,26 +58,11 @@ public class PlayerChooseView extends VBox implements Observer {
 
     @Override
     public void update() {
-        if (game != Settings.getActualGame()){
-            game.removeObserver(this);
-            game = Settings.getActualGame();
-            game.addObserver(this);
-        }
-        if (controller.maxBuildingHeight.getText().equals("")){
-            controller.maxBuildingHeight.setPromptText(String.valueOf(game.getMaxBuildingLevel()));
-        } else {
-            controller.maxBuildingHeight.setText(String.valueOf(game.getMaxBuildingLevel()));
-        }
-        if (controller.maxStepUp.getText().equals("")){
-            controller.maxStepUp.setPromptText(String.valueOf(game.getMaxStepUpHeight()));
-        } else {
-            controller.maxStepUp.setText(String.valueOf(game.getMaxStepUpHeight()));
-        }
-        if (controller.maxStepDown.getText().equals("")){
-            controller.maxStepDown.setPromptText(String.valueOf(game.getMaxStepDownHeight()));
-        } else {
-            controller.maxStepDown.setText(String.valueOf(game.getMaxStepDownHeight()));
-        }
+        updateGame();
+        updateTextfield(controller.maxBuildingHeight, String.valueOf(game.getMaxBuildingLevel()));
+        updateTextfield(controller.maxStepUp, String.valueOf(game.getMaxStepUpHeight()));
+        updateTextfield(controller.maxStepDown, String.valueOf(game.getMaxStepDownHeight()));
+
         ArrayList<Player> players = game.getPlayerOrder();
         int i = 0;
         for (Player playerHere: playerHolder.keySet()){
@@ -87,71 +72,90 @@ public class PlayerChooseView extends VBox implements Observer {
         }
         for(Player player: players){
             i++;
-            if (!playerHolder.containsKey(player)){
-                PlayerAloneChooseView playerAloneChooseView;
-                try {
-                    playerAloneChooseView = new PlayerAloneChooseView(player);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                playerHolder.put(player, playerAloneChooseView);
-                controller.playerPaneSingle.getChildren().add(playerAloneChooseView);
+            updatePlayer(player, i);
+        }
+    }
 
-                ((Button) playerAloneChooseView.getChildren().get(0)).setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        game.removePlayer(player);
-                    }
-                });
-
-                ColorPicker colorP = (ColorPicker) ((VBox) playerAloneChooseView.getChildren().get(4)).getChildren().get(1);
-                colorP.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        player.setColor(colorP.getValue());
-                    }
-                });
-
-                TextField nameField = (TextField) ((VBox) playerAloneChooseView.getChildren().get(2)).getChildren().get(1);
-                nameField.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        player.setName(nameField.getText());
-                    }
-                });
-
-                TextField countFigures = (TextField) ((VBox) playerAloneChooseView.getChildren().get(3)).getChildren().get(1);
-                countFigures.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        if (game.selectingPlayers()) {
-                            try {
-                                player.setAmountOfFigures(Integer.parseInt(countFigures.getText()));
-                            } catch (NumberFormatException e) {
-                                player.setAmountOfFigures(2);
-                            }
-                        }
-
-                    }
-                });
-
-                TextField team = (TextField) ((VBox) playerAloneChooseView.getChildren().get(5)).getChildren().get(1);
-                team.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        player.setTeam(team.getText());
-                    }
-                });
-
-                ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
-                playerType.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
-                    }
-                });
+    private void updatePlayer(Player player, int i) {
+        if (!playerHolder.containsKey(player)){
+            PlayerAloneChooseView playerAloneChooseView;
+            try {
+                playerAloneChooseView = new PlayerAloneChooseView(player);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            playerHolder.get(player).setPlayerNumber(i);
+            playerHolder.put(player, playerAloneChooseView);
+            controller.playerPaneSingle.getChildren().add(playerAloneChooseView);
+
+            ((Button) playerAloneChooseView.getChildren().get(0)).setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    game.removePlayer(player);
+                }
+            });
+
+            ColorPicker colorP = (ColorPicker) ((VBox) playerAloneChooseView.getChildren().get(4)).getChildren().get(1);
+            colorP.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    player.setColor(colorP.getValue());
+                }
+            });
+
+            TextField nameField = (TextField) ((VBox) playerAloneChooseView.getChildren().get(2)).getChildren().get(1);
+            nameField.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    player.setName(nameField.getText());
+                }
+            });
+
+            TextField countFigures = (TextField) ((VBox) playerAloneChooseView.getChildren().get(3)).getChildren().get(1);
+            countFigures.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (game.selectingPlayers()) {
+                        try {
+                            player.setAmountOfFigures(Integer.parseInt(countFigures.getText()));
+                        } catch (NumberFormatException e) {
+                            player.setAmountOfFigures(2);
+                        }
+                    }
+
+                }
+            });
+
+            TextField team = (TextField) ((VBox) playerAloneChooseView.getChildren().get(5)).getChildren().get(1);
+            team.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    player.setTeam(team.getText());
+                }
+            });
+
+            ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
+            playerType.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
+                }
+            });
+        }
+        playerHolder.get(player).setPlayerNumber(i);
+    }
+
+    private void updateTextfield(TextField textField, String value) {
+        if (textField.getText().equals("")){
+            textField.setPromptText(value);
+        } else {
+            textField.setText(value);
+        }
+    }
+    private void updateGame() {
+        if (game != Settings.getActualGame()){
+            game.removeObserver(this);
+            game = Settings.getActualGame();
+            game.addObserver(this);
         }
     }
 }

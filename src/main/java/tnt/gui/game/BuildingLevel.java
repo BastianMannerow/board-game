@@ -42,7 +42,7 @@ public class BuildingLevel extends DragableObject implements Observer {
                 imageView.setImage(ResourceHandler.getInstance().getImage("Turm_3"));
                 break;
             default:
-                if (level < MAX_BUILD_IN_LEVEL) {
+                if (level < 1) {
                     throw new IOException("Building got wrong level: " + level);
                 }
                 imageView.setImage(ResourceHandler.getInstance().getImage("Turm_3"));
@@ -52,7 +52,7 @@ public class BuildingLevel extends DragableObject implements Observer {
         SizeHandler.getInstance().addObserver(this);
         imageView.setFitHeight(SizeHandler.getPrefSize());
         this.getChildren().add(imageView);
-        if(level > 1){
+        if(level > MAX_BUILD_IN_LEVEL){
             Label height = new Label(String.valueOf(level));
             height.setTextFill(Color.WHITE);
             height.setAlignment(Pos.CENTER);

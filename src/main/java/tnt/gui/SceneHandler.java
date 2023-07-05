@@ -64,31 +64,33 @@ public class SceneHandler{
      */
     public void loadView(String viewName){
         if (!views.containsKey(viewName)){
-            if (viewName.equals("gameView")){
-                // generating the gameview
-//        GameView gameView =
-                try {
-                    new GameView(this);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-
-            // generate the playerchoose menu
-//        Parent choosePlayerMenu =
-            if (viewName.equals("playerMenu")) {
-                try {
-                    new PlayerChooseView(this);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            createView(viewName);
         }
         if (views.containsKey(viewName)){
             Parent view = views.get(viewName);
             scene.setRoot(view);
             if (view instanceof Observer) {
                 ((Observer) views.get(viewName)).update();
+            }
+        }
+    }
+
+    private void createView(String viewName) {
+        if (viewName.equals("gameView")){
+            // generating the gameview
+            try {
+                new GameView(this);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        // generate the playerchoose menu
+        if (viewName.equals("playerMenu")) {
+            try {
+                new PlayerChooseView(this);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }

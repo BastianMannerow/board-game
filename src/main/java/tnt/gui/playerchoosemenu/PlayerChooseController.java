@@ -50,6 +50,60 @@ public class PlayerChooseController{
     @FXML
     private void runGame() {
         Game game = Settings.getActualGame();
+        int nrOfFigures = updatePlayer(game);
+
+
+        updateGameSettings(game, nrOfFigures);
+
+        sceneHandler.loadView("gameView");
+    }
+
+    private void updateGameSettings(Game game, int nrOfFigures) {
+        // Todo: get the other fields
+
+        int maxStepUp = updateValueOfTextfield(this.maxStepUp, game.getMaxStepUpHeight());
+        int maxStepDown = updateValueOfTextfield(this.maxStepDown, game.getMaxStepDownHeight());
+        int maxBuildingHeight = updateValueOfTextfield(this.maxBuildingHeight, game.getMaxBuildingLevel());
+
+        int sizeX = updateValueOfTextfield(this.fieldSizeX, Settings.getFieldSizeX());
+        int sizeY = updateValueOfTextfield(this.fieldSizeY, Settings.getFieldSizeY());
+
+        if (sizeX * sizeY <= nrOfFigures){
+            System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
+            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many figures for that board size");
+            popup.show(sceneHandler.getStage());
+            return;
+        }
+
+        if (sizeX * sizeY > Settings.getMaxFieldcount()){
+            System.err.println("Too many fields, the amount of field is limited by " + Settings.getMaxFieldcount() + " but you entered " + sizeX * sizeY);
+            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fields");
+            popup.show(sceneHandler.getStage());
+            return;
+        }
+
+        if (game.selectingPlayers()){
+            game.createBoard(sizeX, sizeY);
+            game.getBoard().setRoundWorld(roundWorld.isSelected());
+            game.setMaxStepUpHeight(maxStepUp);
+            game.setMaxStepDownHeight(maxStepDown);
+            game.setMaxBuildingLevel(maxBuildingHeight);
+            game.initGame();
+            game.startPlaceFigures();
+        }
+    }
+
+    private int updateValueOfTextfield(TextField textfield, int initvalue) {
+        int value = initvalue;
+        try {
+            value = Integer.parseInt(textfield.getText());
+        } catch (NumberFormatException e) {
+            System.err.println("could not convert " + textfield.getId() + ": " + textfield.getText() + " Error: " + e);
+        }
+        return value;
+    }
+
+    private int updatePlayer(Game game) {
         int nrOfFigures = 0;
         for (Node node : playerPaneSingle.getChildren()){
             if (node instanceof PlayerAloneChooseView){
@@ -87,68 +141,7 @@ public class PlayerChooseController{
                 nrOfFigures += player.getAmountOfFigures();
             }
         }
-        // Todo: get the other fields
-
-        int maxStepUp = game.getMaxStepUpHeight();
-        int maxStepDown = game.getMaxStepDownHeight();
-        int maxBuildingHeight = game.getMaxBuildingLevel();
-
-        try {
-            maxStepUp = Integer.parseInt(this.maxStepUp.getText());
-        } catch (NumberFormatException e) {
-            System.err.println("could not convert maxStepUp: " + this.maxStepUp.getText() + " Error: " + e);
-        }
-        try {
-            maxStepDown = Integer.parseInt(this.maxStepDown.getText());
-        } catch (NumberFormatException e) {
-            System.err.println("could not convert maxStepDown: " + this.maxStepDown.getText() + " Error: " + e);
-        }
-        try {
-            maxBuildingHeight = Integer.parseInt(this.maxBuildingHeight.getText());
-        } catch (NumberFormatException e) {
-            System.err.println("could not convert maxBuildingHeight: " + this.maxBuildingHeight.getText() + " Error: " + e);
-        }
-
-        int sizeX = Settings.getFieldSizeX();
-        int sizeY = Settings.getFieldSizeY();
-
-        try {
-            int amount = Integer.parseInt(fieldSizeX.getText());
-            sizeX = amount;
-        } catch (NumberFormatException e) {
-            System.err.println("could not convert the field size x to int " + e);
-        }
-        try {
-            int amount = Integer.parseInt(fieldSizeY.getText());
-            sizeY = amount;
-        } catch (NumberFormatException e) {
-            System.err.println("could not convert the field size y to int " + e);
-        }
-
-        if (sizeX * sizeY <= nrOfFigures){
-            System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
-            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many figures for that board size");
-            popup.show(sceneHandler.getStage());
-            return;
-        }
-
-        if (sizeX * sizeY > Settings.getMaxFieldcount()){
-            System.err.println("Too many fields, the amount of field is limited by " + Settings.getMaxFieldcount() + " but you entered " + sizeX * sizeY);
-            ((Label)((VBox) popup.getContent().get(0)).getChildren().get(0)).setText("Too many fields");
-            popup.show(sceneHandler.getStage());
-            return;
-        }
-
-        if (game.selectingPlayers()){
-            game.createBoard(sizeX, sizeY);
-            game.getBoard().setRoundWorld(roundWorld.isSelected());
-            game.initGame();
-            game.startPlaceFigures();
-            game.setMaxStepUpHeight(maxStepUp);
-            game.setMaxStepDownHeight(maxStepDown);
-            game.setMaxBuildingLevel(maxBuildingHeight);
-        }
-        sceneHandler.loadView("gameView");
+        return nrOfFigures;
     }
 
     /**
