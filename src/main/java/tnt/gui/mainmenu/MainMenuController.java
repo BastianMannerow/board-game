@@ -68,7 +68,7 @@ public class MainMenuController{
                     case PLAYER_4:
                         str.append("4");
                 }
-                str.append(" ").append(Language.playerLabel());
+                str.append(" ").append(Language.getTranslation("player"));
                 return str.toString();
             }
 

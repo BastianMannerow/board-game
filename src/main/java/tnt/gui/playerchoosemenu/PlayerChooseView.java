@@ -80,16 +80,16 @@ public class PlayerChooseView extends VBox implements Observer {
     }
 
     private void updateLabels() {
-        controller.mainMenu.setText(Language.mainMenuLabel());
-        controller.maxStepUpHeight.setText(Language.maxStepUpLabel());
-        controller.maxStepDownHeight.setText(Language.maxStepDownLabel());
-        controller.maxBuildingHeightLabel.setText(Language.maxHeightOfBuildingLabel());
-        controller.addPlayer.setText(Language.addPlayerLabel());
-        controller.boardSize.setText(Language.boardSizeLabel());
-        controller.sphereWorldLabel.setText(Language.sphereWorldLabel());
-        controller.setAmountOfFiguresLabel.setText(Language.setNrOfFiguresLabel());
-        controller.amountFiguresButton.setText(Language.setNrOfFiguresButtonLabel());
-        controller.btnPlay.setText(Language.playButtonLabel());
+        controller.mainMenu.setText(Language.getTranslation("mainMenuLabel"));
+        controller.maxStepUpHeight.setText(Language.getTranslation("maxStepUpLabel"));
+        controller.maxStepDownHeight.setText(Language.getTranslation("maxStepDownLabel"));
+        controller.maxBuildingHeightLabel.setText(Language.getTranslation("maxHeightOfBuildingLabel"));
+        controller.addPlayer.setText(Language.getTranslation("addPlayerLabel"));
+        controller.boardSize.setText(Language.getTranslation("boardSizeLabel"));
+        controller.sphereWorldLabel.setText(Language.getTranslation("sphereWorldLabel"));
+        controller.setAmountOfFiguresLabel.setText(Language.getTranslation("setNrOfFiguresLabel"));
+        controller.amountFiguresButton.setText(Language.getTranslation("setNrOfFiguresButtonLabel"));
+        controller.btnPlay.setText(Language.getTranslation("playButtonLabel"));
     }
 
     private void updatePlayer(Player player, int i) {

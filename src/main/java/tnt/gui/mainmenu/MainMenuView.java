@@ -39,13 +39,13 @@ public class MainMenuView extends VBox implements Observer {
 
     @Override
     public void update() {
-        mainMenuController.defaultlabel.setText(Language.getDefaultLabel());
-        mainMenuController.playButton.setText(Language.gotoGame());
-        mainMenuController.newGameButton.setText(Language.newGame());
-        mainMenuController.serverButton.setText(Language.getStartServerLabel());
-        mainMenuController.connectButton.setText(Language.getConnectAsClientLabel());
-        mainMenuController.loadSaveButton.setText(Language.loadSaveMenu());
-        mainMenuController.settingsButton.setText(Language.settingsButton());
+        mainMenuController.defaultlabel.setText(Language.getTranslation("getDefaultLabel"));
+        mainMenuController.playButton.setText(Language.getTranslation("gotoGame"));
+        mainMenuController.newGameButton.setText(Language.getTranslation("newGame"));
+        mainMenuController.serverButton.setText(Language.getTranslation("getStartServerLabel"));
+        mainMenuController.connectButton.setText(Language.getTranslation("getConnectAsClientLabel"));
+        mainMenuController.loadSaveButton.setText(Language.getTranslation("loadSaveMenu"));
+        mainMenuController.settingsButton.setText(Language.getTranslation("settingsButton"));
         mainMenuController.defaultConfig.setItems(FXCollections.observableArrayList()); // set emtpy list
         mainMenuController.defaultConfig.setItems(mainMenuController.defaultConfigs);
         mainMenuController.defaultConfig.getSelectionModel().selectFirst();

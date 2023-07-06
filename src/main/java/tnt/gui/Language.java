@@ -3,230 +3,91 @@ package tnt.gui;
 import tnt.model.Player;
 import tnt.util.Observable;
 
-import java.util.Locale;
+import java.util.*;
 
 import static java.util.Locale.*;
+import static java.util.Map.entry;
 
 /**
  * Class for handling multiple languages
  */
 public class Language extends Observable {
 
+    private static Map<String, String> actualLanguage;
+    private static Map<String, String> english = Map.ofEntries(
+            entry("getDefaultLabel", "Please choose default config:"),
+            entry("getStartServerLabel", "start server"),
+            entry("getConnectAsClientLabel", "connect as client"),
+            entry("gotoGame", "goto game"),
+            entry("newGame", "start new game"),
+            entry("loadSaveMenu", "load and save"),
+            entry("settingsButton", "settings"),
+            entry("language", "language"),
+            entry("languageGerman", "german"),
+            entry("languageEnglish", "english"),
+            entry("theme", "theme"),
+            entry("themeBlood", "blood"),
+            entry("themeZombie", "zombies"),
+            entry("mainMenuLabel", "main menu"),
+            entry("addPlayerLabel", "add a player"),
+            entry("maxStepUpLabel", "max height for step up"),
+            entry("maxStepDownLabel", "max height for step down"),
+            entry("maxHeightOfBuildingLabel", "max height for buildings"),
+            entry("boardSizeLabel", "board size"),
+            entry("sphereWorldLabel", "enable sphere world"),
+            entry("setNrOfFiguresLabel", "set nr of figures for all players"),
+            entry("setNrOfFiguresButtonLabel", "set amount of figures"),
+            entry("playButtonLabel", "play"),
+            entry("player", "player"),
+            entry("nameLabel", "name"),
+            entry("amountFiguresLabel", "amount of figures"),
+            entry("colorLabel", "color"),
+            entry("teamLabel", "team"),
+            entry("playerTypeLabel", "player type"),
+            entry("playerMenuLabel", "player menu"),
+            entry("human", "human"),
+            entry("", "")
+    );
+    private static Map<String, String> german = Map.ofEntries(
+            entry("getDefaultLabel", "Wählen Sie bitte ein Preset:"),
+            entry("getStartServerLabel", "Starte Server"),
+            entry("getConnectAsClientLabel", "Verbinde zu Server"),
+            entry("gotoGame", "Zum Spiel"),
+            entry("newGame", "Starte neues Spiel"),
+            entry("loadSaveMenu", "Laden und speichern"),
+            entry("settingsButton", "Einstellungen"),
+            entry("language", "Sprache"),
+            entry("languageGerman", "Deutsch"),
+            entry("languageEnglish", "Englisch"),
+            entry("theme", "Thema"),
+            entry("themeBlood", "Blut"),
+            entry("themeZombie", "Zombies"),
+            entry("mainMenuLabel", "Hauptmenü"),
+            entry("addPlayerLabel", "Spieler hinzufügen"),
+            entry("maxStepUpLabel", "Max. Anzahl Stufen hochsteigen"),
+            entry("maxStepDownLabel", "Max. Anzahl Stufen runtersteigen"),
+            entry("maxHeightOfBuildingLabel", "Max. Gebäude Höhe"),
+            entry("boardSizeLabel", "Spielfeldgröße"),
+            entry("sphereWorldLabel", "Aktive Welt als Kugel"),
+            entry("setNrOfFiguresLabel", "Setze Figurenanzahl aller Spieler"),
+            entry("setNrOfFiguresButtonLabel", "Setze Figurenanzahl"),
+            entry("playButtonLabel", "Spiel starten"),
+            entry("player", "Spieler"),
+            entry("nameLabel", "Name"),
+            entry("amountFiguresLabel", "Anzahl Figuren"),
+            entry("colorLabel", "Farbe"),
+            entry("teamLabel", "Team"),
+            entry("playerTypeLabel", "Art des Spielers"),
+            entry("playerMenuLabel", "Spieler Menü"),
+            entry("human", "Mensch"),
+            entry("", "")
+    );
 
-
-    private static Locale actualLanguage = GERMAN;
     private static Language instance;
-
-
-    public static String getDefaultLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Wählen Sie bitte ein Preset:";
-        }
-        return "Please choose default config:";
-    }
-
-    public static String getStartServerLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Starte Server";
-        }
-        return "start server";
-    }
-
-    public static String getConnectAsClientLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Verbinde zu Server";
-        }
-        return "connect as client";
-    }
-
-    public static String gotoGame() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Zum Spiel";
-        }
-        return "goto game";
-    }
-
-    public static String newGame() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Starte neues Spiel";
-        }
-        return "start new game";
-    }
-
-    public static String loadSaveMenu() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Laden und speichern";
-        }
-        return "load and save";
-    }
-
-    public static String settingsButton() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Einstellungen";
-        }
-        return "settings";
-    }
-
-    public static String language() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Sprache";
-        }
-        return "language";
-    }
-
-    public static String languageGerman() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Deutsch";
-        }
-        return "german";
-    }
-
-    public static String languageEnglish() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Englisch";
-        }
-        return "english";
-    }
-
-    public static String theme() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Thema";
-        }
-        return "theme";
-    }
-
-    public static String themeBlood() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Blut";
-        }
-        return "blood";
-    }
-
-    public static String themeZombie() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Zombies";
-        }
-        return "zombies";
-    }
-
-    public static String mainMenuLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Hauptmenü";
-        }
-        return "main menu";
-    }
-
-    public static String addPlayerLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Spieler hinzufügen";
-        }
-        return "add a player";
-    }
-
-    public static String maxStepUpLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Max. Anzahl Stufen hochsteigen";
-        }
-        return "max height for step up";
-    }
-
-    public static String maxStepDownLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Max. Anzahl Stufen runtersteigen";
-        }
-        return "max height for step down";
-    }
-
-    public static String maxHeightOfBuildingLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Max. Gebäude Höhe";
-        }
-        return "max height for buildings";
-    }
-
-    public static String boardSizeLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Spielfeldgröße";
-        }
-        return "board size";
-    }
-
-    public static String sphereWorldLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Aktive Welt als Kugel";
-        }
-        return "enable sphere world";
-    }
-
-    public static String setNrOfFiguresLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Setze Figurenanzahl aller Spieler";
-        }
-        return "set nr of figures for all players";
-    }
-
-    public static String setNrOfFiguresButtonLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Setze Figurenanzahl";
-        }
-        return "set amount of figures";
-    }
-
-    public static String playButtonLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Spiel starten";
-        }
-        return "play";
-    }
-
-    public static String playerLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Spieler";
-        }
-        return "player";
-    }
-
-    public static String nameLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Name";
-        }
-        return "name";
-    }
-    public static String amountFiguresLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Anzahl Figuren";
-        }
-        return "amount of figures";
-    }
-    public static String colorLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Farbe";
-        }
-        return "color";
-    }
-    public static String teamLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Team";
-        }
-        return "team";
-    }
-    public static String playerTypeLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Art des Spielers";
-        }
-        return "player type";
-    }
-
-    public static String playerMenuLabel() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Spieler Menü";
-        }
-        return "player menu";
-    }
 
     public static String playerType(Player.PlayerType playerType) {
         StringBuilder str = new StringBuilder();
-        if (actualLanguage.equals(GERMAN)) {
+        if (Locale.getDefault().equals(GERMAN)) {
             str.append("KI ");
         } else {
             str.append("AI");
@@ -243,13 +104,13 @@ public class Language extends Observable {
                 str.append(difficulty(3));
                 break;
             default:
-                return human();
+                return getTranslation("human");
         }
         return str.toString();
     }
 
     public static String difficulty(int i) {
-        if (actualLanguage.equals(GERMAN)) {
+        if (Locale.getDefault().equals(GERMAN)) {
             switch (i){
                 case 1:
                     return "Einfach";
@@ -273,20 +134,13 @@ public class Language extends Observable {
         }
     }
 
-    public static String human() {
-        if (actualLanguage.equals(GERMAN)) {
-            return "Mensch";
-        }
-        return "human";
-    }
-
 
     /**
      * getter for the actual language set
      * @return the acutal language
      */
     public static Locale getActualLanguage() {
-        return actualLanguage;
+        return Locale.getDefault();
     }
 
     /**
@@ -296,6 +150,7 @@ public class Language extends Observable {
     public static Language getInstance() {
         if (instance == null) {
             instance = new Language();
+            actualLanguage = english;
         }
         return instance;
     }
@@ -305,9 +160,21 @@ public class Language extends Observable {
      * @param language the language to be set
      */
     public void setLanguage(Locale language) {
-        Language.actualLanguage = language;
         Locale.setDefault(language);
+        if (language.equals(GERMAN)) {
+            actualLanguage = german;
+        }
+        else {
+            actualLanguage = english;
+        }
         notifyObservers();
+    }
+
+    public static String getTranslation(String word){
+        if (!actualLanguage.containsKey(word)){
+            return "Language for that label not available";
+        }
+        return actualLanguage.get(word);
     }
 
 }

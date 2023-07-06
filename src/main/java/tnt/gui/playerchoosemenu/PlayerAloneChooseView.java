@@ -61,16 +61,16 @@ public class PlayerAloneChooseView extends HBox implements Observer {
     public void update() {
 
 
-        ((Label) ((VBox) this.getChildren().get(2)).getChildren().get(0)).setText(Language.nameLabel());
-        ((Label) ((VBox) this.getChildren().get(3)).getChildren().get(0)).setText(Language.amountFiguresLabel());
-        ((Label) ((VBox) this.getChildren().get(4)).getChildren().get(0)).setText(Language.colorLabel());
-        ((Label) ((VBox) this.getChildren().get(5)).getChildren().get(0)).setText(Language.teamLabel());
-        ((Label) ((VBox) this.getChildren().get(6)).getChildren().get(0)).setText(Language.playerTypeLabel());
+        ((Label) ((VBox) this.getChildren().get(2)).getChildren().get(0)).setText(Language.getTranslation("nameLabel"));
+        ((Label) ((VBox) this.getChildren().get(3)).getChildren().get(0)).setText(Language.getTranslation("amountFiguresLabel"));
+        ((Label) ((VBox) this.getChildren().get(4)).getChildren().get(0)).setText(Language.getTranslation("colorLabel"));
+        ((Label) ((VBox) this.getChildren().get(5)).getChildren().get(0)).setText(Language.getTranslation("teamLabel"));
+        ((Label) ((VBox) this.getChildren().get(6)).getChildren().get(0)).setText(Language.getTranslation("playerTypeLabel"));
 
-        ((Label) this.getChildren().get(1)).setText(Language.playerLabel() + " " + playerNumber);
+        ((Label) this.getChildren().get(1)).setText(Language.getTranslation("player") + " " + playerNumber);
         TextField name = (TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1);
         if (name.getText().equals("")){
-            name.setPromptText(Language.playerLabel() + " " + player.getName());
+            name.setPromptText(Language.getTranslation("player") + " " + player.getName());
         } else {
             name.setText(player.getName());
         }
