@@ -78,6 +78,8 @@ public class GameView extends BorderPane implements Observer {
         for(ImageView img : highlightedtemp){
             img.setFitHeight(SizeHandler.getPrefSize());
         }
+
+        prepareEnd();
     }
 
     private void updateFields() {
@@ -326,5 +328,11 @@ public class GameView extends BorderPane implements Observer {
      */
     static FigureView getFigureView(Figure fig){
         return figureHolder.get(fig);
+    }
+
+    private void prepareEnd(){
+        if(game.getGameStatus() == Game.GameStatus.GAME_OVER) {
+            controller.goToEnd();
+        }
     }
 }

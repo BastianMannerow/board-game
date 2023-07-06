@@ -3,6 +3,7 @@ package tnt.gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tnt.gui.game.EndView;
 import tnt.gui.mainmenu.MainMenuView;
 import tnt.gui.saveloadmenu.SaveLoadMenuView;
 import tnt.gui.settingsmenu.SettingsView;
@@ -28,6 +29,8 @@ public class Gui extends Application {
         SceneHandler sceneHandler = new SceneHandler(primaryStage);
 
 
+        //generate Endscreen
+        new EndView(sceneHandler);
 
         //generate the SaveLoadMenu
 //        SaveLoadMenuView SaveLoadView =

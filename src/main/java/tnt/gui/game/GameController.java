@@ -48,4 +48,8 @@ public class GameController{
     private void playerMenu(){
         sceneHandler.loadView("playerMenu");
     }
+
+    public void goToEnd() {
+        sceneHandler.loadView("End");
+    }
 }

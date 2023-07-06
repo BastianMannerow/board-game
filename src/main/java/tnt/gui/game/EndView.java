@@ -16,12 +16,10 @@ public class EndView extends VBox {
      * @param sceneHandler the scenehandler holding all the scenes
      * @throws IOException Exception, when fxml file could not get loaded (the file of the scenebuilder)
      */
-    public Endview(SceneHandler sceneHandler) throws IOException {
+    public EndView(SceneHandler sceneHandler) throws IOException {
         FXMLLoader EndScreen = ResourceHandler.getInstance().getFXML("End");
         EndScreen.setRoot(this);
         EndScreen.load();
-        controller = EndScreen.getController();
-        controller.setSceneHandler(sceneHandler);
         sceneHandler.add("End", this);
 
     }
