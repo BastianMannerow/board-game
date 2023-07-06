@@ -15,7 +15,7 @@ public class GameController{
     @FXML
     Button mainMenu;
     @FXML
-    Button playerMenu;
+    Button playerMenuButton;
 
 
     /**

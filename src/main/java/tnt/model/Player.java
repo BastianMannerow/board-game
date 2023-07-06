@@ -50,13 +50,13 @@ public class Player extends Observable {
         this.figures = figures;
     }
 
+//    public Player(Game game) {
     public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.amountOfFigures = amountOfFigures;
         this.game = game;
-        this.team = team;
     }
 
     /**

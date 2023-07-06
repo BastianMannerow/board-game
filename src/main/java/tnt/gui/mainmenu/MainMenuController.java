@@ -18,27 +18,17 @@ import tnt.model.Settings;
  * The controller for the main menu
  */
 public class MainMenuController{
-    public static class DefaultConfiguration {
-        public enum DefaultConfig {
-            PLAYER_2,
-            PLAYER_3,
-            PLAYER_4
-        }
 
-        public static int getAmountOfPlayer(DefaultConfig defaultConfig) {
-            switch (defaultConfig){
-                case PLAYER_3:
-                    return 3;
-                case PLAYER_4:
-                    return 4;
-                default:
-                    return 2;
-            }
-        }
+    /**
+     * Enum for handling different default configurations
+     */
+    private enum DefaultConfig {
+        PLAYER_2,
+        PLAYER_3,
+        PLAYER_4
     }
-
     private SceneHandler sceneHandler;
-    ObservableList<DefaultConfiguration.DefaultConfig> defaultConfigs;
+    ObservableList<DefaultConfig> defaultConfigs;
     @FXML
     ChoiceBox defaultConfig;
 
@@ -60,10 +50,10 @@ public class MainMenuController{
 
     @FXML
     private void initialize(){
-        defaultConfigs = FXCollections.observableArrayList(DefaultConfiguration.DefaultConfig.values());
-        defaultConfig.setConverter(new StringConverter<DefaultConfiguration.DefaultConfig>() {
+        defaultConfigs = FXCollections.observableArrayList(DefaultConfig.values());
+        defaultConfig.setConverter(new StringConverter<DefaultConfig>() {
             @Override
-            public String toString(DefaultConfiguration.DefaultConfig defaultConfig) {
+            public String toString(DefaultConfig defaultConfig) {
                 if (defaultConfig==null){
                     return "";
                 }
@@ -78,12 +68,12 @@ public class MainMenuController{
                     case PLAYER_4:
                         str.append("4");
                 }
-                str.append(" ").append(Language.player());
+                str.append(" ").append(Language.playerLabel());
                 return str.toString();
             }
 
             @Override
-            public DefaultConfiguration.DefaultConfig fromString(String s) {
+            public DefaultConfig fromString(String s) {
                 return null;
             }
         });
@@ -95,8 +85,8 @@ public class MainMenuController{
     @FXML
     private void gotoGame() {
         if (Settings.getActualGame() == null) {
-            DefaultConfiguration.DefaultConfig defaultConf = (DefaultConfiguration.DefaultConfig) defaultConfig.getValue();
-            Game game = new Game(DefaultConfiguration.getAmountOfPlayer(defaultConf));
+            DefaultConfig defaultConf = (DefaultConfig) defaultConfig.getValue();
+            Game game = new Game(getAmountOfPlayer(defaultConf));
             Settings.setActualGame(game);
             game.setGameName("newGame");
         }
@@ -165,5 +155,17 @@ public class MainMenuController{
      */
     public void setSceneHandler(SceneHandler sceneHandler) {
         this.sceneHandler = sceneHandler;
+    }
+
+
+    private static int getAmountOfPlayer(DefaultConfig defaultConfig) {
+        switch (defaultConfig){
+            case PLAYER_3:
+                return 3;
+            case PLAYER_4:
+                return 4;
+            default:
+                return 2;
+        }
     }
 }

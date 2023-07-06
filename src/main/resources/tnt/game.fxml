@@ -55,7 +55,7 @@
    <top>
       <HBox spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="playerMenu" mnemonicParsing="false" onAction="#playerMenu" text="Player" />
+            <Button fx:id="playerMenuButton" mnemonicParsing="false" onAction="#playerMenu" text="Player" />
             <Button fx:id="mainMenu" mnemonicParsing="false" onAction="#goToMenu" text="Menu" />
          </children>
          <padding>

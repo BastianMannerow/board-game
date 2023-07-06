@@ -38,6 +38,6 @@ public class SettingsView extends VBox implements Observer {
         controller.theme.setText(Language.theme());
         controller.blood.setText(Language.themeBlood());
         controller.zombies.setText(Language.themeZombie());
-        controller.mainMenu.setText(Language.mainMenu());
+        controller.mainMenu.setText(Language.mainMenuLabel());
     }
 }

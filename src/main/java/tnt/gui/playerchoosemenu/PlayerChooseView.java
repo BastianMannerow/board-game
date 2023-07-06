@@ -10,7 +10,6 @@ import tnt.ResourceHandler;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.gui.SizeHandler;
-import tnt.gui.mainmenu.MainMenuController;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
@@ -81,16 +80,16 @@ public class PlayerChooseView extends VBox implements Observer {
     }
 
     private void updateLabels() {
-        controller.mainMenu.setText(Language.mainMenu());
-        controller.maxStepUpHeight.setText(Language.maxStepUp());
-        controller.maxStepDownHeight.setText(Language.maxStepDown());
-        controller.maxBuildingHeightLabel.setText(Language.maxHeightOfBuilding());
-        controller.addPlayer.setText(Language.addPlayer());
-        controller.boardSize.setText(Language.boardSize());
-        controller.sphereWorldLabel.setText(Language.sphereWorld());
+        controller.mainMenu.setText(Language.mainMenuLabel());
+        controller.maxStepUpHeight.setText(Language.maxStepUpLabel());
+        controller.maxStepDownHeight.setText(Language.maxStepDownLabel());
+        controller.maxBuildingHeightLabel.setText(Language.maxHeightOfBuildingLabel());
+        controller.addPlayer.setText(Language.addPlayerLabel());
+        controller.boardSize.setText(Language.boardSizeLabel());
+        controller.sphereWorldLabel.setText(Language.sphereWorldLabel());
         controller.setAmountOfFiguresLabel.setText(Language.setNrOfFiguresLabel());
-        controller.amountFiguresButton.setText(Language.setNrOfFiguresButton());
-        controller.btnPlay.setText(Language.playButton());
+        controller.amountFiguresButton.setText(Language.setNrOfFiguresButtonLabel());
+        controller.btnPlay.setText(Language.playButtonLabel());
     }
 
     private void updatePlayer(Player player, int i) {

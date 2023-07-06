@@ -61,16 +61,16 @@ public class PlayerAloneChooseView extends HBox implements Observer {
     public void update() {
 
 
-        ((Label) ((VBox) this.getChildren().get(2)).getChildren().get(0)).setText(Language.name());
-        ((Label) ((VBox) this.getChildren().get(3)).getChildren().get(0)).setText(Language.amountFigures());
-        ((Label) ((VBox) this.getChildren().get(4)).getChildren().get(0)).setText(Language.color());
-        ((Label) ((VBox) this.getChildren().get(5)).getChildren().get(0)).setText(Language.team());
-        ((Label) ((VBox) this.getChildren().get(6)).getChildren().get(0)).setText(Language.playertype());
+        ((Label) ((VBox) this.getChildren().get(2)).getChildren().get(0)).setText(Language.nameLabel());
+        ((Label) ((VBox) this.getChildren().get(3)).getChildren().get(0)).setText(Language.amountFiguresLabel());
+        ((Label) ((VBox) this.getChildren().get(4)).getChildren().get(0)).setText(Language.colorLabel());
+        ((Label) ((VBox) this.getChildren().get(5)).getChildren().get(0)).setText(Language.teamLabel());
+        ((Label) ((VBox) this.getChildren().get(6)).getChildren().get(0)).setText(Language.playerTypeLabel());
 
-        ((Label) this.getChildren().get(1)).setText(Language.player() + " " + playerNumber);
+        ((Label) this.getChildren().get(1)).setText(Language.playerLabel() + " " + playerNumber);
         TextField name = (TextField) ((VBox) this.getChildren().get(2)).getChildren().get(1);
         if (name.getText().equals("")){
-            name.setPromptText(Language.player() + " " + player.getName());
+            name.setPromptText(Language.playerLabel() + " " + player.getName());
         } else {
             name.setText(player.getName());
         }

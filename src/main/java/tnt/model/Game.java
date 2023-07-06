@@ -668,6 +668,13 @@ public class Game extends Observable {
      */
     public void addPlayer(int amountOfFigures, String team) {
         if (selectingPlayers()) {
+//            Player newPlayer = new Player(this);
+//            newPlayer.setLevelOfIntelligence(Player.PlayerType.HUMAN);
+//            newPlayer.setName(String.valueOf(playerOrder.size() + 1));
+//            newPlayer.setColor(def_colors[playerOrder.size() % def_colors.length]);
+//            newPlayer.setAmountOfFigures(amountOfFigures);
+//            newPlayer.setTeam(team);
+//            playerOrder.add(newPlayer);
             playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team));
             notifyObservers();
         }

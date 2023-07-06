@@ -85,8 +85,8 @@ public class GameView extends BorderPane implements Observer {
     }
 
     private void updateLabels() {
-        controller.mainMenu.setText(Language.mainMenu());
-        controller.playerMenu.setText(Language.playerMenu());
+        controller.mainMenu.setText(Language.mainMenuLabel());
+        controller.playerMenuButton.setText(Language.playerMenuLabel());
     }
 
     private void updateFields() {
