@@ -8,6 +8,7 @@ import tnt.gui.SceneHandler;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
+import tnt.util.Observer;
 
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ public class EndView extends VBox {
 
     private GameController controller;
     private Game game;
+    private Boolean notInitialized = true;
 
     /**
      * Constructor for the view
@@ -28,22 +30,26 @@ public class EndView extends VBox {
         EndScreen.load();
         sceneHandler.add("End", this);
         this.game=Settings.getActualGame();
+
     }
 
-    private void initialize(){
-        String print = new String("Highscore: "+game.getAmountOfTurns()+
-                " Turns: "+game.getAmountOfTurns()+" Winner: ");
-        String losers = game.getPlayersTurn().getTeam();
-        for (Player player: game.getPlayerOrder()) {
-            if (player.getTeam()!=losers){
-                print.concat(player.getName());
-                print.concat(" ");
+    public void initialize(){
+        if(notInitialized) {
+            String print = new String("Highscore: " + game.getAmountOfTurns() +
+                    " Turns: " + game.getAmountOfTurns() + " Winner: ");
+            String losers = game.getPlayersTurn().getTeam();
+            for (Player player : game.getPlayerOrder()) {
+                if (player.getTeam() != losers) {
+                    print = print + player.getName();
+                    print = print + " ";
+                }
             }
-        }
-        Label label = new Label();
-        label.setText(print);
+            Label label = new Label();
+            label.setText(print);
 
-        this.getChildren().add(label);
+            this.getChildren().add(label);
+            notInitialized=false;
+        }
     }
 
 }

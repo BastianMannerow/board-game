@@ -30,7 +30,7 @@ public class Gui extends Application {
 
 
         //generate Endscreen
-        new EndView(sceneHandler);
+        //new EndView(sceneHandler);
 
         //generate the SaveLoadMenu
 //        SaveLoadMenuView SaveLoadView =
