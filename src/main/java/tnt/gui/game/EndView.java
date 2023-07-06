@@ -21,7 +21,6 @@ public class EndView extends VBox {
         EndScreen.setRoot(this);
         EndScreen.load();
         sceneHandler.add("End", this);
-
     }
 
 

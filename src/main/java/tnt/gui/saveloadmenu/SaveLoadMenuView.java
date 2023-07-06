@@ -39,7 +39,17 @@ public class SaveLoadMenuView extends VBox{
     }
 
     private void getSaves(){
-        ArrayList<String> saves =SaveLoadMenuController.loadFiles();
+        ArrayList<String> saves=null;
+        try {
+            saves =SaveLoadMenuController.loadFiles();
+        }catch(Exception e){
+            System.out.println(e);
+            System.out.println("The saves couldn´t be loaded");
+        }
+
+
+
+
         for (String save: saves) {
              Label label= new Label();
              label.setText(save);

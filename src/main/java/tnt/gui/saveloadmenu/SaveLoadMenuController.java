@@ -32,7 +32,12 @@ public class SaveLoadMenuController {
 
     @FXML
     private void save(){
-        fileManager.saveGame(Settings.getActualGame());
+        try {
+            fileManager.saveGame(Settings.getActualGame());
+        }catch(Exception e){
+            System.out.println(e);
+            System.out.println("Could not save");
+        }
     }
 
 
