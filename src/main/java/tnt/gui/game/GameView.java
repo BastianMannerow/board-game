@@ -44,7 +44,6 @@ public class GameView extends BorderPane implements Observer {
         this.controller = gameLoader.getController();
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("gameView", this);
-
         this.getChildren().add(dragableObject);
 
         SizeHandler.getInstance().addObserver(this);
@@ -332,6 +331,7 @@ public class GameView extends BorderPane implements Observer {
 
     private void prepareEnd(){
         if(game.getGameStatus() == Game.GameStatus.GAME_OVER) {
+
             controller.goToEnd();
         }
     }
