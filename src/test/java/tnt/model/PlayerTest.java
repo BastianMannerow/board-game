@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * Unit tests for the Player class.
  */
 public class PlayerTest {
+
     private Player player;
     private ArrayList<Figure> figures;
     private ArrayList<Object> gods;
@@ -28,6 +29,7 @@ public class PlayerTest {
         ArrayList<Figure> figures = new ArrayList<>();
 
         player = new Player(levelOfIntelligence, name, color, figures);
+        player.setVictoryHeight(4);
 
         // Create a sample board with 3x3 fields
         Field[][] fields = new Field[3][3];
@@ -208,5 +210,82 @@ public class PlayerTest {
         player.initPlayer();
         ArrayList<Figure> figures = player.getFigure();
         Assertions.assertEquals(2, figures.size());
+    }
+
+    /**
+     * Tests the setVictoryHeight method of Player.
+     * It should set and return the victory height.
+     */
+    @Test
+    public void testSetVictoryHeight() {
+        // Test setting the victory height
+        player.setVictoryHeight(3);
+        int victoryHeight = player.getVictoryHeight();
+
+        // Verify that the victory height is set correctly
+        Assertions.assertEquals(3, victoryHeight);
+    }
+
+    /**
+     * Tests the setLevelOfIntelligence method of Player.
+     * It should set the LevelOfIntelligence.
+     */
+    @Test
+    public void testSetLevelOfIntelligence() {
+        // Test setting the level of intelligence
+        player.setLevelOfIntelligence(Player.PlayerType.AI_1);
+        Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
+
+        // Verify that the level of intelligence is set correctly
+        Assertions.assertEquals(Player.PlayerType.AI_1, levelOfIntelligence);
+    }
+
+    /**
+     * Tests the setTeam method of Player.
+     * It should set the Team.
+     */
+    @Test
+    public void testSetTeam() {
+        // Test setting the team
+        player.setTeam("Team 1");
+        String team = player.getTeam();
+
+        // Verify that the team is set correctly
+        Assertions.assertEquals("Team 1", team);
+    }
+
+    /**
+     * Tests the allFiguresPlaced method of Player.
+     * It should verify that all figures are placed.
+     */
+    @Test
+    public void testAllFiguresPlaced() {
+        // Test when not all figures are placed
+        player.addFigure(2);
+        boolean allFiguresPlaced = player.allFiguresPlaced();
+
+        // Verify that all figures are not placed
+        Assertions.assertFalse(allFiguresPlaced);
+
+        // Place all figures
+        player.getFigure().forEach(figure -> figure.setPlaced());
+        allFiguresPlaced = player.allFiguresPlaced();
+
+        // Verify that all figures are placed
+        Assertions.assertTrue(allFiguresPlaced);
+    }
+
+    /**
+     * Tests the setAmountOfFigures method of Player.
+     * It should set a certain amount of figures.
+     */
+    @Test
+    public void testSetAmountOfFigures() {
+        // Test setting the amount of figures
+        player.setAmountOfFigures(3);
+        int amountOfFigures = player.getAmountOfFigures();
+
+        // Verify that the amount of figures is set correctly
+        Assertions.assertEquals(3, amountOfFigures);
     }
 }
