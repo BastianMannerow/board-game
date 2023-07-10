@@ -113,4 +113,138 @@ public class GameTest {
         expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "1"));
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
     }
+
+    /**
+     * Tests the getMaxStepUpHeight method of Game.
+     * It should return the maximum height to step up.
+     */
+    @Test
+    public void testGetMaxStepUpHeight() {
+        Assertions.assertEquals(1, game.getMaxStepUpHeight());
+    }
+
+    /**
+     * Tests the getMaxStepDownHeight method of Game.
+     * It should return the maximum height to step down.
+     */
+    @Test
+    public void testGetMaxStepDownHeight() {
+        Assertions.assertEquals(3, game.getMaxStepDownHeight());
+    }
+
+    /**
+     * Tests the setMaxStepUpHeight method of Game.
+     * It should set the maximum height to step up to the specified value.
+     */
+    @Test
+    public void testSetMaxStepUpHeight() {
+        game.setMaxStepUpHeight(2);
+        Assertions.assertEquals(2, game.getMaxStepUpHeight());
+    }
+
+    /**
+     * Tests the setMaxStepDownHeight method of Game.
+     * It should set the maximum height to step down to the specified value.
+     */
+    @Test
+    public void testSetMaxStepDownHeight() {
+        game.setMaxStepDownHeight(4);
+        Assertions.assertEquals(4, game.getMaxStepDownHeight());
+    }
+
+    /**
+     * Tests the getMaxBuildingLevel method of Game.
+     * It should return the maximum building level.
+     */
+    @Test
+    public void testGetMaxBuildingLevel() {
+        Assertions.assertEquals(Settings.getMaxBuildingLevel(), game.getMaxBuildingLevel());
+    }
+
+    /**
+     * Tests the setMaxBuildingLevel method of Game.
+     * It should set the maximum building level to the specified value.
+     */
+    @Test
+    public void testSetMaxBuildingLevel() {
+        int newMaxBuildingLevel = 5;
+        game.setMaxBuildingLevel(newMaxBuildingLevel);
+        Assertions.assertEquals(newMaxBuildingLevel, game.getMaxBuildingLevel());
+    }
+
+    /**
+     * Tests the getLevelOneTile method of Game.
+     * It should return the number of level one tiles.
+     */
+    @Test
+    public void testGetLevelOneTile() {
+        Assertions.assertEquals(5, game.getLevelOneTile());
+    }
+
+    /**
+     * Tests the setLevelOneTile method of Game.
+     * It should set the number of level one tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelOneTile() {
+        game.setLevelOneTile(6);
+        Assertions.assertEquals(6, game.getLevelOneTile());
+    }
+
+    /**
+     * Tests the getLevelTwoTile method of Game.
+     * It should return the number of level two tiles.
+     */
+    @Test
+    public void testGetLevelTwoTile() {
+        Assertions.assertEquals(4, game.getLevelTwoTile());
+    }
+
+    /**
+     * Tests the setLevelTwoTile method of Game.
+     * It should set the number of level two tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelTwoTile() {
+        game.setLevelTwoTile(3);
+        Assertions.assertEquals(3, game.getLevelTwoTile());
+    }
+
+    /**
+     * Tests the getLevelThreeTile method of Game.
+     * It should return the number of level three tiles.
+     */
+    @Test
+    public void testGetLevelThreeTile() {
+        Assertions.assertEquals(3, game.getLevelThreeTile());
+    }
+
+    /**
+     * Tests the setLevelThreeTile method of Game.
+     * It should set the number of level three tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelThreeTile() {
+        game.setLevelThreeTile(2);
+        Assertions.assertEquals(2, game.getLevelThreeTile());
+    }
+
+    /**
+     * Tests the getLevelFourTile method of Game.
+     * It should return the number of level four tiles.
+     */
+    @Test
+    public void testGetLevelFourTile() {
+        Assertions.assertEquals(2, game.getLevelFourTile());
+    }
+
+    /**
+     * Tests the setLevelFourTile method of Game.
+     * It should set the number of level four tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelFourTile() {
+        game.setLevelFourTile(1);
+        Assertions.assertEquals(1, game.getLevelFourTile());
+    }
 }
