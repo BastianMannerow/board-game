@@ -6,7 +6,7 @@ import tnt.model.ExecuteGameInputs;
 
 public class ArtificialPlayer{
     /**
-     * Random decision making.
+     * Random decision-making.
      *
      * @param board the current status of the board
      * @param player the player object executing the AI turn
@@ -33,7 +33,7 @@ public class ArtificialPlayer{
     }
 
     /**
-     * Greedy decision making.
+     * Greedy decision-making.
      *
      * @param board the current status of the board
      */
@@ -41,7 +41,7 @@ public class ArtificialPlayer{
     }
 
     /**
-     * Greedy decision making with some tweeks.
+     * Greedy decision -aking with some tweaks.
      *
      * @param board the current status of the board
      */
