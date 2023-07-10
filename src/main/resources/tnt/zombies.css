@@ -1,0 +1,9 @@
+.root {
+  /*This applies styling for the root node*/
+  -fx-background-color: linear-gradient(
+    from 0% 0% to 100% 100%,
+    repeat,
+    #00ff00 0%,
+    #0000ff 100%
+  );
+}

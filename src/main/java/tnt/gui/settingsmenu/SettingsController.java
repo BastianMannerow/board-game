@@ -45,6 +45,17 @@ public class SettingsController {
     private void chooseGerman(){
         Language.getInstance().setLanguage(Locale.GERMAN);
     }
+
+    @FXML
+    private void chooseThemeBlood(){
+        sceneHandler.loadStyle("blood");
+    }
+    @FXML
+    private void chooseThemeZombies(){
+        sceneHandler.loadStyle("zombies");
+    }
+
+
     /**
      * Setter for the scene handler, so the controller can change the view
      * @param sceneHandler the scenehandler, for changing views
@@ -52,5 +63,4 @@ public class SettingsController {
     public void setSceneHandler(SceneHandler sceneHandler) {
         this.sceneHandler = sceneHandler;
     }
-
 }

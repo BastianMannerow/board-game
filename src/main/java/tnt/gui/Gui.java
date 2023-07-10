@@ -27,10 +27,7 @@ public class Gui extends Application {
         // create a scene handler, which holds all scenes, so that we can change between them
         SceneHandler sceneHandler = new SceneHandler(primaryStage);
 
-
-
         //generate the SaveLoadMenu
-//        SaveLoadMenuView SaveLoadView =
         new SaveLoadMenuView(sceneHandler);
 
         // generate the main menu
@@ -38,9 +35,8 @@ public class Gui extends Application {
 
         // adding the main menu to the scenehandler
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
+        sceneHandler.loadStyle(GUISettings.getDefaultTheme());
 
-        // creating the settingsmenu
-//        SettingsView settingsView =
         new SettingsView(sceneHandler);
 
         // sets the scene of the scenehandler to the primary stage
