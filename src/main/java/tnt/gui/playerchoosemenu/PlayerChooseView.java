@@ -84,7 +84,7 @@ public class PlayerChooseView extends VBox implements Observer {
         controller.maxStepUpHeight.setText(Language.getTranslation("maxStepUpLabel"));
         controller.maxStepDownHeight.setText(Language.getTranslation("maxStepDownLabel"));
         controller.maxBuildingHeightLabel.setText(Language.getTranslation("maxHeightOfBuildingLabel"));
-        controller.addPlayer.setText(Language.getTranslation("addPlayerLabel"));
+        controller.addPlayerBtn.setText(Language.getTranslation("addPlayerLabel"));
         controller.boardSize.setText(Language.getTranslation("boardSizeLabel"));
         controller.sphereWorldLabel.setText(Language.getTranslation("sphereWorldLabel"));
         controller.setAmountOfFiguresLabel.setText(Language.getTranslation("setNrOfFiguresLabel"));

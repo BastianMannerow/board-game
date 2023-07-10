@@ -44,7 +44,7 @@ public class PlayerChooseController{
     @FXML
     Label maxBuildingHeightLabel;
     @FXML
-    Button addPlayer;
+    Button addPlayerBtn;
     @FXML
     Label boardSize;
     @FXML

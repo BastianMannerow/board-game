@@ -45,7 +45,7 @@ public class Language extends Observable {
             entry("teamLabel", "team"),
             entry("playerTypeLabel", "player type"),
             entry("playerMenuLabel", "player menu"),
-            entry("human", "human"),
+            entry("human_label", "human"),
             entry("", "")
     );
     private static Map<String, String> german = Map.ofEntries(
@@ -79,12 +79,17 @@ public class Language extends Observable {
             entry("teamLabel", "Team"),
             entry("playerTypeLabel", "Art des Spielers"),
             entry("playerMenuLabel", "Spieler Menü"),
-            entry("human", "Mensch"),
+            entry("human_label", "Mensch"),
             entry("", "")
     );
 
     private static Language instance;
 
+    /**
+     * get the translation of the player type
+     * @param playerType the player type to be translated
+     * @return the string representation of the player type
+     */
     public static String playerType(Player.PlayerType playerType) {
         StringBuilder str = new StringBuilder();
         if (Locale.getDefault().equals(GERMAN)) {
@@ -104,12 +109,12 @@ public class Language extends Observable {
                 str.append(difficulty(3));
                 break;
             default:
-                return getTranslation("human");
+                return getTranslation("human_label");
         }
         return str.toString();
     }
 
-    public static String difficulty(int i) {
+    private static String difficulty(int i) {
         if (Locale.getDefault().equals(GERMAN)) {
             switch (i){
                 case 1:
@@ -119,7 +124,7 @@ public class Language extends Observable {
                 case 3:
                     return "Schwer";
                 default:
-                    return "Suuper Schwer";
+                    return "Super Schwer";
             }
         }
         switch (i){
@@ -170,6 +175,11 @@ public class Language extends Observable {
         notifyObservers();
     }
 
+    /**
+     * get words for the actual language of the given label
+     * @param word the label name
+     * @return the chars the label should become
+     */
     public static String getTranslation(String word){
         if (!actualLanguage.containsKey(word)){
             return "Language for that label not available";

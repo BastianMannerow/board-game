@@ -84,7 +84,7 @@
       </ScrollPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button fx:id="addPlayer" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
+            <Button fx:id="addPlayerBtn" mnemonicParsing="false" onAction="#addPlayer" text="Add Player" />
             <VBox alignment="CENTER">
                <children>
                   <HBox alignment="CENTER">

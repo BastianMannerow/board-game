@@ -286,6 +286,10 @@ public class Player extends Observable {
         notifyObservers();
     }
 
+    /**
+     * getter for the number of figures this player should have
+     * @return the number of figures
+     */
     public int getAmountOfFigures() {
         return this.amountOfFigures;
     }
