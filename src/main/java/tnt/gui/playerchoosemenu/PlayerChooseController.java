@@ -118,7 +118,9 @@ public class PlayerChooseController{
         try {
             value = Integer.parseInt(textfield.getText());
         } catch (NumberFormatException e) {
-            System.err.println("could not convert " + textfield.getId() + ": " + textfield.getText() + " Error: " + e);
+            if (!textfield.getText().equals("")) {
+                System.err.println("could not convert " + textfield.getId() + ": " + textfield.getText() + " Error: " + e);
+            }
         }
         return value;
     }

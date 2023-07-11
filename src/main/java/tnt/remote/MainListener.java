@@ -25,7 +25,7 @@ public class MainListener extends Service<Integer> {
             @Override
             protected Integer call() throws IOException {
                 try {
-                    serverSocket = new ServerSocket(port);
+                            serverSocket = new ServerSocket(port);
                     networkHandler.clear();
                 } catch (IOException e) {
                     System.out.println("could not start server");

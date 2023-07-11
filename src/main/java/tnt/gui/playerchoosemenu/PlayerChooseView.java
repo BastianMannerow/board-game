@@ -149,13 +149,15 @@ public class PlayerChooseView extends VBox implements Observer {
                 }
             });
 
-            ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
-            playerType.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
-                }
-            });
+            // Todo: Check if this is necessary, often playertype is null when action is called...
+
+//            ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
+//            playerType.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent actionEvent) {
+//                    player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
+//                }
+//            });
         }
         playerHolder.get(player).setPlayerNumber(i);
     }

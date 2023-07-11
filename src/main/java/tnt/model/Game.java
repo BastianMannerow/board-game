@@ -722,30 +722,6 @@ public class Game extends Observable {
         Collections.rotate(playerOrder, -1);
 //        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
-        switch (getPlayersTurn().getLevelOfIntelligence()){
-            case HUMAN:
-                break;
-//            case REMOTE:
-//
-//                ExecuteStuff ex = new ExecuteStuff();
-//                TestThread tt = new TestThread(ex);
-//                tt.setOnSucceeded(e -> {
-//                    Integer test = (Integer) e.getSource().getValue();
-//                    System.out.println("int " + test.toString());
-//                });
-//                tt.start();
-//                System.out.println("should have started");
-//                break;
-            case AI_1:
-                break;
-            case AI_2:
-                break;
-            case AI_3:
-                break;
-            default:
-                System.err.println("This player type does not exist: " + getPlayersTurn().getLevelOfIntelligence());
-        }
-
     }
 
     /**

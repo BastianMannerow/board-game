@@ -98,7 +98,6 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         ChoiceBox playerType = (ChoiceBox) ((VBox) this.getChildren().get(6)).getChildren().get(1);
         playerType.setItems(FXCollections.observableArrayList()); // set emtpy list());
         playerType.setItems(playerTypeList);
-        playerType.setValue(Player.PlayerType.HUMAN);
         playerType.setValue(player.getLevelOfIntelligence());
     }
 

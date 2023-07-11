@@ -276,4 +276,20 @@ public class Player extends Observable {
     public int getAmountOfFigures() {
         return this.amountOfFigures;
     }
+
+    public void prePlayersTurn(){
+        switch (levelOfIntelligence){
+            case AI_1:
+                ArtificialPlayer.easyAI(game.getBoard(), this);
+                break;
+            case AI_2:
+                ArtificialPlayer.easyAI(game.getBoard(), this);
+                break;
+            case AI_3:
+                ArtificialPlayer.easyAI(game.getBoard(), this);
+                break;
+            default:
+                break;
+        }
+    }
 }
