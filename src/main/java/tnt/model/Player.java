@@ -35,7 +35,6 @@ public class Player extends Observable {
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<Gods> gods;
     private String team;
-    private int victoryHeight;
 
     /**
      * Constructing an object Player.
@@ -58,22 +57,6 @@ public class Player extends Observable {
         this.amountOfFigures = amountOfFigures;
         this.game = game;
         this.team = team;
-    }
-
-    /**
-     * Getter for the victory height
-     * @return the height for the victory
-     */
-    public int getVictoryHeight() {
-        return victoryHeight;
-    }
-
-    /**
-     * Setter for the victory height
-     * @param victoryHeight the victory height to be set
-     */
-    public void setVictoryHeight(int victoryHeight) {
-        this.victoryHeight = victoryHeight;
     }
 
     /**
@@ -251,7 +234,7 @@ public class Player extends Observable {
         field.setFigure(figure);
 
         // Check if game is already over
-        if(field.getTowerLevel() == victoryHeight){
+        if(field.getTowerLevel() == game.getVictoryHeight()){
             game.setGameOverMode();
         }
     }

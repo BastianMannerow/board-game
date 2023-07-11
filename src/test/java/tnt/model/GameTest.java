@@ -24,7 +24,7 @@ public class GameTest {
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.RED, 2, null, "1"));
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "2"));
 
-        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3);
+        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3, 5);
     }
 
     /**
@@ -246,5 +246,19 @@ public class GameTest {
     public void testSetLevelFourTile() {
         game.setLevelFourTile(1);
         Assertions.assertEquals(1, game.getLevelFourTile());
+    }
+
+    /**
+     * Tests the setVictoryHeight method of Player.
+     * It should set and return the victory height.
+     */
+    @Test
+    public void testSetVictoryHeight() {
+        // Test setting the victory height
+        game.setVictoryHeight(3);
+        int victoryHeight = game.getVictoryHeight();
+
+        // Verify that the victory height is set correctly
+        Assertions.assertEquals(3, victoryHeight);
     }
 }
