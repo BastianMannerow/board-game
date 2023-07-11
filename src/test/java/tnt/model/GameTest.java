@@ -162,8 +162,8 @@ public class GameTest {
     }
 
     /**
-     * Tests the setMaxBuildingLevel method of Game.
-     * It should set the maximum building level to the specified value.
+     * Tests the setVictoryHeight method of Game.
+     * It should set the victoryHeight to the specified value.
      */
     @Test
     public void testSetVictoryHeight2() {
