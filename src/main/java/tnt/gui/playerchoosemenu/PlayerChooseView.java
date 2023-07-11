@@ -61,7 +61,7 @@ public class PlayerChooseView extends VBox implements Observer {
     @Override
     public void update() {
         updateGame();
-        updateTextfield(controller.maxBuildingHeight, String.valueOf(game.getMaxBuildingLevel()));
+        updateTextfield(controller.victoryHeight, String.valueOf(game.getVictoryHeight()));
         updateTextfield(controller.maxStepUp, String.valueOf(game.getMaxStepUpHeight()));
         updateTextfield(controller.maxStepDown, String.valueOf(game.getMaxStepDownHeight()));
 

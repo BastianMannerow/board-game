@@ -140,7 +140,7 @@ public class GameView extends BorderPane implements Observer {
 
     private void updateBuildings() {
         if (game.isRunnung()){
-            for (int level = 1; level <= game.getMaxBuildingLevel() ; level++) {
+            for (int level = 1; level <= game.getVictoryHeight() ; level++) {
                 updateBuilding(level);
             }
             updateBuilding(-1);

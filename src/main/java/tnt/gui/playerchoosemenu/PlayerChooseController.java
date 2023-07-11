@@ -5,9 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
-import tnt.gui.Language;
 import tnt.gui.SceneHandler;
-import tnt.gui.mainmenu.MainMenuController;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
@@ -34,7 +32,7 @@ public class PlayerChooseController{
     @FXML
     TextField maxStepDown;
     @FXML
-    TextField maxBuildingHeight;
+    TextField victoryHeight;
     @FXML
     Button mainMenu;
     @FXML
@@ -85,7 +83,7 @@ public class PlayerChooseController{
 
         int maxStepUp = updateValueOfTextfield(this.maxStepUp, game.getMaxStepUpHeight());
         int maxStepDown = updateValueOfTextfield(this.maxStepDown, game.getMaxStepDownHeight());
-        int maxBuildingHeight = updateValueOfTextfield(this.maxBuildingHeight, game.getMaxBuildingLevel());
+        int victoryHeight = updateValueOfTextfield(this.victoryHeight, game.getVictoryHeight());
 
         int sizeX = updateValueOfTextfield(this.fieldSizeX, Settings.getFieldSizeX());
         int sizeY = updateValueOfTextfield(this.fieldSizeY, Settings.getFieldSizeY());
@@ -109,7 +107,7 @@ public class PlayerChooseController{
             game.getBoard().setRoundWorld(roundWorld.isSelected());
             game.setMaxStepUpHeight(maxStepUp);
             game.setMaxStepDownHeight(maxStepDown);
-            game.setMaxBuildingLevel(maxBuildingHeight);
+            game.setVictoryHeight(victoryHeight);
             game.initGame();
             game.startPlaceFigures();
         }

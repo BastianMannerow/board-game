@@ -122,11 +122,11 @@ public class SettingsTest {
     }
 
     /**
-     * Tests the getMaxBuildingLevel() method.
+     * Tests the getVictoryHeight() method.
      */
     @Test
-    public void testGetMaxBuildingLevel() {
-        int maxBuildingLevel = Settings.getMaxBuildingLevel();
-        Assertions.assertEquals(3, maxBuildingLevel);
+    public void testGetVictoryHeight() {
+        int victoryHeight = Settings.getVictoryHeight();
+        Assertions.assertEquals(3, victoryHeight);
     }
 }

@@ -29,8 +29,6 @@ public class Game extends Observable {
 
     private int maxStepUpHeight;
     private int maxStepDownHeight;
-    private int maxBuildingLevel;
-
     private String gameName;
     private Figure lastMovedFigure;
     private GameStatus gameStatus;
@@ -56,7 +54,6 @@ public class Game extends Observable {
         createBoard(1,1);
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
-        this.maxBuildingLevel = Settings.getMaxBuildingLevel();
         this.victoryHeight = victoryHeight;
     }
 
@@ -76,8 +73,7 @@ public class Game extends Observable {
         }
         this.maxStepUpHeight = Settings.getMaxStepUp();
         this.maxStepDownHeight = Settings.getMaxStepDown();
-        this.maxBuildingLevel = Settings.getMaxBuildingLevel();
-        // this.victoryHeight = Settings.getVictoryHeight();
+        this.victoryHeight = Settings.getVictoryHeight();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
     }
 
@@ -128,23 +124,6 @@ public class Game extends Observable {
     }
 
     /**
-     * Getter for the maximum building level
-     * @return the max building level
-     */
-    public int getMaxBuildingLevel() {
-        return maxBuildingLevel;
-    }
-
-    /**
-     * Setter for the maximum building level
-     * @param maxBuildingLevel the maximum building level
-     */
-    public void setMaxBuildingLevel(int maxBuildingLevel) {
-        this.maxBuildingLevel = maxBuildingLevel;
-    }
-
-
-    /**
      * @return gameName
      */
     public String getGameName() {
@@ -189,7 +168,7 @@ public class Game extends Observable {
      * @param levelTwoTile replaces old playerOrder
      */
     public void setLevelTwoTile(int levelTwoTile) {
-        this.levelOneTile = levelTwoTile;
+        this.levelTwoTile = levelTwoTile;
     }
 
     /**

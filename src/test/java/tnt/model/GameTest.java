@@ -158,7 +158,7 @@ public class GameTest {
      */
     @Test
     public void testGetMaxBuildingLevel() {
-        Assertions.assertEquals(Settings.getMaxBuildingLevel(), game.getMaxBuildingLevel());
+        Assertions.assertEquals(Settings.getVictoryHeight(), game.getVictoryHeight());
     }
 
     /**
@@ -166,10 +166,10 @@ public class GameTest {
      * It should set the maximum building level to the specified value.
      */
     @Test
-    public void testSetMaxBuildingLevel() {
-        int newMaxBuildingLevel = 5;
-        game.setMaxBuildingLevel(newMaxBuildingLevel);
-        Assertions.assertEquals(newMaxBuildingLevel, game.getMaxBuildingLevel());
+    public void testSetVictoryHeight2() {
+        int newVictoryHeight = 5;
+        game.setVictoryHeight(newVictoryHeight);
+        Assertions.assertEquals(newVictoryHeight, game.getVictoryHeight());
     }
 
     /**
