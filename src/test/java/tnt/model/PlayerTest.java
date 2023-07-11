@@ -29,7 +29,6 @@ public class PlayerTest {
         ArrayList<Figure> figures = new ArrayList<>();
 
         player = new Player(levelOfIntelligence, name, color, figures);
-        player.setVictoryHeight(4);
 
         // Create a sample board with 3x3 fields
         Field[][] fields = new Field[3][3];
@@ -210,20 +209,6 @@ public class PlayerTest {
         player.initPlayer();
         ArrayList<Figure> figures = player.getFigure();
         Assertions.assertEquals(2, figures.size());
-    }
-
-    /**
-     * Tests the setVictoryHeight method of Player.
-     * It should set and return the victory height.
-     */
-    @Test
-    public void testSetVictoryHeight() {
-        // Test setting the victory height
-        player.setVictoryHeight(3);
-        int victoryHeight = player.getVictoryHeight();
-
-        // Verify that the victory height is set correctly
-        Assertions.assertEquals(3, victoryHeight);
     }
 
     /**

@@ -34,6 +34,7 @@ public class Game extends Observable {
     private String gameName;
     private Figure lastMovedFigure;
     private GameStatus gameStatus;
+    private int victoryHeight;
 
     /**
      * Constructing an object Game.
@@ -44,7 +45,7 @@ public class Game extends Observable {
      * @param levelThreeTile The amount of tiles
      * @param levelFourTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName, int maxStepUpHeight, int maxStepDownHeight) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
         this.levelOneTile = levelOneTile;
@@ -56,6 +57,7 @@ public class Game extends Observable {
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
         this.maxBuildingLevel = Settings.getMaxBuildingLevel();
+        this.victoryHeight = victoryHeight;
     }
 
     /**
@@ -75,8 +77,26 @@ public class Game extends Observable {
         this.maxStepUpHeight = Settings.getMaxStepUp();
         this.maxStepDownHeight = Settings.getMaxStepDown();
         this.maxBuildingLevel = Settings.getMaxBuildingLevel();
+        // this.victoryHeight = Settings.getVictoryHeight();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
     }
+
+    /**
+     * Getter for the victory height
+     * @return the height for the victory
+     */
+    public int getVictoryHeight() {
+        return victoryHeight;
+    }
+
+    /**
+     * Setter for the victory height
+     * @param victoryHeight the victory height to be set
+     */
+    public void setVictoryHeight(int victoryHeight) {
+        this.victoryHeight = victoryHeight;
+    }
+
     /**
      * @return Maximum height to step up
      */
