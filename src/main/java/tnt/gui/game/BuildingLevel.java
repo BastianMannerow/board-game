@@ -18,7 +18,7 @@ import java.io.IOException;
 public class BuildingLevel extends DragableObject implements Observer {
 
     private int level;
-    private static final int MAX_BUILD_IN_LEVEL = 3;
+    private static final int MAX_BUILD_IN_LEVEL = 5;
 
     /**
      * Constructor for the building level
@@ -41,11 +41,17 @@ public class BuildingLevel extends DragableObject implements Observer {
             case 3:
                 imageView.setImage(ResourceHandler.getInstance().getImage("Turm_3"));
                 break;
+            case 4:
+                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_4"));
+                break;
+            case 5:
+                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_5"));
+                break;
             default:
                 if (level < 1) {
                     throw new IOException("Building got wrong level: " + level);
                 }
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_3"));
+                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_5"));
         }
         this.level = level;
         imageView.setPreserveRatio(true);

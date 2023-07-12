@@ -280,13 +280,13 @@ public class Player extends Observable {
     public void prePlayersTurn(){
         switch (levelOfIntelligence){
             case AI_1:
-                ArtificialPlayer.easyAI(game.getBoard(), this);
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             case AI_2:
-                ArtificialPlayer.easyAI(game.getBoard(), this);
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             case AI_3:
-                ArtificialPlayer.easyAI(game.getBoard(), this);
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             default:
                 break;
