@@ -3,6 +3,7 @@ package tnt.gui.playerchoosemenu;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
@@ -15,6 +16,8 @@ import tnt.model.Settings;
  */
 public class PlayerChooseController{
 
+    @FXML
+    HBox tileBox;
     @FXML
     CheckBox roundWorld;
     @FXML

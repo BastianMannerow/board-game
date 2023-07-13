@@ -64,6 +64,7 @@ public class PlayerChooseView extends VBox implements Observer {
         updateTextfield(controller.victoryHeight, String.valueOf(game.getVictoryHeight()));
         updateTextfield(controller.maxStepUp, String.valueOf(game.getMaxStepUpHeight()));
         updateTextfield(controller.maxStepDown, String.valueOf(game.getMaxStepDownHeight()));
+        updateTileResources();
 
         ArrayList<Player> players = game.getPlayerOrder();
         int i = 0;
@@ -77,6 +78,19 @@ public class PlayerChooseView extends VBox implements Observer {
             updatePlayer(player, i);
         }
         updateLabels();
+    }
+
+    private void updateTileResources() {
+        controller.tileBox.getChildren().clear();
+        for (int i = 0; i < game.getVictoryHeight(); i++){
+            VBox tilePane = new VBox();
+            Label tileLabel = new Label();
+            TextField textField = new TextField();
+            tileLabel.setText("Blabla"); // Todo
+            textField.setText(Integer.toString(game.getLevelOneTile()));
+            tilePane.getChildren().addAll(tileLabel, textField);
+            controller.tileBox.getChildren().add(tilePane);
+        }
     }
 
     private void updateLabels() {

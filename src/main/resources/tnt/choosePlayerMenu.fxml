@@ -77,6 +77,11 @@
             <Insets />
          </opaqueInsets>
       </HBox>
+      <HBox fx:id="tileBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </HBox>
       <ScrollPane fx:id="playerPane" prefHeight="401.0" prefWidth="762.0">
          <content>
             <VBox fx:id="playerPaneSingle" prefHeight="200.0" prefWidth="100.0" />
