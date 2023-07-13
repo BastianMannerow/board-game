@@ -82,12 +82,20 @@ public class PlayerChooseView extends VBox implements Observer {
 
     private void updateTileResources() {
         controller.tileBox.getChildren().clear();
-        for (int i = 0; i < game.getVictoryHeight(); i++){
+        controller.tileBox.getChildren().add(controller.sepBox);
+        controller.tilesSepLabel.setText(Language.getTranslation("seperateLabel"));
+        for (int i = 0; i <= game.getVictoryHeight(); i++){
             VBox tilePane = new VBox();
             Label tileLabel = new Label();
             TextField textField = new TextField();
-            tileLabel.setText("Blabla"); // Todo
+            if (i==0) {
+                tileLabel.setText(Language.getTranslation("domeLabel")); // Todo
+            } else {
+                tileLabel.setText(Language.getTranslation("buildingLevelLabel") + " " + i); // Todo
+            }
             textField.setText(Integer.toString(game.getLevelOneTile()));
+            textField.setPrefWidth(USE_COMPUTED_SIZE);
+            textField.setPrefHeight(USE_COMPUTED_SIZE);
             tilePane.getChildren().addAll(tileLabel, textField);
             controller.tileBox.getChildren().add(tilePane);
         }

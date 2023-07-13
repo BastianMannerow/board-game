@@ -19,6 +19,12 @@ public class PlayerChooseController{
     @FXML
     HBox tileBox;
     @FXML
+    VBox sepBox;
+    @FXML
+    Label tilesSepLabel;
+    @FXML
+    CheckBox tilesSepBox;
+    @FXML
     CheckBox roundWorld;
     @FXML
     VBox playerPaneSingle;

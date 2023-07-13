@@ -81,6 +81,17 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
+         <children>
+            <VBox fx:id="sepBox" alignment="TOP_CENTER">
+               <children>
+                  <Label fx:id="tilesSepLabel" text="seperate tile-pool for each player" />
+                  <CheckBox fx:id="tilesSepBox" contentDisplay="TOP" mnemonicParsing="false" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
       </HBox>
       <ScrollPane fx:id="playerPane" prefHeight="401.0" prefWidth="762.0">
          <content>
