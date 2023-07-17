@@ -12,6 +12,8 @@ public class SaveLoadMenuController {
     private SceneHandler sceneHandler;
     private FileManager fileManager= new FileManager();
 
+
+
     @FXML
     private void goToMenu() {
         sceneHandler.loadView("mainMenu");

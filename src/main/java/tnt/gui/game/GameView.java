@@ -333,6 +333,7 @@ public class GameView extends BorderPane implements Observer {
 
     private void prepareEnd(){
         if(game.getGameStatus() == Game.GameStatus.GAME_OVER) {
+            endView.setController(controller);
             endView.initialize();
             controller.goToEnd();
         }

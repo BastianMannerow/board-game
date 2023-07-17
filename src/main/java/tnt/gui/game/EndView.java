@@ -1,10 +1,13 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
 import tnt.gui.SceneHandler;
+import tnt.model.FileManager;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
@@ -12,12 +15,14 @@ import tnt.util.Observer;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EndView extends VBox {
 
     private GameController controller;
     private Game game;
     private Boolean notInitialized = true;
+    private FileManager fileManager= new FileManager();
 
     /**
      * Constructor for the view
@@ -34,9 +39,17 @@ public class EndView extends VBox {
     }
 
     public void initialize(){
+        this.setAlignment(Pos.CENTER);
         if(notInitialized) {
-            String print = new String("Highscore: " + game.getAmountOfTurns() +
-                    " Turns: " + game.getAmountOfTurns() + " Winner: ");
+            ArrayList<String> highscores=new ArrayList<>();//= fileManager.loadHighscore();//TODO implement loadHighscore
+            for (String score: highscores) {
+                Label label = new Label();
+                label.setText(score);
+                this.getChildren().add(label);
+            }
+            int NumberinHighscores=1;//TODO when loadHighscore is done determine which number is the newly finished game
+            String print = new String(NumberinHighscores + ":    Highscore: " + game.getAmountOfTurns() +
+                    "     Turns: " + game.getAmountOfTurns() + "     Winner: ");
             String losers = game.getPlayersTurn().getTeam();
             for (Player player : game.getPlayerOrder()) {
                 if (player.getTeam() != losers) {
@@ -47,9 +60,18 @@ public class EndView extends VBox {
             Label label = new Label();
             label.setText(print);
 
+
             this.getChildren().add(label);
             notInitialized=false;
+            Button button = new Button("Menu");
+            button.setOnMouseClicked(event -> controller.goToMenu());
+            this.getChildren().add(button);
         }
+
+        // fileManager.saveHighscore(game,game.getPlayerOrder());TODO need fix error Nullpointer exception
     }
 
+    public void setController(GameController controller){
+        this.controller=controller;
+    }
 }

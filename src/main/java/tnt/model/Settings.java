@@ -24,6 +24,8 @@ public class Settings {
 
     static Game actualGame;
 
+    private static int highscoreAmount = 5;
+
     /**
      * getter for the default number of player
      * @return the default number of player
@@ -116,5 +118,13 @@ public class Settings {
 
     public static int getMaxBuildingLevel() {
         return maxBuildingLevel;
+    }
+
+    /**
+     * returns the number which signifys how many highscores will be shown
+     * @return highscoreAmount
+     */
+    public static int getHighscoreAmount() {
+        return highscoreAmount;
     }
 }
