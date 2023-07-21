@@ -2,7 +2,6 @@ package tnt.model;
 import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
-
 import tnt.model.interfaces.Gods;
 import tnt.model.gods.building.*;
 import tnt.model.gods.inventory.Chaos;
@@ -197,9 +196,8 @@ public class Player extends Observable {
      * Increases the height of a field
      *
      * @param field the field chosen by the player
-     * @param board
      */
-    public void executeBuild(Field field, Board board){
+    public void executeBuild(Field field){
         int newLevel = field.getTowerLevel()+1;
         field.setTowerLevel(newLevel);
         if(newLevel == 4){

@@ -1,8 +1,6 @@
 package tnt.model;
-
 import java.util.Random;
 import java.util.ArrayList;
-import tnt.model.ExecuteGameInputs;
 
 public class ArtificialPlayer{
     /**
@@ -21,7 +19,7 @@ public class ArtificialPlayer{
             possibleMoves.addAll(randomMoveFigure.getValidMoves(board));
             int randomMoveFieldNumber = new Random().nextInt(possibleMoves.size());
             Field randomMove = possibleMoves.get(randomMoveFieldNumber);
-            ExecuteGameInputs.placeFigure(randomMoveFigure, randomMove);
+            player.executeMove(randomMove, board, randomMoveFigure);
         }
 
         // execute random building
@@ -32,7 +30,17 @@ public class ArtificialPlayer{
             possibleBuilds.addAll(randomBuildFigure.getValidBuilds(board));
             int randomBuildFieldNumber = new Random().nextInt(possibleBuilds.size());
             Field randomBuild = possibleBuilds.get(randomBuildFieldNumber);
-            ExecuteGameInputs.placeFigure(randomBuildFigure, randomBuild);
+            player.executeBuild(randomBuild);
+        }
+
+        // initial figure placement
+        if(game.placeFigures()){
+            int x=1;
+            int y=1;
+            for(Figure figure:figureList){
+                Field targetField = board.getField(x,y);
+                player.executeMove(targetField, board, figure);
+            }
         }
     }
 
@@ -42,6 +50,7 @@ public class ArtificialPlayer{
      * @param board the current status of the board
      */
     public void mediumAI(Board board){
+        int x = 1;
     }
 
     /**
@@ -50,5 +59,6 @@ public class ArtificialPlayer{
      * @param board the current status of the board
      */
     public void hardAI(Board board){
+        int x = 1;
     }
 }
