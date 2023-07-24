@@ -19,7 +19,7 @@ public class ArtificialPlayer{
             possibleMoves.addAll(randomMoveFigure.getValidMoves(board));
             int randomMoveFieldNumber = new Random().nextInt(possibleMoves.size());
             Field randomMove = possibleMoves.get(randomMoveFieldNumber);
-            player.executeMove(randomMove, board, randomMoveFigure);
+            ExecuteGameInputs.placeFigure(randomMoveFigure, randomMove);
         }
 
         // execute random building
@@ -30,16 +30,28 @@ public class ArtificialPlayer{
             possibleBuilds.addAll(randomBuildFigure.getValidBuilds(board));
             int randomBuildFieldNumber = new Random().nextInt(possibleBuilds.size());
             Field randomBuild = possibleBuilds.get(randomBuildFieldNumber);
-            player.executeBuild(randomBuild);
+            ExecuteGameInputs.buildObject(randomBuild.getTowerLevel()+1, randomBuild);
         }
 
         // initial figure placement
         if(game.placeFigures()){
-            int x=1;
-            int y=1;
+            int x = board.getXSize();
+            int y = board.getYSize();
+            ArrayList<Field> possibleFields = new ArrayList<>();;
+
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
+                    if(!board.getField(i,j).getIsFigureHere()){
+                        possibleFields.add(board.getField(i,j));
+                    }
+                }
+            }
+
             for(Figure figure:figureList){
-                Field targetField = board.getField(x,y);
-                player.executeMove(targetField, board, figure);
+                int randomFigureMoveNumber = new Random().nextInt(possibleFields.size());
+                Field targetField = possibleFields.get(randomFigureMoveNumber);
+                ExecuteGameInputs.placeFigure(figure, targetField);
+                possibleFields.remove(randomFigureMoveNumber);
             }
         }
     }
