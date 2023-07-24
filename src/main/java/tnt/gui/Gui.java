@@ -42,9 +42,6 @@ public class Gui extends Application {
         // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
 
-
-
-
         SizeListener width = new SizeListener(false);
         primaryStage.widthProperty().addListener(width);
         SizeListener height = new SizeListener(true);

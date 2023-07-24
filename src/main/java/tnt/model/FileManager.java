@@ -104,7 +104,8 @@ public class FileManager {
      * @return all saved games.
      */
     public ArrayList<String> getSavedGames(){
-        File folder = new File("user.dir\\savings");
+        String directory = getDirectory();
+        File folder = new File(directory + "\\savings");
 
         ArrayList<String> savedGames = new ArrayList<>();
 
@@ -115,6 +116,9 @@ public class FileManager {
                     savedGames.add(subfolder.getName());
                 }
             }
+        }
+        if (savedGames.isEmpty()){
+            savedGames.add(0, "-");
         }
         return savedGames;
     }
@@ -151,9 +155,12 @@ public class FileManager {
      * Saves the game
      *
      * @param game
+     * @return Boolean, if the saving was successful
      */
     public void saveGame(Game game){
+        String directory = getDirectory();
         String saveGameName = game.getGameName();
+
         // If new game, create new saving folder
         if(saveGameName.equals("newGame")){
             String lastGame = getSavedGames().get(getSavedGames().size()-1);
@@ -287,5 +294,10 @@ public class FileManager {
         data.add(new String[]{playerTwoName, String.valueOf(playerTwoIntelligence)});
         data.add(new String[]{amountOfTurns, ""});
         saveCSV(filepath, data);
+    }
+
+    public String getDirectory(){
+        String directory = System.getProperty("user.dir");
+        return directory;
     }
 }
