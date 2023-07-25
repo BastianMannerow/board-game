@@ -104,12 +104,12 @@ public class SceneHandler{
         return stage;
     }
 
-    /**
-     * loads a specific style to the actual scene
-     * @param key the name of the style to be set
-     */
-    public void loadStyle(String key){
-        scene.getStylesheets().clear();
-        scene.getStylesheets().add(ResourceHandler.getInstance().getStyle(key));
-    }
+//    /**
+//     * loads a specific style to the actual scene
+//     * @param key the name of the style to be set
+//     */
+//    public void loadStyle(String key){
+//        scene.getStylesheets().clear();
+//        scene.getStylesheets().add(ResourceHandler.getInstance().getStyle(key));
+//    }
 }
