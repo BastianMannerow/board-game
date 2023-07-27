@@ -71,7 +71,7 @@ public class ArtificialPlayer{
         if(game.isMoveMode()) {
             Figure bestFigure = new Figure();
             Field bestMove = new Field();
-            int bestProgression = new int;
+            int bestProgression = 100;
 
             for (Figure figure:figureList) {
                 ArrayList<Field> possibleMoves = figure.getValidMoves(board);
@@ -81,18 +81,36 @@ public class ArtificialPlayer{
                     if (moveToWin()) {
                         bestFigure = figure;
                         bestMove = field;
+                        bestProgression = 0;
                         break;
                     }
                     int ownProgression = game.getVictoryHeight()-field.getTowerLevel();
                     if (ownProgression < bestProgression){
                         bestFigure = figure;
                         bestMove = field;
+                        bestProgression = ownProgression;
+                    }
+
+                    // Randomise if the moves are equally good
+                    else if (bestProgression == ownProgression){
+                        Random random = new Random();
+                        int randomInt = random.nextInt(2);
+                        if (randomInt == 0){
+                            bestMove = field;
+                            bestFigure = figure;
+                        }
+
+                        else{
+                            bestMove = field;
+                            bestFigure = figure;
+                        }
                     }
                 }
             }
             ExecuteGameInputs.placeFigure(bestFigure, bestMove);
         }
 
+        /*
         // execute building
         if(game.isBuildMode()) {
             ExecuteGameInputs.buildObject(randomBuild.getTowerLevel()+1, randomBuild);
@@ -101,6 +119,7 @@ public class ArtificialPlayer{
         if(game.placeFigures()){
             ExecuteGameInputs.placeFigure(figure, targetField);
         }
+        */
     }
 
     /**
@@ -115,11 +134,11 @@ public class ArtificialPlayer{
 
         // execute movement
         if(game.isMoveMode()) {
-            Figure bestFigure;
-            Field bestMove;
-            int bestScore;
-            int bestTeamProgression;
-            int bestSabotageEnemy;
+            Figure bestFigure = new Figure();
+            Field bestMove = new Field();
+            int bestScore = 100;
+            int bestTeamProgression = 100;
+            int bestSabotageEnemy = 100;
 
             for (Figure figure:figureList){
                 ArrayList<Field> possibleMoves = figure.getValidMoves(board);
@@ -127,8 +146,8 @@ public class ArtificialPlayer{
                 for (Field field:possibleMoves){
                     // If an instant win is possible, it will be executed
                     if (moveToWin()){
-                        bestFigure = figure;
-                        bestMove = field;
+                        bestFigure = new Figure();
+                        bestMove = new Field();
                         bestScore = 0;
                         break;
                     }
@@ -180,6 +199,8 @@ public class ArtificialPlayer{
             }
             ExecuteGameInputs.placeFigure(bestFigure, bestMove);
         }
+
+        /*
         // execute building
         if(game.isBuildMode()) {
             ExecuteGameInputs.buildObject(randomBuild.getTowerLevel()+1, randomBuild);
@@ -188,22 +209,23 @@ public class ArtificialPlayer{
         if(game.placeFigures()){
             ExecuteGameInputs.placeFigure(figure, targetField);
         }
+        */
     }
 
     public int teamProgressionHeuristic(){
-        return int;
+        return 1;
     }
 
     public int ownProgressionHeuristic(){
-        return int;
+        return 1;
     }
 
     public int sabotageEnemyHeuristic(){
-        return int;
+        return 1;
     }
 
     public boolean moveToWin(){
 
-        return;
+        return true;
     }
 }
