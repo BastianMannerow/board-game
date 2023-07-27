@@ -19,19 +19,29 @@ public class FileManager {
      * @param filepath The filepath you want to load
      * @return the csv as rows and columns
      */
-    public List<List<String>> loadCSV(String filepath) {
+    public List<Object> loadCSV(String filepath) {
         List<List<String>> data = new ArrayList<>();
+        List<String> header = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
             String line;
+            int lineNumber = 0;
             while ((line = reader.readLine()) != null) {
                 String[] row = line.split(";");
-                data.add(Arrays.asList(row));
+                if(lineNumber == 0) {
+                    header = Arrays.asList(row);
+                } else {
+                    data.add(Arrays.asList(row));
+                }
+                lineNumber++;
             }
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        return data;
+        List<Object> csv = new ArrayList<>();
+        csv.add(header);
+        csv.add(data);
+        return csv;
     }
 
     public List<String[]> readString(String str) {
@@ -140,9 +150,10 @@ public class FileManager {
      */
     public void loadGame(String savedGame, Game game){
         String filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + savedGame;
-
         // Load Game
-        List<List<String>> gameData = loadCSV(filepath + File.separator + "game.csv");
+        List<Object> csv = loadCSV(filepath + File.separator + "game.csv");
+        List<String> header = (List<String>) csv.get(0);
+        List<List<String>> gameData = (List<List<String>>) csv.get(1);
         // gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
         // game.setPlayerOrder(gameData.get(0)[1]); // Muss noch anders gesaved werden!
         game.setAmountOfTurns(Integer.parseInt(gameData.get(0).get(2)));
@@ -152,13 +163,17 @@ public class FileManager {
         game.setLevelFourTile(Integer.parseInt(gameData.get(0).get(6)));
 
         // Load Player
-        List<List<String>> playerData = loadCSV(filepath + File.separator + "player.csv");
-
+        csv = loadCSV(filepath + File.separator + "player.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> playerData = (List<List<String>>) csv.get(1);
         // Load Figure
-        List<List<String>> figureData = loadCSV(filepath + File.separator + "figure.csv");
-
+        csv = loadCSV(filepath + File.separator + "figure.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> figureData = (List<List<String>>) csv.get(1);
         // Load Fields
-        List<List<String>> fieldsData = loadCSV(filepath + File.separator + "fields.csv");
+        csv = loadCSV(filepath + File.separator + "fields.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> fieldsData = (List<List<String>>) csv.get(1);
     }
 
     /**
@@ -284,27 +299,55 @@ public class FileManager {
      * @return the old highscore
      */
     public ArrayList<String> loadHighscore() {
-        List<List<String>> data = loadCSV((System.getProperty("user.dir") + File.separator + "savings\\highscore.csv"));
-        String playerOneName = "";
-        String playerOneIntelligence = "";
-        String playerTwoName = "";
-        String playerTwoIntelligence = "";
-        String amountOfTurns = "";
+        List<Object> csv = loadCSV((System.getProperty("user.dir") + File.separator + "savings\\highscore.csv"));
+        List<String> header = (List<String>) csv.get(0);
+        List<List<String>> data = (List<List<String>>) csv.get(1);
+        String topOneplayerNames = "";
+        String topTwoplayerNames = "";
+        String topThreeplayerNames = "";
+        String topOneLevelOfIntelligence = "";
+        String topTwoLevelOfIntelligence = "";
+        String topThreeLevelOfIntelligence = "";
+        String topOneAmountOfTurns = "";
+        String topTwoAmountOfTurns = "";
+        String topThreeAmountOfTurns = "";
+        String topOneTeamName = "";
+        String topTwoTeamName = "";
+        String topThreeTeamName = "";
 
         if(!data.isEmpty()) {
-            playerOneName = data.get(0).get(0);
-            playerOneIntelligence = data.get(0).get(1);
-            playerTwoName = data.get(1).get(0);
-            playerTwoIntelligence = data.get(1).get(1);
-            amountOfTurns = data.get(2).get(0);
+            int name = header.indexOf("Name");
+            int levelOfIntelligence = header.indexOf("LevelOfIntelligence");
+            int gameAmountOfTurns = header.indexOf("AmountOfTurns");
+            int nameOfTeam = header.indexOf("Team Name");
+
+            topOneplayerNames = data.get(0).get(name);
+            topTwoplayerNames = data.get(1).get(name);
+            topThreeplayerNames = data.get(2).get(name);
+            topOneLevelOfIntelligence = data.get(0).get(levelOfIntelligence);
+            topTwoLevelOfIntelligence = data.get(1).get(levelOfIntelligence);
+            topThreeLevelOfIntelligence = data.get(2).get(levelOfIntelligence);
+            topOneAmountOfTurns = data.get(0).get(gameAmountOfTurns);
+            topTwoAmountOfTurns = data.get(1).get(gameAmountOfTurns);
+            topThreeAmountOfTurns = data.get(2).get(gameAmountOfTurns);
+            topOneTeamName = data.get(0).get(nameOfTeam);
+            topTwoTeamName = data.get(1).get(nameOfTeam);
+            topThreeTeamName = data.get(2).get(nameOfTeam);
         }
 
         ArrayList<String> extractedData = new ArrayList<>();
-        extractedData.add(playerOneName);
-        extractedData.add(playerOneIntelligence);
-        extractedData.add(playerTwoName);
-        extractedData.add(playerTwoIntelligence);
-        extractedData.add(amountOfTurns);
+        extractedData.add(topOneplayerNames);
+        extractedData.add(topOneLevelOfIntelligence);
+        extractedData.add(topOneAmountOfTurns);
+        extractedData.add(topOneTeamName);
+        extractedData.add(topTwoplayerNames);
+        extractedData.add(topTwoLevelOfIntelligence);
+        extractedData.add(topTwoAmountOfTurns);
+        extractedData.add(topTwoTeamName);
+        extractedData.add(topThreeplayerNames);
+        extractedData.add(topThreeLevelOfIntelligence);
+        extractedData.add(topThreeAmountOfTurns);
+        extractedData.add(topThreeTeamName);
         System.out.println(extractedData);
         return extractedData;
     }
@@ -313,11 +356,11 @@ public class FileManager {
      * Saves the new highscore.
      *
      * @param game The game object
-     * @param playerList The player who won as list (even if it's just one)
      */
-    public void saveHighscore(Game game, ArrayList<Player> playerList){
+    public void saveHighscore(Game game){
         String filepath = (System.getProperty("user.dir") + File.separator + "savings\\highscore.csv");
         List<String[]> data = new ArrayList<>();
+        ArrayList<Player> playerList = game.getPlayerOrder();
 
         // Getting the data
         String playerOneName = playerList.get(0).getName();
@@ -339,7 +382,9 @@ public class FileManager {
      * @param game The game object
      */
     public void checkHighscore(Game game){
-        int i = 0;
+        ArrayList<String> oldHighscore = loadHighscore();
+        if (Integer.parseInt(oldHighscore.get(4)) < game.getAmountOfTurns()){
+            saveHighscore(game);
+        }
     }
-
 }
