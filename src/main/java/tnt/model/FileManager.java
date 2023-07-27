@@ -7,6 +7,7 @@ import java.util.List;
 import java.io.FileWriter;
 import java.io.File;
 import java.nio.file.*;
+import java.util.Arrays;
 
 /**
  * The FileManager is responsible for permanent savings as csv-files.
@@ -18,13 +19,13 @@ public class FileManager {
      * @param filepath The filepath you want to load
      * @return the csv as rows and columns
      */
-    public List<String[]> loadCSV(String filepath) {
-        List<String[]> data = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filepath))) {
+    public List<List<String>> loadCSV(String filepath) {
+        List<List<String>> data = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
             String line;
-            while ((line = br.readLine()) != null) {
-                String[] row = line.split(",");
-                data.add(row);
+            while ((line = reader.readLine()) != null) {
+                String[] row = line.split(";");
+                data.add(Arrays.asList(row));
             }
         }
         catch (IOException e) {
@@ -37,7 +38,7 @@ public class FileManager {
         List<String[]> data = new ArrayList<>();
         String[] rows = str.split("\n");
         for(String line : rows){
-            String[] row = line.split(",");
+            String[] row = line.split(";");
             data.add(row);
         }
         return data;
@@ -61,7 +62,7 @@ public class FileManager {
                     for (int i = 0; i < row.length; i++) {
                         csvLine.append(row[i]);
                         if (i < row.length - 1) {
-                            csvLine.append(",");
+                            csvLine.append(";");
                         }
                     }
                     csvLine.append(System.lineSeparator());
@@ -113,7 +114,7 @@ public class FileManager {
      * @return all saved games.
      */
     public ArrayList<String> getSavedGames(){
-        String directory = getDirectory();
+        String directory = System.getProperty("user.dir");
         File folder = new File(directory + "\\savings");
 
         ArrayList<String> savedGames = new ArrayList<>();
@@ -141,23 +142,23 @@ public class FileManager {
         String filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + savedGame;
 
         // Load Game
-        List<String[]> gameData = loadCSV(filepath + File.separator + "game.csv");
+        List<List<String>> gameData = loadCSV(filepath + File.separator + "game.csv");
         // gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
         // game.setPlayerOrder(gameData.get(0)[1]); // Muss noch anders gesaved werden!
-        game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
-        game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
-        game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));
-        game.setLevelThreeTile(Integer.parseInt(gameData.get(0)[5]));
-        game.setLevelFourTile(Integer.parseInt(gameData.get(0)[6]));
+        game.setAmountOfTurns(Integer.parseInt(gameData.get(0).get(2)));
+        game.setLevelOneTile(Integer.parseInt(gameData.get(0).get(3)));
+        game.setLevelTwoTile(Integer.parseInt(gameData.get(0).get(4)));
+        game.setLevelThreeTile(Integer.parseInt(gameData.get(0).get(5)));
+        game.setLevelFourTile(Integer.parseInt(gameData.get(0).get(6)));
 
         // Load Player
-        List<String[]> playerData = loadCSV(filepath + File.separator + "player.csv");
+        List<List<String>> playerData = loadCSV(filepath + File.separator + "player.csv");
 
         // Load Figure
-        List<String[]> figureData = loadCSV(filepath + File.separator + "figure.csv");
+        List<List<String>> figureData = loadCSV(filepath + File.separator + "figure.csv");
 
         // Load Fields
-        List<String[]> fieldsData = loadCSV(filepath + File.separator + "fields.csv");
+        List<List<String>> fieldsData = loadCSV(filepath + File.separator + "fields.csv");
     }
 
     /**
@@ -167,7 +168,8 @@ public class FileManager {
      * @return Boolean, if the saving was successful
      */
     public void saveGame(Game game){
-        String directory = getDirectory();
+        loadHighscore();
+
         String saveGameName = game.getGameName();
         // If new game, create new saving folder
         if(saveGameName.equals("newGame")){
@@ -281,13 +283,30 @@ public class FileManager {
     /**
      * @return the old highscore
      */
-    public void loadHighscore() {
-        List<String[]> data = loadCSV(System.getProperty("user.dir\\savings\\highscore.csv"));
-        String playerOneName = data.get(0)[0];
-        String playerOneIntelligence = data.get(0)[1];
-        String playerTwoName = data.get(1)[0];
-        String playerTwoIntelligence = data.get(1)[1];
-        String amountOfTurns = data.get(1)[0];
+    public ArrayList<String> loadHighscore() {
+        List<List<String>> data = loadCSV((System.getProperty("user.dir") + File.separator + "savings\\highscore.csv"));
+        String playerOneName = "";
+        String playerOneIntelligence = "";
+        String playerTwoName = "";
+        String playerTwoIntelligence = "";
+        String amountOfTurns = "";
+
+        if(!data.isEmpty()) {
+            playerOneName = data.get(0).get(0);
+            playerOneIntelligence = data.get(0).get(1);
+            playerTwoName = data.get(1).get(0);
+            playerTwoIntelligence = data.get(1).get(1);
+            amountOfTurns = data.get(2).get(0);
+        }
+
+        ArrayList<String> extractedData = new ArrayList<>();
+        extractedData.add(playerOneName);
+        extractedData.add(playerOneIntelligence);
+        extractedData.add(playerTwoName);
+        extractedData.add(playerTwoIntelligence);
+        extractedData.add(amountOfTurns);
+        System.out.println(extractedData);
+        return extractedData;
     }
 
     /**
@@ -297,7 +316,7 @@ public class FileManager {
      * @param playerList The player who won as list (even if it's just one)
      */
     public void saveHighscore(Game game, ArrayList<Player> playerList){
-        String filepath = System.getProperty("user.dir\\savings\\highscore.csv");
+        String filepath = (System.getProperty("user.dir") + File.separator + "savings\\highscore.csv");
         List<String[]> data = new ArrayList<>();
 
         // Getting the data
@@ -314,8 +333,13 @@ public class FileManager {
         saveCSV(filepath, data);
     }
 
-    public String getDirectory(){
-        String directory = System.getProperty("user.dir");
-        return directory;
+    /**
+     * Ckecks if the highscore is beaten and saves the new one
+     *
+     * @param game The game object
+     */
+    public void checkHighscore(Game game){
+        int i = 0;
     }
+
 }
