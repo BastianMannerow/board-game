@@ -5,7 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import tnt.ResourceHandler;
+import tnt.gui.GUISettings;
 import tnt.gui.SizeHandler;
+import tnt.model.Settings;
 import tnt.util.Observer;
 
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.io.IOException;
 public class BuildingLevel extends DragableObject implements Observer {
 
     private int level;
+    private ImageView imageView;
     private static final int MAX_BUILD_IN_LEVEL = 5;
 
     /**
@@ -27,7 +30,8 @@ public class BuildingLevel extends DragableObject implements Observer {
      */
     public BuildingLevel(int level) throws IOException {
 //        FXMLLoader loader;
-        ImageView imageView = new ImageView();
+        GUISettings.getInstance().addObserver(this);
+        imageView = new ImageView();
         switch (level){
             case -1:
                 imageView.setImage(ResourceHandler.getInstance().getImage("Turm_Kuppel"));
@@ -82,6 +86,26 @@ public class BuildingLevel extends DragableObject implements Observer {
 
     @Override
     public void update() {
+        String prefix = GUISettings.getTheme();
+        switch (level){
+            case -1:
+                imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_Kuppel"));
+                break;
+            case 1:
+                imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_1"));
+                break;
+            case 2:
+                imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_2"));
+                break;
+            case 3:
+                imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_3"));
+                break;
+            case 4:
+                imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_4"));
+                break;
+            default:
+                imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_5"));
+        }
         ((ImageView) this.getChildren().get(0)).setFitHeight(SizeHandler.getPrefSize());
         if(level > MAX_BUILD_IN_LEVEL){
             Label height = (Label) this.getChildren().get(1);

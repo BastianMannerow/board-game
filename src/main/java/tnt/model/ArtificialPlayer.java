@@ -47,10 +47,13 @@ public class ArtificialPlayer{
             }
 
             for(Figure figure:figureList){
-                int randomFigureMoveNumber = new Random().nextInt(possibleFields.size());
-                Field targetField = possibleFields.get(randomFigureMoveNumber);
-                ExecuteGameInputs.placeFigure(figure, targetField);
-                possibleFields.remove(randomFigureMoveNumber);
+                if (!figure.isPlaced()) {
+                    int randomFigureMoveNumber = new Random().nextInt(possibleFields.size());
+                    Field targetField = possibleFields.get(randomFigureMoveNumber);
+                    ExecuteGameInputs.placeFigure(figure, targetField);
+                    possibleFields.remove(randomFigureMoveNumber);
+                    break;
+                }
             }
         }
     }

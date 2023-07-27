@@ -35,7 +35,7 @@ public class ResourceHandler {
     private void loadImage(String name, String... extensions) {
         URL url = null;
         for (String ext : extensions) {
-            url = ResourceHandler.class.getResource(name + "." + ext);
+            url = ResourceHandler.class.getResource("images/" + name + "." + ext);
             if (url != null) {
                 break;
             }
@@ -58,22 +58,22 @@ public class ResourceHandler {
         return imgs.get(key);
     }
 
-    /**
-     * getter for a style
-     * @param key the filename of the style file
-     * @return the style content
-     */
-    public String getStyle(String key) {
-        if (csss.get(key) == null) {
-            loadStyle(key);
-        }
-        return csss.get(key);
-    }
-
-    private void loadStyle(String name) {
-        String css = ResourceHandler.class.getResource(name + ".css").toExternalForm();
-        csss.put(name, css);
-    }
+//    /**
+//     * getter for a style
+//     * @param key the filename of the style file
+//     * @return the style content
+//     */
+//    public String getStyle(String key) {
+//        if (csss.get(key) == null) {
+//            loadStyle(key);
+//        }
+//        return csss.get(key);
+//    }
+//
+//    private void loadStyle(String name) {
+//        String css = ResourceHandler.class.getResource(name + ".css").toExternalForm();
+//        csss.put(name, css);
+//    }
 
     /**
      * getter for a fxml file
@@ -88,7 +88,7 @@ public class ResourceHandler {
     }
 
     private void loadFXML(String name) {
-        FXMLLoader fxml = new FXMLLoader(ResourceHandler.class.getResource(name + ".fxml"));
+        FXMLLoader fxml = new FXMLLoader(ResourceHandler.class.getResource("fxmlfiles/" + name + ".fxml"));
         fxmls.put(name, fxml);
     }
 
