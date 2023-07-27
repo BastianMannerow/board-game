@@ -296,7 +296,7 @@ public class FileManager {
     }
 
     /**
-     * @return the old highscore
+     * @return the highscore data
      */
     public ArrayList<String> loadHighscore() {
         List<Object> csv = loadCSV((System.getProperty("user.dir") + File.separator + "savings\\highscore.csv"));
@@ -356,23 +356,55 @@ public class FileManager {
      * Saves the new highscore.
      *
      * @param game The game object
+     * @param winner The name of the winning team
+     * @param position The position in the highscore ranking
      */
-    public void saveHighscore(Game game){
+    public void saveHighscore(Game game, String winner, int position){
+        String[] header = {"Name", "LevelOfIntelligence", "AmountOfTurns", "Team Name"};
         String filepath = (System.getProperty("user.dir") + File.separator + "savings\\highscore.csv");
         List<String[]> data = new ArrayList<>();
         ArrayList<Player> playerList = game.getPlayerOrder();
 
         // Getting the data
-        String playerOneName = playerList.get(0).getName();
-        String playerTwoName = playerList.get(1).getName();
-        Player.PlayerType playerOneIntelligence = playerList.get(0).getLevelOfIntelligence();
-        Player.PlayerType playerTwoIntelligence = playerList.get(1).getLevelOfIntelligence();
-        String amountOfTurns = Integer.toString(game.getAmountOfTurns());
+        String winnerNames = "";
+        String winnerIntelligence = "";
+        int winnerAmountOfTurns = 10000;
+        int i = 0;
+        for (Player player: playerList){
+            if (player.getTeam().equals(winner)){
+                if(i >0){
+                    winnerNames = winnerNames.concat(" ,").concat(player.getName());
+                    winnerIntelligence = winnerIntelligence.concat(" ,").concat(String.valueOf(player.getLevelOfIntelligence()));
+                }
+                else{
+                    winnerNames = winnerNames.concat(player.getName());
+                    winnerIntelligence = winnerIntelligence.concat(String.valueOf(player.getLevelOfIntelligence()));
+                }
+                i++;
+                if(player.getAmountOfTurns() < winnerAmountOfTurns){
+                    winnerAmountOfTurns = player.getAmountOfTurns();
+                }
+            }
+        }
 
+        ArrayList<String> oldHighscore = loadHighscore();
         // Saving in rows
-        data.add(new String[]{playerOneName, String.valueOf(playerOneIntelligence)});
-        data.add(new String[]{playerTwoName, String.valueOf(playerTwoIntelligence)});
-        data.add(new String[]{amountOfTurns, ""});
+        String[] topOneHighScore = {oldHighscore.get(0), oldHighscore.get(1), oldHighscore.get(2), oldHighscore.get(3)};
+        String[] topTwoHighScore = {oldHighscore.get(4), oldHighscore.get(5), oldHighscore.get(6), oldHighscore.get(7)};
+        String[] topThreeHighScore = {oldHighscore.get(8), oldHighscore.get(9), oldHighscore.get(10), oldHighscore.get(11)};
+        List<String[]> oldHighscoreList = new ArrayList<>(Arrays.asList(topOneHighScore, topTwoHighScore, topThreeHighScore));
+        data.add(header);
+
+        for (int j = 0; j <= 2; j++) {
+            if (j == position){
+                String[] newHighscore = {winnerNames, winnerIntelligence, String.valueOf(winnerAmountOfTurns), winner};
+                data.add(newHighscore);
+            }
+            else{
+                data.add(oldHighscoreList.get(0));
+                oldHighscoreList.remove(0);
+            }
+        }
         saveCSV(filepath, data);
     }
 
@@ -380,11 +412,31 @@ public class FileManager {
      * Ckecks if the highscore is beaten and saves the new one
      *
      * @param game The game object
+     * @param winner The name of the winning team
      */
-    public void checkHighscore(Game game){
+    public void checkHighscore(Game game, String winner){
         ArrayList<String> oldHighscore = loadHighscore();
+        int potentialHighscore = 10000;
+        ArrayList<Player> playerList = game.getPlayerOrder();
+        int position = 4;
+
+        for (Player player: playerList) {
+            if (player.getTeam().equals(winner)) {
+                if (player.getAmountOfTurns() < potentialHighscore) {
+                    potentialHighscore = player.getAmountOfTurns();
+                }
+            }
+        }
+
+        for (int k = 0; k <= 2; k++){
+            if (Integer.parseInt(oldHighscore.get(2+k*3)) > potentialHighscore){
+                position = k;
+                break;
+            }
+        }
+
         if (Integer.parseInt(oldHighscore.get(4)) < game.getAmountOfTurns()){
-            saveHighscore(game);
+            saveHighscore(game, winner, position);
         }
     }
 }

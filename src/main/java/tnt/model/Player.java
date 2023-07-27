@@ -31,6 +31,7 @@ public class Player extends Observable {
     private String name;
     private Color color;
     private int amountOfFigures;
+    private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<Gods> gods;
     private String team;
@@ -42,20 +43,22 @@ public class Player extends Observable {
      * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
      */
-    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.figures = figures;
+        this.amountOfTurns = amountOfTurns;
     }
 
-    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team, int amountOfTurns) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.amountOfFigures = amountOfFigures;
         this.game = game;
         this.team = team;
+        this.amountOfTurns = amountOfTurns;
     }
 
     /**
@@ -190,6 +193,20 @@ public class Player extends Observable {
      */
     public ArrayList<Gods> getGods() {
         return gods;
+    }
+
+    /**
+     * @return amountOfTurns the player has played
+     */
+    public int getAmountOfTurns() {
+        return amountOfTurns;
+    }
+
+    /**
+     * @param amountOfTurns the player has played
+     */
+    public void setAmountOfTurns(int amountOfTurns) {
+        this.amountOfTurns = amountOfTurns;
     }
 
     /**
