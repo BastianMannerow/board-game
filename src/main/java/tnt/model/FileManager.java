@@ -1,4 +1,7 @@
 package tnt.model;
+import javafx.scene.paint.Color;
+import tnt.model.interfaces.Gods;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -154,26 +157,54 @@ public class FileManager {
         List<Object> csv = loadCSV(filepath + File.separator + "game.csv");
         List<String> header = (List<String>) csv.get(0);
         List<List<String>> gameData = (List<List<String>>) csv.get(1);
-        // gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
-        // game.setPlayerOrder(gameData.get(0)[1]); // Muss noch anders gesaved werden!
-        game.setAmountOfTurns(Integer.parseInt(gameData.get(0).get(2)));
-        game.setLevelOneTile(Integer.parseInt(gameData.get(0).get(3)));
-        game.setLevelTwoTile(Integer.parseInt(gameData.get(0).get(4)));
-        game.setLevelThreeTile(Integer.parseInt(gameData.get(0).get(5)));
-        game.setLevelFourTile(Integer.parseInt(gameData.get(0).get(6)));
+
+        String playerOrder = gameData.get(0).get(header.indexOf("playerOrder"));
+        String board = gameData.get(0).get(header.indexOf("board"));
+        String amountOfGameTurns = gameData.get(0).get(header.indexOf("amountOfGameTurns"));
+        String levelOneTile = gameData.get(0).get(header.indexOf("levelOneTile"));
+        String levelTwoTile = gameData.get(0).get(header.indexOf("levelTwoTile"));
+        String levelThreeTile = gameData.get(0).get(header.indexOf("levelThreeTile"));
+        String levelFourTile = gameData.get(0).get(header.indexOf("levelFourTile"));
+        String maxStepUpHeight = gameData.get(0).get(header.indexOf("maxStepUpHeight"));
+        String maxStepDownHeight = gameData.get(0).get(header.indexOf("maxStepDownHeight"));
+        String gameName = gameData.get(0).get(header.indexOf("gameName"));
+        String lastMovedFigure = gameData.get(0).get(header.indexOf("lastMovedFigure"));
+        String gameStatus = gameData.get(0).get(header.indexOf("gameStatus"));
+        String victoryHeight = gameData.get(0).get(header.indexOf("victoryHeight"));
 
         // Load Player
         csv = loadCSV(filepath + File.separator + "player.csv");
         header = (List<String>) csv.get(0);
         List<List<String>> playerData = (List<List<String>>) csv.get(1);
+
+        String levelOfIntelligence = playerData.get(0).get(header.indexOf("levelOfIntelligence"));
+        String name = playerData.get(0).get(header.indexOf("name"));
+        String color = playerData.get(0).get(header.indexOf("color"));
+        String amountOfFigures = playerData.get(0).get(header.indexOf("amountOfFigures"));
+        String amountOfTurns = playerData.get(0).get(header.indexOf("amountOfTurns"));
+        String figures = playerData.get(0).get(header.indexOf("figures"));
+        String gods = playerData.get(0).get(header.indexOf("gods"));
+        String team = playerData.get(0).get(header.indexOf("team"));
+
         // Load Figure
         csv = loadCSV(filepath + File.separator + "figure.csv");
         header = (List<String>) csv.get(0);
         List<List<String>> figureData = (List<List<String>>) csv.get(1);
+
+        String x = playerData.get(0).get(header.indexOf("x"));
+        String y = playerData.get(0).get(header.indexOf("y"));
+        String placed = playerData.get(0).get(header.indexOf("placed"));
+
         // Load Fields
         csv = loadCSV(filepath + File.separator + "fields.csv");
         header = (List<String>) csv.get(0);
         List<List<String>> fieldsData = (List<List<String>>) csv.get(1);
+
+        String fieldX = playerData.get(0).get(header.indexOf("fieldX"));;
+        String fieldY = playerData.get(0).get(header.indexOf("fieldY"));;
+        String towerLevel = playerData.get(0).get(header.indexOf("towerLevel"));;
+        String towerComplete = playerData.get(0).get(header.indexOf("towerComplete"));;
+        String figure = playerData.get(0).get(header.indexOf("figure"));;
     }
 
     /**
