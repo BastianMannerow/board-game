@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.FileWriter;
 import java.io.File;
+import java.nio.file.*;
 
 /**
  * The FileManager is responsible for permanent savings as csv-files.
@@ -49,17 +50,25 @@ public class FileManager {
      * @param data The content of the file
      */
     public void saveCSV(String filepath, List<String[]> data){
-        try (FileWriter writer = new FileWriter(filepath)) {
-            for (String[] row : data) {
-                StringBuilder csvLine = new StringBuilder();
-                for (int i = 0; i < row.length; i++) {
-                    csvLine.append(row[i]);
-                    if (i < row.length - 1) {
-                        csvLine.append(",");
+        try {
+            // Creates Filepath, if not existend
+            Path pathToFile = Paths.get(filepath);
+            Files.createDirectories(pathToFile.getParent());
+            try (FileWriter writer = new FileWriter(filepath)) {
+                // Saves the file
+                for (String[] row : data) {
+                    StringBuilder csvLine = new StringBuilder();
+                    for (int i = 0; i < row.length; i++) {
+                        csvLine.append(row[i]);
+                        if (i < row.length - 1) {
+                            csvLine.append(",");
+                        }
                     }
+                    csvLine.append(System.lineSeparator());
+                    writer.append(csvLine.toString());
                 }
-                csvLine.append(System.lineSeparator());
-                writer.append(csvLine.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
         catch (IOException e) {
@@ -160,13 +169,18 @@ public class FileManager {
     public void saveGame(Game game){
         String directory = getDirectory();
         String saveGameName = game.getGameName();
-
         // If new game, create new saving folder
         if(saveGameName.equals("newGame")){
-            String lastGame = getSavedGames().get(getSavedGames().size()-1);
-            String lastTwoChars = lastGame.substring(lastGame.length() - 2);
-            int number = Integer.parseInt(lastTwoChars) + 1;
-            saveGameName = "Game ".concat(Integer.toString(number));
+            if(getSavedGames().get(getSavedGames().size() - 1).equals("-")){
+                int number = 1;
+                saveGameName = "Game ".concat(Integer.toString(number));
+            }
+            else {
+                String lastGame = getSavedGames().get(getSavedGames().size() - 1);
+                lastGame = lastGame.replace("Game ", "").trim();
+                int lastGameNumber = Integer.parseInt(lastGame);
+                saveGameName = "Game ".concat(Integer.toString(lastGameNumber + 1));
+            }
         }
 
         // If no, delete old game and save new one
@@ -201,6 +215,10 @@ public class FileManager {
 
         filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "fields.csv";
         saveCSV(filepath, fieldsData);
+
+        // Rename the game
+        game.setGameName(saveGameName);
+        System.out.println("Saved this game: " + saveGameName);
     }
 
     public List<String[]> getFieldsData(Game game){
