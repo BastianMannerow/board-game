@@ -69,7 +69,7 @@ public class Game extends Observable {
             amountFigures = 1;
         }
         for (int i = 0; i < defaultAmountPlayer; i++) {
-            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1));
+            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1), amountOfTurns);
         }
         this.maxStepUpHeight = Settings.getMaxStepUp();
         this.maxStepDownHeight = Settings.getMaxStepDown();
@@ -665,7 +665,7 @@ public class Game extends Observable {
      * Adds a player to the game
      * @param amountOfFigures the number of figures this player should have
      */
-    public void addPlayer(int amountOfFigures, String team) {
+    public void addPlayer(int amountOfFigures, String team, int amountOfTurns) {
         if (selectingPlayers()) {
 //            Player newPlayer = new Player(this);
 //            newPlayer.setLevelOfIntelligence(Player.PlayerType.HUMAN);
@@ -674,7 +674,7 @@ public class Game extends Observable {
 //            newPlayer.setAmountOfFigures(amountOfFigures);
 //            newPlayer.setTeam(team);
 //            playerOrder.add(newPlayer);
-            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team));
+            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns));
             notifyObservers();
         }
     }
