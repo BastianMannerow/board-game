@@ -2,17 +2,6 @@ package tnt.model;
 import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
-
-import tnt.model.interfaces.Gods;
-import tnt.model.gods.building.*;
-import tnt.model.gods.inventory.Chaos;
-import tnt.model.gods.inventory.Circe;
-import tnt.model.gods.movement.*;
-import tnt.model.gods.sabotage.*;
-import tnt.model.gods.victory.Chronus;
-import tnt.model.gods.victory.Eros;
-import tnt.model.gods.victory.Hera;
-import tnt.model.gods.victory.Pan;
 import tnt.util.Observable;
 
 /**
@@ -32,9 +21,13 @@ public class Player extends Observable {
     private String name;
     private Color color;
     private int amountOfFigures;
+    private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
-    private ArrayList<Gods> gods;
     private String team;
+    private int levelOneTile;
+    private int levelTwoTile;
+    private int levelThreeTile;
+    private int levelFourTile;
 
     /**
      * Constructing an object Player.
@@ -42,21 +35,87 @@ public class Player extends Observable {
      * @param name initial name
      * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
+     * @param levelOneTile The amount of tiles
+     * @param levelTwoTile The amount of tiles
+     * @param levelThreeTile The amount of tiles
+     * @param levelFourTile The amount of tiles
      */
-    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.figures = figures;
+        this.amountOfTurns = amountOfTurns;
+        this.levelOneTile = levelOneTile;
+        this.levelTwoTile = levelTwoTile;
+        this.levelThreeTile = levelThreeTile;
+        this.levelFourTile = levelFourTile;
     }
 
-    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team, int amountOfTurns) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.amountOfFigures = amountOfFigures;
         this.game = game;
         this.team = team;
+        this.amountOfTurns = amountOfTurns;
+    }
+
+    /**
+     * @return levelOneTile
+     */
+    public int getLevelOneTile() {
+        return levelOneTile;
+    }
+
+    /**
+     * @param levelOneTile replaces old playerOrder
+     */
+    public void setLevelOneTile(int levelOneTile) {
+        this.levelOneTile = levelOneTile;
+    }
+
+    /**
+     * @return levelTwoTile
+     */
+    public int getLevelTwoTile() {
+        return levelTwoTile;
+    }
+
+    /**
+     * @param levelTwoTile replaces old playerOrder
+     */
+    public void setLevelTwoTile(int levelTwoTile) {
+        this.levelTwoTile = levelTwoTile;
+    }
+
+    /**
+     * @return levelThreeTile
+     */
+    public int getLevelThreeTile() {
+        return levelThreeTile;
+    }
+
+    /**
+     * @param levelThreeTile replaces old playerOrder
+     */
+    public void setLevelThreeTile(int levelThreeTile) {
+        this.levelThreeTile = levelThreeTile;
+    }
+
+    /**
+     * @return levelFourTile
+     */
+    public int getLevelFourTile() {
+        return levelFourTile;
+    }
+
+    /**
+     * @param levelFourTile replaces old playerOrder
+     */
+    public void setLevelFourTile(int levelFourTile) {
+        this.levelFourTile = levelFourTile;
     }
 
     /**
@@ -128,53 +187,6 @@ public class Player extends Observable {
     }
 
     /**
-     * Adds a god into the ArrayList gods
-     *
-     * @param god is a instance of a class implementing interface Gods
-     */
-    public void addGod(Gods god){
-        gods.add(god);
-    }
-
-    /**
-     * Adds all gods into the ArrayList gods
-     *
-     */
-    public void addAllGods(){
-        addGod(new Ares());
-        addGod(new Atlas());
-        addGod(new Demeter());
-        addGod(new Dyonisus());
-        addGod(new Hephaistos());
-        addGod(new Hestia());
-        addGod(new Medusa());
-        addGod(new Morpheus());
-        addGod(new Poseidon());
-        addGod(new Prometheus());
-        addGod(new Selene());
-        addGod(new Zeus());
-
-        addGod(new Chaos());
-        addGod(new Circe());
-        addGod(new Apollo());
-        addGod(new Artemis());
-        addGod(new Charon());
-        addGod(new Hermes());
-        addGod(new Minotaures());
-        addGod(new Triton());
-
-        addGod(new Aphrodite());
-        addGod(new Athena());
-        addGod(new Hypnus());
-        addGod(new Limus());
-        addGod(new Persephone());
-
-        addGod(new Chronus());
-        addGod(new Eros());
-        addGod(new Hera());
-        addGod(new Pan());
-    }
-    /**
      * Depending on the god type, the specific figure object will be created.
      *
      * @param amount creates new Figure objects for the player
@@ -187,19 +199,25 @@ public class Player extends Observable {
     }
 
     /**
-     * @return card god/demon card, which belongs to the player
+     * @return amountOfTurns the player has played
      */
-    public ArrayList<Gods> getGods() {
-        return gods;
+    public int getAmountOfTurns() {
+        return amountOfTurns;
+    }
+
+    /**
+     * @param amountOfTurns the player has played
+     */
+    public void setAmountOfTurns(int amountOfTurns) {
+        this.amountOfTurns = amountOfTurns;
     }
 
     /**
      * Increases the height of a field
      *
      * @param field the field chosen by the player
-     * @param board
      */
-    public void executeBuild(Field field, Board board){
+    public void executeBuild(Field field){
         int newLevel = field.getTowerLevel()+1;
         field.setTowerLevel(newLevel);
         if(newLevel == 4){
@@ -208,16 +226,16 @@ public class Player extends Observable {
         // Remove Tile from game
         int tile = field.getTowerLevel();
         if(tile == 0){
-            game.setLevelOneTile(game.getLevelOneTile() - 1);
+            levelOneTile--;
         }
         else if(tile == 1){
-            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
+            levelTwoTile--;
         }
         else if(tile == 2){
-            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
+            levelThreeTile--;
         }
         else{
-            game.setLevelFourTile(game.getLevelFourTile() - 1);
+            levelFourTile--;
         }
     }
 
@@ -234,7 +252,7 @@ public class Player extends Observable {
         field.setFigure(figure);
 
         // Check if game is already over
-        if(field.getTowerLevel() == 3){
+        if(field.getTowerLevel() == game.getVictoryHeight()){
             game.setGameOverMode();
         }
     }
@@ -269,7 +287,27 @@ public class Player extends Observable {
         notifyObservers();
     }
 
+    /**
+     * getter for the number of figures this player should have
+     * @return the number of figures
+     */
     public int getAmountOfFigures() {
         return this.amountOfFigures;
+    }
+
+    public void prePlayersTurn(){
+        switch (levelOfIntelligence){
+            case AI_1:
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                break;
+            case AI_2:
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                break;
+            case AI_3:
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -24,7 +24,7 @@ public class GameTest {
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.RED, 2, null, "1"));
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "2"));
 
-        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3);
+        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3, 5);
     }
 
     /**
@@ -112,5 +112,153 @@ public class GameTest {
         ArrayList<Player> expectedPlayerOrder = new ArrayList<>();
         expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "1"));
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
+    }
+
+    /**
+     * Tests the getMaxStepUpHeight method of Game.
+     * It should return the maximum height to step up.
+     */
+    @Test
+    public void testGetMaxStepUpHeight() {
+        Assertions.assertEquals(1, game.getMaxStepUpHeight());
+    }
+
+    /**
+     * Tests the getMaxStepDownHeight method of Game.
+     * It should return the maximum height to step down.
+     */
+    @Test
+    public void testGetMaxStepDownHeight() {
+        Assertions.assertEquals(3, game.getMaxStepDownHeight());
+    }
+
+    /**
+     * Tests the setMaxStepUpHeight method of Game.
+     * It should set the maximum height to step up to the specified value.
+     */
+    @Test
+    public void testSetMaxStepUpHeight() {
+        game.setMaxStepUpHeight(2);
+        Assertions.assertEquals(2, game.getMaxStepUpHeight());
+    }
+
+    /**
+     * Tests the setMaxStepDownHeight method of Game.
+     * It should set the maximum height to step down to the specified value.
+     */
+    @Test
+    public void testSetMaxStepDownHeight() {
+        game.setMaxStepDownHeight(4);
+        Assertions.assertEquals(4, game.getMaxStepDownHeight());
+    }
+
+    /**
+     * Tests the getMaxBuildingLevel method of Game.
+     * It should return the maximum building level.
+     */
+    @Test
+    public void testGetMaxBuildingLevel() {
+        Assertions.assertEquals(Settings.getVictoryHeight(), game.getVictoryHeight());
+    }
+
+    /**
+     * Tests the setVictoryHeight method of Game.
+     * It should set the victoryHeight to the specified value.
+     */
+    @Test
+    public void testSetVictoryHeight2() {
+        int newVictoryHeight = 5;
+        game.setVictoryHeight(newVictoryHeight);
+        Assertions.assertEquals(newVictoryHeight, game.getVictoryHeight());
+    }
+
+    /**
+     * Tests the getLevelOneTile method of Game.
+     * It should return the number of level one tiles.
+     */
+    @Test
+    public void testGetLevelOneTile() {
+        Assertions.assertEquals(5, game.getLevelOneTile());
+    }
+
+    /**
+     * Tests the setLevelOneTile method of Game.
+     * It should set the number of level one tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelOneTile() {
+        game.setLevelOneTile(6);
+        Assertions.assertEquals(6, game.getLevelOneTile());
+    }
+
+    /**
+     * Tests the getLevelTwoTile method of Game.
+     * It should return the number of level two tiles.
+     */
+    @Test
+    public void testGetLevelTwoTile() {
+        Assertions.assertEquals(4, game.getLevelTwoTile());
+    }
+
+    /**
+     * Tests the setLevelTwoTile method of Game.
+     * It should set the number of level two tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelTwoTile() {
+        game.setLevelTwoTile(3);
+        Assertions.assertEquals(3, game.getLevelTwoTile());
+    }
+
+    /**
+     * Tests the getLevelThreeTile method of Game.
+     * It should return the number of level three tiles.
+     */
+    @Test
+    public void testGetLevelThreeTile() {
+        Assertions.assertEquals(3, game.getLevelThreeTile());
+    }
+
+    /**
+     * Tests the setLevelThreeTile method of Game.
+     * It should set the number of level three tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelThreeTile() {
+        game.setLevelThreeTile(2);
+        Assertions.assertEquals(2, game.getLevelThreeTile());
+    }
+
+    /**
+     * Tests the getLevelFourTile method of Game.
+     * It should return the number of level four tiles.
+     */
+    @Test
+    public void testGetLevelFourTile() {
+        Assertions.assertEquals(2, game.getLevelFourTile());
+    }
+
+    /**
+     * Tests the setLevelFourTile method of Game.
+     * It should set the number of level four tiles to the specified value.
+     */
+    @Test
+    public void testSetLevelFourTile() {
+        game.setLevelFourTile(1);
+        Assertions.assertEquals(1, game.getLevelFourTile());
+    }
+
+    /**
+     * Tests the setVictoryHeight method of Player.
+     * It should set and return the victory height.
+     */
+    @Test
+    public void testSetVictoryHeight() {
+        // Test setting the victory height
+        game.setVictoryHeight(3);
+        int victoryHeight = game.getVictoryHeight();
+
+        // Verify that the victory height is set correctly
+        Assertions.assertEquals(3, victoryHeight);
     }
 }

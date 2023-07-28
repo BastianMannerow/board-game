@@ -25,11 +25,11 @@ public class SizeListener implements ChangeListener{
 
 
         if (isheight) {
-            int height = ((int) (double) t1 - 50) / SizeHandler.getNrFieldsY();
+            int height = ((int) (double) t1 - 90) / SizeHandler.getNrFieldsY();
             SizeHandler.getInstance().setPrefSizeY(height);
         }
         else {
-            int width = ((int) (double) t1 - 100) / (SizeHandler.getNrFieldsX()+1);
+            int width = ((int) (double) t1 - 10) / (SizeHandler.getNrFieldsX()+1);
             SizeHandler.getInstance().setPrefSizeX(width);
         }
     }

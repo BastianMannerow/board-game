@@ -1,6 +1,7 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import tnt.gui.SceneHandler;
 import tnt.model.*;
 
@@ -10,6 +11,11 @@ import tnt.model.*;
 public class GameController{
 
     private SceneHandler sceneHandler;
+
+    @FXML
+    Button mainMenu;
+    @FXML
+    Button playerMenuButton;
 
 
     /**

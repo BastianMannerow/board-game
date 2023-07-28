@@ -32,7 +32,27 @@ public class PlayerChooseController{
     @FXML
     TextField maxStepDown;
     @FXML
-    TextField maxBuildingHeight;
+    TextField victoryHeight;
+    @FXML
+    Button mainMenu;
+    @FXML
+    Label maxStepUpHeight;
+    @FXML
+    Label maxStepDownHeight;
+    @FXML
+    Label maxBuildingHeightLabel;
+    @FXML
+    Button addPlayerBtn;
+    @FXML
+    Label boardSize;
+    @FXML
+    Label sphereWorldLabel;
+    @FXML
+    Label setAmountOfFiguresLabel;
+    @FXML
+    Button amountFiguresButton;
+    @FXML
+    Button btnPlay;
 
     private SceneHandler sceneHandler;
     final Popup popup = new Popup();
@@ -63,7 +83,7 @@ public class PlayerChooseController{
 
         int maxStepUp = updateValueOfTextfield(this.maxStepUp, game.getMaxStepUpHeight());
         int maxStepDown = updateValueOfTextfield(this.maxStepDown, game.getMaxStepDownHeight());
-        int maxBuildingHeight = updateValueOfTextfield(this.maxBuildingHeight, game.getMaxBuildingLevel());
+        int victoryHeight = updateValueOfTextfield(this.victoryHeight, game.getVictoryHeight());
 
         int sizeX = updateValueOfTextfield(this.fieldSizeX, Settings.getFieldSizeX());
         int sizeY = updateValueOfTextfield(this.fieldSizeY, Settings.getFieldSizeY());
@@ -87,7 +107,7 @@ public class PlayerChooseController{
             game.getBoard().setRoundWorld(roundWorld.isSelected());
             game.setMaxStepUpHeight(maxStepUp);
             game.setMaxStepDownHeight(maxStepDown);
-            game.setMaxBuildingLevel(maxBuildingHeight);
+            game.setVictoryHeight(victoryHeight);
             game.initGame();
             game.startPlaceFigures();
         }
@@ -98,7 +118,9 @@ public class PlayerChooseController{
         try {
             value = Integer.parseInt(textfield.getText());
         } catch (NumberFormatException e) {
-            System.err.println("could not convert " + textfield.getId() + ": " + textfield.getText() + " Error: " + e);
+            if (!textfield.getText().equals("")) {
+                System.err.println("could not convert " + textfield.getId() + ": " + textfield.getText() + " Error: " + e);
+            }
         }
         return value;
     }
@@ -149,7 +171,7 @@ public class PlayerChooseController{
      */
     @FXML
     private void addPlayer() {
-        Settings.getActualGame().addPlayer(2, String.valueOf(Settings.getActualGame().getPlayerOrder().size()));
+        Settings.getActualGame().addPlayer(2, String.valueOf(Settings.getActualGame().getPlayerOrder().size()), Settings.getActualGame().getAmountOfTurns());
     }
 
     /**

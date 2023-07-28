@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
+import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.gui.SizeHandler;
 import tnt.model.Game;
@@ -54,12 +55,13 @@ public class PlayerChooseView extends VBox implements Observer {
         popup_loader.setRoot(popup);
         popup_loader.load();
         controller.setPopup(popup);
+        Language.getInstance().addObserver(this);
     }
 
     @Override
     public void update() {
         updateGame();
-        updateTextfield(controller.maxBuildingHeight, String.valueOf(game.getMaxBuildingLevel()));
+        updateTextfield(controller.victoryHeight, String.valueOf(game.getVictoryHeight()));
         updateTextfield(controller.maxStepUp, String.valueOf(game.getMaxStepUpHeight()));
         updateTextfield(controller.maxStepDown, String.valueOf(game.getMaxStepDownHeight()));
 
@@ -74,6 +76,20 @@ public class PlayerChooseView extends VBox implements Observer {
             i++;
             updatePlayer(player, i);
         }
+        updateLabels();
+    }
+
+    private void updateLabels() {
+        controller.mainMenu.setText(Language.getTranslation("mainMenuLabel"));
+        controller.maxStepUpHeight.setText(Language.getTranslation("maxStepUpLabel"));
+        controller.maxStepDownHeight.setText(Language.getTranslation("maxStepDownLabel"));
+        controller.maxBuildingHeightLabel.setText(Language.getTranslation("maxHeightOfBuildingLabel"));
+        controller.addPlayerBtn.setText(Language.getTranslation("addPlayerLabel"));
+        controller.boardSize.setText(Language.getTranslation("boardSizeLabel"));
+        controller.sphereWorldLabel.setText(Language.getTranslation("sphereWorldLabel"));
+        controller.setAmountOfFiguresLabel.setText(Language.getTranslation("setNrOfFiguresLabel"));
+        controller.amountFiguresButton.setText(Language.getTranslation("setNrOfFiguresButtonLabel"));
+        controller.btnPlay.setText(Language.getTranslation("playButtonLabel"));
     }
 
     private void updatePlayer(Player player, int i) {
@@ -133,13 +149,15 @@ public class PlayerChooseView extends VBox implements Observer {
                 }
             });
 
-            ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
-            playerType.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
-                }
-            });
+            // Todo: Check if this is necessary, often playertype is null when action is called...
+
+//            ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
+//            playerType.setOnAction(new EventHandler<ActionEvent>() {
+//                @Override
+//                public void handle(ActionEvent actionEvent) {
+//                    player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
+//                }
+//            });
         }
         playerHolder.get(player).setPlayerNumber(i);
     }

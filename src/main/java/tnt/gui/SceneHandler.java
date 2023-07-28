@@ -4,6 +4,7 @@ package tnt.gui;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tnt.ResourceHandler;
 import tnt.gui.game.GameView;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
 import tnt.model.Settings;
@@ -102,4 +103,13 @@ public class SceneHandler{
     public Stage getStage(){
         return stage;
     }
+
+//    /**
+//     * loads a specific style to the actual scene
+//     * @param key the name of the style to be set
+//     */
+//    public void loadStyle(String key){
+//        scene.getStylesheets().clear();
+//        scene.getStylesheets().add(ResourceHandler.getInstance().getStyle(key));
+//    }
 }

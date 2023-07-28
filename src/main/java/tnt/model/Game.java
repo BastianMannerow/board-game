@@ -22,40 +22,27 @@ public class Game extends Observable {
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
-    private int levelOneTile;
-    private int levelTwoTile;
-    private int levelThreeTile;
-    private int levelFourTile;
-
     private int maxStepUpHeight;
     private int maxStepDownHeight;
-    private int maxBuildingLevel;
-
     private String gameName;
     private Figure lastMovedFigure;
     private GameStatus gameStatus;
+    private int victoryHeight;
 
     /**
      * Constructing an object Game.
      * @param playerOrder
      * @param amountOfTurns How many turns are completed so far (at beginning 0). It's for the highscore
-     * @param levelOneTile The amount of tiles
-     * @param levelTwoTile The amount of tiles
-     * @param levelThreeTile The amount of tiles
-     * @param levelFourTile The amount of tiles
+
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName, int maxStepUpHeight, int maxStepDownHeight) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
-        this.levelOneTile = levelOneTile;
-        this.levelTwoTile = levelTwoTile;
-        this.levelThreeTile = levelThreeTile;
-        this.levelFourTile = levelFourTile;
         this.gameName = gameName;
         createBoard(1,1);
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
-        this.maxBuildingLevel = Settings.getMaxBuildingLevel();
+        this.victoryHeight = victoryHeight;
     }
 
     /**
@@ -70,13 +57,30 @@ public class Game extends Observable {
             amountFigures = 1;
         }
         for (int i = 0; i < defaultAmountPlayer; i++) {
-            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1));
+            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1), amountOfTurns);
         }
         this.maxStepUpHeight = Settings.getMaxStepUp();
         this.maxStepDownHeight = Settings.getMaxStepDown();
-        this.maxBuildingLevel = Settings.getMaxBuildingLevel();
+        this.victoryHeight = Settings.getVictoryHeight();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
     }
+
+    /**
+     * Getter for the victory height
+     * @return the height for the victory
+     */
+    public int getVictoryHeight() {
+        return victoryHeight;
+    }
+
+    /**
+     * Setter for the victory height
+     * @param victoryHeight the victory height to be set
+     */
+    public void setVictoryHeight(int victoryHeight) {
+        this.victoryHeight = victoryHeight;
+    }
+
     /**
      * @return Maximum height to step up
      */
@@ -108,23 +112,6 @@ public class Game extends Observable {
     }
 
     /**
-     * Getter for the maximum building level
-     * @return the max building level
-     */
-    public int getMaxBuildingLevel() {
-        return maxBuildingLevel;
-    }
-
-    /**
-     * Setter for the maximum building level
-     * @param maxBuildingLevel the maximum building level
-     */
-    public void setMaxBuildingLevel(int maxBuildingLevel) {
-        this.maxBuildingLevel = maxBuildingLevel;
-    }
-
-
-    /**
      * @return gameName
      */
     public String getGameName() {
@@ -142,62 +129,6 @@ public class Game extends Observable {
      */
     public void setGameName(String gameName) {
         this.gameName = gameName;
-    }
-
-    /**
-     * @return levelOneTile
-     */
-    public int getLevelOneTile() {
-        return levelOneTile;
-    }
-
-    /**
-     * @param levelOneTile replaces old playerOrder
-     */
-    public void setLevelOneTile(int levelOneTile) {
-        this.levelOneTile = levelOneTile;
-    }
-
-    /**
-     * @return levelTwoTile
-     */
-    public int getLevelTwoTile() {
-        return levelTwoTile;
-    }
-
-    /**
-     * @param levelTwoTile replaces old playerOrder
-     */
-    public void setLevelTwoTile(int levelTwoTile) {
-        this.levelOneTile = levelTwoTile;
-    }
-
-    /**
-     * @return levelThreeTile
-     */
-    public int getLevelThreeTile() {
-        return levelThreeTile;
-    }
-
-    /**
-     * @param levelThreeTile replaces old playerOrder
-     */
-    public void setLevelThreeTile(int levelThreeTile) {
-        this.levelThreeTile = levelThreeTile;
-    }
-
-    /**
-     * @return levelFourTile
-     */
-    public int getLevelFourTile() {
-        return levelFourTile;
-    }
-
-    /**
-     * @param levelFourTile replaces old playerOrder
-     */
-    public void setLevelFourTile(int levelFourTile) {
-        this.levelFourTile = levelFourTile;
     }
 
     /**
@@ -666,9 +597,16 @@ public class Game extends Observable {
      * Adds a player to the game
      * @param amountOfFigures the number of figures this player should have
      */
-    public void addPlayer(int amountOfFigures, String team) {
+    public void addPlayer(int amountOfFigures, String team, int amountOfTurns) {
         if (selectingPlayers()) {
-            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team));
+//            Player newPlayer = new Player(this);
+//            newPlayer.setLevelOfIntelligence(Player.PlayerType.HUMAN);
+//            newPlayer.setName(String.valueOf(playerOrder.size() + 1));
+//            newPlayer.setColor(def_colors[playerOrder.size() % def_colors.length]);
+//            newPlayer.setAmountOfFigures(amountOfFigures);
+//            newPlayer.setTeam(team);
+//            playerOrder.add(newPlayer);
+            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns));
             notifyObservers();
         }
     }
@@ -716,30 +654,6 @@ public class Game extends Observable {
         Collections.rotate(playerOrder, -1);
 //        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
-        switch (getPlayersTurn().getLevelOfIntelligence()){
-            case HUMAN:
-                break;
-//            case REMOTE:
-//
-//                ExecuteStuff ex = new ExecuteStuff();
-//                TestThread tt = new TestThread(ex);
-//                tt.setOnSucceeded(e -> {
-//                    Integer test = (Integer) e.getSource().getValue();
-//                    System.out.println("int " + test.toString());
-//                });
-//                tt.start();
-//                System.out.println("should have started");
-//                break;
-            case AI_1:
-                break;
-            case AI_2:
-                break;
-            case AI_3:
-                break;
-            default:
-                System.err.println("This player type does not exist: " + getPlayersTurn().getLevelOfIntelligence());
-        }
-
     }
 
     /**

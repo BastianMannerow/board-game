@@ -5,6 +5,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import tnt.ResourceHandler;
+import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.gui.SizeHandler;
 import tnt.model.*;
@@ -55,6 +56,9 @@ public class GameView extends BorderPane implements Observer {
 
     @Override
     public void update() {
+
+        updateLabels();
+
         if (game != Settings.getActualGame()){
             game.removeObserver(this);
             game = Settings.getActualGame();
@@ -81,6 +85,11 @@ public class GameView extends BorderPane implements Observer {
         }
 
         prepareEnd();
+    }
+
+    private void updateLabels() {
+        controller.mainMenu.setText(Language.getTranslation("mainMenuLabel"));
+        controller.playerMenuButton.setText(Language.getTranslation("playerMenuLabel"));
     }
 
     private void updateFields() {
@@ -134,7 +143,7 @@ public class GameView extends BorderPane implements Observer {
 
     private void updateBuildings() {
         if (game.isRunnung()){
-            for (int level = 1; level <= game.getMaxBuildingLevel() ; level++) {
+            for (int level = 1; level <= game.getVictoryHeight() ; level++) {
                 updateBuilding(level);
             }
             updateBuilding(-1);
@@ -216,7 +225,7 @@ public class GameView extends BorderPane implements Observer {
                 FigureView figureViewF = (FigureView) sourceObject;
                 if (game.isMoveMode() && game.getPlayersTurn() == figureViewF.getPlayer()) {
                     for (Field field : figureViewF.getFigure().getValidMoves(game.getBoard())) {
-                        makeHighlightField(highlightedtemp, fieldHolder.get(field), "Spielfeld_Highlight");
+                        makeHighlightField(highlightedtemp, fieldHolder.get(field), "Spielfeld_Highlight_bewegen_ziel");
                     }
                 }
             }
@@ -249,14 +258,14 @@ public class GameView extends BorderPane implements Observer {
 
             for (Figure fig : game.getPlayersTurn().getFigure()) {
                 FieldView fieldv = fieldHolder.get(game.getBoard().getField(fig.getX(), fig.getY()));
-                makeHighlightField(highlighted, fieldv, "Spielfeld_Highlight");
+                makeHighlightField(highlighted, fieldv, "Spielfeld_Highlight_bewegen");
             }
         }
 
         if (game.getGameStatus() == Game.GameStatus.BUILD) {
             for (Field field :game.getLastMovedFigure().getValidBuilds(game.getBoard())){
                 FieldView fieldv = fieldHolder.get(field);
-                makeHighlightField(highlighted, fieldv, "Spielfeld_Highlight");
+                makeHighlightField(highlighted, fieldv, "Spielfeld_Highlight_bauen");
             }
 
         }

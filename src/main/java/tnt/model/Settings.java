@@ -15,7 +15,7 @@ public class Settings {
     private static int defaultPlayer = 2;
     private static int maxStepUp = 1;
     private static int maxStepDown = -1; // Negative numbers allow all step height steps
-    private static int maxBuildingLevel = 3;
+    private static int victoryHeight = 3;
 
 
     private static int maxFieldcount = 500;
@@ -111,13 +111,13 @@ public class Settings {
 
     public static int getMaxStepDown() {
         if (maxStepDown < 0){
-            return maxBuildingLevel;
+            return victoryHeight;
         }
         return maxStepDown;
     }
 
-    public static int getMaxBuildingLevel() {
-        return maxBuildingLevel;
+    public static int getVictoryHeight() {
+        return victoryHeight;
     }
 
     /**

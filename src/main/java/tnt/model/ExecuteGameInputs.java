@@ -12,17 +12,23 @@ public class ExecuteGameInputs {
      * @return if the movement was successful
      */
     public static boolean placeFigure(Figure figure, Field field){
+        System.out.println("placed Figure from x: " + figure.getX() + " y: " + figure.getY() + " to fild x :" + field.getX() + " y: " + field.getY());
         Game game = Settings.getActualGame();
+        boolean return_val = false;
         switch (game.getGameStatus()) {
             case SELECT_PLAYER:
             case BUILD:
-                return false;
+                return_val = false;
+                break;
             case PLACE_FIGURES:
-                return checkPlaceFig(game, figure, field);
+                return_val = checkPlaceFig(game, figure, field);
+                break;
             case MOVE_FIGURE:
-                return checkMoveFig(game, figure, field);
+                return_val = checkMoveFig(game, figure, field);
+                break;
         }
-        return false;
+        game.getPlayersTurn().prePlayersTurn();
+        return return_val;
     }
 
     private static boolean checkMoveFig(Game game, Figure figure, Field field) {
@@ -65,25 +71,29 @@ public class ExecuteGameInputs {
      * @return if build has finished successfully
      */
     public static boolean buildObject(int buildLevel, Field field) {
+        System.out.println("build object on x :" + field.getX() + " y: " + field.getY() + " with level " + buildLevel);
         Game game = Settings.getActualGame();
         if (game.isBuildMode() && game.getLastMovedFigure().getValidBuilds(game.getBoard()).contains(field)) {
             Settings.getNetworkHandler().build(buildLevel, field);
 
             // Here you can change where it is possible to build a dome
-            if (field.getTowerLevel() == game.getMaxBuildingLevel() && buildLevel == -1) {
+            if (field.getTowerLevel() == game.getVictoryHeight() && buildLevel == -1) {
                 field.setTowerComplete(true);
             }
             else if (field.getTowerLevel() == buildLevel - 1) {
                 field.setTowerLevel(buildLevel);
             }
             else {
+                game.getPlayersTurn().prePlayersTurn();
                 return false;
             }
             game.nextPlayersTurn();
             game.setMoveMode();
             game.checkBlockedMovement(game.getPlayersTurn());
+            game.getPlayersTurn().prePlayersTurn();
             return true;
         }
+        game.getPlayersTurn().prePlayersTurn();
         return false;
     }
 }

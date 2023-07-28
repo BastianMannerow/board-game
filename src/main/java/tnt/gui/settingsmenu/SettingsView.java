@@ -32,12 +32,13 @@ public class SettingsView extends VBox implements Observer {
 
     @Override
     public void update() {
-        controller.language.setText(Language.language());
-        controller.german.setText(Language.languageGerman());
-        controller.english.setText(Language.languageEnglish());
-        controller.theme.setText(Language.theme());
-        controller.blood.setText(Language.themeBlood());
-        controller.zombies.setText(Language.themeZombie());
-        controller.mainMenu.setText(Language.mainMenu());
+        controller.language.setText(Language.getTranslation("language"));
+        controller.german.setText(Language.getTranslation("languageGerman"));
+        controller.english.setText(Language.getTranslation("languageEnglish"));
+        controller.theme.setText(Language.getTranslation("theme"));
+        controller.blood.setText(Language.getTranslation("themeBlood"));
+        controller.zombies.setText(Language.getTranslation("themeZombie"));
+        controller.defaultTheme.setText(Language.getTranslation("themeDefault"));
+        controller.mainMenu.setText(Language.getTranslation("mainMenuLabel"));
     }
 }

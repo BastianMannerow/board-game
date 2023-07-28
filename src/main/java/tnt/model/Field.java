@@ -27,6 +27,12 @@ public class Field extends Observable {
     }
 
     /**
+     * Constructor for a field
+     */
+    public Field() {
+    }
+
+    /**
      *
      */
     public void figureLeft() {
