@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class FileManagerTest {
         expectedData.add(new String[]{"Hans", "Lulatsch"});
         expectedData.add(new String[]{"Stefan", "Bombig"});
 
-        List<String[]> actualData = fileManager.loadCSV(filepath);
+        List<Object> actualData = fileManager.loadCSV(filepath);
 
         Assertions.assertEquals(expectedData, actualData);
     }
@@ -120,11 +123,9 @@ public class FileManagerTest {
     public void testLoadGame() {
         String savedGame = "Game 1";
         Game game = new Game(2);
-        // ... Set up the game object and other necessary data
 
         fileManager.loadGame(savedGame, game);
 
-        // ... Implement assertions to verify the loaded game data is correct
     }
 
     /**
@@ -137,7 +138,6 @@ public class FileManagerTest {
 
         fileManager.saveGame(game);
 
-        // ... Implement assertions to verify the game is saved correctly
     }
 
     /**
@@ -150,7 +150,6 @@ public class FileManagerTest {
 
         List<String[]> fieldsData = fileManager.getFieldsData(game);
 
-        // ... Implement assertions to verify the fields data matches the expected data
     }
 
     /**
@@ -159,11 +158,9 @@ public class FileManagerTest {
     @Test
     public void testGetFiguresData() {
         ArrayList<Player> playerList = new ArrayList<>();
-        // ... Set up the player list with necessary data
 
         List<String[]> figureData = fileManager.getFiguresData(playerList);
 
-        // ... Implement assertions to verify the figure data matches the expected data
     }
 
     /**
@@ -172,11 +169,9 @@ public class FileManagerTest {
     @Test
     public void testGetPlayersData() {
         ArrayList<Player> playerList = new ArrayList<>();
-        // ... Set up the player list with necessary data
 
         List<String[]> playerData = fileManager.getPlayersData(playerList);
 
-        // ... Implement assertions to verify the player data matches the expected data
     }
 
     /**
@@ -185,11 +180,9 @@ public class FileManagerTest {
     @Test
     public void testGetGameData() {
         Game game = new Game(2);
-        // ... Set up the game object with necessary data
 
         List<String[]> gameData = fileManager.getGameData(game);
 
-        // ... Implement assertions to verify the game data matches the expected data
     }
 
     /**
@@ -199,7 +192,6 @@ public class FileManagerTest {
     public void testLoadHighscore() {
         fileManager.loadHighscore();
 
-        // ... Implement assertions to verify the highscore is loaded correctly
     }
 
     /**
@@ -209,10 +201,8 @@ public class FileManagerTest {
     public void testSaveHighscore() {
         Game game = new Game(2);
         ArrayList<Player> playerList = new ArrayList<>();
-        // ... Set up the game object, player list, and necessary data
 
-        fileManager.saveHighscore(game, playerList);
+        fileManager.saveHighscore(game, "Team A", 1);
 
-        // ... Implement assertions to verify the highscore is saved correctly
     }
 }
