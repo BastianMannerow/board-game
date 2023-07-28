@@ -1,7 +1,4 @@
 package tnt.model;
-import javafx.scene.paint.Color;
-import tnt.model.interfaces.Gods;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
