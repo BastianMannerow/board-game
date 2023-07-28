@@ -89,7 +89,6 @@ public class PlayerChooseController{
 
     @FXML
     private void updateGameSettings(){
-        System.out.println("got input");
         Game game = Settings.getActualGame();
         int nrOfFigures = updatePlayer(game);
 
@@ -104,6 +103,8 @@ public class PlayerChooseController{
 
         int sizeX = updateValueOfTextfield(this.fieldSizeX, Settings.getFieldSizeX());
         int sizeY = updateValueOfTextfield(this.fieldSizeY, Settings.getFieldSizeY());
+
+        boolean globalTilePool = this.tilesSepBox.isSelected();
 
         if (sizeX * sizeY <= nrOfFigures){
             System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
@@ -120,6 +121,7 @@ public class PlayerChooseController{
         }
 
         if (game.selectingPlayers()){
+            game.setGlobalTilePool(globalTilePool);
             game.createBoard(sizeX, sizeY);
             game.getBoard().setRoundWorld(roundWorld.isSelected());
             game.setMaxStepUpHeight(maxStepUp);

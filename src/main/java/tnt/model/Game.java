@@ -86,6 +86,7 @@ public class Game extends Observable {
      * @param victoryHeight the victory height to be set
      */
     public void setVictoryHeight(int victoryHeight) {
+        System.out.println("setVictHeight: " + globalTilePool);
         int[] new_tiles = new int[victoryHeight];
         for (int i = 0; i < new_tiles.length; i++){
             if (i >= this.numberOfTile.length){
@@ -715,6 +716,6 @@ public class Game extends Observable {
 
     public void setGlobalTilePool(boolean globalTilePool) {
         this.globalTilePool = globalTilePool;
-        setVictoryHeight(getVictoryHeight());
+//        setVictoryHeight(getVictoryHeight());
     }
 }
