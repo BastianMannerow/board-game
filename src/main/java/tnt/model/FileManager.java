@@ -284,13 +284,20 @@ public class FileManager {
         return fieldsData;
     }
 
+    /**
+     * Part of save game
+     *
+     * @param playerList alle players
+     * @return the data of the current games figures
+     */
     public List<String[]> getFiguresData(ArrayList<Player> playerList){
         List<String[]> figureData = new ArrayList<>();
-
+        String[] header = {"x", "y", "placed", "player"};
+        figureData.add(header);
         for (Player player: playerList){
             ArrayList<Figure> figureList = player.getFigure();
             for (Figure figure: figureList){
-                figureData.add(new String[]{Integer.toString(figure.getX()), Integer.toString(figure.getY())});
+                figureData.add(new String[]{Integer.toString(figure.getX()), Integer.toString(figure.getY()), Boolean.toString(figure.isPlaced()), player.getName()});
             }
         }
         return figureData;
