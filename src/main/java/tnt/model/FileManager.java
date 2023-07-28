@@ -205,8 +205,7 @@ public class FileManager {
     /**
      * Saves the game
      *
-     * @param game
-     * @return Boolean, if the saving was successful
+     * @param game The game which needs to be saved
      */
     public void saveGame(Game game){
         String saveGameName = game.getGameName();
@@ -275,13 +274,13 @@ public class FileManager {
         for (int i = 0; i < game.getBoard().getXSize(); i++) {
             for (int j = 0; j < game.getBoard().getYSize(); j++) {
                 String towerLevel = Integer.toString(game.getBoard().getField(i, j).getTowerLevel());
-                String towerComplete = "False";
+                String towerComplete = "false";
                 if (game.getBoard().getField(i, j).getTowerComplete()) {
-                    towerComplete = "True";
+                    towerComplete = "true";
                 }
-                String occupiedByFigure = "False";
+                String occupiedByFigure = "false";
                 if (game.getBoard().getField(i, j).getIsFigureHere()) {
-                    occupiedByFigure = "True";
+                    occupiedByFigure = "true";
                 }
                 fieldsData.add(new String[]{Integer.toString(i), Integer.toString(j), towerLevel, towerComplete, occupiedByFigure});
             }
