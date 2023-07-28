@@ -67,7 +67,7 @@
                   <HBox alignment="CENTER">
                      <children>
                         <Label fx:id="maxBuildingHeightLabel" prefHeight="16.0" prefWidth="145.0" text="Max building height:" />
-                        <TextField fx:id="victoryHeight" prefWidth="40.0" />
+                        <TextField fx:id="victoryHeight" onKeyReleased="#updateGameSettings" prefWidth="40.0" />
                      </children>
                   </HBox>
                </children>

@@ -36,6 +36,8 @@ public class Player extends Observable {
     private ArrayList<Gods> gods;
     private String team;
 
+    private int[] nrOfTiles;
+
     /**
      * Constructing an object Player.
      * @param levelOfIntelligence Human, easyAI, mediumAI, hardAI
@@ -220,20 +222,21 @@ public class Player extends Observable {
         if(newLevel == 4){
             field.setTowerComplete(true);
         }
-        // Remove Tile from game
-        int tile = field.getTowerLevel();
-        if(tile == 0){
-            game.setLevelOneTile(game.getLevelOneTile() - 1);
-        }
-        else if(tile == 1){
-            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
-        }
-        else if(tile == 2){
-            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
-        }
-        else{
-            game.setLevelFourTile(game.getLevelFourTile() - 1);
-        }
+//        // Remove Tile from game
+//        int tile = field.getTowerLevel();
+//        if(tile == 0){
+//            game.setLevelOneTile(game.getLevelOneTile() - 1);
+//        }
+//        else if(tile == 1){
+//            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
+//        }
+//        else if(tile == 2){
+//            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
+//        }
+//        else{
+//            game.setLevelFourTile(game.getLevelFourTile() - 1);
+//        }
+        // Todo: remove a tile
     }
 
     /**

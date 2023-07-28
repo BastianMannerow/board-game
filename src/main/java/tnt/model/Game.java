@@ -22,10 +22,6 @@ public class Game extends Observable {
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
-    private int levelOneTile;
-    private int levelTwoTile;
-    private int levelThreeTile;
-    private int levelFourTile;
 
     private int maxStepUpHeight;
     private int maxStepDownHeight;
@@ -34,22 +30,16 @@ public class Game extends Observable {
     private GameStatus gameStatus;
     private int victoryHeight;
 
+    private int[] numberOfTile = {};
+
     /**
      * Constructing an object Game.
      * @param playerOrder
      * @param amountOfTurns How many turns are completed so far (at beginning 0). It's for the highscore
-     * @param levelOneTile The amount of tiles
-     * @param levelTwoTile The amount of tiles
-     * @param levelThreeTile The amount of tiles
-     * @param levelFourTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
-        this.levelOneTile = levelOneTile;
-        this.levelTwoTile = levelTwoTile;
-        this.levelThreeTile = levelThreeTile;
-        this.levelFourTile = levelFourTile;
         this.gameName = gameName;
         createBoard(1,1);
         this.maxStepUpHeight = maxStepUpHeight;
@@ -75,6 +65,10 @@ public class Game extends Observable {
         this.maxStepDownHeight = Settings.getMaxStepDown();
         this.victoryHeight = Settings.getVictoryHeight();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
+        numberOfTile = new int[victoryHeight + 1];
+        for (int i = 0; i < numberOfTile.length; i++){
+            numberOfTile[i] = Settings.getNrOfTile(i);
+        }
     }
 
     /**
@@ -90,7 +84,23 @@ public class Game extends Observable {
      * @param victoryHeight the victory height to be set
      */
     public void setVictoryHeight(int victoryHeight) {
+        int[] new_tiles = new int[victoryHeight];
+        for (int i = 0; i < new_tiles.length; i++){
+            if (i >= this.numberOfTile.length){
+                    new_tiles[i] = Settings.getNrOfTile(i);
+                } else {
+                    new_tiles[i] = this.numberOfTile[i];
+                }
+        }
         this.victoryHeight = victoryHeight;
+        notifyObservers();
+    }
+
+    public int getNrTile(int i){
+        if (i<0 || i >= numberOfTile.length){
+            return 0;
+        }
+        return numberOfTile[i];
     }
 
     /**
@@ -141,62 +151,6 @@ public class Game extends Observable {
      */
     public void setGameName(String gameName) {
         this.gameName = gameName;
-    }
-
-    /**
-     * @return levelOneTile
-     */
-    public int getLevelOneTile() {
-        return levelOneTile;
-    }
-
-    /**
-     * @param levelOneTile replaces old playerOrder
-     */
-    public void setLevelOneTile(int levelOneTile) {
-        this.levelOneTile = levelOneTile;
-    }
-
-    /**
-     * @return levelTwoTile
-     */
-    public int getLevelTwoTile() {
-        return levelTwoTile;
-    }
-
-    /**
-     * @param levelTwoTile replaces old playerOrder
-     */
-    public void setLevelTwoTile(int levelTwoTile) {
-        this.levelTwoTile = levelTwoTile;
-    }
-
-    /**
-     * @return levelThreeTile
-     */
-    public int getLevelThreeTile() {
-        return levelThreeTile;
-    }
-
-    /**
-     * @param levelThreeTile replaces old playerOrder
-     */
-    public void setLevelThreeTile(int levelThreeTile) {
-        this.levelThreeTile = levelThreeTile;
-    }
-
-    /**
-     * @return levelFourTile
-     */
-    public int getLevelFourTile() {
-        return levelFourTile;
-    }
-
-    /**
-     * @param levelFourTile replaces old playerOrder
-     */
-    public void setLevelFourTile(int levelFourTile) {
-        this.levelFourTile = levelFourTile;
     }
 
     /**

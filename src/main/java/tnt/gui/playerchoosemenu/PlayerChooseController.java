@@ -78,15 +78,23 @@ public class PlayerChooseController{
      */
     @FXML
     private void runGame() {
+        updateGameSettings();
         Game game = Settings.getActualGame();
-        int nrOfFigures = updatePlayer(game);
-
-
-        updateGameSettings(game, nrOfFigures);
-
+        if (game.selectingPlayers()){
+            game.initGame();
+            game.startPlaceFigures();
+        }
         sceneHandler.loadView("gameView");
     }
 
+    @FXML
+    private void updateGameSettings(){
+        System.out.println("got input");
+        Game game = Settings.getActualGame();
+        int nrOfFigures = updatePlayer(game);
+
+        updateGameSettings(game, nrOfFigures);
+    }
     private void updateGameSettings(Game game, int nrOfFigures) {
         // Todo: get the other fields
 
@@ -117,8 +125,6 @@ public class PlayerChooseController{
             game.setMaxStepUpHeight(maxStepUp);
             game.setMaxStepDownHeight(maxStepDown);
             game.setVictoryHeight(victoryHeight);
-            game.initGame();
-            game.startPlaceFigures();
         }
     }
 

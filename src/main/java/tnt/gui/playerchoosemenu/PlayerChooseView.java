@@ -91,9 +91,9 @@ public class PlayerChooseView extends VBox implements Observer {
             if (i==0) {
                 tileLabel.setText(Language.getTranslation("domeLabel")); // Todo
             } else {
-                tileLabel.setText(Language.getTranslation("buildingLevelLabel") + " " + i); // Todo
+                tileLabel.setText(Language.getTranslation("buildingLevelLabel") + " " + i); // Todo, but what was it?
             }
-            textField.setText(Integer.toString(game.getLevelOneTile()));
+            textField.setText(Integer.toString(game.getNrTile(i)));
             textField.setPrefWidth(USE_COMPUTED_SIZE);
             textField.setPrefHeight(USE_COMPUTED_SIZE);
             tilePane.getChildren().addAll(tileLabel, textField);

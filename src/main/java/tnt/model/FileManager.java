@@ -318,11 +318,12 @@ public class FileManager {
         }
         String playerOrder = Integer.toString(game.getPlayerOrder().size());
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
-        String levelOneTile = Integer.toString(game.getLevelOneTile());
-        String levelTwoTile = Integer.toString(game.getLevelTwoTile());
-        String levelThreeTile = Integer.toString(game.getLevelThreeTile());
-        String levelFourTile = Integer.toString(game.getLevelFourTile());
-        gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
+        // Todo: Save tiles (in player)
+//        String levelOneTile = Integer.toString(game.getLevelOneTile());
+//        String levelTwoTile = Integer.toString(game.getLevelTwoTile());
+//        String levelThreeTile = Integer.toString(game.getLevelThreeTile());
+//        String levelFourTile = Integer.toString(game.getLevelFourTile());
+//        gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
         return gameData;
     }
 
