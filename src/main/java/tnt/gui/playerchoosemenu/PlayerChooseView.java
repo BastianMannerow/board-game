@@ -84,7 +84,7 @@ public class PlayerChooseView extends VBox implements Observer {
         controller.tilesSepBox.setSelected(game.isGlobalTilePool());
         controller.tileBox.getChildren().clear();
         controller.tileBox.getChildren().add(controller.sepBox);
-        controller.tilesSepLabel.setText(Language.getTranslation("seperateLabel"));
+        controller.labelGlobalTilePool.setText(Language.getTranslation("seperateLabel"));
         for (int i = 0; i <= game.getVictoryHeight(); i++){
             VBox tilePane = new VBox();
             Label tileLabel = new Label();

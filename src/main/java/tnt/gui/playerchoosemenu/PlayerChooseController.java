@@ -21,7 +21,7 @@ public class PlayerChooseController{
     @FXML
     VBox sepBox;
     @FXML
-    Label tilesSepLabel;
+    Label labelGlobalTilePool;
     @FXML
     CheckBox tilesSepBox;
     @FXML
