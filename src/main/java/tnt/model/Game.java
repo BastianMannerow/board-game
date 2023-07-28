@@ -28,27 +28,17 @@ public class Game extends Observable {
     private Figure lastMovedFigure;
     private GameStatus gameStatus;
     private int victoryHeight;
+    private int[] numberOfTile = {};
 
-    private boolean globalTilePool;
-    private int levelOneTile;
-    private int levelTwoTile;
-    private int levelThreeTile;
-    private int levelFourTile;
-    private int levelFiveTile;
-    private int levelSixTile;
+    private boolean globalTilePool = true;
 
     /**
      * Constructing an object Game.
      * @param playerOrder
      * @param amountOfTurns How many turns are completed so far (at beginning 0). It's for the highscore
-     * @param levelOneTile The amount of tiles
-     * @param levelTwoTile The amount of tiles
-     * @param levelThreeTile The amount of tiles
-     * @param levelFourTile The amount of tiles
-     * @param levelFiveTile The amount of tiles
-     * @param levelSixTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight, boolean globalTilePool, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, int levelFiveTile, int levelSixTile) {
+
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight, boolean globalTilePool) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
         this.gameName = gameName;
@@ -57,10 +47,6 @@ public class Game extends Observable {
         this.maxStepDownHeight = maxStepDownHeight;
         this.victoryHeight = victoryHeight;
         this.globalTilePool = globalTilePool;
-        this.levelOneTile = levelOneTile;
-        this.levelTwoTile = levelTwoTile;
-        this.levelThreeTile = levelThreeTile;
-        this.levelFourTile = levelFourTile;
     }
 
     /**
@@ -74,113 +60,17 @@ public class Game extends Observable {
         if (defaultAmountPlayer > 3) {
             amountFigures = 1;
         }
-        for (int i = 0; i < defaultAmountPlayer; i++) {
-            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1), amountOfTurns);
-        }
         this.maxStepUpHeight = Settings.getMaxStepUp();
         this.maxStepDownHeight = Settings.getMaxStepDown();
         this.victoryHeight = Settings.getVictoryHeight();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
-    }
-
-    /**
-     * @return levelOneTile
-     */
-    public int getLevelOneTile() {
-        return levelOneTile;
-    }
-
-    /**
-     * @param levelOneTile replaces old playerOrder
-     */
-    public void setLevelOneTile(int levelOneTile) {
-        this.levelOneTile = levelOneTile;
-    }
-
-    /**
-     * @return levelTwoTile
-     */
-    public int getLevelTwoTile() {
-        return levelTwoTile;
-    }
-
-    /**
-     * @param levelTwoTile replaces old playerOrder
-     */
-    public void setLevelTwoTile(int levelTwoTile) {
-        this.levelTwoTile = levelTwoTile;
-    }
-
-    /**
-     * @return levelThreeTile
-     */
-    public int getLevelThreeTile() {
-        return levelThreeTile;
-    }
-
-    /**
-     * @param levelThreeTile replaces old playerOrder
-     */
-    public void setLevelThreeTile(int levelThreeTile) {
-        this.levelThreeTile = levelThreeTile;
-    }
-
-    /**
-     * @return levelFourTile
-     */
-    public int getLevelFourTile() {
-        return levelFourTile;
-    }
-
-    /**
-     * @param levelFourTile levelFourTile
-     */
-    public void setLevelFourTile(int levelFourTile) {
-        this.levelFourTile = levelFourTile;
-    }
-
-    /**
-     * @param levelFiveTile levelFiveTile
-     */
-    public void setLevelFiveTile(int levelFiveTile) {
-        this.levelFiveTile = levelFiveTile;
-    }
-
-    /**
-     * @return levelFiveTile
-     */
-    public int getLevelFiveTile() {
-        return levelFiveTile;
-    }
-
-    /**
-     * @return levelSixTile
-     */
-    public int getLevelSixTile() {
-        return levelSixTile;
-    }
-
-    /**
-     * @param levelSixTile levelSixTile
-     */
-    public void setLevelSixTile(int levelSixTile) {
-        this.levelSixTile = levelSixTile;
-    }
-
-    /**
-     * Getter for the globalTilePool
-     * @return if the tile pool is local for each player or global
-     */
-    public boolean getGlobalTilePool() {
-        return globalTilePool;
-    }
-
-    /**
-     * Setter for the globalTilePool
-     * @param globalTilePool if the tile pool is local for each player or global
-     */
-    public void setGlobalTilePool(boolean globalTilePool) {
-        this.globalTilePool = globalTilePool;
+        numberOfTile = new int[victoryHeight + 1];
+        for (int i = 0; i < numberOfTile.length; i++){
+            numberOfTile[i] = Settings.getNrOfTile(i);
+        }
+        for (int i = 0; i < defaultAmountPlayer; i++) {
+            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1), amountOfTurns);
+        }
     }
 
     /**
@@ -196,8 +86,32 @@ public class Game extends Observable {
      * @param victoryHeight the victory height to be set
      */
     public void setVictoryHeight(int victoryHeight) {
+        System.out.println("setVictHeight: " + globalTilePool);
+        int[] new_tiles = new int[victoryHeight];
+        for (int i = 0; i < new_tiles.length; i++){
+            if (i >= this.numberOfTile.length){
+                    new_tiles[i] = Settings.getNrOfTile(i);
+                } else {
+                    new_tiles[i] = this.numberOfTile[i];
+                }
+        }
         this.victoryHeight = victoryHeight;
+        for (Player player: playerOrder){
+            if (globalTilePool){
+                player.setNrOfTiles(numberOfTile);
+            } else {
+                player.setNrOfTiles(numberOfTile.clone());
+            }
+        }
+        notifyObservers();
     }
+
+//    public int getNrTile(int i){
+//        if (i<0 || i >= numberOfTile.length){
+//            return 0;
+//        }
+//        return numberOfTile[i];
+//    }
 
     /**
      * @return Maximum height to step up
@@ -724,7 +638,13 @@ public class Game extends Observable {
 //            newPlayer.setAmountOfFigures(amountOfFigures);
 //            newPlayer.setTeam(team);
 //            playerOrder.add(newPlayer);
-            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns));
+            Player newPlayer = new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns);
+            playerOrder.add(newPlayer);
+            if (globalTilePool){
+                newPlayer.setNrOfTiles(numberOfTile);
+            } else {
+                newPlayer.setNrOfTiles(numberOfTile.clone());
+            }
             notifyObservers();
         }
     }
@@ -788,5 +708,14 @@ public class Game extends Observable {
      */
     public Figure getLastMovedFigure() {
         return lastMovedFigure;
+    }
+
+    public boolean isGlobalTilePool() {
+        return globalTilePool;
+    }
+
+    public void setGlobalTilePool(boolean globalTilePool) {
+        this.globalTilePool = globalTilePool;
+//        setVictoryHeight(getVictoryHeight());
     }
 }

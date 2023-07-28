@@ -47,6 +47,9 @@ public class Language extends Observable {
             entry("playerTypeLabel", "player type"),
             entry("playerMenuLabel", "player menu"),
             entry("human_label", "human"),
+            entry("domeLabel", "dome"),
+            entry("buildingLevelLabel", "building level"),
+            entry("seperateLabel", "use global pool for\nbuilding levels\nfor all player"),
             entry("", "")
     );
     private static Map<String, String> german = Map.ofEntries(
@@ -82,6 +85,9 @@ public class Language extends Observable {
             entry("playerTypeLabel", "Art des Spielers"),
             entry("playerMenuLabel", "Spieler Menü"),
             entry("human_label", "Mensch"),
+            entry("domeLabel", "Kuppel"),
+            entry("buildingLevelLabel", "Stockwerk"),
+            entry("seperateLabel", "Globaler Pool\nfür Stockwerke\nfür alle Spieler"),
             entry("", "")
     );
 

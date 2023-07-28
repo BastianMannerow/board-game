@@ -114,7 +114,7 @@ public class ExecuteGameInputsTest {
     @Test
     public void testBuildObject_ValidBuildLevel_MaxBuildingLevel_ReturnsTrue() {
         field.setTowerLevel(2);
-        boolean result = ExecuteGameInputs.buildObject(-1, field);
+        boolean result = ExecuteGameInputs.buildObject(0, field);
         Assertions.assertTrue(result);
         Assertions.assertTrue(field.getTowerComplete());
     }

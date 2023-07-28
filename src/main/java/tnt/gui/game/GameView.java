@@ -1,6 +1,8 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -26,7 +28,8 @@ public class GameView extends BorderPane implements Observer {
     private DragableObject dragableObject;
     static private Map<Field, FieldView> fieldHolder = new HashMap<Field, FieldView>();
     static private Map<Figure, FigureView> figureHolder = new HashMap<Figure, FigureView>();
-    static private Map<Integer, BuildingLevel> initBuildingHolder = new HashMap<Integer, BuildingLevel>();
+//    static private Map<Integer, BuildingLevel> initBuildingHolder = new HashMap<Integer, BuildingLevel>();
+    static private Map<Integer, HBox> initBuildingHolder = new HashMap<Integer, HBox>();
     GameController controller;
     private List<ImageView> highlighted = new ArrayList<>();
     private List<ImageView> highlightedtemp = new ArrayList<>();
@@ -69,6 +72,7 @@ public class GameView extends BorderPane implements Observer {
         removeHighlights(highlighted);
 
         ((ScrollPane) this.getCenter()).setFitToHeight(true);
+        ((ScrollPane) this.getCenter()).setFitToWidth(true);
 
         updateFiguresRightBar();
 
@@ -143,7 +147,7 @@ public class GameView extends BorderPane implements Observer {
             for (int level = 1; level <= game.getVictoryHeight() ; level++) {
                 updateBuilding(level);
             }
-            updateBuilding(-1);
+            updateBuilding(0);
 
             makeHighlight();
         }
@@ -157,15 +161,20 @@ public class GameView extends BorderPane implements Observer {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-            initBuildingHolder.put(level, buildingLevel);
+            HBox building = new HBox();
+            building.setAlignment(Pos.CENTER_LEFT);
+            building.getChildren().add(buildingLevel);
+            Label amount = new Label();
+            building.getChildren().add(amount);
+            initBuildingHolder.put(level, building);
             setDragableEvents(buildingLevel, true);
         }
 
-        BuildingLevel buildingLevel = initBuildingHolder.get(level);
+        HBox buildingLevel = initBuildingHolder.get(level);
         if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
             ((VBox) this.getRight()).getChildren().add(buildingLevel);
         }
+        ((Label) buildingLevel.getChildren().get(1)).setText(Integer.toString(game.getPlayersTurn().getNrOfTiles(level)));
     }
 
     private void updateFiguresRightBar() {
@@ -199,7 +208,7 @@ public class GameView extends BorderPane implements Observer {
             }
 
         }
-        ((VBox) this.getRight()).setPrefWidth(SizeHandler.getPrefSize());
+        ((VBox) this.getRight()).setPrefWidth(SizeHandler.getPrefSize() + 50);
     }
 
     /**

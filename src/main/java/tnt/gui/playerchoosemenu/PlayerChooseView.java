@@ -64,6 +64,7 @@ public class PlayerChooseView extends VBox implements Observer {
         updateTextfield(controller.victoryHeight, String.valueOf(game.getVictoryHeight()));
         updateTextfield(controller.maxStepUp, String.valueOf(game.getMaxStepUpHeight()));
         updateTextfield(controller.maxStepDown, String.valueOf(game.getMaxStepDownHeight()));
+        updateTileResources();
 
         ArrayList<Player> players = game.getPlayerOrder();
         int i = 0;
@@ -77,6 +78,28 @@ public class PlayerChooseView extends VBox implements Observer {
             updatePlayer(player, i);
         }
         updateLabels();
+    }
+
+    private void updateTileResources() {
+        controller.tilesSepBox.setSelected(game.isGlobalTilePool());
+        controller.tileBox.getChildren().clear();
+        controller.tileBox.getChildren().add(controller.sepBox);
+        controller.labelGlobalTilePool.setText(Language.getTranslation("seperateLabel"));
+        for (int i = 0; i <= game.getVictoryHeight(); i++){
+            VBox tilePane = new VBox();
+            Label tileLabel = new Label();
+            TextField textField = new TextField();
+            if (i==0) {
+                tileLabel.setText(Language.getTranslation("domeLabel")); // Todo
+            } else {
+                tileLabel.setText(Language.getTranslation("buildingLevelLabel") + " " + i); // Todo, but what was it?
+            }
+            textField.setText(Integer.toString(game.getPlayersTurn().getNrTile(i)));
+            textField.setPrefWidth(USE_COMPUTED_SIZE);
+            textField.setPrefHeight(USE_COMPUTED_SIZE);
+            tilePane.getChildren().addAll(tileLabel, textField);
+            controller.tileBox.getChildren().add(tilePane);
+        }
     }
 
     private void updateLabels() {

@@ -9,6 +9,14 @@ import tnt.util.Observable;
  */
 public class Player extends Observable {
 
+
+    public int getNrTile(int i) {
+        if (i<0 || i >= nrOfTiles.length){
+            return 0;
+        }
+        return nrOfTiles[i];
+    }
+
     public enum PlayerType {
         HUMAN,
 //        REMOTE,
@@ -24,12 +32,7 @@ public class Player extends Observable {
     private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private String team;
-    private int levelOneTile;
-    private int levelTwoTile;
-    private int levelThreeTile;
-    private int levelFourTile;
-    private int levelFiveTile;
-    private int levelSixTile;
+    private int[] nrOfTiles;
 
     /**
      * Constructing an object Player.
@@ -37,25 +40,13 @@ public class Player extends Observable {
      * @param name initial name
      * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
-     * @param levelOneTile The amount of tiles
-     * @param levelTwoTile The amount of tiles
-     * @param levelThreeTile The amount of tiles
-     * @param levelFourTile The amount of tiles
-     * @param levelFiveTile The amount of tiles
-     * @param levelSixTile The amount of tiles
      */
-    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, int levelFiveTile, int levelSixTile) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.figures = figures;
         this.amountOfTurns = amountOfTurns;
-        this.levelOneTile = levelOneTile;
-        this.levelTwoTile = levelTwoTile;
-        this.levelThreeTile = levelThreeTile;
-        this.levelFourTile = levelFourTile;
-        this.levelFiveTile = levelFiveTile;
-        this.levelSixTile = levelSixTile;
     }
 
     public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team, int amountOfTurns) {
@@ -66,90 +57,6 @@ public class Player extends Observable {
         this.game = game;
         this.team = team;
         this.amountOfTurns = amountOfTurns;
-    }
-
-    /**
-     * @return levelOneTile
-     */
-    public int getLevelOneTile() {
-        return levelOneTile;
-    }
-
-    /**
-     * @param levelOneTile replaces old playerOrder
-     */
-    public void setLevelOneTile(int levelOneTile) {
-        this.levelOneTile = levelOneTile;
-    }
-
-    /**
-     * @return levelTwoTile
-     */
-    public int getLevelTwoTile() {
-        return levelTwoTile;
-    }
-
-    /**
-     * @param levelTwoTile replaces old playerOrder
-     */
-    public void setLevelTwoTile(int levelTwoTile) {
-        this.levelTwoTile = levelTwoTile;
-    }
-
-    /**
-     * @return levelThreeTile
-     */
-    public int getLevelThreeTile() {
-        return levelThreeTile;
-    }
-
-    /**
-     * @param levelThreeTile replaces old playerOrder
-     */
-    public void setLevelThreeTile(int levelThreeTile) {
-        this.levelThreeTile = levelThreeTile;
-    }
-
-    /**
-     * @return levelFourTile
-     */
-    public int getLevelFourTile() {
-        return levelFourTile;
-    }
-
-    /**
-     * @param levelFourTile levelFourTile
-     */
-    public void setLevelFourTile(int levelFourTile) {
-        this.levelFourTile = levelFourTile;
-    }
-
-    /**
-     * @param levelFiveTile levelFiveTile
-     */
-    public void setLevelFiveTile(int levelFiveTile) {
-        this.levelFiveTile = levelFiveTile;
-    }
-
-    /**
-     * @return levelFiveTile
-     */
-    public int getLevelFiveTile() {
-        return levelFiveTile;
-    }
-
-    /**
-     * @return levelSixTile
-     */
-    public int getLevelSixTile() {
-        return levelSixTile;
-    }
-
-    /**
-     * @param levelSixTile levelSixTile
-     */
-    public void setLevelSixTile(int levelSixTile) {
-        this.levelSixTile = levelSixTile;
     }
 
     /**
@@ -257,20 +164,7 @@ public class Player extends Observable {
         if(newLevel == 4){
             field.setTowerComplete(true);
         }
-        // Remove Tile from game
-        int tile = field.getTowerLevel();
-        if(tile == 0){
-            levelOneTile--;
-        }
-        else if(tile == 1){
-            levelTwoTile--;
-        }
-        else if(tile == 2){
-            levelThreeTile--;
-        }
-        else{
-            levelFourTile--;
-        }
+        // Todo: remove a tile
     }
 
     /**
@@ -327,6 +221,19 @@ public class Player extends Observable {
      */
     public int getAmountOfFigures() {
         return this.amountOfFigures;
+    }
+
+
+    public void setNrOfTiles(int[] numberOfTile) {
+        this.nrOfTiles = numberOfTile;
+    }
+
+    public int getNrOfTiles(int level) {
+        return nrOfTiles[level];
+    }
+
+    public void removeTile(int buildLevel) {
+        nrOfTiles[buildLevel] -=1;
     }
 
     public void prePlayersTurn(){
