@@ -51,9 +51,12 @@ public class EndView extends VBox {
             }
             fileManager.checkHighscore(game,winner);
             ArrayList<String> highscores = fileManager.loadHighscore();
-            for (String string:highscores) {
+            for (int i=0;i<highscores.size();i=i+4) {
+                String print="";
+                print += "Name: "+highscores.get(i)+" LevelOfIntelligence: "+
+                        highscores.get(i+1)+" AmountOfTurns: "+highscores.get(i+2)+" Team Name: "+highscores.get(i+3);
                 Label label = new Label();
-                label.setText(string);
+                label.setText(print);
                 this.getChildren().add(label);
             }
             notInitialized=false;
@@ -62,37 +65,10 @@ public class EndView extends VBox {
             this.getChildren().add(button);
         }
 
-        // fileManager.saveHighscore(game,game.getPlayerOrder());TODO need fix error Nullpointer exception
     }
 
     public void setController(GameController controller){
         this.controller=controller;
     }
-    /*
-     ArrayList<String> highscores=new ArrayList<>();//= fileManager.loadHighscore();//TODO implement loadHighscore
-            for (String score: highscores) {
-                Label label = new Label();
-                label.setText(score);
-                this.getChildren().add(label);
-            }
-            int NumberinHighscores=1;//TODO when loadHighscore is done determine which number is the newly finished game
-            String print = new String(NumberinHighscores + ":    Highscore: " + game.getAmountOfTurns() +
-                    "     Turns: " + game.getAmountOfTurns() + "     Winner: ");
-            String losers = game.getPlayersTurn().getTeam();
-            for (Player player : game.getPlayerOrder()) {
-                if (player.getTeam() != losers) {
-                    print = print + player.getName();
-                    print = print + " ";
-                }
-            }
-            Label label = new Label();
-            label.setText(print);
 
-
-            this.getChildren().add(label);
-            notInitialized=false;
-            Button button = new Button("Menu");
-            button.setOnMouseClicked(event -> controller.goToMenu());
-            this.getChildren().add(button);
-     */
 }

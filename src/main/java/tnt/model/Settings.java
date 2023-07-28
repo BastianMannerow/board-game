@@ -22,6 +22,8 @@ public class Settings {
     private static RemoteMode remoteMode = RemoteMode.SERVER;
     static NetworkHandler networkHandler = new NetworkHandler();
 
+
+    private static int[] defaultNrTiles = {18, 22, 20, 14};
     static Game actualGame;
 
     private static int highscoreAmount = 5;
@@ -126,5 +128,13 @@ public class Settings {
      */
     public static int getHighscoreAmount() {
         return highscoreAmount;
+    }
+
+    public static int getNrOfTile(int i){
+        if (i >= defaultNrTiles.length || i < 0){
+            return 0;
+        }
+        return defaultNrTiles[i];
+
     }
 }

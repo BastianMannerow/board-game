@@ -27,7 +27,7 @@ public class FileManager {
             int lineNumber = 0;
             while ((line = reader.readLine()) != null) {
                 String[] row = line.split(";");
-                if(lineNumber == 0) {
+                if(lineNumber == 0) { // The first line will be the header, which is used for an easier indexing
                     header = Arrays.asList(row);
                 } else {
                     data.add(Arrays.asList(row));
@@ -62,7 +62,7 @@ public class FileManager {
      */
     public void saveCSV(String filepath, List<String[]> data){
         try {
-            // Creates Filepath, if not existend
+            // Creates Filepath, if not existing
             Path pathToFile = Paths.get(filepath);
             Files.createDirectories(pathToFile.getParent());
             try (FileWriter writer = new FileWriter(filepath)) {
@@ -126,9 +126,7 @@ public class FileManager {
     public ArrayList<String> getSavedGames(){
         String directory = System.getProperty("user.dir");
         File folder = new File(directory + "\\savings");
-
         ArrayList<String> savedGames = new ArrayList<>();
-
         if (folder.isDirectory()) {
             File[] subfolders = folder.listFiles(File::isDirectory);
             if (subfolders != null) {
@@ -158,10 +156,6 @@ public class FileManager {
         String playerOrder = gameData.get(0).get(header.indexOf("playerOrder"));
         String board = gameData.get(0).get(header.indexOf("board"));
         String amountOfGameTurns = gameData.get(0).get(header.indexOf("amountOfGameTurns"));
-        String levelOneTile = gameData.get(0).get(header.indexOf("levelOneTile"));
-        String levelTwoTile = gameData.get(0).get(header.indexOf("levelTwoTile"));
-        String levelThreeTile = gameData.get(0).get(header.indexOf("levelThreeTile"));
-        String levelFourTile = gameData.get(0).get(header.indexOf("levelFourTile"));
         String maxStepUpHeight = gameData.get(0).get(header.indexOf("maxStepUpHeight"));
         String maxStepDownHeight = gameData.get(0).get(header.indexOf("maxStepDownHeight"));
         String gameName = gameData.get(0).get(header.indexOf("gameName"));
@@ -182,6 +176,10 @@ public class FileManager {
         String figures = playerData.get(0).get(header.indexOf("figures"));
         String gods = playerData.get(0).get(header.indexOf("gods"));
         String team = playerData.get(0).get(header.indexOf("team"));
+        String levelOneTile = gameData.get(0).get(header.indexOf("levelOneTile"));
+        String levelTwoTile = gameData.get(0).get(header.indexOf("levelTwoTile"));
+        String levelThreeTile = gameData.get(0).get(header.indexOf("levelThreeTile"));
+        String levelFourTile = gameData.get(0).get(header.indexOf("levelFourTile"));
 
         // Load Figure
         csv = loadCSV(filepath + File.separator + "figure.csv");
@@ -212,6 +210,7 @@ public class FileManager {
      */
     public void saveGame(Game game){
         loadHighscore();
+        checkHighscore(game, "1");
 
         String saveGameName = game.getGameName();
         // If new game, create new saving folder
@@ -237,27 +236,22 @@ public class FileManager {
 
         // Save Game Information
         List<String[]> gameData = getGameData(game);
-
         String filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "game.csv";
         saveCSV(filepath, gameData);
 
         // Save Player Information
         ArrayList<Player> playerList = game.getPlayerOrder();
         List<String[]> playerData = getPlayersData(playerList);
-
-
         filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "player.csv";
         saveCSV(filepath, playerData);
 
         // Save Figure Information
         List<String[]> figureData = getFiguresData(playerList);
-
         filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "figure.csv";
         saveCSV(filepath, figureData);
 
         // Save Field Information
         List<String[]> fieldsData = getFieldsData(game);
-
         filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "fields.csv";
         saveCSV(filepath, fieldsData);
 
@@ -300,10 +294,7 @@ public class FileManager {
             String color = player.getColor().toString();
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
             String gods = "Nobody"; // Muss gelöscht werden
-            String levelOneTile = Integer.toString(player.getLevelOneTile());
-            String levelTwoTile = Integer.toString(player.getLevelTwoTile());
-            String levelThreeTile = Integer.toString(player.getLevelThreeTile());
-            String levelFourTile = Integer.toString(player.getLevelFourTile());
+            // Todo : get tiles data
             // String gods = player.getGods(); Muss angepasst werden.
             String team = player.getTeam();
             playerData.add(new String[]{name, color, String.valueOf(levelOfIntelligence), gods, team});
@@ -319,6 +310,12 @@ public class FileManager {
         }
         String playerOrder = Integer.toString(game.getPlayerOrder().size());
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
+        // Todo: Save tiles ( also above in player)
+//        String levelOneTile = Integer.toString(game.getLevelOneTile());
+//        String levelTwoTile = Integer.toString(game.getLevelTwoTile());
+//        String levelThreeTile = Integer.toString(game.getLevelThreeTile());
+//        String levelFourTile = Integer.toString(game.getLevelFourTile());
+//        gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
         gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns});
         return gameData;
     }
@@ -348,7 +345,6 @@ public class FileManager {
             int levelOfIntelligence = header.indexOf("LevelOfIntelligence");
             int gameAmountOfTurns = header.indexOf("AmountOfTurns");
             int nameOfTeam = header.indexOf("Team Name");
-
             topOneplayerNames = data.get(0).get(name);
             topTwoplayerNames = data.get(1).get(name);
             topThreeplayerNames = data.get(2).get(name);
@@ -362,20 +358,8 @@ public class FileManager {
             topTwoTeamName = data.get(1).get(nameOfTeam);
             topThreeTeamName = data.get(2).get(nameOfTeam);
         }
-
         ArrayList<String> extractedData = new ArrayList<>();
-        extractedData.add(topOneplayerNames);
-        extractedData.add(topOneLevelOfIntelligence);
-        extractedData.add(topOneAmountOfTurns);
-        extractedData.add(topOneTeamName);
-        extractedData.add(topTwoplayerNames);
-        extractedData.add(topTwoLevelOfIntelligence);
-        extractedData.add(topTwoAmountOfTurns);
-        extractedData.add(topTwoTeamName);
-        extractedData.add(topThreeplayerNames);
-        extractedData.add(topThreeLevelOfIntelligence);
-        extractedData.add(topThreeAmountOfTurns);
-        extractedData.add(topThreeTeamName);
+        extractedData.addAll(Arrays.asList(topOneplayerNames, topOneLevelOfIntelligence, topOneAmountOfTurns, topOneTeamName, topTwoplayerNames, topTwoLevelOfIntelligence, topTwoAmountOfTurns, topTwoTeamName, topThreeplayerNames, topThreeLevelOfIntelligence, topThreeAmountOfTurns, topThreeTeamName));
         System.out.println(extractedData);
         return extractedData;
     }
@@ -442,12 +426,13 @@ public class FileManager {
      * @param game The game object
      * @param winner The name of the winning team
      */
-    public void checkHighscore(Game game, String winner){
+    public void checkHighscore (Game game, String winner){
         ArrayList<String> oldHighscore = loadHighscore();
         int potentialHighscore = 10000;
         ArrayList<Player> playerList = game.getPlayerOrder();
         int position = 4;
 
+        // Compares the potential new highscore with the existing ones
         for (Player player: playerList) {
             if (player.getTeam().equals(winner)) {
                 if (player.getAmountOfTurns() < potentialHighscore) {
@@ -455,7 +440,6 @@ public class FileManager {
                 }
             }
         }
-
         for (int k = 0; k <= 2; k++){
             if (Integer.parseInt(oldHighscore.get(2+k*4)) > potentialHighscore){
                 position = k;
@@ -463,8 +447,6 @@ public class FileManager {
             }
         }
 
-        if (Integer.parseInt(oldHighscore.get(4)) < game.getAmountOfTurns()){
-            saveHighscore(game, winner, position);
-        }
+        saveHighscore(game, winner, position);
     }
 }
