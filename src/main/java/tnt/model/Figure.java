@@ -10,7 +10,7 @@ import java.util.Set;
 public class Figure extends Observable {
     private int x = 0;
     private int y = 0;
-//    private Game game; //Todo: delete?
+    private Game game;
     private boolean placed;
     private Player player;
 
@@ -25,7 +25,7 @@ public class Figure extends Observable {
         this.x = x;
         this.y = y;
         this.placed = true;
-//        this.game = game;
+        this.game = game;
         this.player = player;
     }
 
@@ -105,8 +105,8 @@ public class Figure extends Observable {
 
         // Filter the reachable fields, so that only the legal fields remain
         int ownTowerLevel = board.getField(x,y).getTowerLevel();
-        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel + Settings.getActualGame().getMaxStepUpHeight()
-                || field.getTowerLevel() < ownTowerLevel - Settings.getActualGame().getMaxStepDownHeight());
+        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel + game.getMaxStepUpHeight()
+                || field.getTowerLevel() < ownTowerLevel - game.getMaxStepDownHeight());
         return reachableFields;
     }
 
@@ -157,7 +157,6 @@ public class Figure extends Observable {
 //                }
 //            }
 //            else{
-            Game game = Settings.getActualGame();
             int tile = field.getTowerLevel();
             for (int i = 0; i < game.getVictoryHeight(); i++){
                 if ((player.getNrOfTiles(tile + 1) == 0 && tile != game.getVictoryHeight()) || (tile == game.getVictoryHeight() && player.getNrOfTiles(0) == 0)){
