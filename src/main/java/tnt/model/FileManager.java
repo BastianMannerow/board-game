@@ -300,6 +300,10 @@ public class FileManager {
             String color = player.getColor().toString();
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
             String gods = "Nobody"; // Muss gelöscht werden
+            String levelOneTile = Integer.toString(player.getLevelOneTile());
+            String levelTwoTile = Integer.toString(player.getLevelTwoTile());
+            String levelThreeTile = Integer.toString(player.getLevelThreeTile());
+            String levelFourTile = Integer.toString(player.getLevelFourTile());
             // String gods = player.getGods(); Muss angepasst werden.
             String team = player.getTeam();
             playerData.add(new String[]{name, color, String.valueOf(levelOfIntelligence), gods, team});
@@ -315,11 +319,7 @@ public class FileManager {
         }
         String playerOrder = Integer.toString(game.getPlayerOrder().size());
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
-        String levelOneTile = Integer.toString(game.getLevelOneTile());
-        String levelTwoTile = Integer.toString(game.getLevelTwoTile());
-        String levelThreeTile = Integer.toString(game.getLevelThreeTile());
-        String levelFourTile = Integer.toString(game.getLevelFourTile());
-        gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
+        gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns});
         return gameData;
     }
 

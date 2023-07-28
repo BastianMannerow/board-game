@@ -24,6 +24,10 @@ public class Player extends Observable {
     private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private String team;
+    private int levelOneTile;
+    private int levelTwoTile;
+    private int levelThreeTile;
+    private int levelFourTile;
 
     /**
      * Constructing an object Player.
@@ -31,13 +35,21 @@ public class Player extends Observable {
      * @param name initial name
      * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
+     * @param levelOneTile The amount of tiles
+     * @param levelTwoTile The amount of tiles
+     * @param levelThreeTile The amount of tiles
+     * @param levelFourTile The amount of tiles
      */
-    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.figures = figures;
         this.amountOfTurns = amountOfTurns;
+        this.levelOneTile = levelOneTile;
+        this.levelTwoTile = levelTwoTile;
+        this.levelThreeTile = levelThreeTile;
+        this.levelFourTile = levelFourTile;
     }
 
     public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team, int amountOfTurns) {
@@ -48,6 +60,62 @@ public class Player extends Observable {
         this.game = game;
         this.team = team;
         this.amountOfTurns = amountOfTurns;
+    }
+
+    /**
+     * @return levelOneTile
+     */
+    public int getLevelOneTile() {
+        return levelOneTile;
+    }
+
+    /**
+     * @param levelOneTile replaces old playerOrder
+     */
+    public void setLevelOneTile(int levelOneTile) {
+        this.levelOneTile = levelOneTile;
+    }
+
+    /**
+     * @return levelTwoTile
+     */
+    public int getLevelTwoTile() {
+        return levelTwoTile;
+    }
+
+    /**
+     * @param levelTwoTile replaces old playerOrder
+     */
+    public void setLevelTwoTile(int levelTwoTile) {
+        this.levelTwoTile = levelTwoTile;
+    }
+
+    /**
+     * @return levelThreeTile
+     */
+    public int getLevelThreeTile() {
+        return levelThreeTile;
+    }
+
+    /**
+     * @param levelThreeTile replaces old playerOrder
+     */
+    public void setLevelThreeTile(int levelThreeTile) {
+        this.levelThreeTile = levelThreeTile;
+    }
+
+    /**
+     * @return levelFourTile
+     */
+    public int getLevelFourTile() {
+        return levelFourTile;
+    }
+
+    /**
+     * @param levelFourTile replaces old playerOrder
+     */
+    public void setLevelFourTile(int levelFourTile) {
+        this.levelFourTile = levelFourTile;
     }
 
     /**
@@ -158,16 +226,16 @@ public class Player extends Observable {
         // Remove Tile from game
         int tile = field.getTowerLevel();
         if(tile == 0){
-            game.setLevelOneTile(game.getLevelOneTile() - 1);
+            levelOneTile--;
         }
         else if(tile == 1){
-            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
+            levelTwoTile--;
         }
         else if(tile == 2){
-            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
+            levelThreeTile--;
         }
         else{
-            game.setLevelFourTile(game.getLevelFourTile() - 1);
+            levelFourTile--;
         }
     }
 

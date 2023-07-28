@@ -88,10 +88,10 @@ public class NetworkHandler {
                 List<String[]> gameData = fm.readString(msg.substring(4));
                 Game game = new Game(0);
                 game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
-                game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
-                game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));
-                game.setLevelThreeTile(Integer.parseInt(gameData.get(0)[5]));
-                game.setLevelFourTile(Integer.parseInt(gameData.get(0)[6]));
+                // game.setLevelOneTile(Integer.parseInt(gameData.get(0)[3]));
+                // game.setLevelTwoTile(Integer.parseInt(gameData.get(0)[4]));
+                // game.setLevelThreeTile(Integer.parseInt(gameData.get(0)[5]));
+                // game.setLevelFourTile(Integer.parseInt(gameData.get(0)[6]));
                 Settings.setActualGame(game);
                 break;
             case "play":
