@@ -210,6 +210,7 @@ public class FileManager {
      */
     public void saveGame(Game game){
         loadHighscore();
+        checkHighscore(game, "1");
 
         String saveGameName = game.getGameName();
         // If new game, create new saving folder
@@ -445,8 +446,6 @@ public class FileManager {
                 break;
             }
         }
-        if (Integer.parseInt(oldHighscore.get(4)) < game.getAmountOfTurns()){
-            saveHighscore(game, winner, position);
-        }
+        saveHighscore(game, winner, position);
     }
 }
