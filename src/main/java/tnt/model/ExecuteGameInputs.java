@@ -87,7 +87,7 @@ public class ExecuteGameInputs {
                 game.getPlayersTurn().prePlayersTurn();
                 return false;
             }
-            if (game.getPlayersTurn().getNrOfTiles(buildLevel) == 0) {
+            if (game.getPlayersTurn().getNrTile(buildLevel) == 0) {
                 game.getPlayersTurn().prePlayersTurn();
                 return false;
             }

@@ -228,9 +228,9 @@ public class Player extends Observable {
         this.nrOfTiles = numberOfTile;
     }
 
-    public int getNrOfTiles(int level) {
-        return nrOfTiles[level];
-    }
+//    public int getNrOfTiles(int level) {
+//        return nrOfTiles[level];
+//    }
 
     public void removeTile(int buildLevel) {
         nrOfTiles[buildLevel] -=1;

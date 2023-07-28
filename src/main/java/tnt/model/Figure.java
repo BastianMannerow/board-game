@@ -191,9 +191,15 @@ public class Figure extends Observable {
 //            else{
             int tile = field.getTowerLevel();
             for (int i = 0; i < game.getVictoryHeight(); i++){
-                if ((player.getNrOfTiles(tile + 1) == 0 && tile != game.getVictoryHeight()) || (tile == game.getVictoryHeight() && player.getNrOfTiles(0) == 0)){
-                    validBuilds.remove(field);
+                if (tile == game.getVictoryHeight()){
+                    if (player.getNrTile(0) == 0){
+                        validBuilds.remove(field);
+                    }
 //>>>>>>> tiles
+                } else {
+                    if (player.getNrTile(tile + 1) == 0){
+
+                    }
                 }
             }
 //            if (tile == 0 && player.getLevelOneTile() == 0) {
