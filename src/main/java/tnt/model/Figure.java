@@ -32,9 +32,10 @@ public class Figure extends Observable {
     /**
      * Constructor for a figure
      */
-    public Figure(Player player) {
+    public Figure(Player player, Game game) {
         this.placed = false;
         this.player = player;
+        this.game = game;
     }
 
     /**

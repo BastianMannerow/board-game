@@ -69,7 +69,7 @@ public class ArtificialPlayer{
         ArrayList<Figure> figureList = player.getFigure();
         // execute movement
         if(game.isMoveMode()) {
-            Figure bestFigure = new Figure(player);
+            Figure bestFigure = new Figure(player, game);
             Field bestMove = new Field();
             int bestProgression = 100;
 
@@ -134,7 +134,7 @@ public class ArtificialPlayer{
 
         // execute movement
         if(game.isMoveMode()) {
-            Figure bestFigure = new Figure(player);
+            Figure bestFigure = new Figure(player, game);
             Field bestMove = new Field();
             int bestScore = 100;
             int bestTeamProgression = 100;
@@ -146,7 +146,7 @@ public class ArtificialPlayer{
                 for (Field field:possibleMoves){
                     // If an instant win is possible, it will be executed
                     if (moveToWin()){
-                        bestFigure = new Figure(player);
+                        bestFigure = new Figure(player, game);
                         bestMove = new Field();
                         bestScore = 0;
                         break;
