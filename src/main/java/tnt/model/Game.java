@@ -107,13 +107,6 @@ public class Game extends Observable {
         notifyObservers();
     }
 
-//    public int getNrTile(int i){
-//        if (i<0 || i >= numberOfTile.length){
-//            return 0;
-//        }
-//        return numberOfTile[i];
-//    }
-
     /**
      * @return Maximum height to step up
      */

@@ -252,6 +252,11 @@ public class FileManager {
         filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "fields.csv";
         saveCSV(filepath, fieldsData);
 
+        // Save Board Information
+        List<String[]> boardData = getBoardData(game);
+        filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + saveGameName + File.separator + "board.csv";
+        saveCSV(filepath, boardData);
+
         // Rename the game
         game.setGameName(saveGameName);
         System.out.println("Saved this game: " + saveGameName);
@@ -335,22 +340,43 @@ public class FileManager {
         return playerData;
     }
 
+    /**
+     * Part of save game
+     *
+     * @param game the game which is played on
+     * @return the data of the current game
+     */
     public List<String[]> getGameData(Game game){
         List<String[]> gameData = new ArrayList<>();
+        String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTile", "globalTilePool"};
+        gameData.add(header);
+
         String roundWorld = "False";
         if (game.getBoard().getRoundWorld()) {
             roundWorld = "True";
         }
         String playerOrder = Integer.toString(game.getPlayerOrder().size());
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
-        // Todo: Save tiles ( also above in player)
-//        String levelOneTile = Integer.toString(game.getLevelOneTile());
-//        String levelTwoTile = Integer.toString(game.getLevelTwoTile());
-//        String levelThreeTile = Integer.toString(game.getLevelThreeTile());
-//        String levelFourTile = Integer.toString(game.getLevelFourTile());
-//        gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns, levelOneTile, levelTwoTile, levelThreeTile, levelFourTile});
-        gameData.add(new String[]{roundWorld, playerOrder, amountOfTurns});
+
+        gameData.add(new String[]{playerOrder, amountOfTurns, roundWorld, });
         return gameData;
+    }
+
+    /**
+     * Part of save game
+     *
+     * @param game the game which is played on
+     * @return the data of the current board
+     */
+    public List<String[]> getBoardData(Game game){
+        List<String[]> boardData = new ArrayList<>();
+        String[] header = {"xSize", "ySize", "roundWorld"};
+        boardData.add(header);
+        String xSize = Integer.toString(game.getBoard().getXSize());
+        String ySize = Integer.toString(game.getBoard().getYSize());
+        String roundWorld = Boolean.toString(game.getBoard().getRoundWorld());
+        boardData.add(new String[]{xSize, ySize, roundWorld});
+        return boardData;
     }
 
     /**

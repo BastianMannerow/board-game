@@ -8,7 +8,6 @@ public class Board {
     private Field[][] board;
     private int xSize;
     private int ySize;
-
     private boolean roundWorld = false;
 
     /**
