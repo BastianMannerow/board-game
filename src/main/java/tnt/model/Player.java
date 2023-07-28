@@ -19,6 +19,14 @@ import tnt.util.Observable;
  */
 public class Player extends Observable {
 
+    public void setNrOfTiles(int[] numberOfTile) {
+        this.nrOfTiles = numberOfTile;
+    }
+
+    public int getNrOfTiles(int level) {
+        return nrOfTiles[level];
+    }
+
     public enum PlayerType {
         HUMAN,
 //        REMOTE,

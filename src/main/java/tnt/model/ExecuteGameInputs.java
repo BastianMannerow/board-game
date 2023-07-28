@@ -77,7 +77,7 @@ public class ExecuteGameInputs {
             Settings.getNetworkHandler().build(buildLevel, field);
 
             // Here you can change where it is possible to build a dome
-            if (field.getTowerLevel() == game.getVictoryHeight() && buildLevel == -1) {
+            if (field.getTowerLevel() == game.getVictoryHeight() && buildLevel == 0) {
                 field.setTowerComplete(true);
             }
             else if (field.getTowerLevel() == buildLevel - 1) {

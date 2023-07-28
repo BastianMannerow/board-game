@@ -33,7 +33,7 @@ public class BuildingLevel extends DragableObject implements Observer {
         GUISettings.getInstance().addObserver(this);
         imageView = new ImageView();
         switch (level){
-            case -1:
+            case 0:
                 imageView.setImage(ResourceHandler.getInstance().getImage("Turm_Kuppel"));
                 break;
             case 1:
@@ -88,7 +88,7 @@ public class BuildingLevel extends DragableObject implements Observer {
     public void update() {
         String prefix = GUISettings.getTheme();
         switch (level){
-            case -1:
+            case 0:
                 imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_Kuppel"));
                 break;
             case 1:

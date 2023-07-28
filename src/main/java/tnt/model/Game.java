@@ -32,6 +32,8 @@ public class Game extends Observable {
 
     private int[] numberOfTile = {};
 
+    private boolean globalTilePool = true;
+
     /**
      * Constructing an object Game.
      * @param playerOrder
@@ -93,6 +95,13 @@ public class Game extends Observable {
                 }
         }
         this.victoryHeight = victoryHeight;
+        for (Player player: playerOrder){
+            if (globalTilePool){
+                player.setNrOfTiles(numberOfTile);
+            } else {
+                player.setNrOfTiles(numberOfTile.clone());
+            }
+        }
         notifyObservers();
     }
 
