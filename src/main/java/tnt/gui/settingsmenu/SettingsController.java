@@ -28,6 +28,8 @@ public class SettingsController {
     @FXML
     Button zombies;
     @FXML
+    Button defaultTheme;
+    @FXML
     Label language;
     @FXML
     Label theme;
@@ -57,6 +59,11 @@ public class SettingsController {
     private void chooseThemeZombies(){
 //        sceneHandler.loadStyle("zombies");
         GUISettings.getInstance().setTheme("Horror2");
+    }
+    @FXML
+    private void chooseThemeDefault(){
+//        sceneHandler.loadStyle("zombies");
+        GUISettings.getInstance().setTheme("");
     }
 
 
