@@ -26,7 +26,7 @@ public class FileManager {
             String line;
             int lineNumber = 0;
             while ((line = reader.readLine()) != null) {
-                String[] row = line.split(";");
+                String[] row = line.split(";"); // A separator for parsing
                 if(lineNumber == 0) { // The first line will be the header, which is used for an easier indexing
                     header = Arrays.asList(row);
                 } else {
@@ -66,7 +66,7 @@ public class FileManager {
             Path pathToFile = Paths.get(filepath);
             Files.createDirectories(pathToFile.getParent());
             try (FileWriter writer = new FileWriter(filepath)) {
-                // Saves the file
+                // Saves the file and uses a separator for future parsing
                 for (String[] row : data) {
                     StringBuilder csvLine = new StringBuilder();
                     for (int i = 0; i < row.length; i++) {
@@ -152,7 +152,40 @@ public class FileManager {
         List<Object> csv = loadCSV(filepath + File.separator + "game.csv");
         List<String> header = (List<String>) csv.get(0);
         List<List<String>> gameData = (List<List<String>>) csv.get(1);
+        setGameData(header, gameData);
 
+        // Load Player
+        csv = loadCSV(filepath + File.separator + "player.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> playerData = (List<List<String>>) csv.get(1);
+        setPlayerData(header, playerData);
+
+        // Load Figure
+        csv = loadCSV(filepath + File.separator + "figure.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> figureData = (List<List<String>>) csv.get(1);
+        setFigureData(header, figureData);
+
+        // Load Fields
+        csv = loadCSV(filepath + File.separator + "fields.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> fieldData = (List<List<String>>) csv.get(1);
+        setFieldData(header, fieldData);
+
+        // Load Board
+        csv = loadCSV(filepath + File.separator + "board.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> boardData = (List<List<String>>) csv.get(1);
+        setBoardData(header, boardData);
+    }
+
+    /**
+     * Part of load game
+     *
+     * @param header the header for the data
+     * @param gameData the data
+     */
+    public void setGameData(List<String> header, List<List<String>> gameData){
         String playerOrder = gameData.get(0).get(header.indexOf("playerOrder"));
         String board = gameData.get(0).get(header.indexOf("board"));
         String amountOfGameTurns = gameData.get(0).get(header.indexOf("amountOfGameTurns"));
@@ -162,12 +195,15 @@ public class FileManager {
         String lastMovedFigure = gameData.get(0).get(header.indexOf("lastMovedFigure"));
         String gameStatus = gameData.get(0).get(header.indexOf("gameStatus"));
         String victoryHeight = gameData.get(0).get(header.indexOf("victoryHeight"));
+    }
 
-        // Load Player
-        csv = loadCSV(filepath + File.separator + "player.csv");
-        header = (List<String>) csv.get(0);
-        List<List<String>> playerData = (List<List<String>>) csv.get(1);
-
+    /**
+     * Part of load game
+     *
+     * @param header the header for the data
+     * @param playerData the data
+     */
+    public void setPlayerData(List<String> header, List<List<String>> playerData){
         String levelOfIntelligence = playerData.get(0).get(header.indexOf("levelOfIntelligence"));
         String name = playerData.get(0).get(header.indexOf("name"));
         String color = playerData.get(0).get(header.indexOf("color"));
@@ -176,30 +212,50 @@ public class FileManager {
         String figures = playerData.get(0).get(header.indexOf("figures"));
         String gods = playerData.get(0).get(header.indexOf("gods"));
         String team = playerData.get(0).get(header.indexOf("team"));
-        String levelOneTile = gameData.get(0).get(header.indexOf("levelOneTile"));
-        String levelTwoTile = gameData.get(0).get(header.indexOf("levelTwoTile"));
-        String levelThreeTile = gameData.get(0).get(header.indexOf("levelThreeTile"));
-        String levelFourTile = gameData.get(0).get(header.indexOf("levelFourTile"));
+        // String levelOneTile = gameData.get(0).get(header.indexOf("levelOneTile"));
+        // String levelTwoTile = gameData.get(0).get(header.indexOf("levelTwoTile"));
+        // String levelThreeTile = gameData.get(0).get(header.indexOf("levelThreeTile"));
+        // String levelFourTile = gameData.get(0).get(header.indexOf("levelFourTile"));
+    }
 
-        // Load Figure
-        csv = loadCSV(filepath + File.separator + "figure.csv");
-        header = (List<String>) csv.get(0);
-        List<List<String>> figureData = (List<List<String>>) csv.get(1);
+    /**
+     * Part of load game
+     *
+     * @param header the header for the data
+     * @param figureData the data
+     */
+    public void setFigureData(List<String> header, List<List<String>> figureData){
+        String x = figureData.get(0).get(header.indexOf("x"));
+        String y = figureData.get(0).get(header.indexOf("y"));
+        String placed = figureData.get(0).get(header.indexOf("placed"));
+    }
 
-        String x = playerData.get(0).get(header.indexOf("x"));
-        String y = playerData.get(0).get(header.indexOf("y"));
-        String placed = playerData.get(0).get(header.indexOf("placed"));
+    /**
+     * Part of load game
+     *
+     * @param header the header for the data
+     * @param fieldData the data
+     */
+    public void setFieldData(List<String> header, List<List<String>> fieldData){
+        // String fieldX = playerData.get(0).get(header.indexOf("fieldX"));
+        // String fieldY = playerData.get(0).get(header.indexOf("fieldY"));
+        // String towerLevel = playerData.get(0).get(header.indexOf("towerLevel"));
+        // String towerComplete = playerData.get(0).get(header.indexOf("towerComplete"));
+        // String figure = playerData.get(0).get(header.indexOf("figure"));
+    }
 
-        // Load Fields
-        csv = loadCSV(filepath + File.separator + "fields.csv");
-        header = (List<String>) csv.get(0);
-        List<List<String>> fieldsData = (List<List<String>>) csv.get(1);
-
-        String fieldX = playerData.get(0).get(header.indexOf("fieldX"));;
-        String fieldY = playerData.get(0).get(header.indexOf("fieldY"));;
-        String towerLevel = playerData.get(0).get(header.indexOf("towerLevel"));;
-        String towerComplete = playerData.get(0).get(header.indexOf("towerComplete"));;
-        String figure = playerData.get(0).get(header.indexOf("figure"));;
+    /**
+     * Part of load game
+     *
+     * @param header the header for the data
+     * @param boardData the data
+     */
+    public void setBoardData(List<String> header, List<List<String>> boardData){
+        // String fieldX = playerData.get(0).get(header.indexOf("fieldX"));
+        // String fieldY = playerData.get(0).get(header.indexOf("fieldY"));
+        // String towerLevel = playerData.get(0).get(header.indexOf("towerLevel"));
+        // String towerComplete = playerData.get(0).get(header.indexOf("towerComplete"));
+        // String figure = playerData.get(0).get(header.indexOf("figure"));
     }
 
     /**
