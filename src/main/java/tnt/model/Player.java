@@ -28,6 +28,8 @@ public class Player extends Observable {
     private int levelTwoTile;
     private int levelThreeTile;
     private int levelFourTile;
+    private int levelFiveTile;
+    private int levelSixTile;
 
     /**
      * Constructing an object Player.
@@ -39,8 +41,10 @@ public class Player extends Observable {
      * @param levelTwoTile The amount of tiles
      * @param levelThreeTile The amount of tiles
      * @param levelFourTile The amount of tiles
+     * @param levelFiveTile The amount of tiles
+     * @param levelSixTile The amount of tiles
      */
-    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, int levelFiveTile, int levelSixTile) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
@@ -50,6 +54,8 @@ public class Player extends Observable {
         this.levelTwoTile = levelTwoTile;
         this.levelThreeTile = levelThreeTile;
         this.levelFourTile = levelFourTile;
+        this.levelFiveTile = levelFiveTile;
+        this.levelSixTile = levelSixTile;
     }
 
     public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team, int amountOfTurns) {
@@ -112,10 +118,38 @@ public class Player extends Observable {
     }
 
     /**
-     * @param levelFourTile replaces old playerOrder
+     * @param levelFourTile levelFourTile
      */
     public void setLevelFourTile(int levelFourTile) {
         this.levelFourTile = levelFourTile;
+    }
+
+    /**
+     * @param levelFiveTile levelFiveTile
+     */
+    public void setLevelFiveTile(int levelFiveTile) {
+        this.levelFiveTile = levelFiveTile;
+    }
+
+    /**
+     * @return levelFiveTile
+     */
+    public int getLevelFiveTile() {
+        return levelFiveTile;
+    }
+
+    /**
+     * @return levelSixTile
+     */
+    public int getLevelSixTile() {
+        return levelSixTile;
+    }
+
+    /**
+     * @param levelSixTile levelSixTile
+     */
+    public void setLevelSixTile(int levelSixTile) {
+        this.levelSixTile = levelSixTile;
     }
 
     /**

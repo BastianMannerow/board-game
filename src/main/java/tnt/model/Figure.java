@@ -11,17 +11,21 @@ public class Figure extends Observable {
     private int y = 0;
     private Game game; //Todo: delete?
     private boolean placed;
+    private Player player;
 
     /**
      * Constructing an object Figure.
      * @param x initial x coordinate
      * @param y initial y coordinate
+     * @param game the game which is played on
+     * @param player the owner of the figure
      */
-    public Figure(int x, int y, Game game) {
+    public Figure(int x, int y, Game game, Player player) {
         this.x = x;
         this.y = y;
         this.placed = true;
         this.game = game;
+        this.player = player;
     }
 
     /**
@@ -57,6 +61,20 @@ public class Figure extends Observable {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * @return player who owns the figure
+     */
+    public Player getOwner() {
+        return player;
+    };
+
+    /**
+     * @param player player who owns the figure
+     */
+    public void setOwner(Player player) {
+        this.player = player;
     }
 
     /**
@@ -116,23 +134,43 @@ public class Figure extends Observable {
 
         // Filter the fields, so that only the legal fields remain
         validBuilds.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete());
+
         // Check if tiles are available
-        /*
         for (Field field: validBuilds) {
             int tile = field.getTowerLevel();
 
-            if (tile == 0 && game.getLevelOneTile() == 0) {
+            // distinguishes between global and local tile pool
+            if (game.getGlobalTilePool()) {
+                if (tile == 0 && game.getLevelOneTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 1 && game.getLevelTwoTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 2 && game.getLevelThreeTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 3 && game.getLevelFourTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 4 && game.getLevelFiveTile() == 0) {
                 validBuilds.remove(field);
-            } else if (tile == 1 && game.getLevelTwoTile() == 0) {
+                } else if (tile == 5 && game.getLevelSixTile() == 0) {
                 validBuilds.remove(field);
-            } else if (tile == 2 && game.getLevelThreeTile() == 0) {
-                validBuilds.remove(field);
-            } else if (tile == 3 && game.getLevelFourTile() == 0){
-                validBuilds.remove(field);
+                }
+            }
+            else{
+                if (tile == 0 && player.getLevelOneTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 1 && player.getLevelTwoTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 2 && player.getLevelThreeTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 3 && player.getLevelFourTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 4 && player.getLevelFiveTile() == 0) {
+                    validBuilds.remove(field);
+                } else if (tile == 5 && player.getLevelSixTile() == 0) {
+                    validBuilds.remove(field);
+                }
             }
         }
-
-         */
         return validBuilds;
     }
 

@@ -29,13 +29,26 @@ public class Game extends Observable {
     private GameStatus gameStatus;
     private int victoryHeight;
 
+    private boolean globalTilePool;
+    private int levelOneTile;
+    private int levelTwoTile;
+    private int levelThreeTile;
+    private int levelFourTile;
+    private int levelFiveTile;
+    private int levelSixTile;
+
     /**
      * Constructing an object Game.
      * @param playerOrder
      * @param amountOfTurns How many turns are completed so far (at beginning 0). It's for the highscore
-
+     * @param levelOneTile The amount of tiles
+     * @param levelTwoTile The amount of tiles
+     * @param levelThreeTile The amount of tiles
+     * @param levelFourTile The amount of tiles
+     * @param levelFiveTile The amount of tiles
+     * @param levelSixTile The amount of tiles
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight) {
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight, boolean globalTilePool, int levelOneTile, int levelTwoTile, int levelThreeTile, int levelFourTile, int levelFiveTile, int levelSixTile) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
         this.gameName = gameName;
@@ -43,6 +56,11 @@ public class Game extends Observable {
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
         this.victoryHeight = victoryHeight;
+        this.globalTilePool = globalTilePool;
+        this.levelOneTile = levelOneTile;
+        this.levelTwoTile = levelTwoTile;
+        this.levelThreeTile = levelThreeTile;
+        this.levelFourTile = levelFourTile;
     }
 
     /**
@@ -63,6 +81,106 @@ public class Game extends Observable {
         this.maxStepDownHeight = Settings.getMaxStepDown();
         this.victoryHeight = Settings.getVictoryHeight();
         createBoard(Settings.getFieldSizeX(), Settings.getFieldSizeY());
+    }
+
+    /**
+     * @return levelOneTile
+     */
+    public int getLevelOneTile() {
+        return levelOneTile;
+    }
+
+    /**
+     * @param levelOneTile replaces old playerOrder
+     */
+    public void setLevelOneTile(int levelOneTile) {
+        this.levelOneTile = levelOneTile;
+    }
+
+    /**
+     * @return levelTwoTile
+     */
+    public int getLevelTwoTile() {
+        return levelTwoTile;
+    }
+
+    /**
+     * @param levelTwoTile replaces old playerOrder
+     */
+    public void setLevelTwoTile(int levelTwoTile) {
+        this.levelTwoTile = levelTwoTile;
+    }
+
+    /**
+     * @return levelThreeTile
+     */
+    public int getLevelThreeTile() {
+        return levelThreeTile;
+    }
+
+    /**
+     * @param levelThreeTile replaces old playerOrder
+     */
+    public void setLevelThreeTile(int levelThreeTile) {
+        this.levelThreeTile = levelThreeTile;
+    }
+
+    /**
+     * @return levelFourTile
+     */
+    public int getLevelFourTile() {
+        return levelFourTile;
+    }
+
+    /**
+     * @param levelFourTile levelFourTile
+     */
+    public void setLevelFourTile(int levelFourTile) {
+        this.levelFourTile = levelFourTile;
+    }
+
+    /**
+     * @param levelFiveTile levelFiveTile
+     */
+    public void setLevelFiveTile(int levelFiveTile) {
+        this.levelFiveTile = levelFiveTile;
+    }
+
+    /**
+     * @return levelFiveTile
+     */
+    public int getLevelFiveTile() {
+        return levelFiveTile;
+    }
+
+    /**
+     * @return levelSixTile
+     */
+    public int getLevelSixTile() {
+        return levelSixTile;
+    }
+
+    /**
+     * @param levelSixTile levelSixTile
+     */
+    public void setLevelSixTile(int levelSixTile) {
+        this.levelSixTile = levelSixTile;
+    }
+
+    /**
+     * Getter for the globalTilePool
+     * @return if the tile pool is local for each player or global
+     */
+    public boolean getGlobalTilePool() {
+        return globalTilePool;
+    }
+
+    /**
+     * Setter for the globalTilePool
+     * @param globalTilePool if the tile pool is local for each player or global
+     */
+    public void setGlobalTilePool(boolean globalTilePool) {
+        this.globalTilePool = globalTilePool;
     }
 
     /**
