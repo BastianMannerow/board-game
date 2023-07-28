@@ -2,16 +2,6 @@ package tnt.model;
 import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
-import tnt.model.interfaces.Gods;
-import tnt.model.gods.building.*;
-import tnt.model.gods.inventory.Chaos;
-import tnt.model.gods.inventory.Circe;
-import tnt.model.gods.movement.*;
-import tnt.model.gods.sabotage.*;
-import tnt.model.gods.victory.Chronus;
-import tnt.model.gods.victory.Eros;
-import tnt.model.gods.victory.Hera;
-import tnt.model.gods.victory.Pan;
 import tnt.util.Observable;
 
 /**
@@ -41,9 +31,7 @@ public class Player extends Observable {
     private int amountOfFigures;
     private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
-    private ArrayList<Gods> gods;
     private String team;
-
     private int[] nrOfTiles;
 
     /**
@@ -140,69 +128,15 @@ public class Player extends Observable {
     }
 
     /**
-     * Adds a god into the ArrayList gods
-     *
-     * @param god is a instance of a class implementing interface Gods
-     */
-    public void addGod(Gods god){
-        gods.add(god);
-    }
-
-    /**
-     * Adds all gods into the ArrayList gods
-     *
-     */
-    public void addAllGods(){
-        addGod(new Ares());
-        addGod(new Atlas());
-        addGod(new Demeter());
-        addGod(new Dyonisus());
-        addGod(new Hephaistos());
-        addGod(new Hestia());
-        addGod(new Medusa());
-        addGod(new Morpheus());
-        addGod(new Poseidon());
-        addGod(new Prometheus());
-        addGod(new Selene());
-        addGod(new Zeus());
-
-        addGod(new Chaos());
-        addGod(new Circe());
-        addGod(new Apollo());
-        addGod(new Artemis());
-        addGod(new Charon());
-        addGod(new Hermes());
-        addGod(new Minotaures());
-        addGod(new Triton());
-
-        addGod(new Aphrodite());
-        addGod(new Athena());
-        addGod(new Hypnus());
-        addGod(new Limus());
-        addGod(new Persephone());
-
-        addGod(new Chronus());
-        addGod(new Eros());
-        addGod(new Hera());
-        addGod(new Pan());
-    }
-    /**
      * Depending on the god type, the specific figure object will be created.
      *
      * @param amount creates new Figure objects for the player
      */
     public void addFigure(int amount) {
         for (int i = 0; i < amount; i++) {
-            Figure newFigure = new Figure();
+            Figure newFigure = new Figure(this);
             this.figures.add(newFigure);
         }
-    }
-
-    /**
-     * @return card god/demon card, which belongs to the player
-     */
-    public ArrayList<Gods> getGods() {
-        return gods;
     }
 
     /**
@@ -230,20 +164,6 @@ public class Player extends Observable {
         if(newLevel == 4){
             field.setTowerComplete(true);
         }
-//        // Remove Tile from game
-//        int tile = field.getTowerLevel();
-//        if(tile == 0){
-//            game.setLevelOneTile(game.getLevelOneTile() - 1);
-//        }
-//        else if(tile == 1){
-//            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
-//        }
-//        else if(tile == 2){
-//            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
-//        }
-//        else{
-//            game.setLevelFourTile(game.getLevelFourTile() - 1);
-//        }
         // Todo: remove a tile
     }
 

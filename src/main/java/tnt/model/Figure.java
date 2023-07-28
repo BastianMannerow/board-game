@@ -2,6 +2,7 @@ package tnt.model;
 import tnt.util.Observable;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * A figure owned by the Player.
@@ -9,26 +10,31 @@ import java.util.ArrayList;
 public class Figure extends Observable {
     private int x = 0;
     private int y = 0;
-    private Game game; //Todo: delete?
+//    private Game game; //Todo: delete?
     private boolean placed;
+    private Player player;
 
     /**
      * Constructing an object Figure.
      * @param x initial x coordinate
      * @param y initial y coordinate
+     * @param game the game which is played on
+     * @param player the owner of the figure
      */
-    public Figure(int x, int y, Game game) {
+    public Figure(int x, int y, Game game, Player player) {
         this.x = x;
         this.y = y;
         this.placed = true;
-        this.game = game;
+//        this.game = game;
+        this.player = player;
     }
 
     /**
      * Constructor for a figure
      */
-    public Figure() {
+    public Figure(Player player) {
         this.placed = false;
+        this.player = player;
     }
 
     /**
@@ -57,6 +63,20 @@ public class Figure extends Observable {
      */
     public void setY(int y) {
         this.y = y;
+    }
+
+    /**
+     * @return player who owns the figure
+     */
+    public Player getOwner() {
+        return player;
+    };
+
+    /**
+     * @param player player who owns the figure
+     */
+    public void setOwner(Player player) {
+        this.player = player;
     }
 
     /**
@@ -116,23 +136,49 @@ public class Figure extends Observable {
 
         // Filter the fields, so that only the legal fields remain
         validBuilds.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete());
+
         // Check if tiles are available
-        /*
         for (Field field: validBuilds) {
+
+            // distinguishes between global and local tile pool
+//            if (game.isGlobalTilePool()) {
+//                if (tile == 0 && game.getLevelOneTile() == 0) {
+//                    validBuilds.remove(field);
+//                } else if (tile == 1 && game.getLevelTwoTile() == 0) {
+//                    validBuilds.remove(field);
+//                } else if (tile == 2 && game.getLevelThreeTile() == 0) {
+//                    validBuilds.remove(field);
+//                } else if (tile == 3 && game.getLevelFourTile() == 0) {
+//                    validBuilds.remove(field);
+//                } else if (tile == 4 && game.getLevelFiveTile() == 0) {
+//                validBuilds.remove(field);
+//                } else if (tile == 5 && game.getLevelSixTile() == 0) {
+//                validBuilds.remove(field);
+//                }
+//            }
+//            else{
+            Game game = Settings.getActualGame();
             int tile = field.getTowerLevel();
-
-            if (tile == 0 && game.getLevelOneTile() == 0) {
-                validBuilds.remove(field);
-            } else if (tile == 1 && game.getLevelTwoTile() == 0) {
-                validBuilds.remove(field);
-            } else if (tile == 2 && game.getLevelThreeTile() == 0) {
-                validBuilds.remove(field);
-            } else if (tile == 3 && game.getLevelFourTile() == 0){
-                validBuilds.remove(field);
+            for (int i = 0; i < game.getVictoryHeight(); i++){
+                if ((player.getNrOfTiles(tile + 1) == 0 && tile != game.getVictoryHeight()) || (tile == game.getVictoryHeight() && player.getNrOfTiles(0) == 0)){
+                    validBuilds.remove(field);
+                }
             }
+//            if (tile == 0 && player.getLevelOneTile() == 0) {
+//
+//            } else if (tile == 1 && player.getLevelTwoTile() == 0) {
+//                validBuilds.remove(field);
+//            } else if (tile == 2 && player.getLevelThreeTile() == 0) {
+//                validBuilds.remove(field);
+//            } else if (tile == 3 && player.getLevelFourTile() == 0) {
+//                validBuilds.remove(field);
+//            } else if (tile == 4 && player.getLevelFiveTile() == 0) {
+//                validBuilds.remove(field);
+//            } else if (tile == 5 && player.getLevelSixTile() == 0) {
+//                validBuilds.remove(field);
+//            }
+//            }
         }
-
-         */
         return validBuilds;
     }
 

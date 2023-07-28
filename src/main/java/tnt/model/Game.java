@@ -22,14 +22,12 @@ public class Game extends Observable {
     private ArrayList<Player> playerOrder;
     private Board board;
     private int amountOfTurns;
-
     private int maxStepUpHeight;
     private int maxStepDownHeight;
     private String gameName;
     private Figure lastMovedFigure;
     private GameStatus gameStatus;
     private int victoryHeight;
-
     private int[] numberOfTile = {};
 
     private boolean globalTilePool = true;
@@ -39,7 +37,8 @@ public class Game extends Observable {
      * @param playerOrder
      * @param amountOfTurns How many turns are completed so far (at beginning 0). It's for the highscore
      */
-    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight) {
+
+    public Game(ArrayList<Player> playerOrder, int amountOfTurns, String gameName, int maxStepUpHeight, int maxStepDownHeight, int victoryHeight, boolean globalTilePool) {
         this.playerOrder = playerOrder;
         this.amountOfTurns = amountOfTurns;
         this.gameName = gameName;
@@ -47,6 +46,7 @@ public class Game extends Observable {
         this.maxStepUpHeight = maxStepUpHeight;
         this.maxStepDownHeight = maxStepDownHeight;
         this.victoryHeight = victoryHeight;
+        this.globalTilePool = globalTilePool;
     }
 
     /**
