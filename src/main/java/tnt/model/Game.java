@@ -60,9 +60,6 @@ public class Game extends Observable {
         if (defaultAmountPlayer > 3) {
             amountFigures = 1;
         }
-        for (int i = 0; i < defaultAmountPlayer; i++) {
-            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1), amountOfTurns);
-        }
         this.maxStepUpHeight = Settings.getMaxStepUp();
         this.maxStepDownHeight = Settings.getMaxStepDown();
         this.victoryHeight = Settings.getVictoryHeight();
@@ -70,6 +67,9 @@ public class Game extends Observable {
         numberOfTile = new int[victoryHeight + 1];
         for (int i = 0; i < numberOfTile.length; i++){
             numberOfTile[i] = Settings.getNrOfTile(i);
+        }
+        for (int i = 0; i < defaultAmountPlayer; i++) {
+            addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1), amountOfTurns);
         }
     }
 
@@ -105,12 +105,12 @@ public class Game extends Observable {
         notifyObservers();
     }
 
-    public int getNrTile(int i){
-        if (i<0 || i >= numberOfTile.length){
-            return 0;
-        }
-        return numberOfTile[i];
-    }
+//    public int getNrTile(int i){
+//        if (i<0 || i >= numberOfTile.length){
+//            return 0;
+//        }
+//        return numberOfTile[i];
+//    }
 
     /**
      * @return Maximum height to step up
@@ -637,7 +637,13 @@ public class Game extends Observable {
 //            newPlayer.setAmountOfFigures(amountOfFigures);
 //            newPlayer.setTeam(team);
 //            playerOrder.add(newPlayer);
-            playerOrder.add(new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns));
+            Player newPlayer = new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns);
+            playerOrder.add(newPlayer);
+            if (globalTilePool){
+                newPlayer.setNrOfTiles(numberOfTile);
+            } else {
+                newPlayer.setNrOfTiles(numberOfTile.clone());
+            }
             notifyObservers();
         }
     }
@@ -701,5 +707,14 @@ public class Game extends Observable {
      */
     public Figure getLastMovedFigure() {
         return lastMovedFigure;
+    }
+
+    public boolean isGlobalTilePool() {
+        return globalTilePool;
+    }
+
+    public void setGlobalTilePool(boolean globalTilePool) {
+        this.globalTilePool = globalTilePool;
+        setVictoryHeight(getVictoryHeight());
     }
 }

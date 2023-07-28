@@ -125,6 +125,7 @@ public class PlayerChooseController{
             game.setMaxStepUpHeight(maxStepUp);
             game.setMaxStepDownHeight(maxStepDown);
             game.setVictoryHeight(victoryHeight);
+            Settings.getActualGame().setGlobalTilePool(tilesSepBox.isSelected());
         }
     }
 
@@ -205,10 +206,15 @@ public class PlayerChooseController{
         }
     }
 
-    @FXML
-    private void setMaxStepUp() {
-//        Settings.getActualGame().set
-    }
+//    @FXML
+//    private void setMaxStepUp() {
+//        Settings.getActualGame().setVictoryHeight(victoryHeight.getText());
+//    }
+
+//    @FXML
+//    private void setSeperatePool(){
+//        Settings.getActualGame().setGlobalTilePool(tilesSepBox.isSelected());
+//    }
 
     @FXML
     private void gotoHome(){

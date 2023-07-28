@@ -81,6 +81,7 @@ public class PlayerChooseView extends VBox implements Observer {
     }
 
     private void updateTileResources() {
+        controller.tilesSepBox.setSelected(game.isGlobalTilePool());
         controller.tileBox.getChildren().clear();
         controller.tileBox.getChildren().add(controller.sepBox);
         controller.tilesSepLabel.setText(Language.getTranslation("seperateLabel"));
@@ -93,7 +94,7 @@ public class PlayerChooseView extends VBox implements Observer {
             } else {
                 tileLabel.setText(Language.getTranslation("buildingLevelLabel") + " " + i); // Todo, but what was it?
             }
-            textField.setText(Integer.toString(game.getNrTile(i)));
+            textField.setText(Integer.toString(game.getPlayersTurn().getNrTile(i)));
             textField.setPrefWidth(USE_COMPUTED_SIZE);
             textField.setPrefHeight(USE_COMPUTED_SIZE);
             tilePane.getChildren().addAll(tileLabel, textField);

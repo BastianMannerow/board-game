@@ -20,6 +20,13 @@ import tnt.util.Observable;
 public class Player extends Observable {
 
 
+    public int getNrTile(int i) {
+        if (i<0 || i >= nrOfTiles.length){
+            return 0;
+        }
+        return nrOfTiles[i];
+    }
+
     public enum PlayerType {
         HUMAN,
 //        REMOTE,
