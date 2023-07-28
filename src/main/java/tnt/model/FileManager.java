@@ -209,9 +209,6 @@ public class FileManager {
      * @return Boolean, if the saving was successful
      */
     public void saveGame(Game game){
-        loadHighscore();
-        checkHighscore(game, "1");
-
         String saveGameName = game.getGameName();
         // If new game, create new saving folder
         if(saveGameName.equals("newGame")){
@@ -260,8 +257,16 @@ public class FileManager {
         System.out.println("Saved this game: " + saveGameName);
     }
 
+    /**
+     * Part of save game
+     *
+     * @param game the game on which is played on
+     * @return the data of the current games fields
+     */
     public List<String[]> getFieldsData(Game game){
         List<String[]> fieldsData = new ArrayList<>();
+        String[] header = {"fieldX", "fieldY", "towerLevel", "towerComplete", "figure"};
+        fieldsData.add(header);
         for (int i = 0; i < game.getBoard().getXSize(); i++) {
             for (int j = 0; j < game.getBoard().getYSize(); j++) {
                 String towerLevel = Integer.toString(game.getBoard().getField(i, j).getTowerLevel());
@@ -269,7 +274,11 @@ public class FileManager {
                 if (game.getBoard().getField(i, j).getTowerComplete()) {
                     towerComplete = "True";
                 }
-                fieldsData.add(new String[]{Integer.toString(i), Integer.toString(j), towerLevel, towerComplete});
+                String occupiedByFigure = "False";
+                if (game.getBoard().getField(i, j).getIsFigureHere()) {
+                    occupiedByFigure = "True";
+                }
+                fieldsData.add(new String[]{Integer.toString(i), Integer.toString(j), towerLevel, towerComplete, occupiedByFigure});
             }
         }
         return fieldsData;
@@ -398,7 +407,6 @@ public class FileManager {
                 }
             }
         }
-
         ArrayList<String> oldHighscore = loadHighscore();
         // Saving in rows
         String[] topOneHighScore = {oldHighscore.get(0), oldHighscore.get(1), oldHighscore.get(2), oldHighscore.get(3)};
@@ -446,7 +454,6 @@ public class FileManager {
                 break;
             }
         }
-
         saveHighscore(game, winner, position);
     }
 }

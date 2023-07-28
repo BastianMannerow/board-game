@@ -1,5 +1,4 @@
 package tnt.model;
-
 import tnt.util.Observable;
 
 /**
