@@ -446,6 +446,7 @@ public class FileManager {
                 break;
             }
         }
+
         saveHighscore(game, winner, position);
     }
 }
