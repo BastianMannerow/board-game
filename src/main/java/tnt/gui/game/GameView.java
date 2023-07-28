@@ -174,7 +174,7 @@ public class GameView extends BorderPane implements Observer {
         if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
             ((VBox) this.getRight()).getChildren().add(buildingLevel);
         }
-        ((Label) buildingLevel.getChildren().get(1)).setText(Integer.toString(game.getPlayersTurn().getNrOfTiles(level)));
+        ((Label) buildingLevel.getChildren().get(1)).setText(Integer.toString(game.getPlayersTurn().getNrTile(level)));
     }
 
     private void updateFiguresRightBar() {

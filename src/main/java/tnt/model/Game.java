@@ -97,6 +97,7 @@ public class Game extends Observable {
         }
         this.victoryHeight = victoryHeight;
         for (Player player: playerOrder){
+            System.out.println("TEst + " + numberOfTile.length);
             if (globalTilePool){
                 player.setNrOfTiles(numberOfTile);
             } else {
