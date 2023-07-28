@@ -180,7 +180,7 @@ public class PlayerChooseController{
      */
     @FXML
     private void addPlayer() {
-        Settings.getActualGame().addPlayer(2, String.valueOf(Settings.getActualGame().getPlayerOrder().size()));
+        Settings.getActualGame().addPlayer(2, String.valueOf(Settings.getActualGame().getPlayerOrder().size()), Settings.getActualGame().getAmountOfTurns());
     }
 
     /**

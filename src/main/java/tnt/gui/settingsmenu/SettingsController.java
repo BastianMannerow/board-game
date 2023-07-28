@@ -3,8 +3,10 @@ package tnt.gui.settingsmenu;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import tnt.gui.GUISettings;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
+import tnt.model.Settings;
 
 import java.util.Locale;
 
@@ -25,6 +27,8 @@ public class SettingsController {
     Button blood;
     @FXML
     Button zombies;
+    @FXML
+    Button defaultTheme;
     @FXML
     Label language;
     @FXML
@@ -48,11 +52,18 @@ public class SettingsController {
 
     @FXML
     private void chooseThemeBlood(){
-        sceneHandler.loadStyle("blood");
+//        sceneHandler.loadStyle("blood");
+        GUISettings.getInstance().setTheme("Horror1");
     }
     @FXML
     private void chooseThemeZombies(){
-        sceneHandler.loadStyle("zombies");
+//        sceneHandler.loadStyle("zombies");
+        GUISettings.getInstance().setTheme("Horror2");
+    }
+    @FXML
+    private void chooseThemeDefault(){
+//        sceneHandler.loadStyle("zombies");
+        GUISettings.getInstance().setTheme("");
     }
 
 

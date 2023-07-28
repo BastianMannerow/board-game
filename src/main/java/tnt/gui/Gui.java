@@ -35,15 +35,12 @@ public class Gui extends Application {
 
         // adding the main menu to the scenehandler
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
-        sceneHandler.loadStyle(GUISettings.getDefaultTheme());
+//        sceneHandler.loadStyle(GUISettings.getDefaultTheme());
 
         new SettingsView(sceneHandler);
 
         // sets the scene of the scenehandler to the primary stage
         primaryStage.setScene(sceneHandler.getScene());
-
-
-
 
         SizeListener width = new SizeListener(false);
         primaryStage.widthProperty().addListener(width);

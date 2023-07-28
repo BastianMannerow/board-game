@@ -67,6 +67,7 @@
             <Label fx:id="theme" text="Thema:" GridPane.rowIndex="1" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
+                  <Button fx:id="defaultTheme" mnemonicParsing="false" onAction="#chooseThemeDefault" text="Default" />
                   <Button fx:id="blood" mnemonicParsing="false" onAction="#chooseThemeBlood" text="Blut" />
                   <Button fx:id="zombies" mnemonicParsing="false" onAction="#chooseThemeZombies" text="Zombies" />
                </children>

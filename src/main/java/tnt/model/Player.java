@@ -2,7 +2,6 @@ package tnt.model;
 import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
-
 import tnt.model.interfaces.Gods;
 import tnt.model.gods.building.*;
 import tnt.model.gods.inventory.Chaos;
@@ -32,6 +31,7 @@ public class Player extends Observable {
     private String name;
     private Color color;
     private int amountOfFigures;
+    private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private ArrayList<Gods> gods;
     private String team;
@@ -43,20 +43,22 @@ public class Player extends Observable {
      * @param color initial colour
      * @param figures ArrayList of figures, which belongs to the player
      */
-    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, ArrayList<Figure> figures, int amountOfTurns) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.figures = figures;
+        this.amountOfTurns = amountOfTurns;
     }
 
-    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team) {
+    public Player(PlayerType levelOfIntelligence, String name, Color color, int amountOfFigures, Game game, String team, int amountOfTurns) {
         this.levelOfIntelligence = levelOfIntelligence;
         this.name = name;
         this.color = color;
         this.amountOfFigures = amountOfFigures;
         this.game = game;
         this.team = team;
+        this.amountOfTurns = amountOfTurns;
     }
 
     /**
@@ -194,12 +196,25 @@ public class Player extends Observable {
     }
 
     /**
+     * @return amountOfTurns the player has played
+     */
+    public int getAmountOfTurns() {
+        return amountOfTurns;
+    }
+
+    /**
+     * @param amountOfTurns the player has played
+     */
+    public void setAmountOfTurns(int amountOfTurns) {
+        this.amountOfTurns = amountOfTurns;
+    }
+
+    /**
      * Increases the height of a field
      *
      * @param field the field chosen by the player
-     * @param board
      */
-    public void executeBuild(Field field, Board board){
+    public void executeBuild(Field field){
         int newLevel = field.getTowerLevel()+1;
         field.setTowerLevel(newLevel);
         if(newLevel == 4){
@@ -280,13 +295,13 @@ public class Player extends Observable {
     public void prePlayersTurn(){
         switch (levelOfIntelligence){
             case AI_1:
-                ArtificialPlayer.easyAI(game.getBoard(), this);
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             case AI_2:
-                ArtificialPlayer.easyAI(game.getBoard(), this);
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             case AI_3:
-                ArtificialPlayer.easyAI(game.getBoard(), this);
+                ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             default:
                 break;
