@@ -41,7 +41,35 @@ public class EndView extends VBox {
     public void initialize(){
         this.setAlignment(Pos.CENTER);
         if(notInitialized) {
-            ArrayList<String> highscores=new ArrayList<>();//= fileManager.loadHighscore();//TODO implement loadHighscore
+
+            String losers = game.getPlayersTurn().getTeam();
+            String winner = "";
+            for (Player player : game.getPlayerOrder()) {
+                if (player.getTeam() != losers) {
+                   winner = player.getName();
+                }
+            }
+            fileManager.checkHighscore(game,winner);
+            ArrayList<String> highscores = fileManager.loadHighscore();
+            for (String string:highscores) {
+                Label label = new Label();
+                label.setText(string);
+                this.getChildren().add(label);
+            }
+            notInitialized=false;
+            Button button = new Button("Menu");
+            button.setOnMouseClicked(event -> controller.goToMenu());
+            this.getChildren().add(button);
+        }
+
+        // fileManager.saveHighscore(game,game.getPlayerOrder());TODO need fix error Nullpointer exception
+    }
+
+    public void setController(GameController controller){
+        this.controller=controller;
+    }
+    /*
+     ArrayList<String> highscores=new ArrayList<>();//= fileManager.loadHighscore();//TODO implement loadHighscore
             for (String score: highscores) {
                 Label label = new Label();
                 label.setText(score);
@@ -66,12 +94,5 @@ public class EndView extends VBox {
             Button button = new Button("Menu");
             button.setOnMouseClicked(event -> controller.goToMenu());
             this.getChildren().add(button);
-        }
-
-        // fileManager.saveHighscore(game,game.getPlayerOrder());TODO need fix error Nullpointer exception
-    }
-
-    public void setController(GameController controller){
-        this.controller=controller;
-    }
+     */
 }

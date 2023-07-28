@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * menu for saving and loading games
@@ -21,7 +22,7 @@ public class SaveLoadMenuView extends VBox{
 
     @FXML
     private SaveLoadMenuController SaveLoadMenuController;
-    private HashMap<Button,String> saveHolder;
+    private HashMap<Button,String> saveHolder = new HashMap<Button,String>();
 
     /**
      * Constructor for the save load menu
@@ -39,7 +40,7 @@ public class SaveLoadMenuView extends VBox{
     }
 
     private void getSaves(){
-        ArrayList<String> saves=null;
+        List<String> saves=null;
         try {
             saves =SaveLoadMenuController.loadFiles();
         }catch(Exception e){
