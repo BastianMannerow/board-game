@@ -19,13 +19,6 @@ import tnt.util.Observable;
  */
 public class Player extends Observable {
 
-    public void setNrOfTiles(int[] numberOfTile) {
-        this.nrOfTiles = numberOfTile;
-    }
-
-    public int getNrOfTiles(int level) {
-        return nrOfTiles[level];
-    }
 
     public enum PlayerType {
         HUMAN,
@@ -301,6 +294,19 @@ public class Player extends Observable {
      */
     public int getAmountOfFigures() {
         return this.amountOfFigures;
+    }
+
+
+    public void setNrOfTiles(int[] numberOfTile) {
+        this.nrOfTiles = numberOfTile;
+    }
+
+    public int getNrOfTiles(int level) {
+        return nrOfTiles[level];
+    }
+
+    public void removeTile(int buildLevel) {
+        nrOfTiles[buildLevel] -=1;
     }
 
     public void prePlayersTurn(){

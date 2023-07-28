@@ -29,7 +29,7 @@ public class SizeListener implements ChangeListener{
             SizeHandler.getInstance().setPrefSizeY(height);
         }
         else {
-            int width = ((int) (double) t1 - 10) / (SizeHandler.getNrFieldsX()+1);
+            int width = ((int) (double) t1 - 60) / (SizeHandler.getNrFieldsX()+1);
             SizeHandler.getInstance().setPrefSizeX(width);
         }
     }

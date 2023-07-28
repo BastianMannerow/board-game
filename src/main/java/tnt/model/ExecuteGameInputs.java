@@ -87,6 +87,11 @@ public class ExecuteGameInputs {
                 game.getPlayersTurn().prePlayersTurn();
                 return false;
             }
+            if (game.getPlayersTurn().getNrOfTiles(buildLevel) == 0) {
+                game.getPlayersTurn().prePlayersTurn();
+                return false;
+            }
+            game.getPlayersTurn().removeTile(buildLevel);
             game.nextPlayersTurn();
             game.setMoveMode();
             game.checkBlockedMovement(game.getPlayersTurn());

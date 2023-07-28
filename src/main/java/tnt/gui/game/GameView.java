@@ -1,6 +1,7 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
@@ -71,6 +72,7 @@ public class GameView extends BorderPane implements Observer {
         removeHighlights(highlighted);
 
         ((ScrollPane) this.getCenter()).setFitToHeight(true);
+        ((ScrollPane) this.getCenter()).setFitToWidth(true);
 
         updateFiguresRightBar();
 
@@ -160,8 +162,9 @@ public class GameView extends BorderPane implements Observer {
                 throw new RuntimeException(e);
             }
             HBox building = new HBox();
+            building.setAlignment(Pos.CENTER_LEFT);
             building.getChildren().add(buildingLevel);
-            Label amount = new Label(Integer.toString(game.getPlayersTurn().getNrOfTiles(level)));
+            Label amount = new Label();
             building.getChildren().add(amount);
             initBuildingHolder.put(level, building);
             setDragableEvents(buildingLevel, true);
@@ -171,6 +174,7 @@ public class GameView extends BorderPane implements Observer {
         if (!((VBox) this.getRight()).getChildren().contains(buildingLevel)) {
             ((VBox) this.getRight()).getChildren().add(buildingLevel);
         }
+        ((Label) buildingLevel.getChildren().get(1)).setText(Integer.toString(game.getPlayersTurn().getNrOfTiles(level)));
     }
 
     private void updateFiguresRightBar() {
@@ -204,7 +208,7 @@ public class GameView extends BorderPane implements Observer {
             }
 
         }
-        ((VBox) this.getRight()).setPrefWidth(SizeHandler.getPrefSize());
+        ((VBox) this.getRight()).setPrefWidth(SizeHandler.getPrefSize() + 50);
     }
 
     /**
