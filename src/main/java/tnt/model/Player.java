@@ -227,7 +227,7 @@ public class Player extends Observable {
      */
     public void addFigure(int amount) {
         for (int i = 0; i < amount; i++) {
-            Figure newFigure = new Figure();
+            Figure newFigure = new Figure(game, this);
             this.figures.add(newFigure);
         }
     }
