@@ -303,17 +303,34 @@ public class FileManager {
         return figureData;
     }
 
+    /**
+     * Part of save game
+     *
+     * @param playerList alle players
+     * @return the data of the current games players
+     */
     public List<String[]> getPlayersData(ArrayList<Player> playerList){
         List<String[]> playerData = new ArrayList<>();
+        String[] header = {"name", "levelOfIntelligence", "color", "amountOfFigures", "amountOfTurns", "team", "nrOfTiles"};
+        playerData.add(header);
         for (Player player: playerList){
             String name = player.getName();
             String color = player.getColor().toString();
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
-            String gods = "Nobody"; // Muss gelöscht werden
-            // Todo : get tiles data
-            // String gods = player.getGods(); Muss angepasst werden.
+            int amountOfFigures = player.getAmountOfFigures();
+            int amountOfTurns = player.getAmountOfTurns();
             String team = player.getTeam();
-            playerData.add(new String[]{name, color, String.valueOf(levelOfIntelligence), gods, team});
+            // Amount of tiles need a simple loop to be converted into String
+            String amountOfTiles = "";
+            for (int i = 0; i < player.getTileSize(); i++) {
+                if(i == 0) {
+                    amountOfTiles = amountOfTiles.concat(String.valueOf(player.getNrTile(i)));
+                }
+                else{
+                    amountOfTiles = amountOfTiles.concat(", ").concat(String.valueOf(player.getNrTile(i)));
+                }
+            }
+            playerData.add(new String[]{name, String.valueOf(levelOfIntelligence), color, String.valueOf(amountOfFigures), String.valueOf(amountOfTurns), team, amountOfTiles});
         }
         return playerData;
     }

@@ -52,14 +52,22 @@ public class Player extends Observable {
     }
 
     /**
-     * Getter for the player type
-     * @return the type of the player
+     * Getter for the players tiles
+     * @return the tiles of the player
      */
     public int getNrTile(int i) {
         if (i<0 || i >= nrOfTiles.length){
             return 0;
         }
         return nrOfTiles[i];
+    }
+
+    /**
+     * Getter for the size of tiles
+     * @return the size
+     */
+    public int getTileSize() {
+        return nrOfTiles.length;
     }
 
     /**
