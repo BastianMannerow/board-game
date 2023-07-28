@@ -344,7 +344,6 @@ public class FileManager {
             int levelOfIntelligence = header.indexOf("LevelOfIntelligence");
             int gameAmountOfTurns = header.indexOf("AmountOfTurns");
             int nameOfTeam = header.indexOf("Team Name");
-
             topOneplayerNames = data.get(0).get(name);
             topTwoplayerNames = data.get(1).get(name);
             topThreeplayerNames = data.get(2).get(name);
@@ -358,7 +357,6 @@ public class FileManager {
             topTwoTeamName = data.get(1).get(nameOfTeam);
             topThreeTeamName = data.get(2).get(nameOfTeam);
         }
-
         ArrayList<String> extractedData = new ArrayList<>();
         extractedData.addAll(Arrays.asList(topOneplayerNames, topOneLevelOfIntelligence, topOneAmountOfTurns, topOneTeamName, topTwoplayerNames, topTwoLevelOfIntelligence, topTwoAmountOfTurns, topTwoTeamName, topThreeplayerNames, topThreeLevelOfIntelligence, topThreeAmountOfTurns, topThreeTeamName));
         System.out.println(extractedData);
@@ -427,12 +425,13 @@ public class FileManager {
      * @param game The game object
      * @param winner The name of the winning team
      */
-    public void checkHighscore(Game game, String winner){
+    public void checkHighscore (Game game, String winner){
         ArrayList<String> oldHighscore = loadHighscore();
         int potentialHighscore = 10000;
         ArrayList<Player> playerList = game.getPlayerOrder();
         int position = 4;
 
+        // Compares the potential new highscore with the existing ones
         for (Player player: playerList) {
             if (player.getTeam().equals(winner)) {
                 if (player.getAmountOfTurns() < potentialHighscore) {
@@ -440,14 +439,12 @@ public class FileManager {
                 }
             }
         }
-
         for (int k = 0; k <= 2; k++){
             if (Integer.parseInt(oldHighscore.get(2+k*3)) > potentialHighscore){
                 position = k;
                 break;
             }
         }
-
         if (Integer.parseInt(oldHighscore.get(4)) < game.getAmountOfTurns()){
             saveHighscore(game, winner, position);
         }
