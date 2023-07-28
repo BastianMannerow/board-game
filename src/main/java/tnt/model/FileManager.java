@@ -348,17 +348,27 @@ public class FileManager {
      */
     public List<String[]> getGameData(Game game){
         List<String[]> gameData = new ArrayList<>();
-        String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTile", "globalTilePool"};
+        String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTiles", "globalTilePool"};
         gameData.add(header);
 
-        String roundWorld = "False";
-        if (game.getBoard().getRoundWorld()) {
-            roundWorld = "True";
-        }
         String playerOrder = Integer.toString(game.getPlayerOrder().size());
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
-
-        gameData.add(new String[]{playerOrder, amountOfTurns, roundWorld, });
+        String maxStepUpHeight = Integer.toString(game.getMaxStepUpHeight());
+        String maxStepDownHeight = Integer.toString(game.getMaxStepDownHeight());
+        String gameName = game.getGameName();
+        String victoryHeight = Integer.toString(game.getVictoryHeight());
+        String globalTilePool = Boolean.toString(game.isGlobalTilePool());
+        // Amount of tiles need a simple loop to be converted into String
+        String amountOfTiles = "";
+        for (int i = 0; i < game.getTileSize(); i++) {
+            if(i == 0) {
+                amountOfTiles = amountOfTiles.concat(String.valueOf(game.getNrTile(i)));
+            }
+            else{
+                amountOfTiles = amountOfTiles.concat(", ").concat(String.valueOf(game.getNrTile(i)));
+            }
+        }
+        gameData.add(new String[]{playerOrder, amountOfTurns, maxStepUpHeight, maxStepDownHeight, gameName, victoryHeight, amountOfTiles, globalTilePool});
         return gameData;
     }
 

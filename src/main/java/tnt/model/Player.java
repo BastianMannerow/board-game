@@ -24,7 +24,7 @@ public class Player extends Observable {
     private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private String team;
-    private int[] nrOfTiles;
+    private int[] numberOfTile;
 
     /**
      * Constructing an object Player.
@@ -56,10 +56,10 @@ public class Player extends Observable {
      * @return the tiles of the player
      */
     public int getNrTile(int i) {
-        if (i<0 || i >= nrOfTiles.length){
+        if (i<0 || i >= numberOfTile.length){
             return 0;
         }
-        return nrOfTiles[i];
+        return numberOfTile[i];
     }
 
     /**
@@ -67,7 +67,7 @@ public class Player extends Observable {
      * @return the size
      */
     public int getTileSize() {
-        return nrOfTiles.length;
+        return numberOfTile.length;
     }
 
     /**
@@ -235,8 +235,8 @@ public class Player extends Observable {
     }
 
 
-    public void setNrOfTiles(int[] numberOfTile) {
-        this.nrOfTiles = numberOfTile;
+    public void setNumberOfTile(int[] numberOfTile) {
+        this.numberOfTile = numberOfTile;
     }
 
 //    public int getNrOfTiles(int level) {
@@ -244,7 +244,7 @@ public class Player extends Observable {
 //    }
 
     public void removeTile(int buildLevel) {
-        nrOfTiles[buildLevel] -=1;
+        numberOfTile[buildLevel] -=1;
     }
 
     public void prePlayersTurn(){

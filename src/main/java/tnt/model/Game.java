@@ -74,6 +74,25 @@ public class Game extends Observable {
     }
 
     /**
+     * Getter for the players tiles
+     * @return the tiles of the player
+     */
+    public int getNrTile(int i) {
+        if (i<0 || i >= numberOfTile.length){
+            return 0;
+        }
+        return numberOfTile[i];
+    }
+
+    /**
+     * Getter for the size of tiles
+     * @return the size
+     */
+    public int getTileSize() {
+        return numberOfTile.length;
+    }
+
+    /**
      * Getter for the victory height
      * @return the height for the victory
      */
@@ -99,9 +118,9 @@ public class Game extends Observable {
         for (Player player: playerOrder){
             System.out.println("TEst + " + numberOfTile.length);
             if (globalTilePool){
-                player.setNrOfTiles(numberOfTile);
+                player.setNumberOfTile(numberOfTile);
             } else {
-                player.setNrOfTiles(numberOfTile.clone());
+                player.setNumberOfTile(numberOfTile.clone());
             }
         }
         notifyObservers();
@@ -635,9 +654,9 @@ public class Game extends Observable {
             Player newPlayer = new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns);
             playerOrder.add(newPlayer);
             if (globalTilePool){
-                newPlayer.setNrOfTiles(numberOfTile);
+                newPlayer.setNumberOfTile(numberOfTile);
             } else {
-                newPlayer.setNrOfTiles(numberOfTile.clone());
+                newPlayer.setNumberOfTile(numberOfTile.clone());
             }
             notifyObservers();
         }
