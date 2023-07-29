@@ -49,7 +49,7 @@ public class ArtificialPlayer{
         if(game.isMoveMode()) {
             Figure bestFigure = new Figure(game, player);
             Field bestMove = new Field();
-            int bestProgression = 100;
+            int bestProgression = 100; // An initial value, which will never be reached
 
             for (Figure figure:figureList) {
                 ArrayList<Field> possibleMoves = figure.getValidMoves(board);
@@ -88,12 +88,35 @@ public class ArtificialPlayer{
             ExecuteGameInputs.placeFigure(bestFigure, bestMove);
         }
 
-        /*
-        // execute building
+        // execute random building
         if(game.isBuildMode()) {
-            ExecuteGameInputs.buildObject(randomBuild.getTowerLevel()+1, randomBuild);
+            Field bestBuild = new Field();
+            int bestProgression = 100; // An initial value, which will never be reached
+            for (Figure figure:figureList) {
+                ArrayList<Field> possibleBuilds = figure.getValidMoves(board);
+                // For each field the following heuristic is going to be calculated, which determines the best move
+                for (Field field : possibleBuilds) {
+                    int ownProgression = game.getVictoryHeight() - field.getTowerLevel();
+                    if (ownProgression < bestProgression) {
+                        bestBuild = field;
+                        bestProgression = ownProgression;
+                    }
+                    // Sabotage an enemy if possible
+                    // Randomise if the moves are equally good
+                    else if (bestProgression == ownProgression) {
+                        Random random = new Random();
+                        int randomInt = random.nextInt(2);
+                        if (randomInt == 0) {
+                            bestBuild = field;
+                        } else {
+                            bestBuild = field;
+                        }
+                    }
+                }
+            }
+            ExecuteGameInputs.buildObject(bestBuild.getTowerLevel()+1, bestBuild);
         }
-         */
+
         // initial figure placement
         randomInitialPlacement(game, board, figureList);
     }
@@ -112,9 +135,9 @@ public class ArtificialPlayer{
         if(game.isMoveMode()) {
             Figure bestFigure = new Figure(game, player);
             Field bestMove = new Field();
-            int bestScore = 100;
-            int bestTeamProgression = 100;
-            int bestSabotageEnemy = 100;
+            int bestScore = 100; // An initial value, which will never be reached
+            int bestTeamProgression = 100; // An initial value, which will never be reached
+            int bestSabotageEnemy = 100; // An initial value, which will never be reached
 
             for (Figure figure:figureList){
                 ArrayList<Field> possibleMoves = figure.getValidMoves(board);
@@ -176,16 +199,6 @@ public class ArtificialPlayer{
             ExecuteGameInputs.placeFigure(bestFigure, bestMove);
         }
 
-        /*
-        // execute building
-        if(game.isBuildMode()) {
-            ExecuteGameInputs.buildObject(randomBuild.getTowerLevel()+1, randomBuild);
-        }
-        // initial figure placement
-        if(game.placeFigures()){
-            ExecuteGameInputs.placeFigure(figure, targetField);
-        }
-        */
         // execute random building
         if(game.isBuildMode()) {
             int randomFigureBuildNumber = new Random().nextInt(figureList.size());
@@ -211,7 +224,7 @@ public class ArtificialPlayer{
         if(game.placeFigures()){
             int x = board.getXSize();
             int y = board.getYSize();
-            ArrayList<Field> possibleFields = new ArrayList<>();;
+            ArrayList<Field> possibleFields = new ArrayList<>();
 
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
