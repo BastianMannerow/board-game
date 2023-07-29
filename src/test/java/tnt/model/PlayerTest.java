@@ -28,7 +28,7 @@ public class PlayerTest {
         Color color = Color.RED;
         ArrayList<Figure> figures = new ArrayList<>();
 
-        player = new Player(levelOfIntelligence, name, color, figures);
+        player = new Player(levelOfIntelligence, name, color, figures, 0);
 
         // Create a sample board with 3x3 fields
         Field[][] fields = new Field[3][3];
@@ -138,7 +138,7 @@ public class PlayerTest {
     @Test
     public void testAddFigureWithCoordinates() {
         Game game = new Game(Settings.getDefaultPlayer());
-        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures);
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 0);
         player.addFigure(1);
         ArrayList<Figure> figures = player.getFigure();
         Assertions.assertEquals(1, figures.size());
@@ -171,7 +171,7 @@ public class PlayerTest {
         field.setTowerComplete(false);
 
         // Execute the build action
-        player.executeBuild(field, board);
+        player.executeBuild(field);
 
         // Check if the tower level and completion status are updated correctly
         Assertions.assertEquals(1, field.getTowerLevel());
@@ -186,7 +186,8 @@ public class PlayerTest {
     public void testExecuteMove() {
         // Set up the necessary objects for the test
         Field field = board.getField(1, 1);
-        Figure figure = new Figure(0, 0, new Game(Settings.getDefaultPlayer()));
+        Game game = new Game(Settings.getDefaultPlayer());
+        Figure figure = new Figure(0, 0, game, game.getPlayersTurn());
         board.getField(0, 0).setFigure(figure);
 
         // Execute the move action
@@ -205,7 +206,7 @@ public class PlayerTest {
      */
     @Test
     public void testInitPlayer() {
-        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures);
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 0);
         player.initPlayer();
         ArrayList<Figure> figures = player.getFigure();
         Assertions.assertEquals(2, figures.size());

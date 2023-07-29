@@ -41,7 +41,8 @@ public class FieldTest implements tnt.util.Observer {
      */
     @Test
     public void testFigureLeft() {
-        field.setFigure(new Figure());
+        Game game = new Game(2);
+        field.setFigure(new Figure(game, game.getPlayersTurn()));
         field.addObserver(this);
 
         field.figureLeft();
@@ -58,7 +59,8 @@ public class FieldTest implements tnt.util.Observer {
     public void testIsFigureHere() {
         Assertions.assertFalse(field.getIsFigureHere());
 
-        field.setFigure(new Figure());
+        Game game = new Game(2);
+        field.setFigure(new Figure(game, game.getPlayersTurn()));
 
         Assertions.assertTrue(field.getIsFigureHere());
     }
@@ -109,7 +111,8 @@ public class FieldTest implements tnt.util.Observer {
      */
     @Test
     public void testSetFigure() {
-        Figure figure = new Figure();
+        Game game = new Game(2);
+        Figure figure = new Figure(game, game.getPlayersTurn());
         field.addObserver(this);
 
         field.setFigure(figure);
