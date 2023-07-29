@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import tnt.gui.GUISettings;
 import tnt.gui.Language;
 import tnt.gui.SceneHandler;
-import tnt.model.Settings;
 
 import java.util.Locale;
 

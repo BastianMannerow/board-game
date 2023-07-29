@@ -3,9 +3,9 @@ package tnt.gui;
 import tnt.model.Player;
 import tnt.util.Observable;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
 
-import static java.util.Locale.*;
 import static java.util.Map.entry;
 
 /**
@@ -100,8 +100,8 @@ public class Language extends Observable {
      */
     public static String playerType(Player.PlayerType playerType) {
         StringBuilder str = new StringBuilder();
-        if (Locale.getDefault().equals(GERMAN)) {
-            str.append("KI ");
+        if (Locale.getDefault().equals(Locale.GERMAN)) {
+            str.append("KI");
         } else {
             str.append("AI");
         }
@@ -123,7 +123,7 @@ public class Language extends Observable {
     }
 
     private static String difficulty(int i) {
-        if (Locale.getDefault().equals(GERMAN)) {
+        if (Locale.getDefault().equals(Locale.GERMAN)) {
             switch (i){
                 case 1:
                     return "Einfach";
@@ -174,7 +174,7 @@ public class Language extends Observable {
      */
     public void setLanguage(Locale language) {
         Locale.setDefault(language);
-        if (language.equals(GERMAN)) {
+        if (language.equals(Locale.GERMAN)) {
             actualLanguage = german;
         }
         else {
