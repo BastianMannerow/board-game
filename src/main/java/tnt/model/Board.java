@@ -32,6 +32,14 @@ public class Board {
     }
 
     /**
+     * @param x the x coordinate of the desired field
+     * @param y the y coordinate of the desired field
+     */
+    public void setField(int x, int y, Field field) {
+        this.board[x][y] = field;
+    }
+
+    /**
      * @return x size of the board as int
      */
     public int getXSize(){

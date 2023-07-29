@@ -52,6 +52,13 @@ public class Player extends Observable {
     }
 
     /**
+     * Constructor for a player
+     */
+    public Player(Game game) {
+        this.game = game;
+    }
+
+    /**
      * Getter for the players tiles
      * @return the tiles of the player
      */
@@ -234,7 +241,10 @@ public class Player extends Observable {
         return this.amountOfFigures;
     }
 
-
+    /**
+     * getter for the number of tiles this player should have
+     * @param numberOfTile the amount of tiles
+     */
     public void setNumberOfTile(int[] numberOfTile) {
         this.numberOfTile = numberOfTile;
     }

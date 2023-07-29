@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.File;
 import java.nio.file.*;
 import java.util.Arrays;
+import javafx.scene.paint.Color;
 
 /**
  * The FileManager is responsible for permanent savings as csv-files.
@@ -148,53 +149,36 @@ public class FileManager {
      */
     public void loadGame(String savedGame, Game game){
         String filepath = System.getProperty("user.dir") + File.separator + "savings" + File.separator + savedGame;
-        // Load Game
-        List<Object> csv = loadCSV(filepath + File.separator + "game.csv");
-        List<String> header = (List<String>) csv.get(0);
-        List<List<String>> gameData = (List<List<String>>) csv.get(1);
-        setGameData(header, gameData);
 
         // Load Player
-        csv = loadCSV(filepath + File.separator + "player.csv");
-        header = (List<String>) csv.get(0);
+        List<Object> csv = loadCSV(filepath + File.separator + "player.csv");
+        List<String> header = (List<String>) csv.get(0);
         List<List<String>> playerData = (List<List<String>>) csv.get(1);
-        setPlayerData(header, playerData);
+        ArrayList<Player> playerList = setPlayerData(header, playerData, game);
 
-        // Load Figure
-        csv = loadCSV(filepath + File.separator + "figure.csv");
+        // Load Game
+        csv = loadCSV(filepath + File.separator + "game.csv");
         header = (List<String>) csv.get(0);
-        List<List<String>> figureData = (List<List<String>>) csv.get(1);
-        setFigureData(header, figureData);
+        List<List<String>> gameData = (List<List<String>>) csv.get(1);
+        setGameData(header, gameData, game, playerList);
 
         // Load Fields
         csv = loadCSV(filepath + File.separator + "fields.csv");
         header = (List<String>) csv.get(0);
         List<List<String>> fieldData = (List<List<String>>) csv.get(1);
-        setFieldData(header, fieldData);
+        ArrayList<Field> allFields = setFieldData(header, fieldData);
 
         // Load Board
         csv = loadCSV(filepath + File.separator + "board.csv");
         header = (List<String>) csv.get(0);
         List<List<String>> boardData = (List<List<String>>) csv.get(1);
-        setBoardData(header, boardData);
-    }
+        setBoardData(header, boardData, game, allFields);
 
-    /**
-     * Part of load game
-     *
-     * @param header the header for the data
-     * @param gameData the data
-     */
-    public void setGameData(List<String> header, List<List<String>> gameData){
-        String playerOrder = gameData.get(0).get(header.indexOf("playerOrder"));
-        String board = gameData.get(0).get(header.indexOf("board"));
-        String amountOfGameTurns = gameData.get(0).get(header.indexOf("amountOfGameTurns"));
-        String maxStepUpHeight = gameData.get(0).get(header.indexOf("maxStepUpHeight"));
-        String maxStepDownHeight = gameData.get(0).get(header.indexOf("maxStepDownHeight"));
-        String gameName = gameData.get(0).get(header.indexOf("gameName"));
-        String lastMovedFigure = gameData.get(0).get(header.indexOf("lastMovedFigure"));
-        String gameStatus = gameData.get(0).get(header.indexOf("gameStatus"));
-        String victoryHeight = gameData.get(0).get(header.indexOf("victoryHeight"));
+        // Load Figure
+        csv = loadCSV(filepath + File.separator + "figure.csv");
+        header = (List<String>) csv.get(0);
+        List<List<String>> figureData = (List<List<String>>) csv.get(1);
+        setFigureData(header, figureData, game, playerList);
     }
 
     /**
@@ -203,31 +187,71 @@ public class FileManager {
      * @param header the header for the data
      * @param playerData the data
      */
-    public void setPlayerData(List<String> header, List<List<String>> playerData){
-        String levelOfIntelligence = playerData.get(0).get(header.indexOf("levelOfIntelligence"));
-        String name = playerData.get(0).get(header.indexOf("name"));
-        String color = playerData.get(0).get(header.indexOf("color"));
-        String amountOfFigures = playerData.get(0).get(header.indexOf("amountOfFigures"));
-        String amountOfTurns = playerData.get(0).get(header.indexOf("amountOfTurns"));
-        String figures = playerData.get(0).get(header.indexOf("figures"));
-        String gods = playerData.get(0).get(header.indexOf("gods"));
-        String team = playerData.get(0).get(header.indexOf("team"));
-        // String levelOneTile = gameData.get(0).get(header.indexOf("levelOneTile"));
-        // String levelTwoTile = gameData.get(0).get(header.indexOf("levelTwoTile"));
-        // String levelThreeTile = gameData.get(0).get(header.indexOf("levelThreeTile"));
-        // String levelFourTile = gameData.get(0).get(header.indexOf("levelFourTile"));
+    public ArrayList<Player> setPlayerData(List<String> header, List<List<String>> playerData, Game game){
+        ArrayList<Player> playerList = new ArrayList<>();
+        for (List<String> player:playerData) {
+            String name = player.get(header.indexOf("name"));
+            String levelOfIntelligence = player.get(header.indexOf("levelOfIntelligence"));
+            String color = player.get(header.indexOf("color"));
+            int amountOfFigures = Integer.parseInt(player.get(header.indexOf("amountOfFigures")));
+            int amountOfTurns = Integer.parseInt(player.get(header.indexOf("amountOfTurns")));
+            String team = player.get(header.indexOf("team"));
+            String stringNumberOfTiles = player.get(header.indexOf("numberOfTiles"));
+            Player playerObject = new Player(game);
+            playerObject.setName(name);
+
+            if(levelOfIntelligence.equals("HUMAN")) {
+                playerObject.setLevelOfIntelligence(Player.PlayerType.HUMAN);
+            }
+            else if(levelOfIntelligence.equals("AI_1")) {
+                playerObject.setLevelOfIntelligence(Player.PlayerType.AI_1);
+            }
+            else if(levelOfIntelligence.equals("AI_2")) {
+                playerObject.setLevelOfIntelligence(Player.PlayerType.AI_2);
+            }
+            else if(levelOfIntelligence.equals("AI_3")) {
+                playerObject.setLevelOfIntelligence(Player.PlayerType.AI_3);
+            }
+
+            color = "#" + color.substring(2); // Entfernt das "0x" und fügt "#" hinzu
+            playerObject.setColor(Color.web(color));
+            playerObject.setAmountOfFigures(amountOfFigures);
+            playerObject.setAmountOfTurns(amountOfTurns);
+            playerObject.setTeam(team);
+            // Parses the tile pool
+            String[] parsedStringNumberOfTiles = stringNumberOfTiles.split(", ");
+            int[] numberOfTiles = new int[stringNumberOfTiles.length()];
+            for (int i = 0; i < parsedStringNumberOfTiles.length; i++) {
+                numberOfTiles[i] = Integer.parseInt(parsedStringNumberOfTiles[i]);
+            }
+            playerObject.setNumberOfTile(numberOfTiles);
+            playerList.add(playerObject);
+        }
+        return playerList;
     }
 
     /**
      * Part of load game
      *
      * @param header the header for the data
-     * @param figureData the data
+     * @param figureData the
+     * @param playerList the list of players to add the figures to
      */
-    public void setFigureData(List<String> header, List<List<String>> figureData){
-        String x = figureData.get(0).get(header.indexOf("x"));
-        String y = figureData.get(0).get(header.indexOf("y"));
-        String placed = figureData.get(0).get(header.indexOf("placed"));
+    public void setFigureData(List<String> header, List<List<String>> figureData, Game game, ArrayList<Player> playerList){
+        for (List<String> figure: figureData) {
+            for (Player player: playerList){
+                if(player.getName().equals(figure.get(header.indexOf("player")))){
+                    player.addFigure(1);
+                    Figure currentFigure = player.getFigure().get(player.getAmountOfFigures()-1);
+                    currentFigure.setX(Integer.parseInt(figure.get(header.indexOf("x"))));
+                    currentFigure.setY(Integer.parseInt(figure.get(header.indexOf("y"))));
+                    if(Boolean.valueOf(figure.get(header.indexOf("placed")))){
+                        currentFigure.setPlaced();
+                        game.getBoard().getField(Integer.parseInt(figure.get(header.indexOf("x"))), Integer.parseInt(figure.get(header.indexOf("y")))).setFigure(currentFigure);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -236,12 +260,19 @@ public class FileManager {
      * @param header the header for the data
      * @param fieldData the data
      */
-    public void setFieldData(List<String> header, List<List<String>> fieldData){
-        // String fieldX = playerData.get(0).get(header.indexOf("fieldX"));
-        // String fieldY = playerData.get(0).get(header.indexOf("fieldY"));
-        // String towerLevel = playerData.get(0).get(header.indexOf("towerLevel"));
-        // String towerComplete = playerData.get(0).get(header.indexOf("towerComplete"));
-        // String figure = playerData.get(0).get(header.indexOf("figure"));
+    public ArrayList<Field> setFieldData(List<String> header, List<List<String>> fieldData){
+        ArrayList<Field> allFields = new ArrayList<>();
+        for (List<String> field: fieldData){
+            String fieldX = field.get(header.indexOf("fieldX"));
+            String fieldY = field.get(header.indexOf("fieldY"));
+            Field fieldObject = new Field(Integer.valueOf(fieldX), Integer.valueOf(fieldY));
+            String towerLevel = field.get(header.indexOf("towerLevel"));
+            fieldObject.setTowerLevel(Integer.valueOf(towerLevel));
+            String towerComplete = field.get(header.indexOf("towerComplete"));
+            fieldObject.setTowerComplete(Boolean.valueOf(towerComplete));
+            allFields.add(fieldObject);
+        }
+        return allFields;
     }
 
     /**
@@ -249,13 +280,54 @@ public class FileManager {
      *
      * @param header the header for the data
      * @param boardData the data
+     * @param allFields all the fields, which will be placed on the board
      */
-    public void setBoardData(List<String> header, List<List<String>> boardData){
-        // String fieldX = playerData.get(0).get(header.indexOf("fieldX"));
-        // String fieldY = playerData.get(0).get(header.indexOf("fieldY"));
-        // String towerLevel = playerData.get(0).get(header.indexOf("towerLevel"));
-        // String towerComplete = playerData.get(0).get(header.indexOf("towerComplete"));
-        // String figure = playerData.get(0).get(header.indexOf("figure"));
+    public void setBoardData(List<String> header, List<List<String>> boardData, Game game, ArrayList<Field> allFields){
+        String fieldX = boardData.get(0).get(header.indexOf("fieldX"));
+        String fieldY = boardData.get(0).get(header.indexOf("fieldY"));
+        game.createBoard(Integer.valueOf(fieldX), Integer.valueOf(fieldY));
+        game.getBoard().setRoundWorld(Boolean.valueOf(boardData.get(0).get(header.indexOf("roundWorld"))));
+        for (Field field: allFields){
+            game.getBoard().setField(field.getX(), field.getY(), field);
+        }
+    }
+
+    /**
+     * Part of load game
+     *
+     * @param header the header for the data
+     * @param gameData the data
+     */
+    public void setGameData(List<String> header, List<List<String>> gameData, Game game, ArrayList<Player> playerList){
+        // Sorting the player order
+        String playerOrder = gameData.get(0).get(header.indexOf("playerOrder"));
+
+        String[] parsedStringPlayerOrder = playerOrder.split(", ");
+        ArrayList<Player> finalPlayerOrder = new ArrayList<>();
+        for (int i = 0; i < parsedStringPlayerOrder.length; i++) {
+            for (Player player: playerList){
+                if (player.getName().equals(parsedStringPlayerOrder[i])){
+                    finalPlayerOrder.add(player);
+                }
+            }
+        }
+        game.setPlayerOrder(finalPlayerOrder);
+
+        game.setAmountOfTurns(Integer.valueOf(gameData.get(0).get(header.indexOf("amountOfTurns"))));
+        game.setMaxStepUpHeight(Integer.valueOf(gameData.get(0).get(header.indexOf("maxStepUpHeight"))));
+        game.setMaxStepDownHeight(Integer.valueOf(gameData.get(0).get(header.indexOf("maxStepDownHeight"))));
+        game.setVictoryHeight(Integer.valueOf(gameData.get(0).get(header.indexOf("victoryHeight"))));
+        game.setGameName(gameData.get(0).get(header.indexOf("gameName")));
+        game.setGlobalTilePool(Boolean.valueOf(gameData.get(0).get(header.indexOf("globalTilePool"))));
+
+        String stringNumberOfTiles = gameData.get(0).get(header.indexOf("numberOfTiles"));
+        // Parses the tile pool
+        String[] parsedStringNumberOfTiles = stringNumberOfTiles.split(", ");
+        int[] numberOfTiles = new int[stringNumberOfTiles.length()];
+        for (int i = 0; i < parsedStringNumberOfTiles.length; i++) {
+            numberOfTiles[i] = Integer.parseInt(parsedStringNumberOfTiles[i]);
+        }
+        game.setNumberOfTile(numberOfTiles);
     }
 
     /**
@@ -325,7 +397,7 @@ public class FileManager {
      */
     public List<String[]> getFieldsData(Game game){
         List<String[]> fieldsData = new ArrayList<>();
-        String[] header = {"fieldX", "fieldY", "towerLevel", "towerComplete", "figure"};
+        String[] header = {"fieldX", "fieldY", "towerLevel", "towerComplete"};
         fieldsData.add(header);
         for (int i = 0; i < game.getBoard().getXSize(); i++) {
             for (int j = 0; j < game.getBoard().getYSize(); j++) {
@@ -334,11 +406,7 @@ public class FileManager {
                 if (game.getBoard().getField(i, j).getTowerComplete()) {
                     towerComplete = "true";
                 }
-                String occupiedByFigure = "false";
-                if (game.getBoard().getField(i, j).getIsFigureHere()) {
-                    occupiedByFigure = "true";
-                }
-                fieldsData.add(new String[]{Integer.toString(i), Integer.toString(j), towerLevel, towerComplete, occupiedByFigure});
+                fieldsData.add(new String[]{Integer.toString(i), Integer.toString(j), towerLevel, towerComplete});
             }
         }
         return fieldsData;
@@ -371,7 +439,7 @@ public class FileManager {
      */
     public List<String[]> getPlayersData(ArrayList<Player> playerList){
         List<String[]> playerData = new ArrayList<>();
-        String[] header = {"name", "levelOfIntelligence", "color", "amountOfFigures", "amountOfTurns", "team", "nrOfTiles"};
+        String[] header = {"name", "levelOfIntelligence", "color", "amountOfFigures", "amountOfTurns", "team", "numberOfTiles"};
         playerData.add(header);
         for (Player player: playerList){
             String name = player.getName();
@@ -381,16 +449,16 @@ public class FileManager {
             int amountOfTurns = player.getAmountOfTurns();
             String team = player.getTeam();
             // Amount of tiles need a simple loop to be converted into String
-            String amountOfTiles = "";
+            String numberOfTile = "";
             for (int i = 0; i < player.getTileSize(); i++) {
                 if(i == 0) {
-                    amountOfTiles = amountOfTiles.concat(String.valueOf(player.getNrTile(i)));
+                    numberOfTile = numberOfTile.concat(String.valueOf(player.getNrTile(i)));
                 }
                 else{
-                    amountOfTiles = amountOfTiles.concat(", ").concat(String.valueOf(player.getNrTile(i)));
+                    numberOfTile = numberOfTile.concat(", ").concat(String.valueOf(player.getNrTile(i)));
                 }
             }
-            playerData.add(new String[]{name, String.valueOf(levelOfIntelligence), color, String.valueOf(amountOfFigures), String.valueOf(amountOfTurns), team, amountOfTiles});
+            playerData.add(new String[]{name, String.valueOf(levelOfIntelligence), color, String.valueOf(amountOfFigures), String.valueOf(amountOfTurns), team, numberOfTile});
         }
         return playerData;
     }
@@ -406,7 +474,20 @@ public class FileManager {
         String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTiles", "globalTilePool"};
         gameData.add(header);
 
-        String playerOrder = Integer.toString(game.getPlayerOrder().size());
+        ArrayList<Player> playerList = game.getPlayerOrder();
+        // Saving the players names
+        String playerOrder = "";
+        int i = 0;
+        for (Player player: playerList){
+            if(i >0){
+                playerOrder = playerOrder.concat(" ,").concat(player.getName());
+            }
+            else{
+                playerOrder = playerOrder.concat(player.getName());
+            }
+            i++;
+        }
+
         String amountOfTurns = Integer.toString(game.getAmountOfTurns());
         String maxStepUpHeight = Integer.toString(game.getMaxStepUpHeight());
         String maxStepDownHeight = Integer.toString(game.getMaxStepDownHeight());
@@ -415,8 +496,8 @@ public class FileManager {
         String globalTilePool = Boolean.toString(game.isGlobalTilePool());
         // Amount of tiles need a simple loop to be converted into String
         String amountOfTiles = "";
-        for (int i = 0; i < game.getTileSize(); i++) {
-            if(i == 0) {
+        for (int j = 0; j < game.getTileSize(); j++) {
+            if(j == 0) {
                 amountOfTiles = amountOfTiles.concat(String.valueOf(game.getNrTile(i)));
             }
             else{
