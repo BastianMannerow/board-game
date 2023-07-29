@@ -1,13 +1,10 @@
 package tnt.gui;
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tnt.gui.mainmenu.MainMenuView;
 import tnt.gui.saveloadmenu.SaveLoadMenuView;
 import tnt.gui.settingsmenu.SettingsView;
-
-
 import java.io.IOException;
 
 /**

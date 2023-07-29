@@ -21,7 +21,6 @@ public class ArtificialPlayer{
             Field randomMove = possibleMoves.get(randomMoveFieldNumber);
             ExecuteGameInputs.placeFigure(randomMoveFigure, randomMove);
         }
-
         // execute random building
         if(game.isBuildMode()) {
             int randomFigureBuildNumber = new Random().nextInt(figureList.size());
@@ -47,8 +46,8 @@ public class ArtificialPlayer{
         ArrayList<Figure> figureList = player.getFigure();
         // execute movement
         if(game.isMoveMode()) {
-            Figure bestFigure = new Figure(game, player);
-            Field bestMove = new Field();
+            Figure bestFigure = null;
+            Field bestMove = null;
             int bestProgression = 100; // An initial value, which will never be reached
 
             for (Figure figure:figureList) {
@@ -122,7 +121,7 @@ public class ArtificialPlayer{
     }
 
     /**
-     * Greedy decision with an advanced reward and punishment heuristic
+     * Greedy decision with an advanced reward and punishment heuristic. It also includes considering the team-mate.
      *
      * @param board the current status of the board
      * @param player the player object executing the AI turn010
@@ -133,8 +132,8 @@ public class ArtificialPlayer{
 
         // execute movement
         if(game.isMoveMode()) {
-            Figure bestFigure = new Figure(game, player);
-            Field bestMove = new Field();
+            Figure bestFigure = null;
+            Field bestMove = null;
             int bestScore = 100; // An initial value, which will never be reached
             int bestTeamProgression = 100; // An initial value, which will never be reached
             int bestSabotageEnemy = 100; // An initial value, which will never be reached
@@ -145,31 +144,32 @@ public class ArtificialPlayer{
                 for (Field field:possibleMoves){
                     // If an instant win is possible, it will be executed
                     if (moveToWin()){
-                        bestFigure = new Figure(game, player);
-                        bestMove = new Field();
+                        bestFigure = figure;
+                        bestMove = field;
                         bestScore = 0;
                         break;
                     }
                     // Calculating the heuristic and comparing it with the old best value
-                    int ownProgression = ownProgressionHeuristic();
-                    int teamProgression = teamProgressionHeuristic();
-                    int sabotageEnemy = sabotageEnemyHeuristic();
+                    int ownProgression = ownProgressionHeuristic(figure, field, game);
+                    int teamProgression = teamProgressionHeuristic(figure, field, game);
+                    int sabotageEnemy = sabotageEnemyHeuristic(figure, field, game);
 
+                    // If move is better than the current best move, replace it
                     if (ownProgression + teamProgression + sabotageEnemy < bestScore){
                         bestTeamProgression = teamProgression;
                         bestSabotageEnemy = sabotageEnemy;
-
+                        bestMove = field;
+                        bestFigure = figure;
                     }
-
-                    // If move is as good as the current best move
                     else if (ownProgression + teamProgression + sabotageEnemy == bestScore){
+                        // If move is as good as the current best move, prefer the sabotage
                         if(sabotageEnemy < bestSabotageEnemy){
                             bestTeamProgression = teamProgression;
                             bestSabotageEnemy = sabotageEnemy;
                             bestMove = field;
                             bestFigure = figure;
                         }
-
+                        // If move is as good as the current best move, prefer the teamProgression, since team-mate is able to move earlier
                         else if(teamProgression < bestTeamProgression){
                             bestTeamProgression = teamProgression;
                             bestSabotageEnemy = sabotageEnemy;
@@ -185,7 +185,6 @@ public class ArtificialPlayer{
                                 bestMove = field;
                                 bestFigure = figure;
                             }
-
                             else{
                                 bestTeamProgression = teamProgression;
                                 bestSabotageEnemy = sabotageEnemy;
@@ -213,7 +212,7 @@ public class ArtificialPlayer{
     }
 
     /**
-     * Places the figures at the start of the game in a random way to ensure an unique game experience.
+     * Places the figures at the start of the game in a random way to ensure a unique game experience.
      *
      * @param game the game which is played on
      * @param board the current status of the board
@@ -233,7 +232,6 @@ public class ArtificialPlayer{
                     }
                 }
             }
-
             for(Figure figure:figureList){
                 if (!figure.isPlaced()) {
                     int randomFigureMoveNumber = new Random().nextInt(possibleFields.size());
@@ -246,15 +244,15 @@ public class ArtificialPlayer{
         }
     }
 
-    public static int teamProgressionHeuristic(){
+    public static int teamProgressionHeuristic(Figure figure, Field field, Game game){
         return 1;
     }
 
-    public static int ownProgressionHeuristic(){
+    public static int ownProgressionHeuristic(Figure figure, Field field, Game game){
         return 1;
     }
 
-    public static int sabotageEnemyHeuristic(){
+    public static int sabotageEnemyHeuristic(Figure figure, Field field, Game game){
         return 1;
     }
 
