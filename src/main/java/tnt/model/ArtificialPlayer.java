@@ -8,7 +8,7 @@ public class ArtificialPlayer{
      *
      * @param board the current status of the board
      * @param player the player object executing the AI turn
-     * @param game the game which is be played on
+     * @param game the game which is played on
      */
     public static void easyAI(Board board, Player player, Game game){
         ArrayList<Figure> figureList = player.getFigure();
@@ -33,29 +33,7 @@ public class ArtificialPlayer{
         }
 
         // initial figure placement
-        if(game.placeFigures()){
-            int x = board.getXSize();
-            int y = board.getYSize();
-            ArrayList<Field> possibleFields = new ArrayList<>();;
-
-            for (int i = 0; i < x; i++) {
-                for (int j = 0; j < y; j++) {
-                    if(!board.getField(i,j).getIsFigureHere()){
-                        possibleFields.add(board.getField(i,j));
-                    }
-                }
-            }
-
-            for(Figure figure:figureList){
-                if (!figure.isPlaced()) {
-                    int randomFigureMoveNumber = new Random().nextInt(possibleFields.size());
-                    Field targetField = possibleFields.get(randomFigureMoveNumber);
-                    ExecuteGameInputs.placeFigure(figure, targetField);
-                    possibleFields.remove(randomFigureMoveNumber);
-                    break;
-                }
-            }
-        }
+        randomInitialPlacement(game, board, figureList);
     }
 
     /**
@@ -63,9 +41,9 @@ public class ArtificialPlayer{
      *
      * @param board the current status of the board
      * @param player the player object executing the AI turn
-     * @param game the game which is be played on
+     * @param game the game which is played on
      */
-    public void mediumAI(Board board, Player player, Game game){
+    public static void mediumAI(Board board, Player player, Game game){
         ArrayList<Figure> figureList = player.getFigure();
         // execute movement
         if(game.isMoveMode()) {
@@ -115,11 +93,9 @@ public class ArtificialPlayer{
         if(game.isBuildMode()) {
             ExecuteGameInputs.buildObject(randomBuild.getTowerLevel()+1, randomBuild);
         }
+         */
         // initial figure placement
-        if(game.placeFigures()){
-            ExecuteGameInputs.placeFigure(figure, targetField);
-        }
-        */
+        randomInitialPlacement(game, board, figureList);
     }
 
     /**
@@ -127,9 +103,9 @@ public class ArtificialPlayer{
      *
      * @param board the current status of the board
      * @param player the player object executing the AI turn010
-     * @param game the game which is be played on
+     * @param game the game which is played on
      */
-    public void hardAI(Board board, Player player, Game game){
+    public static void hardAI(Board board, Player player, Game game){
         ArrayList<Figure> figureList = player.getFigure();
 
         // execute movement
@@ -210,22 +186,67 @@ public class ArtificialPlayer{
             ExecuteGameInputs.placeFigure(figure, targetField);
         }
         */
+        // execute random building
+        if(game.isBuildMode()) {
+            int randomFigureBuildNumber = new Random().nextInt(figureList.size());
+            Figure randomBuildFigure = figureList.get(randomFigureBuildNumber);
+            ArrayList<Field> possibleBuilds = new ArrayList<>(randomBuildFigure.getValidBuilds(board));
+            int randomBuildFieldNumber = new Random().nextInt(possibleBuilds.size());
+            Field randomBuild = possibleBuilds.get(randomBuildFieldNumber);
+            ExecuteGameInputs.buildObject(randomBuild.getTowerLevel()+1, randomBuild);
+        }
+        // initial figure placement
+        randomInitialPlacement(game, board, figureList);
     }
 
-    public int teamProgressionHeuristic(){
+    /**
+     * Places the figures at the start of the game in a random way to ensure an unique game experience.
+     *
+     * @param game the game which is played on
+     * @param board the current status of the board
+     * @param figureList all figures of the player
+     */
+    public static void randomInitialPlacement(Game game, Board board, ArrayList<Figure> figureList){
+        // initial figure placement
+        if(game.placeFigures()){
+            int x = board.getXSize();
+            int y = board.getYSize();
+            ArrayList<Field> possibleFields = new ArrayList<>();;
+
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
+                    if(!board.getField(i,j).getIsFigureHere()){
+                        possibleFields.add(board.getField(i,j));
+                    }
+                }
+            }
+
+            for(Figure figure:figureList){
+                if (!figure.isPlaced()) {
+                    int randomFigureMoveNumber = new Random().nextInt(possibleFields.size());
+                    Field targetField = possibleFields.get(randomFigureMoveNumber);
+                    ExecuteGameInputs.placeFigure(figure, targetField);
+                    possibleFields.remove(randomFigureMoveNumber);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static int teamProgressionHeuristic(){
         return 1;
     }
 
-    public int ownProgressionHeuristic(){
+    public static int ownProgressionHeuristic(){
         return 1;
     }
 
-    public int sabotageEnemyHeuristic(){
+    public static int sabotageEnemyHeuristic(){
         return 1;
     }
 
-    public boolean moveToWin(){
+    public static boolean moveToWin(){
 
-        return true;
+        return false;
     }
 }

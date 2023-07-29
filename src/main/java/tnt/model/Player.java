@@ -263,10 +263,10 @@ public class Player extends Observable {
                 ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             case AI_2:
-                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                ArtificialPlayer.mediumAI(game.getBoard(), this, game);
                 break;
             case AI_3:
-                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                ArtificialPlayer.hardAI(game.getBoard(), this, game);
                 break;
             default:
                 break;
