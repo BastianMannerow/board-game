@@ -44,9 +44,15 @@ public class FileManager {
         return csv;
     }
 
+    /**
+     * converts a string representation to a list of string arrays
+     * @param str the string to be converted
+     * @return the data as list of string array
+     */
     public List<String[]> readString(String str) {
         List<String[]> data = new ArrayList<>();
-        String[] rows = str.split("\n");
+        String newstr = str.replace("new##notaseperator##data", "new####data");
+        String[] rows = newstr.split("\n");
         for(String line : rows){
             String[] row = line.split(";");
             data.add(row);
@@ -87,6 +93,11 @@ public class FileManager {
         }
     }
 
+    /**
+     * makes a string from the list of string array
+     * @param data the data to be converted to a single string
+     * @return the data represented as string
+     */
     public static String makeString(List<String[]> data){
         StringBuilder csvLine = new StringBuilder();
         for (String[] row : data) {
@@ -98,7 +109,7 @@ public class FileManager {
             }
             csvLine.append(System.lineSeparator());
         }
-        return csvLine.toString();
+        return csvLine.toString().replace("new####data", "new##notaseperator##data");
     }
 
     /**

@@ -95,7 +95,7 @@ public class MainMenuController{
 
     @FXML
     private void newGame() {
-        Settings.setActualGame(null);
+        Settings.setActualGame(new Game(getAmountOfPlayer((DefaultConfig) defaultConfig.getValue())));
         System.out.println(Settings.getActualGame());
         gotoGame();
     }
