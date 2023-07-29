@@ -85,7 +85,7 @@
             <VBox fx:id="sepBox" alignment="TOP_CENTER">
                <children>
                   <Label fx:id="labelGlobalTilePool" text="seperate tile-pool for each player" />
-                  <CheckBox fx:id="tilesSepBox" contentDisplay="TOP" mnemonicParsing="false" />
+                  <CheckBox fx:id="tilesSepBox" contentDisplay="TOP" mnemonicParsing="false" onAction="#updateGameSettings" />
                </children>
             </VBox>
          </children>

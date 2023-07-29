@@ -1,5 +1,12 @@
 package tnt.util;
 
+/**
+ * interface for an observer
+ */
 public interface Observer {
-    public void update();
+
+    /**
+     * method to get called if the observable notifiy its observer
+     */
+    void update();
 }

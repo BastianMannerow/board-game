@@ -21,10 +21,13 @@ public class GameTest {
     @BeforeEach
     public void setup() {
         playerOrder = new ArrayList<>();
-        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.RED, 2, null, "1"));
-        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "2"));
+//        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.RED, 2, null, "1"));
+//        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "2"));
+        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.BLUE, 2, game, "1 ", 0));
+        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, game, "2 ", 0));
 
-        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3, 5);
+//        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3, 5);
+        game = new Game(2);
     }
 
     /**
@@ -95,9 +98,9 @@ public class GameTest {
      */
     @Test
     public void testAddPlayer() {
-        game.addPlayer(3,"1");
+        game.addPlayer(3,"1",0);
         ArrayList<Player> expectedPlayerOrder = new ArrayList<>(playerOrder);
-        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 3", Color.GREEN, 3, null, "1"));
+        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 3", Color.GREEN, 3, game, "1", 0));
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
     }
 
@@ -110,7 +113,7 @@ public class GameTest {
         Player playerToRemove = playerOrder.get(0);
         game.removePlayer(playerToRemove);
         ArrayList<Player> expectedPlayerOrder = new ArrayList<>();
-        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "1"));
+        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 3, game, "1", 0));
         Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
     }
 
@@ -170,82 +173,6 @@ public class GameTest {
         int newVictoryHeight = 5;
         game.setVictoryHeight(newVictoryHeight);
         Assertions.assertEquals(newVictoryHeight, game.getVictoryHeight());
-    }
-
-    /**
-     * Tests the getLevelOneTile method of Game.
-     * It should return the number of level one tiles.
-     */
-    @Test
-    public void testGetLevelOneTile() {
-        Assertions.assertEquals(5, game.getLevelOneTile());
-    }
-
-    /**
-     * Tests the setLevelOneTile method of Game.
-     * It should set the number of level one tiles to the specified value.
-     */
-    @Test
-    public void testSetLevelOneTile() {
-        game.setLevelOneTile(6);
-        Assertions.assertEquals(6, game.getLevelOneTile());
-    }
-
-    /**
-     * Tests the getLevelTwoTile method of Game.
-     * It should return the number of level two tiles.
-     */
-    @Test
-    public void testGetLevelTwoTile() {
-        Assertions.assertEquals(4, game.getLevelTwoTile());
-    }
-
-    /**
-     * Tests the setLevelTwoTile method of Game.
-     * It should set the number of level two tiles to the specified value.
-     */
-    @Test
-    public void testSetLevelTwoTile() {
-        game.setLevelTwoTile(3);
-        Assertions.assertEquals(3, game.getLevelTwoTile());
-    }
-
-    /**
-     * Tests the getLevelThreeTile method of Game.
-     * It should return the number of level three tiles.
-     */
-    @Test
-    public void testGetLevelThreeTile() {
-        Assertions.assertEquals(3, game.getLevelThreeTile());
-    }
-
-    /**
-     * Tests the setLevelThreeTile method of Game.
-     * It should set the number of level three tiles to the specified value.
-     */
-    @Test
-    public void testSetLevelThreeTile() {
-        game.setLevelThreeTile(2);
-        Assertions.assertEquals(2, game.getLevelThreeTile());
-    }
-
-    /**
-     * Tests the getLevelFourTile method of Game.
-     * It should return the number of level four tiles.
-     */
-    @Test
-    public void testGetLevelFourTile() {
-        Assertions.assertEquals(2, game.getLevelFourTile());
-    }
-
-    /**
-     * Tests the setLevelFourTile method of Game.
-     * It should set the number of level four tiles to the specified value.
-     */
-    @Test
-    public void testSetLevelFourTile() {
-        game.setLevelFourTile(1);
-        Assertions.assertEquals(1, game.getLevelFourTile());
     }
 
     /**

@@ -142,81 +142,21 @@ public class Figure extends Observable {
         validBuilds.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete());
 
         // Check if tiles are available
-//<<<<<<< HEAD
-//        Iterator<Field> iterator = validBuilds.iterator();
-//        while (iterator.hasNext()) {
-//            Field field = iterator.next();
+        validBuilds.removeIf(field -> (field.getTowerLevel() == game.getVictoryHeight() && player.getNrTile(0) == 0) || field.getTowerLevel() < game.getVictoryHeight() && player.getNrTile(field.getTowerLevel() + 1) == 0);
+//        for (Field field: validBuilds) {
 //            int tile = field.getTowerLevel();
-//
-//            // distinguishes between global and local tile pool
-//            if (game.getGlobalTilePool()) {
-//                if ((tile == 0 && game.getLevelOneTile() == 0) ||
-//                        (tile == 1 && game.getLevelTwoTile() == 0) ||
-//                        (tile == 2 && game.getLevelThreeTile() == 0) ||
-//                        (tile == 3 && game.getLevelFourTile() == 0) ||
-//                        (tile == 4 && game.getLevelFiveTile() == 0) ||
-//                        (tile == 5 && game.getLevelSixTile() == 0)) {
-//
-//                    iterator.remove();
+//            for (int i = 0; i < game.getVictoryHeight(); i++){
+//                if (tile == game.getVictoryHeight()){
+//                    if (player.getNrTile(0) == 0){
+//                        validBuilds.remove(field);
+//                    }
+//                } else {
+//                    if (player.getNrTile(tile + 1) == 0){
+//                        validBuilds.remove(field);
+//                    }
 //                }
 //            }
-//            else {
-//                if ((tile == 0 && player.getLevelOneTile() == 0) ||
-//                        (tile == 1 && player.getLevelTwoTile() == 0) ||
-//                        (tile == 2 && player.getLevelThreeTile() == 0) ||
-//                        (tile == 3 && player.getLevelFourTile() == 0) ||
-//                        (tile == 4 && player.getLevelFiveTile() == 0) ||
-//                        (tile == 5 && player.getLevelSixTile() == 0)) {
-//
-//                    iterator.remove();
-//=======
-        for (Field field: validBuilds) {
-
-            // distinguishes between global and local tile pool
-//            if (game.isGlobalTilePool()) {
-//                if (tile == 0 && game.getLevelOneTile() == 0) {
-//                    validBuilds.remove(field);
-//                } else if (tile == 1 && game.getLevelTwoTile() == 0) {
-//                    validBuilds.remove(field);
-//                } else if (tile == 2 && game.getLevelThreeTile() == 0) {
-//                    validBuilds.remove(field);
-//                } else if (tile == 3 && game.getLevelFourTile() == 0) {
-//                    validBuilds.remove(field);
-//                } else if (tile == 4 && game.getLevelFiveTile() == 0) {
-//                validBuilds.remove(field);
-//                } else if (tile == 5 && game.getLevelSixTile() == 0) {
-//                validBuilds.remove(field);
-//                }
-//            }
-//            else{
-            int tile = field.getTowerLevel();
-            for (int i = 0; i < game.getVictoryHeight(); i++){
-                if (tile == game.getVictoryHeight()){
-                    if (player.getNrTile(0) == 0){
-                        validBuilds.remove(field);
-                    }
-//>>>>>>> tiles
-                } else {
-                    if (player.getNrTile(tile + 1) == 0){
-
-                    }
-                }
-            }
-//            if (tile == 0 && player.getLevelOneTile() == 0) {
-//
-//            } else if (tile == 1 && player.getLevelTwoTile() == 0) {
-//                validBuilds.remove(field);
-//            } else if (tile == 2 && player.getLevelThreeTile() == 0) {
-//                validBuilds.remove(field);
-//            } else if (tile == 3 && player.getLevelFourTile() == 0) {
-//                validBuilds.remove(field);
-//            } else if (tile == 4 && player.getLevelFiveTile() == 0) {
-//                validBuilds.remove(field);
-//            } else if (tile == 5 && player.getLevelSixTile() == 0) {
-//                validBuilds.remove(field);
-//            }
-//            }
-        }
+//        }
         return validBuilds;
     }
 

@@ -21,7 +21,8 @@ public class ArtificialPlayerTest {
     public void setup() {
         // Create a game with necessary parameters
         ArrayList<Player> playerOrder = new ArrayList<>();
-        game = new Game(playerOrder, 20, 1, 2, 3, 4, "Test Game", 2, 1, 4);
+//        game = new Game(playerOrder, 20, 1, 2, 3, 4, "Test Game", 2, 1, 4);
+        game = new Game(2);
 
         board = new Board(fields, 5, 5);
 

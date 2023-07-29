@@ -31,7 +31,7 @@ public class FileManagerTest {
         expectedData.add(new String[]{"Hans", "Lulatsch"});
         expectedData.add(new String[]{"Stefan", "Bombig"});
 
-        List<String[]> actualData = fileManager.loadCSV(filepath);
+        List<Object> actualData = fileManager.loadCSV(filepath);
 
         Assertions.assertEquals(expectedData, actualData);
     }
@@ -211,7 +211,8 @@ public class FileManagerTest {
         ArrayList<Player> playerList = new ArrayList<>();
         // ... Set up the game object, player list, and necessary data
 
-        fileManager.saveHighscore(game, playerList);
+        // Todo:
+//        fileManager.saveHighscore(game, playerList);
 
         // ... Implement assertions to verify the highscore is saved correctly
     }

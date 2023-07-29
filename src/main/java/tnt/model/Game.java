@@ -91,6 +91,13 @@ public class Game extends Observable {
         return numberOfTile[i];
     }
 
+    public void setNrTile(int i, int nr) {
+        if (i<0 || i >= numberOfTile.length){
+            return;
+        }
+        numberOfTile[i] = nr;
+    }
+
     /**
      * Getter for the size of tiles
      * @return the size
@@ -112,7 +119,6 @@ public class Game extends Observable {
      * @param victoryHeight the victory height to be set
      */
     public void setVictoryHeight(int victoryHeight) {
-        System.out.println("setVictHeight: " + globalTilePool);
         int[] new_tiles = new int[victoryHeight];
         for (int i = 0; i < new_tiles.length; i++){
             if (i >= this.numberOfTile.length){
@@ -123,7 +129,6 @@ public class Game extends Observable {
         }
         this.victoryHeight = victoryHeight;
         for (Player player: playerOrder){
-            System.out.println("TEst + " + numberOfTile.length);
             if (globalTilePool){
                 player.setNumberOfTile(numberOfTile);
             } else {
@@ -260,13 +265,6 @@ public class Game extends Observable {
         SizeHandler.setNrFieldsY(boardY);
         Board board = new Board(fields, boardX, boardY);
         this.board = board;
-
-        // Testprint, kann später entfernt werden.
-        for (int i = 0; i < boardX; i++) {
-            for (int j = 0; j < boardY; j++) {
-                System.out.println(board.getField(i, j));
-            }
-        }
         notifyObservers();
     }
 

@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Service class for starting the connection to the client
+ */
 public class ListenService extends Service<Integer> {
     private NetworkHandler networkHandler;
     private Socket socket;
@@ -28,6 +31,7 @@ public class ListenService extends Service<Integer> {
                     serverSocket.close();
                 } catch (IOException e) {
                     // ignore
+                    System.err.println("Socket has been closed already");
                 }
             }
         };
