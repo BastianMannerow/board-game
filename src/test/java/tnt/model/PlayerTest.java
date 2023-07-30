@@ -103,24 +103,6 @@ public class PlayerTest {
         Assertions.assertEquals(0, figures.size());
     }
 
-    /*
-    @Test
-    public void testAddGod() {
-        Gods god = new Ares();
-        player.addGod(god);
-        ArrayList<Gods> gods = player.getGods();
-        Assertions.assertEquals(1, gods.size());
-        Assertions.assertEquals(god, gods.get(0));
-    }
-
-    @Test
-    public void testAddAllGods() {
-        player.AddAllGods();
-        ArrayList<Gods> gods = player.getGods();
-        Assertions.assertEquals(34, gods.size());
-    }
-    */
-
     /**
      * Tests the addFigure method of Player with the amount parameter.
      * It should add the specified number of figures to the player's collection.
@@ -140,21 +122,13 @@ public class PlayerTest {
     public void testAddFigureWithCoordinates() {
         Game game = new Game(Settings.getDefaultPlayer());
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
-        player.addFigure(1);
+        player.addFigure(2);
         ArrayList<Figure> figures = player.getFigure();
         Assertions.assertEquals(1, figures.size());
         Figure figure = figures.get(0);
         Assertions.assertEquals(1, figure.getX());
         Assertions.assertEquals(2, figure.getY());
     }
-
-    /*
-    @Test
-    public void testGetGods() {
-        ArrayList<Gods> gods = player.getGods();
-        Assertions.assertEquals(0, gods.size());
-    }
-    */
 
     /**
      * Tests the executeBuild method of Player.
@@ -187,7 +161,7 @@ public class PlayerTest {
     public void testExecuteMove() {
         // Set up the necessary objects for the test
         Field field = board.getField(1, 1);
-        Figure figure = new Figure(0, 0, new Game(Settings.getDefaultPlayer()));
+        Figure figure = new Figure(0, 0, new Game(Settings.getDefaultPlayer()), player);
         board.getField(0, 0).setFigure(figure);
 
         // Execute the move action

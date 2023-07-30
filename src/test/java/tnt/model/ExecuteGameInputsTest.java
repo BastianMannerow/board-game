@@ -24,7 +24,7 @@ public class ExecuteGameInputsTest {
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, 2, game, "Team A", 10);
         board = new Board(new Field[5][5], 5, 5);
         field = new Field(2, 2);
-        figure = new Figure(1, 1, game);
+        figure = new Figure(1, 1, game, player);
         player.addFigure(2);
         game.nextPlayersTurn();
         game.setGameStatus(Game.GameStatus.PLACE_FIGURES);

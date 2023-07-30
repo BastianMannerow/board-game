@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tnt.util.Observer;
 
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 
@@ -15,6 +16,8 @@ public class FigureTest implements Observer {
 
     private Figure figure;
     private Board board;
+    private Player player;
+    private Game game;
 
     /**
      * Set up the necessary dependencies before each test.
@@ -22,7 +25,8 @@ public class FigureTest implements Observer {
     @BeforeEach
     public void setup() {
         board = new Board(new Field[5][5], 5, 5);
-        Game game = new Game(1);
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, new ArrayList<>(), 10);
+        game = new Game(1);
         figure = new Figure(2, 2, game, game.getPlayersTurn());
     }
 
@@ -74,8 +78,30 @@ public class FigureTest implements Observer {
      */
     @Test
     public void testGetValidMoves() {
-        figure.addObserver(this);
+        Figure figure = new Figure(1, 1, game, player);
+        board.getField(1, 1).setFigure(figure);
+
+        // Test when the world is not round
         ArrayList<Field> validMoves = figure.getValidMoves(board);
+        // Assert that the reachable fields are correct based on the test configuration
+        // In this example, the figure is at (1, 1), so the reachable fields should be 8
+        Assertions.assertEquals(8, validMoves.size());
+
+        // Test when the world is round
+        board.setRoundWorld(true);
+        validMoves = figure.getValidMoves(board);
+        // In this example, the figure is at (1, 1), and the world is round, so the reachable fields should still be 8
+        Assertions.assertEquals(8, validMoves.size());
+
+        // Test when the figure is at the edge of the board in a round world
+        figure = new Figure(0, 0, game, player);
+        board.getField(0, 0).setFigure(figure);
+        board.setRoundWorld(true);
+        validMoves = figure.getValidMoves(board);
+        // In this case, the figure is at (0, 0), and the world is round, so the reachable fields should be 8
+        // because it can move to (1, 0), (1, 1), (0, 1), (2, 0), (2, 1), (2, 2), (0, 2), and (1, 2)
+        Assertions.assertEquals(8, validMoves.size());
+
     }
 
     /**
@@ -84,8 +110,29 @@ public class FigureTest implements Observer {
      */
     @Test
     public void testGetValidBuilds() {
-        figure.addObserver(this);
+        Figure figure = new Figure(1, 1, game, player);
+        board.getField(1, 1).setFigure(figure);
+
+        // Test when the world is not round
         ArrayList<Field> validBuilds = figure.getValidBuilds(board);
+        // In this example, the figure is at (1, 1), so it can build on any adjacent field without a tower
+        Assertions.assertEquals(8, validBuilds.size());
+
+        // Test when the world is round
+        board.setRoundWorld(true);
+        validBuilds = figure.getValidBuilds(board);
+        // In this example, the figure is at (1, 1), and the world is round, so it can build on any adjacent field without a tower
+        Assertions.assertEquals(8, validBuilds.size());
+
+        // Test when the figure is at the edge of the board in a round world
+        figure = new Figure(0, 0, game, player);
+        board.getField(0, 0).setFigure(figure);
+        board.setRoundWorld(true);
+        validBuilds = figure.getValidBuilds(board);
+        // In this case, the figure is at (0, 0), and the world is round, so it can build on any adjacent field without a tower
+        // which includes (1, 0), (1, 1), (0, 1), (2, 0), (2, 1), (2, 2), (0, 2), and (1, 2)
+        Assertions.assertEquals(8, validBuilds.size());
+
     }
 
     /**
