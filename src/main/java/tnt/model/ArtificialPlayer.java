@@ -62,6 +62,7 @@ public class ArtificialPlayer{
                         break;
                     }
                     int ownProgression = game.getVictoryHeight()-field.getTowerLevel();
+
                     if (ownProgression < bestProgression){
                         bestFigure = figure;
                         bestMove = field;
