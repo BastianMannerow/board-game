@@ -64,17 +64,17 @@ public class FieldView extends HBox implements Observer {
 
     private void updateTowerComplete() {
         if (field.getTowerComplete()) {
-            if (!buildingHolder.containsKey(-1)) {
+            if (!buildingHolder.containsKey(0)) {
                 BuildingLevel buildingLevel = null;
                 try {
-                    buildingLevel = new BuildingLevel(-1);
+                    buildingLevel = new BuildingLevel(0);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                buildingHolder.put(-1, buildingLevel);
+                buildingHolder.put(0, buildingLevel);
             }
-            if (!((StackPane) this.getChildren().get(0)).getChildren().contains(buildingHolder.get(-1))) {
-                ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(-1));
+            if (!((StackPane) this.getChildren().get(0)).getChildren().contains(buildingHolder.get(0))) {
+                ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(0));
             }
         }
     }

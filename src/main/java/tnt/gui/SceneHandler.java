@@ -4,10 +4,8 @@ package tnt.gui;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tnt.ResourceHandler;
 import tnt.gui.game.GameView;
 import tnt.gui.playerchoosemenu.PlayerChooseView;
-import tnt.model.Settings;
 import tnt.util.Observer;
 
 import java.io.IOException;

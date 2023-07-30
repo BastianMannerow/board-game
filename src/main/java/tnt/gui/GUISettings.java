@@ -7,13 +7,16 @@ import tnt.util.Observable;
  */
 public class GUISettings extends Observable {
 
+    /**
+     * representation for different themes
+     */
     private enum Theme {
         DEFAULT,
         HORROR_1,
         HORROR_2
     }
 
-    private static GUISettings guiSettings = new GUISettings();
+    private static GUISettings instance = new GUISettings();
     private static Theme theme = Theme.DEFAULT;
     private static final int maxFieldsize = 150;
     private static final int minFieldsize = 40;
@@ -43,6 +46,10 @@ public class GUISettings extends Observable {
 //        return defaultTheme;
 //    }
 
+    /**
+     * getter for the actual theme with string representation
+     * @return the prefix of the current theme
+     */
     public static String getTheme() {
         switch (theme){
             case HORROR_1:
@@ -54,6 +61,10 @@ public class GUISettings extends Observable {
         }
     }
 
+    /**
+     * setter for the actual theme
+     * @param themeIn the string representation for the theme to be set
+     */
     public void setTheme(String themeIn) {
         if (themeIn.equals("Horror1")){
             theme = Theme.HORROR_1;
@@ -67,10 +78,14 @@ public class GUISettings extends Observable {
         notifyObservers();
     }
 
+    /**
+     * The getter for the instance of these settings
+     * @return the instance of the GUISettings
+     */
     public static GUISettings getInstance() {
-        if (guiSettings == null){
-            guiSettings = new GUISettings();
+        if (instance == null){
+            instance = new GUISettings();
         }
-        return guiSettings;
+        return instance;
     }
 }

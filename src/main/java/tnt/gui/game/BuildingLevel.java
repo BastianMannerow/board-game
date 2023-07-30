@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import tnt.ResourceHandler;
 import tnt.gui.GUISettings;
 import tnt.gui.SizeHandler;
-import tnt.model.Settings;
 import tnt.util.Observer;
 
 import java.io.IOException;
@@ -32,31 +31,6 @@ public class BuildingLevel extends DragableObject implements Observer {
 //        FXMLLoader loader;
         GUISettings.getInstance().addObserver(this);
         imageView = new ImageView();
-        switch (level){
-            case -1:
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_Kuppel"));
-                break;
-            case 1:
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_1"));
-                break;
-            case 2:
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_2"));
-                break;
-            case 3:
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_3"));
-                break;
-            case 4:
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_4"));
-                break;
-            case 5:
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_5"));
-                break;
-            default:
-                if (level < 1) {
-                    throw new IOException("Building got wrong level: " + level);
-                }
-                imageView.setImage(ResourceHandler.getInstance().getImage("Turm_5"));
-        }
         this.level = level;
         imageView.setPreserveRatio(true);
         SizeHandler.getInstance().addObserver(this);
@@ -88,7 +62,7 @@ public class BuildingLevel extends DragableObject implements Observer {
     public void update() {
         String prefix = GUISettings.getTheme();
         switch (level){
-            case -1:
+            case 0:
                 imageView.setImage(ResourceHandler.getInstance().getImage(prefix + "Turm_Kuppel"));
                 break;
             case 1:

@@ -3,9 +3,9 @@ package tnt.gui;
 import tnt.model.Player;
 import tnt.util.Observable;
 
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
 
-import static java.util.Locale.*;
 import static java.util.Map.entry;
 
 /**
@@ -47,6 +47,9 @@ public class Language extends Observable {
             entry("playerTypeLabel", "player type"),
             entry("playerMenuLabel", "player menu"),
             entry("human_label", "human"),
+            entry("domeLabel", "dome"),
+            entry("buildingLevelLabel", "building level"),
+            entry("seperateLabel", "use global pool for\nbuilding levels\nfor all player"),
             entry("", "")
     );
     private static Map<String, String> german = Map.ofEntries(
@@ -82,6 +85,9 @@ public class Language extends Observable {
             entry("playerTypeLabel", "Art des Spielers"),
             entry("playerMenuLabel", "Spieler Menü"),
             entry("human_label", "Mensch"),
+            entry("domeLabel", "Kuppel"),
+            entry("buildingLevelLabel", "Stockwerk"),
+            entry("seperateLabel", "Globaler Pool\nfür Stockwerke\nfür alle Spieler"),
             entry("", "")
     );
 
@@ -94,8 +100,8 @@ public class Language extends Observable {
      */
     public static String playerType(Player.PlayerType playerType) {
         StringBuilder str = new StringBuilder();
-        if (Locale.getDefault().equals(GERMAN)) {
-            str.append("KI ");
+        if (Locale.getDefault().equals(Locale.GERMAN)) {
+            str.append("KI");
         } else {
             str.append("AI");
         }
@@ -117,7 +123,7 @@ public class Language extends Observable {
     }
 
     private static String difficulty(int i) {
-        if (Locale.getDefault().equals(GERMAN)) {
+        if (Locale.getDefault().equals(Locale.GERMAN)) {
             switch (i){
                 case 1:
                     return "Einfach";
@@ -168,7 +174,7 @@ public class Language extends Observable {
      */
     public void setLanguage(Locale language) {
         Locale.setDefault(language);
-        if (language.equals(GERMAN)) {
+        if (language.equals(Locale.GERMAN)) {
             actualLanguage = german;
         }
         else {

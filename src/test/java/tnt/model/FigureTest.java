@@ -22,7 +22,8 @@ public class FigureTest implements Observer {
     @BeforeEach
     public void setup() {
         board = new Board(new Field[5][5], 5, 5);
-        figure = new Figure(2, 2, new Game(0));
+        Game game = new Game(1);
+        figure = new Figure(2, 2, game, game.getPlayersTurn());
     }
 
     /**
@@ -42,7 +43,8 @@ public class FigureTest implements Observer {
      */
     @Test
     public void testConstructionWithoutCoordinates() {
-        Figure figure = new Figure();
+        Game game = new Game(2);
+        Figure figure = new Figure(game, game.getPlayersTurn());
         Assertions.assertFalse(figure.isPlaced());
     }
 

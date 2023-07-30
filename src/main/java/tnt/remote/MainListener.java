@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Service class for listen on the server socket
+ */
 public class MainListener extends Service<Integer> {
     private int port;
     private ServerSocket serverSocket = null;
@@ -25,7 +28,7 @@ public class MainListener extends Service<Integer> {
             @Override
             protected Integer call() throws IOException {
                 try {
-                            serverSocket = new ServerSocket(port);
+                    serverSocket = new ServerSocket(port);
                     networkHandler.clear();
                 } catch (IOException e) {
                     System.out.println("could not start server");
@@ -36,7 +39,6 @@ public class MainListener extends Service<Integer> {
                         System.out.println("waiting for client");
                         Socket socket = serverSocket.accept();
 //                        System.out.println("client connected oho");
-
                         ListenService listenService = new ListenService();
                         listenService.setNetworkHandler(networkHandler);
                         listenService.setSocket(socket);
@@ -63,6 +65,7 @@ public class MainListener extends Service<Integer> {
                     serverSocket.close();
                 } catch (IOException e) {
                     // ignore
+                    System.err.println("socket has already been closed");
                 }
             }
         };

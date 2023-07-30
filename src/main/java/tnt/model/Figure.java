@@ -1,7 +1,8 @@
 package tnt.model;
 import tnt.util.Observable;
-
+import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * A figure owned by the Player.
@@ -9,26 +10,35 @@ import java.util.ArrayList;
 public class Figure extends Observable {
     private int x = 0;
     private int y = 0;
-    private Game game; //Todo: delete?
+    private Game game;
     private boolean placed;
+    private Player player;
 
     /**
      * Constructing an object Figure.
      * @param x initial x coordinate
      * @param y initial y coordinate
+     * @param game the game which is played on
+     * @param player the owner of the figure
      */
-    public Figure(int x, int y, Game game) {
+    public Figure(int x, int y, Game game, Player player) {
         this.x = x;
         this.y = y;
         this.placed = true;
         this.game = game;
+        this.player = player;
     }
 
     /**
      * Constructor for a figure
+     *
+     * @param game the game which is played on
+     * @param player the owner of the figure
      */
-    public Figure() {
+    public Figure(Game game, Player player) {
         this.placed = false;
+        this.game = game;
+        this.player = player;
     }
 
     /**
@@ -60,6 +70,20 @@ public class Figure extends Observable {
     }
 
     /**
+     * @return player who owns the figure
+     */
+    public Player getOwner() {
+        return player;
+    };
+
+    /**
+     * @param player player who owns the figure
+     */
+    public void setOwner(Player player) {
+        this.player = player;
+    }
+
+    /**
      * Calculating the reachable fields.
      *
      * @param board the board the possible actions should be calculated on
@@ -85,8 +109,8 @@ public class Figure extends Observable {
 
         // Filter the reachable fields, so that only the legal fields remain
         int ownTowerLevel = board.getField(x,y).getTowerLevel();
-        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel + Settings.getActualGame().getMaxStepUpHeight()
-                || field.getTowerLevel() < ownTowerLevel - Settings.getActualGame().getMaxStepDownHeight());
+        reachableFields.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete() || field.getTowerLevel() > ownTowerLevel + game.getMaxStepUpHeight()
+                || field.getTowerLevel() < ownTowerLevel - game.getMaxStepDownHeight());
         return reachableFields;
     }
 
@@ -116,23 +140,23 @@ public class Figure extends Observable {
 
         // Filter the fields, so that only the legal fields remain
         validBuilds.removeIf(field -> field.getIsFigureHere() || field.getTowerComplete());
+
         // Check if tiles are available
-        /*
-        for (Field field: validBuilds) {
-            int tile = field.getTowerLevel();
-
-            if (tile == 0 && game.getLevelOneTile() == 0) {
-                validBuilds.remove(field);
-            } else if (tile == 1 && game.getLevelTwoTile() == 0) {
-                validBuilds.remove(field);
-            } else if (tile == 2 && game.getLevelThreeTile() == 0) {
-                validBuilds.remove(field);
-            } else if (tile == 3 && game.getLevelFourTile() == 0){
-                validBuilds.remove(field);
-            }
-        }
-
-         */
+        validBuilds.removeIf(field -> (field.getTowerLevel() == game.getVictoryHeight() && player.getNrTile(0) == 0) || field.getTowerLevel() < game.getVictoryHeight() && player.getNrTile(field.getTowerLevel() + 1) == 0);
+//        for (Field field: validBuilds) {
+//            int tile = field.getTowerLevel();
+//            for (int i = 0; i < game.getVictoryHeight(); i++){
+//                if (tile == game.getVictoryHeight()){
+//                    if (player.getNrTile(0) == 0){
+//                        validBuilds.remove(field);
+//                    }
+//                } else {
+//                    if (player.getNrTile(tile + 1) == 0){
+//                        validBuilds.remove(field);
+//                    }
+//                }
+//            }
+//        }
         return validBuilds;
     }
 

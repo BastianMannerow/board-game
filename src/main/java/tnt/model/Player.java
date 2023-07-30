@@ -24,6 +24,7 @@ public class Player extends Observable {
     private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private String team;
+    private int[] numberOfTile;
 
     /**
      * Constructing an object Player.
@@ -48,6 +49,32 @@ public class Player extends Observable {
         this.game = game;
         this.team = team;
         this.amountOfTurns = amountOfTurns;
+    }
+
+    /**
+     * Constructor for a player
+     */
+    public Player(Game game) {
+        this.game = game;
+    }
+
+    /**
+     * Getter for the players tiles
+     * @return the tiles of the player
+     */
+    public int getNrTile(int i) {
+        if (i<0 || i >= numberOfTile.length){
+            return 0;
+        }
+        return numberOfTile[i];
+    }
+
+    /**
+     * Getter for the size of tiles
+     * @return the size
+     */
+    public int getTileSize() {
+        return numberOfTile.length;
     }
 
     /**
@@ -125,7 +152,7 @@ public class Player extends Observable {
      */
     public void addFigure(int amount) {
         for (int i = 0; i < amount; i++) {
-            Figure newFigure = new Figure();
+            Figure newFigure = new Figure(game, this);
             this.figures.add(newFigure);
         }
     }
@@ -155,20 +182,7 @@ public class Player extends Observable {
         if(newLevel == 4){
             field.setTowerComplete(true);
         }
-        // Remove Tile from game
-        int tile = field.getTowerLevel();
-        if(tile == 0){
-            game.setLevelOneTile(game.getLevelOneTile() - 1);
-        }
-        else if(tile == 1){
-            game.setLevelTwoTile(game.getLevelTwoTile() - 1);
-        }
-        else if(tile == 2){
-            game.setLevelThreeTile(game.getLevelThreeTile() - 1);
-        }
-        else{
-            game.setLevelFourTile(game.getLevelFourTile() - 1);
-        }
+        // Todo: remove a tile
     }
 
     /**
@@ -227,16 +241,32 @@ public class Player extends Observable {
         return this.amountOfFigures;
     }
 
+    /**
+     * getter for the number of tiles this player should have
+     * @param numberOfTile the amount of tiles
+     */
+    public void setNumberOfTile(int[] numberOfTile) {
+        this.numberOfTile = numberOfTile;
+    }
+
+//    public int getNrOfTiles(int level) {
+//        return nrOfTiles[level];
+//    }
+
+    public void removeTile(int buildLevel) {
+        numberOfTile[buildLevel] -=1;
+    }
+
     public void prePlayersTurn(){
         switch (levelOfIntelligence){
             case AI_1:
                 ArtificialPlayer.easyAI(game.getBoard(), this, game);
                 break;
             case AI_2:
-                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                ArtificialPlayer.mediumAI(game.getBoard(), this, game);
                 break;
             case AI_3:
-                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                ArtificialPlayer.hardAI(game.getBoard(), this, game);
                 break;
             default:
                 break;

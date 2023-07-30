@@ -3,6 +3,7 @@ package tnt.gui.playerchoosemenu;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import tnt.gui.SceneHandler;
@@ -15,6 +16,14 @@ import tnt.model.Settings;
  */
 public class PlayerChooseController{
 
+    @FXML
+    HBox tileBox;
+    @FXML
+    VBox sepBox;
+    @FXML
+    Label labelGlobalTilePool;
+    @FXML
+    CheckBox tilesSepBox;
     @FXML
     CheckBox roundWorld;
     @FXML
@@ -69,15 +78,22 @@ public class PlayerChooseController{
      */
     @FXML
     private void runGame() {
+        updateGameSettings();
         Game game = Settings.getActualGame();
-        int nrOfFigures = updatePlayer(game);
-
-
-        updateGameSettings(game, nrOfFigures);
-
+        if (game.selectingPlayers()){
+            game.initGame();
+            game.startPlaceFigures();
+        }
         sceneHandler.loadView("gameView");
     }
 
+    @FXML
+    private void updateGameSettings(){
+        Game game = Settings.getActualGame();
+        int nrOfFigures = updatePlayer(game);
+
+        updateGameSettings(game, nrOfFigures);
+    }
     private void updateGameSettings(Game game, int nrOfFigures) {
         // Todo: get the other fields
 
@@ -87,6 +103,20 @@ public class PlayerChooseController{
 
         int sizeX = updateValueOfTextfield(this.fieldSizeX, Settings.getFieldSizeX());
         int sizeY = updateValueOfTextfield(this.fieldSizeY, Settings.getFieldSizeY());
+
+
+        int[] tiles = new int[victoryHeight + 1];
+        for(int i = 0; i< tiles.length; i++){
+            TextField tilenr = (TextField) ((VBox) this.tileBox.getChildren().get(i+1)).getChildren().get(1);
+            if (i >= game.getTileSize()){
+                tiles[i] = updateValueOfTextfield(tilenr, 0);
+            } else {
+                tiles[i] = updateValueOfTextfield(tilenr, game.getNrTile(i));
+            }
+        }
+
+
+        boolean globalTilePool = this.tilesSepBox.isSelected();
 
         if (sizeX * sizeY <= nrOfFigures){
             System.err.println("Too many figures for that board size: fig:" + nrOfFigures + " sizeX: " + sizeX + " sizeY: " + sizeY);
@@ -103,13 +133,17 @@ public class PlayerChooseController{
         }
 
         if (game.selectingPlayers()){
+            game.setGlobalTilePool(globalTilePool);
             game.createBoard(sizeX, sizeY);
             game.getBoard().setRoundWorld(roundWorld.isSelected());
             game.setMaxStepUpHeight(maxStepUp);
             game.setMaxStepDownHeight(maxStepDown);
             game.setVictoryHeight(victoryHeight);
-            game.initGame();
-            game.startPlaceFigures();
+            for(int i = 0; i < game.getTileSize(); i++){
+                game.setNrTile(i, tiles[i]);
+            }
+            game.setVictoryHeight(victoryHeight);
+            Settings.getActualGame().setGlobalTilePool(tilesSepBox.isSelected());
         }
     }
 
@@ -190,10 +224,15 @@ public class PlayerChooseController{
         }
     }
 
-    @FXML
-    private void setMaxStepUp() {
-//        Settings.getActualGame().set
-    }
+//    @FXML
+//    private void setMaxStepUp() {
+//        Settings.getActualGame().setVictoryHeight(victoryHeight.getText());
+//    }
+
+//    @FXML
+//    private void setSeperatePool(){
+//        Settings.getActualGame().setGlobalTilePool(tilesSepBox.isSelected());
+//    }
 
     @FXML
     private void gotoHome(){

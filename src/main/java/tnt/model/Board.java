@@ -8,7 +8,6 @@ public class Board {
     private Field[][] board;
     private int xSize;
     private int ySize;
-
     private boolean roundWorld = false;
 
     /**
@@ -30,6 +29,14 @@ public class Board {
      */
     public Field getField(int x, int y) {
         return board[x][y];
+    }
+
+    /**
+     * @param x the x coordinate of the desired field
+     * @param y the y coordinate of the desired field
+     */
+    public void setField(int x, int y, Field field) {
+        this.board[x][y] = field;
     }
 
     /**
