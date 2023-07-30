@@ -1,6 +1,7 @@
 package tnt.gui.game;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -38,6 +39,9 @@ public class EndView extends VBox {
 
     }
 
+    /**
+     * initializes the Endview if called with everything that will show on the vbox
+     */
     public void initialize(){
         this.setAlignment(Pos.CENTER);
         if(notInitialized) {
@@ -57,6 +61,7 @@ public class EndView extends VBox {
                         highscores.get(i+1)+" AmountOfTurns: "+highscores.get(i+2)+" Team Name: "+highscores.get(i+3);
                 Label label = new Label();
                 label.setText(print);
+                label.setPadding(new Insets(10,0,0,0));
                 this.getChildren().add(label);
             }
             notInitialized=false;
@@ -67,6 +72,10 @@ public class EndView extends VBox {
 
     }
 
+    /**
+     * Sets the Controller of this View
+     * @param controller
+     */
     public void setController(GameController controller){
         this.controller=controller;
     }
