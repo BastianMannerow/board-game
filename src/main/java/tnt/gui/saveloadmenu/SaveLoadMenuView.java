@@ -23,7 +23,7 @@ public class SaveLoadMenuView extends VBox{
 
     @FXML
     private SaveLoadMenuController SaveLoadMenuController;
-    private Map<Button,String> saveHolder;
+    private Map<Button,String> saveHolder=new HashMap<Button,String>();
 
     /**
      * Constructor for the save load menu
@@ -41,19 +41,19 @@ public class SaveLoadMenuView extends VBox{
     }
 
     private void getSaves(){
-//        List<String> saves =SaveLoadMenuController.loadFiles();
-//        for (String save: saves) {
-//             Label label= new Label();
-//             label.setText(save);
-//             Button loadButton = new Button("load");
-//             loadButton.setOnMouseClicked(event-> {
-//                 Button button = (Button) event.getSource();
-//                 SaveLoadMenuController.load(saveHolder.get(button));
-//             });
-//             saveHolder.put(loadButton,save);
-//             HBox saved = new HBox();
-//             saved.getChildren().addAll(label,loadButton);
-//             ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().add(saved);
-//        }
+        List<String> saves =SaveLoadMenuController.loadFiles();
+        for (String save: saves) {
+             Label label= new Label();
+             label.setText(save);
+             Button loadButton = new Button("load");
+             loadButton.setOnMouseClicked(event-> {
+                 Button button = (Button) event.getSource();
+                 SaveLoadMenuController.load(saveHolder.get(button));
+             });
+             saveHolder.put(loadButton,save);
+             HBox saved = new HBox();
+             saved.getChildren().addAll(label,loadButton);
+             ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().add(saved);
+       }
     }
 }
