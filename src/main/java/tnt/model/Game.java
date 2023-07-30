@@ -72,6 +72,13 @@ public class Game extends Observable {
             addPlayer(amountFigures, String.valueOf((i % (1 + amountFigures)) + 1), amountOfTurns);
         }
     }
+    /**
+     * getter for the number of tiles this game should have
+     * @param numberOfTile the amount of tiles
+     */
+    public void setNumberOfTile(int[] numberOfTile) {
+        this.numberOfTile = numberOfTile;
+    }
 
     /**
      * Getter for the players tiles
