@@ -55,6 +55,9 @@ public class GameController{
         sceneHandler.loadView("playerMenu");
     }
 
+    /**
+     * If this function is called and the sceneHandler has saved a viewName "End" then switch to EndView
+     */
     public void goToEnd() {
         sceneHandler.loadView("End");
     }

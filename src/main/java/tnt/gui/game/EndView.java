@@ -18,6 +18,9 @@ import tnt.util.Observer;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The class EndView holds all important things for the Endscreen if the game is finished
+ */
 public class EndView extends VBox {
 
     private GameController controller;

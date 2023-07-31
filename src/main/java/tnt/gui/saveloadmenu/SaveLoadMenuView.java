@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +39,11 @@ public class SaveLoadMenuView extends VBox{
         this.getSaves();
     }
 
+    /**
+     * Gets the saves of the Games and displays them with their respective loading Button
+     */
     private void getSaves(){
-        List<String> saves =SaveLoadMenuController.loadFiles();
+        List<String> saves =SaveLoadMenuController.loadNames();
         for (String save: saves) {
              Label label= new Label();
              label.setText(save);

@@ -6,7 +6,6 @@ import tnt.model.FileManager;
 import tnt.model.Game;
 import tnt.model.Settings;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,10 +30,17 @@ public class SaveLoadMenuController {
         this.sceneHandler = sceneHandler;
     }
 
-    public List<String> loadFiles(){
+    /**
+     * Gets the names of the files if called
+     * @return the Names of the Saves
+     */
+    public List<String> loadNames(){
         return fileManager.getSavedGames();
     }
 
+    /**
+     * Saves a State of the Game through fileManager
+     */
     @FXML
     private void save(){
         try {
@@ -45,7 +51,10 @@ public class SaveLoadMenuController {
         }
     }
 
-
+    /**
+     * Prepares for loading the file of the Game with the corresponding SavefileName
+     * @param save
+     */
     public void load(String save) {
         Game game = new Game(0);
         fileManager.loadGame(save, game);
