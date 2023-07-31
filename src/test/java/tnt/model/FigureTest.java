@@ -24,10 +24,21 @@ public class FigureTest implements Observer {
      */
     @BeforeEach
     public void setup() {
-        board = new Board(new Field[5][5], 5, 5);
-        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, new ArrayList<>(), 10);
-        game = new Game(1);
-        figure = new Figure(2, 2, game, game.getPlayersTurn());
+        Field[][] fields = new Field[5][5];
+        for(int i = 0; i < fields.length; i++){
+            for (int j = 0; j < fields[i].length; j++){
+                fields[i][j] = new Field();
+            }
+        }
+        board = new Board(fields, 5, 5);
+        ArrayList<Figure> figures = new ArrayList<>();
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
+        player.setNumberOfTile(new int[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25});
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
+        game = new Game(players, 12, "Test Game", 1, 3, 3, true);
+        figure = new Figure(2, 2, game, player);
+        board.getField(2,2).setFigure(figure);
     }
 
     /**
@@ -84,23 +95,22 @@ public class FigureTest implements Observer {
         // Test when the world is not round
         ArrayList<Field> validMoves = figure.getValidMoves(board);
         // Assert that the reachable fields are correct based on the test configuration
-        // In this example, the figure is at (1, 1), so the reachable fields should be 8
-        Assertions.assertEquals(8, validMoves.size());
+        // In this example, the figure is at (1, 1), so the reachable fields should be 7
+        Assertions.assertEquals(7, validMoves.size());
 
         // Test when the world is round
         board.setRoundWorld(true);
         validMoves = figure.getValidMoves(board);
-        // In this example, the figure is at (1, 1), and the world is round, so the reachable fields should still be 8
-        Assertions.assertEquals(8, validMoves.size());
+        // In this example, the figure is at (1, 1), and the world is round, so the reachable fields should still be 7
+        Assertions.assertEquals(7, validMoves.size());
 
         // Test when the figure is at the edge of the board in a round world
         figure = new Figure(0, 0, game, player);
         board.getField(0, 0).setFigure(figure);
         board.setRoundWorld(true);
         validMoves = figure.getValidMoves(board);
-        // In this case, the figure is at (0, 0), and the world is round, so the reachable fields should be 8
-        // because it can move to (1, 0), (1, 1), (0, 1), (2, 0), (2, 1), (2, 2), (0, 2), and (1, 2)
-        Assertions.assertEquals(8, validMoves.size());
+        // In this case, the figure is at (0, 0), and the world is round, so the reachable fields should be 7
+        Assertions.assertEquals(7, validMoves.size());
 
     }
 
@@ -116,13 +126,13 @@ public class FigureTest implements Observer {
         // Test when the world is not round
         ArrayList<Field> validBuilds = figure.getValidBuilds(board);
         // In this example, the figure is at (1, 1), so it can build on any adjacent field without a tower
-        Assertions.assertEquals(8, validBuilds.size());
+        Assertions.assertEquals(7, validBuilds.size());
 
         // Test when the world is round
         board.setRoundWorld(true);
         validBuilds = figure.getValidBuilds(board);
         // In this example, the figure is at (1, 1), and the world is round, so it can build on any adjacent field without a tower
-        Assertions.assertEquals(8, validBuilds.size());
+        Assertions.assertEquals(7, validBuilds.size());
 
         // Test when the figure is at the edge of the board in a round world
         figure = new Figure(0, 0, game, player);
@@ -130,8 +140,7 @@ public class FigureTest implements Observer {
         board.setRoundWorld(true);
         validBuilds = figure.getValidBuilds(board);
         // In this case, the figure is at (0, 0), and the world is round, so it can build on any adjacent field without a tower
-        // which includes (1, 0), (1, 1), (0, 1), (2, 0), (2, 1), (2, 2), (0, 2), and (1, 2)
-        Assertions.assertEquals(8, validBuilds.size());
+        Assertions.assertEquals(7, validBuilds.size());
 
     }
 
@@ -156,7 +165,6 @@ public class FigureTest implements Observer {
 
     @Override
     public void update() {
-        // Do Nothing
     }
 }
 

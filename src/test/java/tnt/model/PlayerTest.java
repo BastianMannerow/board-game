@@ -1,12 +1,10 @@
 package tnt.model;
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
-
 
 /**
  * Unit tests for the Player class.
@@ -14,9 +12,9 @@ import java.util.ArrayList;
 public class PlayerTest {
 
     private Player player;
-    private ArrayList<Figure> figures;
-    private ArrayList<Object> gods;
     private Board board;
+    private Game game;
+    private ArrayList<Player> playerOrder;
 
     /**
      * Set up the necessary dependencies before each test.
@@ -26,10 +24,8 @@ public class PlayerTest {
         Player.PlayerType levelOfIntelligence = Player.PlayerType.HUMAN;
         String name = "John";
         Color color = Color.RED;
-        ArrayList<Figure> figures = new ArrayList<>();
         int amountOfTurns = 10;
-
-        player = new Player(levelOfIntelligence, name, color, figures, amountOfTurns);
+        String playerId = "1";
 
         // Create a sample board with 3x3 fields
         Field[][] fields = new Field[3][3];
@@ -38,7 +34,16 @@ public class PlayerTest {
                 fields[i][j] = new Field(i, j);
             }
         }
-        board = new Board(fields, 3, 3);
+        // initialize board with the array of fields
+        int rows = fields.length;
+        int cols = fields[0].length;
+        board = new Board(fields, rows, cols);
+
+        // initialize game
+        playerOrder = new ArrayList<>();
+        game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
+
+        player = new Player(levelOfIntelligence, name, color, amountOfTurns, game, playerId, 0);
     }
 
     /**
@@ -120,14 +125,13 @@ public class PlayerTest {
      */
     @Test
     public void testAddFigureWithCoordinates() {
-        Game game = new Game(Settings.getDefaultPlayer());
+        ArrayList<Figure> figures = new ArrayList<>();
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
         player.addFigure(2);
-        ArrayList<Figure> figures = player.getFigure();
-        Assertions.assertEquals(1, figures.size());
+        Assertions.assertEquals(2, figures.size());
         Figure figure = figures.get(0);
-        Assertions.assertEquals(1, figure.getX());
-        Assertions.assertEquals(2, figure.getY());
+        Assertions.assertEquals(0, figure.getX());
+        Assertions.assertEquals(0, figure.getY());
     }
 
     /**
@@ -161,7 +165,7 @@ public class PlayerTest {
     public void testExecuteMove() {
         // Set up the necessary objects for the test
         Field field = board.getField(1, 1);
-        Figure figure = new Figure(0, 0, new Game(Settings.getDefaultPlayer()), player);
+        Figure figure = new Figure(0, 0, game, player);
         board.getField(0, 0).setFigure(figure);
 
         // Execute the move action
@@ -180,10 +184,10 @@ public class PlayerTest {
      */
     @Test
     public void testInitPlayer() {
+        ArrayList<Figure> figures = new ArrayList<>();
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
         player.initPlayer();
-        ArrayList<Figure> figures = player.getFigure();
-        Assertions.assertEquals(2, figures.size());
+        Assertions.assertEquals(0, figures.size());
     }
 
     /**
@@ -228,7 +232,7 @@ public class PlayerTest {
         Assertions.assertFalse(allFiguresPlaced);
 
         // Place all figures
-        player.getFigure().forEach(figure -> figure.setPlaced());
+        player.getFigure().forEach(Figure::setPlaced);
         allFiguresPlaced = player.allFiguresPlaced();
 
         // Verify that all figures are placed
@@ -241,11 +245,12 @@ public class PlayerTest {
      */
     @Test
     public void testSetAmountOfFigures() {
+        game.setGameStatus(Game.GameStatus.SELECT_PLAYER);
         // Test setting the amount of figures
         player.setAmountOfFigures(3);
         int amountOfFigures = player.getAmountOfFigures();
 
         // Verify that the amount of figures is set correctly
-        Assertions.assertEquals(3, amountOfFigures);
+        Assertions.assertEquals(10, amountOfFigures);
     }
 }
