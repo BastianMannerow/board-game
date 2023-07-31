@@ -47,11 +47,18 @@ public class GameController{
     }
 
     @FXML
-    private void goToMenu(){
+    void goToMenu(){
         sceneHandler.loadView("mainMenu");
     }
     @FXML
     private void playerMenu(){
         sceneHandler.loadView("playerMenu");
+    }
+
+    /**
+     * If this function is called and the sceneHandler has saved a viewName "End" then switch to EndView
+     */
+    public void goToEnd() {
+        sceneHandler.loadView("End");
     }
 }

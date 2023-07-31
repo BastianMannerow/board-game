@@ -647,7 +647,7 @@ public class FileManager {
             }
         }
         for (int k = 0; k <= 2; k++){
-            if (Integer.parseInt(oldHighscore.get(2+k*3)) > potentialHighscore){
+            if (Integer.parseInt(oldHighscore.get(2+k*4)) > potentialHighscore){
                 position = k;
                 break;
             }
