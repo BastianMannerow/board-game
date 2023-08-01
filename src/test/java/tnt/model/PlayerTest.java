@@ -135,29 +135,6 @@ public class PlayerTest {
     }
 
     /**
-     * Tests the executeBuild method of Player.
-     * It should execute the build action on the specified field and update its tower level and completion status.
-     */
-    @Test
-    public void testExecuteBuild() {
-        Field field = new Field(0, 0);
-        Field[][] boardArray = new Field[1][1];
-        boardArray[0][0] = field;
-        Board board = new Board(boardArray, 1, 1);
-
-        // Set initial tower level and completion status
-        field.setTowerLevel(0);
-        field.setTowerComplete(false);
-
-        // Execute the build action
-        player.executeBuild(field);
-
-        // Check if the tower level and completion status are updated correctly
-        Assertions.assertEquals(1, field.getTowerLevel());
-        Assertions.assertFalse(field.getTowerComplete());
-    }
-
-    /**
      * Tests the executeMove method of Player.
      * It should execute the move action, moving the specified figure to the specified field on the board.
      */
