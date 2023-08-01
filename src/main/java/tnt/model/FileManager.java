@@ -126,7 +126,7 @@ public class FileManager {
      */
     public ArrayList<String> getSavedGames(){
         String directory = System.getProperty("user.dir");
-        File folder = new File(directory + "\\savings");
+        File folder = new File(directory + File.separator + "savings");
         ArrayList<String> savedGames = new ArrayList<>();
         if (folder.isDirectory()) {
             File[] subfolders = folder.listFiles(File::isDirectory);
@@ -531,7 +531,7 @@ public class FileManager {
      * @return the highscore data
      */
     public ArrayList<String> loadHighscore() {
-        List<Object> csv = loadCSV((System.getProperty("user.dir") + File.separator + "savings\\highscore.csv"));
+        List<Object> csv = loadCSV((System.getProperty("user.dir") + File.separator + "savings" + File.separator + "highscore.csv"));
         List<String> header = (List<String>) csv.get(0);
         List<List<String>> data = (List<List<String>>) csv.get(1);
         String topOneplayerNames = "";
@@ -580,7 +580,7 @@ public class FileManager {
      */
     public void saveHighscore(Game game, String winner, int position){
         String[] header = {"Name", "LevelOfIntelligence", "AmountOfTurns", "Team Name"};
-        String filepath = (System.getProperty("user.dir") + File.separator + "savings\\highscore.csv");
+        String filepath = (System.getProperty("user.dir") + File.separator + "savings" + File.separator + "highscore.csv");
         List<String[]> data = new ArrayList<>();
         ArrayList<Player> playerList = game.getPlayerOrder();
 
