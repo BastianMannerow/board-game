@@ -293,6 +293,12 @@ public class ArtificialPlayer{
             int teamProgression = teamBuildingProgressionHeuristic(figure, field, game);
             int sabotageEnemy = sabotageBuildingEnemyHeuristic(figure, field, game);
             int punishment = punishBuilding(figure, field, game);
+            System.out.println("-----------------");
+            System.out.println("Feld: " + field.getX() + ", " + field.getY());
+            System.out.println("ownProgression: " + ownProgression);
+            System.out.println("teamProgression: " + teamProgression);
+            System.out.println("sabotageEnemy: " + sabotageEnemy);
+            System.out.println("punishment: " + punishment);
 
             // If move is better than the current best move, replace it
             if (ownProgression + teamProgression + sabotageEnemy + punishment < bestProgression){
@@ -546,7 +552,9 @@ public class ArtificialPlayer{
                 for (Figure enemyFigure:enemyFigures){
                     ArrayList<Field> possibleEnemyMoves = enemyFigure.getValidMoves(fictiveBoard);
                     if(possibleEnemyMoves.contains(fictiveField) && fictiveField.getTowerLevel() != game.getVictoryHeight()+1){
-                        punishment = punishment+2;
+                        punishment = game.getVictoryHeight()-ownMoveProgressionHeuristic(field, game);
+
+                        // punishment = punishment+2;
                     }
                 }
             }
