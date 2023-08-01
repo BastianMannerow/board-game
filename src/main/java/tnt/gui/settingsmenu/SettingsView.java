@@ -30,6 +30,9 @@ public class SettingsView extends VBox implements Observer {
         update();
     }
 
+    /**
+     * Updates the language of the labels
+     */
     @Override
     public void update() {
         controller.language.setText(Language.getTranslation("language"));
