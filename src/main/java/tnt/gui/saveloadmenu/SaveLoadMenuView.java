@@ -2,6 +2,8 @@ package tnt.gui.saveloadmenu;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -45,10 +47,14 @@ public class SaveLoadMenuView extends VBox{
      */
     public void getSaves(){
         ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().clear();
+        this.setAlignment(Pos.CENTER);
+
+        ((HBox) this.getChildren().get(0)).setAlignment(Pos.CENTER);
         List<String> saves =SaveLoadMenuController.loadNames();
         for (String save: saves) {
              Label label= new Label();
              label.setText(save);
+             label.setPadding(new Insets(0,100,10,50));
              Button loadButton = new Button("load");
              loadButton.setOnMouseClicked(event-> {
                  Button button = (Button) event.getSource();
