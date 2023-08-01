@@ -41,7 +41,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root alignment="CENTER" prefHeight="400.0" prefWidth="640.0" spacing="10.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tnt.gui.playerchoosemenu.PlayerChooseController">
+<fx:root alignment="CENTER" prefHeight="400.0" prefWidth="640.0" spacing="10.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tnt.gui.playerchoosemenu.PlayerChooseController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
