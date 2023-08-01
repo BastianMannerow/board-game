@@ -61,7 +61,7 @@ public class SaveLoadMenuController {
      * @param save
      */
     public void load(String save) {
-        Game game = new Game(0);
+        Game game = new Game(1);
         fileManager.loadGame(save, game);
         Settings.setActualGame(game);
     }

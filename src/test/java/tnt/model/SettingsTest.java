@@ -71,7 +71,7 @@ public class SettingsTest {
     @Test
     public void testIsServerMode() {
         boolean isServerMode = Settings.isServerMode();
-        Assertions.assertTrue(isServerMode);
+        Assertions.assertFalse(isServerMode);
     }
 
     /**

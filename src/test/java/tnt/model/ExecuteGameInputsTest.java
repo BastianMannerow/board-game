@@ -13,24 +13,29 @@ import java.util.ArrayList;
 public class ExecuteGameInputsTest {
     private Game game;
     private Player player;
+    private Player player2;
     private Board board;
     private Field field;
     private Figure figure;
-    private ArrayList<Figure> figures;
 
     @BeforeEach
     public void setup() {
-        game = new Game(2);
+        ArrayList<Player> playerOrder = new ArrayList<>();
+        game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
+        game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
+        game.setVictoryHeight(3);
+        Settings.setActualGame(game);
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, 2, game, "Team A", 10);
+        player2= new Player(Player.PlayerType.HUMAN, "J", Color.BLUE, 1, game, "Team B", 10);
+        playerOrder.add(player);
+        playerOrder.add(player2);
         board = new Board(new Field[5][5], 5, 5);
         field = new Field(2, 2);
-        figure = new Figure(1, 1, game, player);
+        figure = new Figure(game, player);
         player.addFigure(2);
-        game.nextPlayersTurn();
+        player2.addFigure(1);
         game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
         game.createBoard(5,5);
-        figure.setPlaced();
-        field.setFigure(figure);
     }
 
     /**
@@ -61,8 +66,7 @@ public class ExecuteGameInputsTest {
      */
     @Test
     public void testPlaceFigure_CheckPlaceFig_NotPlaced_ReturnsTrue() {
-        figure.setPlaced();
-        boolean result = ExecuteGameInputs.placeFigure(figure, field);
+        boolean result = ExecuteGameInputs.placeFigure(player.getFigure().get(0), field);
         Assertions.assertTrue(result);
     }
 
@@ -103,7 +107,13 @@ public class ExecuteGameInputsTest {
      */
     @Test
     public void testBuildObject_ValidBuildLevel_NotMaxBuildingLevel_ReturnsTrue() {
-        boolean result = ExecuteGameInputs.buildObject(1, field);
+        ExecuteGameInputs.placeFigure(player.getFigure().get(0), game.getBoard().getField(2,2));
+        ExecuteGameInputs.placeFigure(player.getFigure().get(1), game.getBoard().getField(1,1));
+        ExecuteGameInputs.placeFigure(player2.getFigure().get(0),game.getBoard().getField(2,1));
+        ExecuteGameInputs.placeFigure(player.getFigure().get(0), game.getBoard().getField(1,2));
+        game.setNumberOfTile(new int[] {1,2,3,4,5});
+        player.setNumberOfTile(new int[] {1,2,3,4,5});
+        boolean result = ExecuteGameInputs.buildObject(1, game.getBoard().getField(2,2));
         Assertions.assertTrue(result);
     }
 
