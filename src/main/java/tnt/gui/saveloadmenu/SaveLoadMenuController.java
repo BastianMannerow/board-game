@@ -21,7 +21,7 @@ public class SaveLoadMenuController {
     /**
      * Swaps the scene to the MainMenu if the scene exists
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void goToMenu() {
         sceneHandler.loadView("mainMenu");
     }
@@ -45,7 +45,7 @@ public class SaveLoadMenuController {
     /**
      * Saves a State of the Game through fileManager
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void save(){
         try {
             fileManager.saveGame(Settings.getActualGame());

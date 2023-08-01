@@ -50,7 +50,7 @@ public class MainMenuController{
     /**
      * Initializes the Controller
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void initialize(){
         defaultConfigs = FXCollections.observableArrayList(DefaultConfig.values());
         defaultConfig.setConverter(new StringConverter<DefaultConfig>() {
@@ -98,7 +98,7 @@ public class MainMenuController{
     /**
      * Starts a new Game
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void newGame() {
         Settings.setActualGame(null);
         System.out.println(Settings.getActualGame());
@@ -109,7 +109,7 @@ public class MainMenuController{
     /**
      * method to get called when load/save game is pressed
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void gotoSaveMenu() {
         sceneHandler.loadView("SaveLoad");
     }
@@ -118,7 +118,7 @@ public class MainMenuController{
     /**
      * method to get called when settings is pressed
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void gotoSettings() {
         sceneHandler.loadView("settings");
     }
@@ -126,7 +126,7 @@ public class MainMenuController{
     /**
      * method to get called when start server is pressed
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void startServer() {
         System.out.println("about to start the server");
         Settings.getNetworkHandler().listen();
@@ -136,7 +136,7 @@ public class MainMenuController{
     /**
      * method to get called when connect to server is pressed
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void connectToServer() {
         System.out.println("about to connect as client to server");
 //        Settings.getNetworkHandler().startClient("localhost");
@@ -148,7 +148,7 @@ public class MainMenuController{
     /**
      * Sends data to through the established connection
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void sendToPartner() {
 //        networkHandler.sendMsg("Hello\nabc");
         FileManager fileManager = new FileManager();
