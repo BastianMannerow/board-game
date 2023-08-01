@@ -45,6 +45,11 @@ public class BuildingLevel extends DragableObject implements Observer {
         update();
     }
 
+    /**
+     * Copys the Buildinglevel
+     * @return Buildinglevel
+     * @throws IOException
+     */
     @Override
     public DragableObject copy() throws IOException {
         return new BuildingLevel(level);
@@ -58,6 +63,9 @@ public class BuildingLevel extends DragableObject implements Observer {
         return this.level;
     }
 
+    /**
+     *  The update method for each Building if it is changed in the model
+     */
     @Override
     public void update() {
         String prefix = GUISettings.getTheme();

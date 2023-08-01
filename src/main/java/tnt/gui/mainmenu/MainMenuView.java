@@ -37,6 +37,9 @@ public class MainMenuView extends VBox implements Observer {
         update();
     }
 
+    /**
+     * The update Method for Language if the Language button is pressed
+     */
     @Override
     public void update() {
         mainMenuController.defaultlabel.setText(Language.getTranslation("getDefaultLabel"));

@@ -58,6 +58,9 @@ public class PlayerChooseView extends VBox implements Observer {
         Language.getInstance().addObserver(this);
     }
 
+    /**
+     * The update Method if something in the Textfields get changed
+     */
     @Override
     public void update() {
         updateGame();
@@ -80,6 +83,9 @@ public class PlayerChooseView extends VBox implements Observer {
         updateLabels();
     }
 
+    /**
+     * Updates the tiles TODO: what are you doing here???
+     */
     private void updateTileResources() {
         controller.tilesSepBox.setSelected(game.isGlobalTilePool());
         controller.tileBox.getChildren().clear();
@@ -102,6 +108,9 @@ public class PlayerChooseView extends VBox implements Observer {
         }
     }
 
+    /**
+     * Updates the Language of the Labels
+     */
     private void updateLabels() {
         controller.mainMenu.setText(Language.getTranslation("mainMenuLabel"));
         controller.maxStepUpHeight.setText(Language.getTranslation("maxStepUpLabel"));
@@ -115,6 +124,11 @@ public class PlayerChooseView extends VBox implements Observer {
         controller.btnPlay.setText(Language.getTranslation("playButtonLabel"));
     }
 
+    /**
+     * Updates the player if something happens with a player
+     * @param player ,a player in the Menu
+     * @param i ,the player amount
+     */
     private void updatePlayer(Player player, int i) {
         if (!playerHolder.containsKey(player)){
             PlayerAloneChooseView playerAloneChooseView;

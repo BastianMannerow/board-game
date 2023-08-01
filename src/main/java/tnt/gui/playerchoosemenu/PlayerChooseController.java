@@ -66,12 +66,6 @@ public class PlayerChooseController{
     private SceneHandler sceneHandler;
     final Popup popup = new Popup();
 
-//    @FXML
-//    private void initialize(){
-//        maxStepUp.setPromptText(String.valueOf(Settings.getMaxStepUp()));
-//        maxStepDown.setPromptText(String.valueOf(Settings.getMaxStepDown()));
-//        maxBuildingHeight.setPromptText(String.valueOf(Settings.getMaxBuildingLevel()));
-//    }
 
     /**
      * The method getting called, when user pressed the play button
@@ -87,6 +81,9 @@ public class PlayerChooseController{
         sceneHandler.loadView("gameView");
     }
 
+    /**
+     * Updates the game to the actual game
+     */
     @FXML
     private void updateGameSettings(){
         Game game = Settings.getActualGame();
@@ -94,6 +91,13 @@ public class PlayerChooseController{
 
         updateGameSettings(game, nrOfFigures);
     }
+
+    /**
+     * Updates the game with paramaters that differ from the standart such as:
+     * maxStepUp,maxStepDown,victoryHeight,sizeX,sizeY,globalTilePool,
+     * @param game ,the actual game
+     * @param nrOfFigures ,the amount of figures selected within the Menu
+     */
     private void updateGameSettings(Game game, int nrOfFigures) {
         // Todo: get the other fields
 
@@ -147,6 +151,12 @@ public class PlayerChooseController{
         }
     }
 
+    /**
+     * Updates the integer Value in the given textfield
+     * @param textfield ,the given textfield which you want to update
+     * @param initvalue ,the value with which you want to intialize TODO: Seeing if this line is correct
+     * @return
+     */
     private int updateValueOfTextfield(TextField textfield, int initvalue) {
         int value = initvalue;
         try {
@@ -159,6 +169,11 @@ public class PlayerChooseController{
         return value;
     }
 
+    /**
+     * Updates the Player to the correct Team,Name,levelofintelligence
+     * @param game ,the actual game
+     * @return nrOfFigures ,the number of Figures in the Game
+     */
     private int updatePlayer(Game game) {
         int nrOfFigures = 0;
         for (Node node : playerPaneSingle.getChildren()){
@@ -224,16 +239,9 @@ public class PlayerChooseController{
         }
     }
 
-//    @FXML
-//    private void setMaxStepUp() {
-//        Settings.getActualGame().setVictoryHeight(victoryHeight.getText());
-//    }
-
-//    @FXML
-//    private void setSeperatePool(){
-//        Settings.getActualGame().setGlobalTilePool(tilesSepBox.isSelected());
-//    }
-
+    /**
+     * Swaps the scene to the MainMenu
+     */
     @FXML
     private void gotoHome(){
         sceneHandler.loadView("mainMenu");

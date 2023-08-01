@@ -20,7 +20,6 @@ public class GUISettings extends Observable {
     private static Theme theme = Theme.DEFAULT;
     private static final int maxFieldsize = 150;
     private static final int minFieldsize = 40;
-//    private static final String defaultTheme = "blood";
 
     /**
      * getter for the max size of a single field
@@ -38,13 +37,6 @@ public class GUISettings extends Observable {
         return minFieldsize;
     }
 
-//    /**
-//     * getter for the default theme
-//     * @return the theme gets set initial
-//     */
-//    public static String getDefaultTheme() {
-//        return defaultTheme;
-//    }
 
     /**
      * getter for the actual theme with string representation

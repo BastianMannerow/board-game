@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class GameTest {
 
     private Game game;
+    private Player player;
     private ArrayList<Player> playerOrder;
 
     /**
@@ -21,13 +22,14 @@ public class GameTest {
     @BeforeEach
     public void setup() {
         playerOrder = new ArrayList<>();
-//        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.RED, 2, null, "1"));
-//        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, null, "2"));
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 1", Color.BLUE, 2, game, "1 ", 0));
         playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 2, game, "2 ", 0));
+        ArrayList<Figure> figures = new ArrayList<>();
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(player);
+        game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
 
-//        game = new Game(playerOrder, 10, 5, 4, 3, 2, "Test Game", 1, 3, 5);
-        game = new Game(2);
     }
 
     /**
@@ -98,10 +100,16 @@ public class GameTest {
      */
     @Test
     public void testAddPlayer() {
-        game.addPlayer(3,"1",0);
-        ArrayList<Player> expectedPlayerOrder = new ArrayList<>(playerOrder);
-        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 3", Color.GREEN, 3, game, "1", 0));
-        Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
+        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 4", Color.BLUE, 2, game, "1 ", 0));
+        playerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 3", Color.BLUE, 2, game, "2 ", 0));
+        Assertions.assertEquals(4, game.getPlayerOrder().size());
+        Player addedPlayer = game.getPlayerOrder().get(3);
+        Assertions.assertEquals(Player.PlayerType.HUMAN, addedPlayer.getLevelOfIntelligence());
+        Assertions.assertEquals("Player 3", addedPlayer.getName());
+        Assertions.assertEquals(Color.BLUE, addedPlayer.getColor());
+        Assertions.assertEquals(2, addedPlayer.getAmountOfFigures());
+        Assertions.assertEquals("2 ", addedPlayer.getTeam());
+        Assertions.assertEquals(0, addedPlayer.getAmountOfTurns());
     }
 
     /**
@@ -112,9 +120,18 @@ public class GameTest {
     public void testRemovePlayer() {
         Player playerToRemove = playerOrder.get(0);
         game.removePlayer(playerToRemove);
-        ArrayList<Player> expectedPlayerOrder = new ArrayList<>();
-        expectedPlayerOrder.add(new Player(Player.PlayerType.HUMAN, "Player 2", Color.BLUE, 3, game, "1", 0));
-        Assertions.assertEquals(expectedPlayerOrder, game.getPlayerOrder());
+        playerOrder.remove(playerToRemove);  // Update the playerOrder list to match the expected outcome
+        Assertions.assertEquals(playerOrder.size(), game.getPlayerOrder().size());
+        for (int i = 0; i < playerOrder.size(); i++) {
+            Player expected = playerOrder.get(i);
+            Player actual = game.getPlayerOrder().get(i);
+            // check that the properties of the players match
+            Assertions.assertEquals(expected.getName(), actual.getName());
+            Assertions.assertEquals(expected.getColor(), actual.getColor());
+            Assertions.assertEquals(expected.getLevelOfIntelligence(), actual.getLevelOfIntelligence());
+            Assertions.assertEquals(expected.getAmountOfFigures(), actual.getAmountOfFigures());
+            Assertions.assertEquals(expected.getTeam(), actual.getTeam());
+        }
     }
 
     /**

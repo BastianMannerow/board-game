@@ -259,6 +259,8 @@ public class FileManager {
             color = "#" + color.substring(2); // Entfernt das "0x" und fügt "#" hinzu
             playerObject.setColor(Color.web(color));
             playerObject.setAmountOfFigures(amountOfFigures);
+            playerObject.addFigure(amountOfFigures);
+
             playerObject.setAmountOfTurns(amountOfTurns);
             playerObject.setTeam(team);
             // Parses the tile pool
@@ -326,8 +328,8 @@ public class FileManager {
      * @param allFields all the fields, which will be placed on the board
      */
     public void setBoardData(List<String> header, List<List<String>> boardData, Game game, ArrayList<Field> allFields){
-        String fieldX = boardData.get(0).get(header.indexOf("fieldX"));
-        String fieldY = boardData.get(0).get(header.indexOf("fieldY"));
+        String fieldX = boardData.get(0).get(header.indexOf("xSize"));
+        String fieldY = boardData.get(0).get(header.indexOf("ySize"));
         game.createBoard(Integer.valueOf(fieldX), Integer.valueOf(fieldY));
         game.getBoard().setRoundWorld(Boolean.valueOf(boardData.get(0).get(header.indexOf("roundWorld"))));
         for (Field field: allFields){
@@ -688,7 +690,7 @@ public class FileManager {
             }
         }
         for (int k = 0; k <= 2; k++){
-            if (Integer.parseInt(oldHighscore.get(2+k*3)) > potentialHighscore){
+            if (Integer.parseInt(oldHighscore.get(2+k*4)) > potentialHighscore){
                 position = k;
                 break;
             }

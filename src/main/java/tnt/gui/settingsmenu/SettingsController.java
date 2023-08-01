@@ -40,25 +40,43 @@ public class SettingsController {
         sceneHandler.loadView("mainMenu");
     }
 
+    /**
+     * Swaps the local Language to English
+     */
     @FXML
     private void chooseEnglish(){
         Language.getInstance().setLanguage(Locale.ENGLISH);
     }
+
+    /**
+     * Swaps the local Language to German
+     */
     @FXML
     private void chooseGerman(){
         Language.getInstance().setLanguage(Locale.GERMAN);
     }
 
+    /**
+     * Swaps the theme to Blood Theme
+     */
     @FXML
     private void chooseThemeBlood(){
 //        sceneHandler.loadStyle("blood");
         GUISettings.getInstance().setTheme("Horror1");
     }
+
+    /**
+     * Swaps the theme to Zombie Theme
+     */
     @FXML
     private void chooseThemeZombies(){
 //        sceneHandler.loadStyle("zombies");
         GUISettings.getInstance().setTheme("Horror2");
     }
+
+    /**
+     * Swaps the theme to Default Theme
+     */
     @FXML
     private void chooseThemeDefault(){
 //        sceneHandler.loadStyle("zombies");

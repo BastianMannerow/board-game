@@ -46,12 +46,25 @@ public class GameController{
         return ExecuteGameInputs.buildObject(buildLevel, field);
     }
 
+    /**
+     * the function swaps the scene to the mainMenu if it saved in the SceneHandler
+     */
     @FXML
-    private void goToMenu(){
+    void goToMenu(){
         sceneHandler.loadView("mainMenu");
     }
+    /**
+     * the function swaps the scene to the playerMenu if it saved in the SceneHandler
+     */
     @FXML
     private void playerMenu(){
         sceneHandler.loadView("playerMenu");
+    }
+
+    /**
+     * If this function is called and the sceneHandler has saved a viewName "End" then switch to EndView
+     */
+    public void goToEnd() {
+        sceneHandler.loadView("End");
     }
 }

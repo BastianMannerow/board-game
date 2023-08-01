@@ -47,7 +47,9 @@ public class MainMenuController{
     @FXML
     Button serverButton;
 
-
+    /**
+     * Initializes the Controller
+     */
     @FXML
     private void initialize(){
         defaultConfigs = FXCollections.observableArrayList(DefaultConfig.values());
@@ -93,6 +95,9 @@ public class MainMenuController{
         sceneHandler.loadView("playerMenu");
     }
 
+    /**
+     * Starts a new Game
+     */
     @FXML
     private void newGame() {
         Settings.setActualGame(new Game(getAmountOfPlayer((DefaultConfig) defaultConfig.getValue())));
@@ -140,6 +145,9 @@ public class MainMenuController{
         System.out.println("connected to server");
     }
 
+    /**
+     * Sends data to through the established connection
+     */
     @FXML
     private void sendToPartner() {
 //        networkHandler.sendMsg("Hello\nabc");
@@ -156,7 +164,11 @@ public class MainMenuController{
         this.sceneHandler = sceneHandler;
     }
 
-
+    /**
+     * Get´s the amount of Players in accordance with the defaultconfig
+     * @param defaultConfig ,the default configuration of the game
+     * @return AmountOfPlayer ,the amount of Players in the game
+     */
     private static int getAmountOfPlayer(DefaultConfig defaultConfig) {
         switch (defaultConfig){
             case PLAYER_3:

@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class SaveLoadMenuView extends VBox{
 
     @FXML
     private SaveLoadMenuController SaveLoadMenuController;
-    private Map<Button,String> saveHolder;
+    private Map<Button,String> saveHolder=new HashMap<Button,String>();
 
     /**
      * Constructor for the save load menu
@@ -40,20 +39,23 @@ public class SaveLoadMenuView extends VBox{
         this.getSaves();
     }
 
+    /**
+     * Gets the saves of the Games and displays them with their respective loading Button
+     */
     private void getSaves(){
-//        List<String> saves =SaveLoadMenuController.loadFiles();
-//        for (String save: saves) {
-//             Label label= new Label();
-//             label.setText(save);
-//             Button loadButton = new Button("load");
-//             loadButton.setOnMouseClicked(event-> {
-//                 Button button = (Button) event.getSource();
-//                 SaveLoadMenuController.load(saveHolder.get(button));
-//             });
-//             saveHolder.put(loadButton,save);
-//             HBox saved = new HBox();
-//             saved.getChildren().addAll(label,loadButton);
-//             ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().add(saved);
-//        }
+        List<String> saves =SaveLoadMenuController.loadNames();
+        for (String save: saves) {
+             Label label= new Label();
+             label.setText(save);
+             Button loadButton = new Button("load");
+             loadButton.setOnMouseClicked(event-> {
+                 Button button = (Button) event.getSource();
+                 SaveLoadMenuController.load(saveHolder.get(button));
+             });
+             saveHolder.put(loadButton,save);
+             HBox saved = new HBox();
+             saved.getChildren().addAll(label,loadButton);
+             ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().add(saved);
+       }
     }
 }

@@ -91,6 +91,11 @@ public class Game extends Observable {
         return numberOfTile[i];
     }
 
+    /**
+     * Sets the Number of tiles
+     * @param i ,the type of tile
+     * @param nr ,the amount of tiles
+     */
     public void setNrTile(int i, int nr) {
         if (i<0 || i >= numberOfTile.length){
             return;
@@ -226,28 +231,6 @@ public class Game extends Observable {
     }
 
     /**
-     * Creating new player objects and adding them to playerOrder
-     *
-     * @param playerAmount the amount of new players
-     * @param names the names of the new players
-     * @param colour the colours of the new players
-     * @param figureAmount the amount of figures on the players disposal
-
-    public void createPlayer(ArrayList<String> levelOfIntelligence, int playerAmount, ArrayList<String> names,
-                             ArrayList<String> colour, int figureAmount, ArrayList<Gods> gods)                  {
-        for (int i = 0; i < playerAmount; i++) {
-
-            Player newPlayer = new Player(levelOfIntelligence.get(i), names.get(i), Color.RED, new ArrayList<Figure>(), gods);
-
-            newPlayer.addFigure(figureAmount, gods.get(i));
-            ArrayList<Player> newPlayerOrder = getPlayerOrder();
-            newPlayerOrder.add(newPlayer);
-            setPlayerOrder(newPlayerOrder);
-        }
-    }
-    */
-
-    /**
      * Creates Board and containing Field objects.
      *
      * @param boardX the Width of the board
@@ -266,278 +249,6 @@ public class Game extends Observable {
         Board board = new Board(fields, boardX, boardY);
         this.board = board;
         notifyObservers();
-    }
-
-    /**
-     * Checks if the Game is over
-     */
-    public boolean checkRegularEnding(){
-        // Differenzierung 2 oder 4 Spieler einbauen.
-        boolean gameEnded = false;
-        return gameEnded;
-    }
-
-    /**
-     * Checks if the game ended, because of a gods ability.
-     *
-     * @return boardY the Height of the board
-     */
-//<<<<<<< HEAD
-//    public boolean checkSpecialEnding() {
-//        boolean gameEnded = false;
-//        for (int i = 1; i < playerOrder.size(); i++) {
-//            Player player = playerOrder.get(i);
-//            ArrayList<Gods> allGods = player.getGods();
-//            if(allGods.contains(new Chronus())){
-//                if(Chronus.checkSpecialEnding()){
-//                    gameEnded = true;
-//                }
-//            }
-//            for (Gods god : allGods) {
-//                switch (god.getName()) {
-//                    case "Chronus":
-//                        if (Chronus.checkSpecialEnding()) {
-//                            gameEnded = true;
-//                            break;
-//                        }
-//                    case "Eros":
-//                        if (Eros.checkSpecialEnding()) {
-//                            gameEnded = true;
-//                            break;
-//                        }
-//                    case "Hera":
-//                        if (Hera.checkSpecialEnding()) {
-//                            gameEnded = true;
-//                            break;
-//                        }
-//                    case "Pan":
-//                        if (Pan.checkSpecialEnding()) {
-//                            gameEnded = true;
-//                            break;
-//                        }
-//                    default:
-//                        continue;
-//                }
-//            }
-//        }
-//        return gameEnded;
-//    }
-//=======
-////    public boolean checkSpecialEnding() {
-////        boolean gameEnded = false;
-////        for (int i = 1; i < playerOrder.size(); i++) {
-////            Player player = playerOrder.get(i);
-////            ArrayList<Gods> allGods = player.getGods();
-////
-////            for (Gods god : allGods) {
-////                switch (god) {
-////                    case Chronus:
-////                        if (Chronus.checkSpecialEnding()) {
-////                            gameEnded = true;
-////                            break;
-////                        }
-////                    case Eros:
-////                        if (Eros.checkSpecialEnding()) {
-////                            gameEnded = true;
-////                            break;
-////                        }
-////                    case Hera:
-////                        if (Hera.checkSpecialEnding()) {
-////                            gameEnded = true;
-////                            break;
-////                        }
-////                    case Pan:
-////                        if (Pan.checkSpecialEnding()) {
-////                            gameEnded = true;
-////                            break;
-////                        }
-////                    default:
-////                        continue;
-////                }
-////            }
-////        }
-////        return gameEnded;
-////    }
-//>>>>>>> scenebuilder
-
-    /**
-     * Sabotage of the players movement abilities by other players gods.
-     *
-     * @param figure the figure executing the movement
-     * @param possibleMovement the possible movement before the sabotage
-     *
-     * @return the List of fields, which are reachable after sabotage
-     */
-    public ArrayList<Field> sabotageMovement(Figure figure, ArrayList<Field> possibleMovement){
-//<<<<<<< HEAD
-//        for (int i = 1; i < playerOrder.size(); i++) {
-//            Player passivePlayer = playerOrder.get(i);
-//            ArrayList<Gods> passiveGods = passivePlayer.getGods();
-//            for(Gods god:passiveGods) {
-//                switch (god.getName()) {
-//                    case "Aphrodite":
-//                        possibleMovement = Aphrodite.sabotage(figure, possibleMovement);
-//                    case "Athena":
-//                        possibleMovement = Athena.sabotage(figure, possibleMovement);
-//                    case "Hypnus":
-//                        possibleMovement = Hypnus.sabotage(figure, possibleMovement);
-//                    case "Persephone":
-//                        possibleMovement = Persephone.sabotage(figure, possibleMovement);
-//                    default:
-//                        continue;
-//                }
-//            }
-//        }
-//=======
-////        for (int i = 1; i < playerOrder.size(); i++) {
-////            Player passivePlayer = playerOrder.get(i);
-////            ArrayList<Gods> passiveGods = passivePlayer.getGods();
-////            for(Gods god:passiveGods) {
-////                switch (god) {
-////                    case Aphrodite:
-////                        possibleMovement = Aphrodite.sabotage(figure, possibleMovement);
-////                    case Athena:
-////                        possibleMovement = Athena.sabotage(figure, possibleMovement);
-////                    case Hypnus:
-////                        possibleMovement = Hypnus.sabotage(figure, possibleMovement);
-////                    case Persephone:
-////                        possibleMovement = Persephone.sabotage(figure, possibleMovement);
-////                    default:
-////                        continue;
-////                }
-////            }
-////        }
-//>>>>>>> scenebuilder
-        return possibleMovement;
-    }
-
-    /**
-     * Sabotage of the players building abilities by other players gods.
-     *
-     * @param figure the figure executing the movement
-     * @param possibleBuilds the possible builds before the sabotage
-     *
-     * @return the List of fields, which are buildable after sabotage
-     */
-    public ArrayList<Field> sabotageBuilds(Figure figure, ArrayList<Field> possibleBuilds){
-        for (int i = 1; i < playerOrder.size(); i++) {
-            Player passivePlayer = playerOrder.get(i);
-            // ArrayList<Gods> passiveGods = passivePlayer.getGods();
-//<<<<<<< HEAD
-//            for (Gods god : passiveGods) {
-//                switch (god.getName()) {
-//                    case "Limus":
-//                        possibleBuilds = Limus.sabotage(figure, possibleBuilds);
-//                    default:
-//                        continue;
-//                }
-//            }
-//=======
-////            for (Gods god : passiveGods) {
-////                switch (god) {
-////                    case Limus:
-////                        possibleBuilds = Limus.sabotage(figure, possibleBuilds);
-////                    default:
-////                        continue;
-////                }
-////            }
-//>>>>>>> scenebuilder
-        }
-        return possibleBuilds;
-    }
-
-    /**
-     * Runs the Game
-     */
-    public void runGame() {
-        boolean gameEnded = false;
-        while(gameEnded == false) {
-            Player activePlayer = playerOrder.get(0);
-
-            // Checks the active players resources
-            // ArrayList<Gods> activeGods = activePlayer.getGods();
-            ArrayList<Figure> activeFigures = activePlayer.getFigure();
-
-            // Movement
-            boolean artemisIsAvailable = false;
-//<<<<<<< HEAD
-//            for(Figure figure:activeFigures){
-//                ArrayList<Field> regularFields = sabotageMovement(figure, figure.getValidMoves(board));
-//                for(Gods god:activeGods) {
-//                    switch (god.getName()) {
-//                        case "Apollo":
-//                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder,figure, board);
-//                            apolloFields = sabotageMovement(figure, apolloFields);
-//                        case "Artemis":
-//                            artemisIsAvailable = true;
-//                        case "Charon":
-//                        case "Hermes":
-//                        case "Minotaures":
-//                        case "Triton":
-//                    }
-//                }
-//            }
-//=======
-////            for(Figure figure:activeFigures){
-////                ArrayList<Field> regularFields = sabotageMovement(figure, figure.getValidMoves(board));
-////                for(Gods god:activeGods) {
-////                    switch (god) {
-////                        case Apollo:
-////                            ArrayList<Field> apolloFields = Apollo.getValidMove(playerOrder, board);
-////                            apolloFields = sabotageMovement(figure, apolloFields);
-////                        case Artemis:
-////                            artemisIsAvailable = true;
-////                        case Charon:
-////                        case Hermes:
-////                        case Minotaures:
-////                        case Triton:
-////                    }
-////                }
-////            }
-//>>>>>>> scenebuilder
-            Field field = board.getField(0, 0);
-            Figure figure = activeFigures.get(0); // Figur und Field muss gewählt werden, hier nur Testwert
-            // Artemis !!!!!!!!! muss noch angepasst werden für getvalid move
-            if (artemisIsAvailable) {
-                int originalFigureX = figure.getX();
-                int originalFigureY = figure.getY();
-                // Artemis.getValidMove(figure, originalFigureX, originalFigureY);
-            }
-
-            activePlayer.executeMove(field, board, figure); //Kann auch zB. Apollo.executeMove sein
-
-
-            // Building
-            for (Figure figure2 : activeFigures) {
-//<<<<<<< HEAD
-//                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds());
-//            }
-//            //Testweise dieses Stück rausgenommen
-//            //Field field = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
-//            activePlayer.executeBuild(field, board); // Kann auch zB. BuildingGod.executeBuild sein
-//=======
-//                ArrayList<Field> possibleFields = sabotageBuilds(figure2, figure2.getValidBuilds(board));
-//            }
-//
-//            Field field2 = board.getField(0,0); // Feld muss aus possibleFields gewählt werden, hier nur Testwert
-//            activePlayer.executeBuild(field2, board); // Kann auch zB. BuildingGod.executeBuild sein
-//>>>>>>> scenebuilder
-
-                // Checks if the game is over
-                this.amountOfTurns++;
-                if (checkRegularEnding()) {
-                    gameEnded = true;
-                    break;
-                }
-//            if(checkSpecialEnding()){
-//                gameEnded = true;
-//                break;
-//            }
-
-                // Spielerwechsel
-                nextPlayersTurn();
-            }
-        }
     }
 
     /**
@@ -649,13 +360,7 @@ public class Game extends Observable {
      */
     public void addPlayer(int amountOfFigures, String team, int amountOfTurns) {
         if (selectingPlayers()) {
-//            Player newPlayer = new Player(this);
-//            newPlayer.setLevelOfIntelligence(Player.PlayerType.HUMAN);
-//            newPlayer.setName(String.valueOf(playerOrder.size() + 1));
-//            newPlayer.setColor(def_colors[playerOrder.size() % def_colors.length]);
-//            newPlayer.setAmountOfFigures(amountOfFigures);
-//            newPlayer.setTeam(team);
-//            playerOrder.add(newPlayer);
+
             Player newPlayer = new Player(Player.PlayerType.HUMAN, "" + (playerOrder.size() + 1), def_colors[playerOrder.size() % def_colors.length], amountOfFigures, this, team, amountOfTurns);
             playerOrder.add(newPlayer);
             if (globalTilePool){
@@ -708,7 +413,6 @@ public class Game extends Observable {
      */
     public void nextPlayersTurn(){
         Collections.rotate(playerOrder, -1);
-//        System.out.println("Now its " + getPlayersTurn().getName() + "turn.");
         notifyObservers();
     }
 
@@ -728,12 +432,19 @@ public class Game extends Observable {
         return lastMovedFigure;
     }
 
+    /**
+     * Returns the bool globalTilePool
+     * @return globalTilePool ,the checkmark of activation with 1 beeing yes and 0 no
+     */
     public boolean isGlobalTilePool() {
         return globalTilePool;
     }
 
+    /**
+     * Setter for the globalTilePool bool
+     * @param globalTilePool ,the to be setted Value
+     */
     public void setGlobalTilePool(boolean globalTilePool) {
         this.globalTilePool = globalTilePool;
-//        setVictoryHeight(getVictoryHeight());
     }
 }

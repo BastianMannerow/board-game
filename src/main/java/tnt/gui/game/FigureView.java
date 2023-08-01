@@ -61,6 +61,9 @@ public class FigureView extends DragableObject implements Observer{
         return figure;
     }
 
+    /**
+     * The Update Method while the Game is running
+     */
     @Override
     public void update() {
         ((Circle)((StackPane) this.getChildren().get(0)).getChildren().get(0)).setFill(player.getColor());
@@ -72,6 +75,11 @@ public class FigureView extends DragableObject implements Observer{
         ((StackPane) this.getChildren().get(0)).setPrefWidth(SizeHandler.getPrefSize());
     }
 
+    /**
+     * Copys the FigureView
+     * @return Figureview ,the copy
+     * @throws IOException
+     */
     @Override
     public FigureView copy() throws IOException
     {

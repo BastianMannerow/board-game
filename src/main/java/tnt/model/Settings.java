@@ -6,17 +6,12 @@ import tnt.remote.NetworkHandler;
  * Class for holding the actual settings and default settings
  */
 public class Settings {
-
-    /**
-     * Representation for this instance network type: server or client
-     */
     public enum RemoteMode {
         SERVER,
         CLIENT
     }
-//    private static int fieldSizeX = 5;
-//    private static int fieldSizeY = 5;
-    private static int[] fieldSize = {5, 5};
+    private static int fieldSizeX = 5;
+    private static int fieldSizeY = 5;
     private static int defaultPlayer = 2;
     private static int maxStepUp = 1;
     private static int maxStepDown = -1; // Negative numbers allow all step height steps
@@ -44,7 +39,7 @@ public class Settings {
      * @return the boards width
      */
     public static int getFieldSizeX() {
-        return fieldSize[0];
+        return fieldSizeX;
     }
 
     /**
@@ -52,7 +47,7 @@ public class Settings {
      * @return the boards height
      */
     public static int getFieldSizeY() {
-        return fieldSize[1];
+        return fieldSizeY;
     }
 
     /**
@@ -102,34 +97,18 @@ public class Settings {
         }
     }
 
-    /**
-     * makes this instance to be a client and not a server
-     */
     public static void setClientMode() {
         Settings.remoteMode = RemoteMode.CLIENT;
     }
 
-
-    /**
-     * returns the maximum number of fields for a board
-     * @return the maximum number of fields to get set
-     */
     public static int getMaxFieldcount() {
         return maxFieldcount;
     }
 
-    /**
-     * getter for the default maximum available level to go up
-     * @return the maximum number of level to got up
-     */
     public static int getMaxStepUp() {
         return maxStepUp;
     }
 
-    /**
-     * getter for the default maximum available level to go down
-     * @return the maximum number of level to got down
-     */
     public static int getMaxStepDown() {
         if (maxStepDown < 0){
             return victoryHeight;
@@ -137,19 +116,10 @@ public class Settings {
         return maxStepDown;
     }
 
-    /**
-     * getter for the default victory height
-     * @return the values of the default highest building level (except the dome)
-     */
     public static int getVictoryHeight() {
         return victoryHeight;
     }
 
-    /**
-     * getter for the default number of tiles available
-     * @param i the building level for getting the number of tiles (dome = 0)
-     * @return the default available number of tiles for given building level
-     */
     public static int getNrOfTile(int i){
         if (i >= defaultNrTiles.length || i < 0){
             return 0;

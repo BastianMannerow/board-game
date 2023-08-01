@@ -21,12 +21,10 @@ public class ExecuteGameInputsTest {
     @BeforeEach
     public void setup() {
         game = new Game(2);
-//        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures);
-        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, 3, game, "Team 1", 0);
+        player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, 2, game, "Team A", 10);
         board = new Board(new Field[5][5], 5, 5);
         field = new Field(2, 2);
-//        figure = new Figure(1, 1, game);
-        figure = new Figure(game, player);
+        figure = new Figure(1, 1, game, player);
         player.addFigure(2);
         game.nextPlayersTurn();
         game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
@@ -116,7 +114,7 @@ public class ExecuteGameInputsTest {
     @Test
     public void testBuildObject_ValidBuildLevel_MaxBuildingLevel_ReturnsTrue() {
         field.setTowerLevel(2);
-        boolean result = ExecuteGameInputs.buildObject(0, field);
+        boolean result = ExecuteGameInputs.buildObject(-1, field);
         Assertions.assertTrue(result);
         Assertions.assertTrue(field.getTowerComplete());
     }

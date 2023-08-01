@@ -62,6 +62,10 @@ public class FieldView extends HBox implements Observer {
 
     }
 
+    /**
+     * TODO: better description i don´t know what is going on here
+     * Updates Complete Towers
+     */
     private void updateTowerComplete() {
         if (field.getTowerComplete()) {
             if (!buildingHolder.containsKey(0)) {
@@ -79,6 +83,9 @@ public class FieldView extends HBox implements Observer {
         }
     }
 
+    /**
+     * Updates the Tower level while the game is running
+     */
     private void updateTowerLevel() {
         for (int level = 1; level <= field.getTowerLevel(); level++) {
             if (!buildingHolder.containsKey(level)) {
@@ -99,6 +106,9 @@ public class FieldView extends HBox implements Observer {
         }
     }
 
+    /**
+     * Updates the Figureview contained on the Fields
+     */
     private void updateFigure() {
         if (field.getIsFigureHere()){
             if (!((StackPane) this.getChildren().get(0)).getChildren().contains(GameView.getFigureView(field.getFigure()))) {
