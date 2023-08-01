@@ -57,6 +57,9 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         Language.getInstance().addObserver(this);
     }
 
+    /**
+     * The update Method for continues expansion of the amount of players added to the game
+     */
     @Override
     public void update() {
 
@@ -76,10 +79,6 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         }
         ColorPicker cp = (ColorPicker) ((VBox) this.getChildren().get(4)).getChildren().get(1);
         ((VBox) cp.getParent()).getChildren().remove(cp);
-//        Color x = new Color(player.getColor().getRed(),player.getColor().getGreen(),player.getColor().getBlue(), player.getColor().getOpacity());
-//        Color x = Color.GREEN;
-//        ColorPicker y = new ColorPicker();
-//        y.setValue(x);
         ((VBox) this.getChildren().get(4)).getChildren().add(new ColorPicker(player.getColor()));
 
 
