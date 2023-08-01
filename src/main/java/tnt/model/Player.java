@@ -182,7 +182,6 @@ public class Player extends Observable {
         if(newLevel == 4){
             field.setTowerComplete(true);
         }
-        // TODO: remove a tile
     }
 
     /**
