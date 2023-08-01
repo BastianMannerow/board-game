@@ -546,7 +546,7 @@ public class ArtificialPlayer{
                 for (Figure enemyFigure:enemyFigures){
                     ArrayList<Field> possibleEnemyMoves = enemyFigure.getValidMoves(fictiveBoard);
                     if(possibleEnemyMoves.contains(fictiveField) && fictiveField.getTowerLevel() != game.getVictoryHeight()+1){
-                        punishment = game.getVictoryHeight()-ownMoveProgressionHeuristic(field, game);
+                        punishment = game.getVictoryHeight()+1-ownMoveProgressionHeuristic(field, game);
 
                         // punishment = punishment+2;
                     }
