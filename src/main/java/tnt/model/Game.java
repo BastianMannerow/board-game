@@ -266,7 +266,12 @@ public class Game extends Observable {
             }
         }
         if (blockedMovement == player.getFigure().size()){
-            setGameOverMode();
+            if (playerOrder.size()==3){
+                removePlayer(playerOrder.get(0));
+            }else {
+                setGameOverMode();
+            }
+
         }
     }
 
@@ -277,7 +282,11 @@ public class Game extends Observable {
      */
     public void checkBlockedBuilding(Player player){
         if (this.lastMovedFigure.getValidBuilds(this.board).isEmpty()){
-            setGameOverMode();
+            if (playerOrder.size()==3){
+                removePlayer(playerOrder.get(0));
+            }else {
+                setGameOverMode();
+            }
         }
     }
 

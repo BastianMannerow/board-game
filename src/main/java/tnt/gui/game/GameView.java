@@ -78,6 +78,8 @@ public class GameView extends BorderPane implements Observer {
 
         updateBuildings();
 
+        removePlayer();
+
         updateFields();
 
         for(ImageView img : highlighted){
@@ -380,4 +382,30 @@ public class GameView extends BorderPane implements Observer {
             controller.goToEnd();
         }
     }
+
+    /**
+     * removes the Figures of the Removed Player
+     */
+    private void removePlayer(){
+        ArrayList<Figure> figures=new ArrayList<Figure>();
+        for (Figure figure:figureHolder.keySet()) {
+            boolean loopbool=false;
+            for (Player player: game.getPlayerOrder()) {
+                if (figure.getOwner()==player){
+                    loopbool=true;
+                }
+            }
+            if (!loopbool){
+                figures.add(figure);
+
+            }
+        }
+        for (Figure figure:figures) {
+
+            game.getBoard().getField(figure.getX(),figure.getY()).figureLeft();
+            figureHolder.remove(figure);
+        }
+    }
+
+
 }
