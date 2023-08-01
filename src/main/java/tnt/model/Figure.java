@@ -143,20 +143,7 @@ public class Figure extends Observable {
 
         // Check if tiles are available
         validBuilds.removeIf(field -> (field.getTowerLevel() == game.getVictoryHeight() && player.getNrTile(0) == 0) || field.getTowerLevel() < game.getVictoryHeight() && player.getNrTile(field.getTowerLevel() + 1) == 0);
-//        for (Field field: validBuilds) {
-//            int tile = field.getTowerLevel();
-//            for (int i = 0; i < game.getVictoryHeight(); i++){
-//                if (tile == game.getVictoryHeight()){
-//                    if (player.getNrTile(0) == 0){
-//                        validBuilds.remove(field);
-//                    }
-//                } else {
-//                    if (player.getNrTile(tile + 1) == 0){
-//                        validBuilds.remove(field);
-//                    }
-//                }
-//            }
-//        }
+
         return validBuilds;
     }
 

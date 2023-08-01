@@ -91,6 +91,11 @@ public class Game extends Observable {
         return numberOfTile[i];
     }
 
+    /**
+     * Sets the Number of tiles
+     * @param i ,the type of tile
+     * @param nr ,the amount of tiles
+     */
     public void setNrTile(int i, int nr) {
         if (i<0 || i >= numberOfTile.length){
             return;
@@ -427,10 +432,18 @@ public class Game extends Observable {
         return lastMovedFigure;
     }
 
+    /**
+     * Returns the bool globalTilePool
+     * @return globalTilePool ,the checkmark of activation with 1 beeing yes and 0 no
+     */
     public boolean isGlobalTilePool() {
         return globalTilePool;
     }
 
+    /**
+     * Setter for the globalTilePool bool
+     * @param globalTilePool ,the to be setted Value
+     */
     public void setGlobalTilePool(boolean globalTilePool) {
         this.globalTilePool = globalTilePool;
     }

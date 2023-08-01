@@ -182,7 +182,7 @@ public class Player extends Observable {
         if(newLevel == 4){
             field.setTowerComplete(true);
         }
-        // Todo: remove a tile
+        // TODO: remove a tile
     }
 
     /**
@@ -249,14 +249,17 @@ public class Player extends Observable {
         this.numberOfTile = numberOfTile;
     }
 
-//    public int getNrOfTiles(int level) {
-//        return nrOfTiles[level];
-//    }
-
+    /**
+     * Removes a tile from the Player
+     * @param buildLevel ,the buildlevel of the tile
+     */
     public void removeTile(int buildLevel) {
         numberOfTile[buildLevel] -=1;
     }
 
+    /**
+     * Prepares for the Turn for the ai´s
+     */
     public void prePlayersTurn(){
         switch (levelOfIntelligence){
             case AI_1:
