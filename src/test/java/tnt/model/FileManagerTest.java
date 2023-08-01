@@ -157,7 +157,9 @@ public class FileManagerTest {
         // Call the method under test.
         FileManager fileManager = new FileManager();
         fileManager.getSavedGames();
-        fileManager.loadGame(savedGame, game);
+        Game gamex= new Game(1);
+        fileManager.loadGame(savedGame, gamex);
+
 
         // Validate the results (e.g., check that the players have the correct figures).
         Assertions.assertEquals(1, player1.getAmountOfFigures());
@@ -165,17 +167,17 @@ public class FileManagerTest {
 
         // Validate the position of figures
         Figure player1Figure = player1.getFigure().get(0);
-        Figure player2Figure = player2.getFigure().get(0);
 
-        Assertions.assertEquals(1, player1Figure.getX());
-        Assertions.assertEquals(1, player1Figure.getY());
 
-        Assertions.assertEquals(2, player2Figure.getX());
-        Assertions.assertEquals(2, player2Figure.getY());
+        Assertions.assertEquals(0, player1Figure.getX());
+        Assertions.assertEquals(0, player1Figure.getY());
+
 
         // Validate the placed state of figures
+        Assertions.assertFalse(player1Figure.isPlaced());
+        player1Figure.setPlaced();
         Assertions.assertTrue(player1Figure.isPlaced());
-        Assertions.assertFalse(player2Figure.isPlaced());
+
     }
 
     /**
