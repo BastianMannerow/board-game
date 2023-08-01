@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.File;
 import java.nio.file.*;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import javafx.scene.paint.Color;
 
 /**
@@ -76,10 +78,9 @@ public class FileManager {
         for(String line : rows){
             String[] row = line.split(";,"); // A separator for parsing
             if(lineNumber == 0) { // The first line will be the header, which is used for an easier indexing
-                header = (List<String>) Arrays.asList(row).stream().map((rowhere) -> rowhere.replace(";-,", ";,"));
-                Arrays.asList(Arrays.stream(row).map(rowhere -> rowhere));
+                header = Arrays.stream(row).map((rowhere) -> rowhere.replace(";-,", ";,")).collect(Collectors.toList());
             } else {
-                data.add(Arrays.asList(row));
+                data.add(Arrays.stream(row).map((rowhere) -> rowhere.replace(";-,", ";,")).collect(Collectors.toList()));
             }
             lineNumber++;
         }
