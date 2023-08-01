@@ -254,7 +254,7 @@ public class ArtificialPlayer{
         for (Figure figure:figureList) {
             ArrayList<Field> possibleMoves = figure.getValidMoves(board);
             for (Field field : possibleMoves) {
-                if(board.getRoundWorld()){
+                if(board.isRoundWorld()){
                     xDistance = Math.min(board.getXSize() - field.getX() + targetX, Math.abs(field.getX() - targetX));
                     yDistance = Math.min(board.getYSize() - field.getY() + targetY, Math.abs(field.getY() - targetY));
                 }
@@ -595,7 +595,7 @@ public class ArtificialPlayer{
             }
         }
         Board fictiveBoard = new Board(fields, xSize, ySize);
-        fictiveBoard.setRoundWorld(originalBoard.getRoundWorld());
+        fictiveBoard.setRoundWorld(originalBoard.isRoundWorld());
         for (Field field: allFields){
             fictiveBoard.setField(field.getX(), field.getY(), field);
         }

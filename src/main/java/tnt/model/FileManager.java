@@ -534,7 +534,7 @@ public class FileManager {
         boardData.add(header);
         String xSize = Integer.toString(game.getBoard().getXSize());
         String ySize = Integer.toString(game.getBoard().getYSize());
-        String roundWorld = Boolean.toString(game.getBoard().getRoundWorld());
+        String roundWorld = Boolean.toString(game.getBoard().isRoundWorld());
         boardData.add(new String[]{xSize, ySize, roundWorld});
         return boardData;
     }
