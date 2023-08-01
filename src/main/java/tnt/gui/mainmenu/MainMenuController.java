@@ -144,8 +144,7 @@ public class MainMenuController{
     private void sendToPartner() {
 //        networkHandler.sendMsg("Hello\nabc");
         FileManager fileManager = new FileManager();
-        String data = FileManager.makeString(fileManager.getGameData(Settings.getActualGame()));
-        Settings.getNetworkHandler().sendMsg("game" + data);
+        Settings.getNetworkHandler().sendGame(Settings.getActualGame());
 
     }
 

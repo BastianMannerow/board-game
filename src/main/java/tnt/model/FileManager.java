@@ -50,15 +50,42 @@ public class FileManager {
      * @param str the string to be converted
      * @return the data as list of string array
      */
-    public List<String[]> readString(String str) {
+    public List<String[]> readStringold(String str) {
         List<String[]> data = new ArrayList<>();
         String newstr = str.replace("new##notaseperator##data", "new####data");
         String[] rows = newstr.split("\n");
         for(String line : rows){
-            String[] row = line.split(";");
+            String[] row = line.split(";,");
+            // Todo: replace ";-," with ";," again
             data.add(row);
         }
         return data;
+    }
+
+    /**
+     * converts a string representation to other object representation
+     * @param str the string to be converted
+     * @return the data with header
+     */
+    public List<Object> readString(String str) {
+        String newstr = str.replace("new##notaseperator##data", "new####data");
+        List<List<String>> data = new ArrayList<>();
+        List<String> header = new ArrayList<>();
+        String[] rows = newstr.split("\n");
+        int lineNumber = 0;
+        for(String line : rows){
+            String[] row = line.split(";,"); // A separator for parsing
+            if(lineNumber == 0) { // The first line will be the header, which is used for an easier indexing
+                header = (List<String>) Arrays.asList(row).stream().map((rowhere) -> rowhere.replace(";-,", ";,"));
+            } else {
+                data.add(Arrays.asList(row));
+            }
+            lineNumber++;
+        }
+        List<Object> csv = new ArrayList<>();
+        csv.add(header);
+        csv.add(data);
+        return csv;
     }
 
     /**
@@ -103,9 +130,9 @@ public class FileManager {
         StringBuilder csvLine = new StringBuilder();
         for (String[] row : data) {
             for (int i = 0; i < row.length; i++) {
-                csvLine.append(row[i]);
+                csvLine.append(row[i].replace(";,", ";-,"));
                 if (i < row.length - 1) {
-                    csvLine.append(",");
+                    csvLine.append(";,");
                 }
             }
             csvLine.append(System.lineSeparator());

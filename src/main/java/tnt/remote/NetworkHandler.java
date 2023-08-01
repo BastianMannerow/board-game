@@ -117,15 +117,36 @@ public class NetworkHandler {
 
     private void parseGame(FileManager fm, String gameStr){
         String[] data = gameStr.split("new####data");
-        List<String[]> gameData = fm.readString(data[0]);
-        List<String[]> playerData = fm.readString(data[1]);
-        List<String[]> figureData = fm.readString(data[2]);
-        List<String[]> fieldsData = fm.readString(data[3]);
-        List<String[]> boardData = fm.readString(data[4]);
         Game game = new Game(0);
-//        game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
-        // Todo: set tiles for each player and everything else
+        // getting player data
+        List<Object> dataObject = fm.readString(data[0]);
+        List<String> header = (List<String>) dataObject.get(0);
+        List<List<String>> playerData = (List<List<String>>) dataObject.get(1);
+        ArrayList<Player> playerList = fm.setPlayerData(header, playerData, game);
 
+        // getting game data
+        dataObject = fm.readString(data[1]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> gameData = (List<List<String>>) dataObject.get(1);
+        fm.setGameData(header, gameData, game, playerList);
+
+        // getting fields data
+        dataObject = fm.readString(data[2]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> fieldData = (List<List<String>>) dataObject.get(1);
+        ArrayList<Field> allFields = fm.setFieldData(header, fieldData);
+
+        // getting board data
+        dataObject = fm.readString(data[3]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> boardData = (List<List<String>>) dataObject.get(1);
+        fm.setBoardData(header, boardData, game, allFields);
+
+        // getting figure data
+        dataObject = fm.readString(data[4]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> figureData = (List<List<String>>) dataObject.get(1);
+        fm.setFigureData(header, figureData, game, playerList);
 
         Settings.setActualGame(game);
     }
@@ -192,12 +213,8 @@ public class NetworkHandler {
      */
     public void sendGame(Game actualGame) {
         System.out.println("Sending here the game");
-        // Get Game Information
         FileManager fm = new FileManager();
         StringBuilder data = new StringBuilder();
-        List<String[]> gameData = fm.getGameData(actualGame);
-        data.append(fm.makeString(gameData));
-        data.append("new####data");
 
         // Get Player Information
         ArrayList<Player> playerList = actualGame.getPlayerOrder();
@@ -205,9 +222,9 @@ public class NetworkHandler {
         data.append(fm.makeString(playerData));
         data.append("new####data");
 
-        // Get Figure Information
-        List<String[]> figureData = fm.getFiguresData(playerList);
-        data.append(fm.makeString(figureData));
+        // Get Game Information
+        List<String[]> gameData = fm.getGameData(actualGame);
+        data.append(fm.makeString(gameData));
         data.append("new####data");
 
         // Get Field Information
@@ -220,6 +237,11 @@ public class NetworkHandler {
         data.append(fm.makeString(boardData));
         sendMsg("game" + data);
 //        System.out.println("sendet this game: " + data.toString());
+
+        // Get Figure Information
+        List<String[]> figureData = fm.getFiguresData(playerList);
+        data.append(fm.makeString(figureData));
+        data.append("new####data");
     }
 
     /**
