@@ -110,7 +110,6 @@ public class ArtificialPlayer{
             }
         }
         ExecuteGameInputs.placeFigure(bestFigure, bestMove);
-        System.out.println("Moving: " + Integer.toString(bestProgression));
     }
 
     /**
@@ -143,7 +142,6 @@ public class ArtificialPlayer{
                 }
             }
         }
-        System.out.println("Building: " + Integer.toString(bestProgression));
         ExecuteGameInputs.buildObject(bestBuild.getTowerLevel()+1, bestBuild);
     }
 
