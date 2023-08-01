@@ -172,19 +172,6 @@ public class Player extends Observable {
     }
 
     /**
-     * Increases the height of a field
-     *
-     * @param field the field chosen by the player
-     */
-    public void executeBuild(Field field){
-        int newLevel = field.getTowerLevel()+1;
-        field.setTowerLevel(newLevel);
-        if(newLevel == 4){
-            field.setTowerComplete(true);
-        }
-    }
-
-    /**
      * Moves the figure on the board
      *
      * @param field the field chosen by the player
