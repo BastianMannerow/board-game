@@ -1,0 +1,2 @@
+playerOrder;amountOfTurns;maxStepUpHeight;maxStepDownHeight;gameName;victoryHeight;numberOfTiles;globalTilePool
+2 ,1;0;1;3;newGame;3;20, 20, 20, 20;true

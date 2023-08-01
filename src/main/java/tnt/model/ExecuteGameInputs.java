@@ -31,6 +31,13 @@ public class ExecuteGameInputs {
         return return_val;
     }
 
+    /**
+     * Checks if the Figure can Move and if not applys all rules neccessary
+     * @param game ,the actual game
+     * @param figure ,the Figure which can move
+     * @param field ,the field the figure should move to
+     * @return  if the movement was successful
+     */
     private static boolean checkMoveFig(Game game, Figure figure, Field field) {
         if (game.getPlayersTurn().getFigure().contains(figure) && figure.getValidMoves(game.getBoard()).contains(field)){
             Settings.getNetworkHandler().place(figure, field);
@@ -44,6 +51,13 @@ public class ExecuteGameInputs {
         }
     }
 
+    /**
+     * Checks if the Figure be placed and if not applys all rules neccessary
+     * @param game ,the actual game
+     * @param figure ,the Figure which should be placed
+     * @param field ,the field the figure should be placed on
+     * @return if the movement was successful
+     */
     private static boolean checkPlaceFig(Game game, Figure figure, Field field) {
         if (!field.getIsFigureHere() && game.getPlayersTurn().getFigure().contains(figure) && !figure.isPlaced()){
             Settings.getNetworkHandler().place(figure, field);
@@ -77,7 +91,7 @@ public class ExecuteGameInputs {
             Settings.getNetworkHandler().build(buildLevel, field);
 
             // Here you can change where it is possible to build a dome
-            if (field.getTowerLevel() == game.getVictoryHeight() && buildLevel == 0) {
+            if (field.getTowerLevel() == game.getVictoryHeight() && (buildLevel == 0 || buildLevel > game.getVictoryHeight())) {
                 field.setTowerComplete(true);
             }
             else if (field.getTowerLevel() == buildLevel - 1) {
