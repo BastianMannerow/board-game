@@ -1,3 +1,2 @@
 name;levelOfIntelligence;color;amountOfFigures;amountOfTurns;team;numberOfTiles
-1;HUMAN;0xff0000ff;2;0;1;18, 14, 18, 14
-2;AI_1;0x0000ffff;2;0;2;18, 14, 18, 14
+John;HUMAN;0xff0000ff;0;10;null;

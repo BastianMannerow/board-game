@@ -114,15 +114,20 @@ public class FileManagerTest {
      */
     @Test
     public void testGetSavedGames() {
-        ArrayList<String> expectedGames = new ArrayList<>();
-        expectedGames.add("Game 1");
-        expectedGames.add("Game 2");
-        expectedGames.add("Game 3");
-        expectedGames.add("Test Game");
+        playerOrder = new ArrayList<>();
+        ArrayList<Figure> figures = new ArrayList<>();
+        int initialNumberOfGames = fileManager.getSavedGames().size();
 
-        ArrayList<String> actualGames = fileManager.getSavedGames();
+        Game game = new Game(playerOrder, 12, "Test Game Remove Later", 1, 3, 3, true);
+        Player player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
+        playerOrder.add(player);
+        fileManager.saveGame(game);
 
-        Assertions.assertEquals(expectedGames, actualGames);
+        ArrayList<String> savedGames = fileManager.getSavedGames();
+        int numberOfGamesAfterAddingNew = savedGames.size();
+
+        Assertions.assertEquals(initialNumberOfGames + 1, numberOfGamesAfterAddingNew);
+        fileManager.deleteFolder(new File(System.getProperty("user.dir")+File.separator + "savings"+File.separator + "Test Game Remove Later"));
     }
 
     /**
@@ -130,7 +135,7 @@ public class FileManagerTest {
      */
     @Test
     public void testLoadGame() {
-        String savedGame = "testGame";
+        String savedGame = "Test Game";
         Game game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
 
         Player player1 = new Player(Player.PlayerType.HUMAN, "Player1", Color.BLUE, 1, game, "1", 0);
@@ -138,7 +143,7 @@ public class FileManagerTest {
 
         // Call the method under test.
         FileManager fileManager = new FileManager();
-
+        fileManager.getSavedGames();
         fileManager.loadGame(savedGame, game);
 
         // Validate the results (e.g., check that the players have the correct figures).
