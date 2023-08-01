@@ -118,7 +118,7 @@ public class FileManagerTest {
         ArrayList<Figure> figures = new ArrayList<>();
         int initialNumberOfGames = fileManager.getSavedGames().size();
 
-        Game game = new Game(playerOrder, 12, "Test Game Remove Later", 1, 3, 3, true);
+        Game game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
         Player player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
         playerOrder.add(player);
         fileManager.saveGame(game);
@@ -127,8 +127,9 @@ public class FileManagerTest {
         int numberOfGamesAfterAddingNew = savedGames.size();
 
         Assertions.assertEquals(initialNumberOfGames + 1, numberOfGamesAfterAddingNew);
-        fileManager.deleteFolder(new File(System.getProperty("user.dir")+File.separator + "savings"+File.separator + "Test Game Remove Later"));
+        fileManager.deleteFolder(new File(System.getProperty("user.dir")+File.separator + "savings"+File.separator + "Test Game"));
     }
+
 
     /**
      * Test case for the loadGame method.
