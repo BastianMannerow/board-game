@@ -513,8 +513,9 @@ public class ArtificialPlayer{
                         fictiveField.setTowerLevel(fictiveField.getTowerLevel()+1);
 
                         if(!enemyFigure.getValidMoves(fictiveBoard).contains(fictiveField)){
-                            //reward = enemyCost * (-1);
-                            reward = (game.getVictoryHeight() - enemyCost) * (-1);
+                            if(reward>(game.getVictoryHeight() - enemyCost) * (-1)){
+                                reward = (game.getVictoryHeight() - enemyCost) * (-1);
+                            }
                         }
                     }
                 }
