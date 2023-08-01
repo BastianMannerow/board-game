@@ -32,7 +32,7 @@ public class Field extends Observable {
     }
 
     /**
-     *
+     *Removes the figure of the Field
      */
     public void figureLeft() {
         this.figure = null;
