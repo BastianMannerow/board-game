@@ -16,11 +16,11 @@ public class ExecuteGameInputsTest {
     private Board board;
     private Field field;
     private Figure figure;
-    private ArrayList<Figure> figures;
 
     @BeforeEach
     public void setup() {
-        game = new Game(2);
+        ArrayList<Player> playerOrder = new ArrayList<>();
+        game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, 2, game, "Team A", 10);
         board = new Board(new Field[5][5], 5, 5);
         field = new Field(2, 2);
