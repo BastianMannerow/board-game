@@ -144,6 +144,9 @@ public class PlayerChooseController{
             game.setMaxStepDownHeight(maxStepDown);
             game.setVictoryHeight(victoryHeight);
             for(int i = 0; i < game.getTileSize(); i++){
+                if (i >= tiles.length){
+                    break;
+                }
                 game.setNrTile(i, tiles[i]);
             }
             game.setVictoryHeight(victoryHeight);
