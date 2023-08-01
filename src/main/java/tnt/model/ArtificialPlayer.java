@@ -185,7 +185,6 @@ public class ArtificialPlayer{
         Figure bestFigure = null;
         Field bestMove = null;
         int bestProgression = 100; // An initial value, which will never be reached
-        int bestTeamProgression = 100; // An initial value, which will never be reached
         int bestSabotageEnemy = 100; // An initial value, which will never be reached
 
         for (Figure figure:figureList){
@@ -201,29 +200,19 @@ public class ArtificialPlayer{
                 }
                 // Calculating the heuristic and comparing it with the old best value
                 int ownProgression = ownMoveProgressionHeuristic(figure, field, game);
-                int teamProgression = teamMoveProgressionHeuristic(figure, field, game);
                 int sabotageEnemy = sabotageMoveEnemyHeuristic(figure, field, game);
                 int punishment = punishMovement(figure, game, ownProgression);
 
                 // If move is better than the current best move, replace it
-                if (ownProgression + teamProgression + sabotageEnemy + punishment < bestProgression){
-                    bestTeamProgression = teamProgression;
+                if (ownProgression + sabotageEnemy + punishment < bestProgression){
                     bestSabotageEnemy = sabotageEnemy;
                     bestMove = field;
                     bestFigure = figure;
-                    bestProgression = ownProgression + teamProgression + sabotageEnemy + punishment;
+                    bestProgression = ownProgression + sabotageEnemy + punishment;
                 }
-                else if (ownProgression + teamProgression + sabotageEnemy + punishment == bestProgression){
+                else if (ownProgression + sabotageEnemy + punishment == bestProgression){
                     // If move is as good as the current best move, prefer the sabotage
                     if(sabotageEnemy < bestSabotageEnemy){
-                        bestTeamProgression = teamProgression;
-                        bestSabotageEnemy = sabotageEnemy;
-                        bestMove = field;
-                        bestFigure = figure;
-                    }
-                    // If move is as good as the current best move, prefer the teamProgression, since team-mate is able to move earlier
-                    else if(teamProgression < bestTeamProgression){
-                        bestTeamProgression = teamProgression;
                         bestSabotageEnemy = sabotageEnemy;
                         bestMove = field;
                         bestFigure = figure;
@@ -238,7 +227,6 @@ public class ArtificialPlayer{
                             bestFigure = figure;
                         }
                         else{
-                            bestTeamProgression = teamProgression;
                             bestSabotageEnemy = sabotageEnemy;
                             bestMove = field;
                             bestFigure = figure;
@@ -354,10 +342,6 @@ public class ArtificialPlayer{
      */
     public static int ownMoveProgressionHeuristic(Figure figure, Field field, Game game) {
         return game.getVictoryHeight() - field.getTowerLevel();
-    }
-
-    public static int teamMoveProgressionHeuristic(Figure figure, Field field, Game game){
-        return 1;
     }
 
     public static int sabotageMoveEnemyHeuristic(Figure figure, Field field, Game game){
