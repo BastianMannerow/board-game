@@ -117,7 +117,7 @@ public class NetworkHandler {
 
     private void parseGame(FileManager fm, String gameStr){
         String[] data = gameStr.split("new####data");
-        Game game = new Game(0);
+        Game game = new Game(1);
         // getting player data
         List<Object> dataObject = fm.readString(data[0]);
         List<String> header = (List<String>) dataObject.get(0);
@@ -235,13 +235,13 @@ public class NetworkHandler {
         // Get Board Information
         List<String[]> boardData = fm.getBoardData(actualGame);
         data.append(fm.makeString(boardData));
-        sendMsg("game" + data);
+        data.append("new####data");
 //        System.out.println("sendet this game: " + data.toString());
 
         // Get Figure Information
         List<String[]> figureData = fm.getFiguresData(playerList);
         data.append(fm.makeString(figureData));
-        data.append("new####data");
+        sendMsg("game" + data);
     }
 
     /**
