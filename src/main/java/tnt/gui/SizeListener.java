@@ -20,6 +20,12 @@ public class SizeListener implements ChangeListener{
         this.isheight = isheight;
     }
 
+    /**
+     * If the size of the window changes this get´s called TODO: ich weiß nicht genau was hier abgeht
+     * @param observableValue
+     * @param o
+     * @param t1
+     */
     @Override
     public void changed(ObservableValue observableValue, Object o, Object t1) {
 
