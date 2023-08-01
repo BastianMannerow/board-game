@@ -16,7 +16,9 @@ public class SaveLoadMenuController {
     private FileManager fileManager= new FileManager();
 
 
-
+    /**
+     * Swaps the scene to the MainMenu if the scene exists
+     */
     @FXML
     private void goToMenu() {
         sceneHandler.loadView("mainMenu");
