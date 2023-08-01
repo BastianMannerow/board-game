@@ -45,6 +45,12 @@ public class FileManager {
         return csv;
     }
 
+    /**
+     * Parses a string reverse
+     *
+     * @param str The desired string
+     * @return the data
+     */
     public List<String[]> readString(String str) {
         List<String[]> data = new ArrayList<>();
         String[] rows = str.split("\n");
@@ -88,6 +94,12 @@ public class FileManager {
         }
     }
 
+    /**
+     * Transforms a list to string
+     *
+     * @param data The desired data
+     * @return the transformed data
+     */
     public static String makeString(List<String[]> data){
         StringBuilder csvLine = new StringBuilder();
         for (String[] row : data) {
@@ -528,6 +540,8 @@ public class FileManager {
     }
 
     /**
+     * Loads the current highscore.
+     *
      * @return the highscore data
      */
     public ArrayList<String> loadHighscore() {
