@@ -1,7 +1,5 @@
 x;y;placed;player
-4;1;true;b
-2;2;true;b
-3;3;true;c
-3;2;true;c
-2;1;true;a
-1;2;true;a
+3;1;true;er
+2;3;true;er
+1;0;true;op
+2;4;true;op

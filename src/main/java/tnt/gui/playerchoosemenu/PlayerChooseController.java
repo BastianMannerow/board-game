@@ -207,6 +207,7 @@ public class PlayerChooseController{
                 }
 
                 int amount = player.getAmountOfFigures();
+//                int amount = player.getRealAmountFigure();
                 try {
                     amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
                 } catch (NumberFormatException e) {
@@ -228,7 +229,8 @@ public class PlayerChooseController{
                     player.setAmountOfFigures(amount);
                     // Todo: set Team and playertype (or outside this condition)
                 }
-                nrOfFigures += player.getAmountOfFigures();
+//                nrOfFigures += player.getAmountOfFigures();
+                nrOfFigures += player.getRealAmountFigure();
             }
         }
         return nrOfFigures;

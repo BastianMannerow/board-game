@@ -1,4 +1,3 @@
 name;levelOfIntelligence;color;amountOfFigures;amountOfTurns;team;numberOfTiles
-b;HUMAN;0x0000ffff;2;0;2;18, 21, 20, 14
-c;HUMAN;0x008000ff;2;0;3;18, 21, 20, 14
-a;HUMAN;0xff0000ff;2;0;1;18, 21, 20, 14
+er;HUMAN;0xe6804dff;2;0;2;18, 20, 19, 14
+op;HUMAN;0x669966ff;2;0;1;18, 20, 19, 14

@@ -228,7 +228,7 @@ public class FileManager {
             color = "#" + color.substring(2); // Entfernt das "0x" und fügt "#" hinzu
             playerObject.setColor(Color.web(color));
             playerObject.setAmountOfFigures(amountOfFigures);
-            playerObject.addFigure(amountOfFigures);
+//            playerObject.addFigure(amountOfFigures);
 
             playerObject.setAmountOfTurns(amountOfTurns);
             playerObject.setTeam(team);
@@ -256,7 +256,7 @@ public class FileManager {
             for (Player player: playerList){
                 if(player.getName().equals(figure.get(header.indexOf("player")))){
                     player.addFigure(1);
-                    Figure currentFigure = player.getFigure().get(player.getAmountOfFigures()-1);
+                    Figure currentFigure = player.getFigure().get(player.getRealAmountFigure()-1);
                     currentFigure.setX(Integer.parseInt(figure.get(header.indexOf("x"))));
                     currentFigure.setY(Integer.parseInt(figure.get(header.indexOf("y"))));
                     if(Boolean.valueOf(figure.get(header.indexOf("placed")))){
@@ -333,6 +333,8 @@ public class FileManager {
         game.setVictoryHeight(Integer.valueOf(gameData.get(0).get(header.indexOf("victoryHeight"))));
         game.setGameName(gameData.get(0).get(header.indexOf("gameName")));
         game.setGlobalTilePool(Boolean.valueOf(gameData.get(0).get(header.indexOf("globalTilePool"))));
+
+        game.setGameStatus(Game.GameStatus.valueOf(gameData.get(0).get(header.indexOf("gameStatus"))));
 
         String stringNumberOfTiles = gameData.get(0).get(header.indexOf("numberOfTiles"));
         // Parses the tile pool
@@ -459,7 +461,8 @@ public class FileManager {
             String name = player.getName();
             String color = player.getColor().toString();
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
-            int amountOfFigures = player.getAmountOfFigures();
+//            int amountOfFigures = player.getAmountOfFigures();
+            int amountOfFigures = player.getRealAmountFigure();
             int amountOfTurns = player.getAmountOfTurns();
             String team = player.getTeam();
             // Amount of tiles need a simple loop to be converted into String
@@ -485,7 +488,7 @@ public class FileManager {
      */
     public List<String[]> getGameData(Game game){
         List<String[]> gameData = new ArrayList<>();
-        String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTiles", "globalTilePool"};
+        String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTiles", "globalTilePool", "gameStatus"};
         gameData.add(header);
 
         ArrayList<Player> playerList = game.getPlayerOrder();
@@ -508,6 +511,7 @@ public class FileManager {
         String gameName = game.getGameName();
         String victoryHeight = Integer.toString(game.getVictoryHeight());
         String globalTilePool = Boolean.toString(game.isGlobalTilePool());
+        String gameStatus = game.getGameStatus().toString();
         // Amount of tiles need a simple loop to be converted into String
         String amountOfTiles = "";
         for (int j = 0; j < game.getTileSize(); j++) {
@@ -518,7 +522,7 @@ public class FileManager {
                 amountOfTiles = amountOfTiles.concat(", ").concat(String.valueOf(game.getNrTile(i)));
             }
         }
-        gameData.add(new String[]{playerOrder, amountOfTurns, maxStepUpHeight, maxStepDownHeight, gameName, victoryHeight, amountOfTiles, globalTilePool});
+        gameData.add(new String[]{playerOrder, amountOfTurns, maxStepUpHeight, maxStepDownHeight, gameName, victoryHeight, amountOfTiles, globalTilePool, gameStatus});
         return gameData;
     }
 

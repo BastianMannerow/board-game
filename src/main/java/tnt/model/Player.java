@@ -230,6 +230,14 @@ public class Player extends Observable {
     }
 
     /**
+     * getter for the number of figures this player really has
+     * @return the number of figures
+     */
+    public int getRealAmountFigure() {
+        return figures.size();
+    }
+
+    /**
      * getter for the number of tiles this player should have
      * @param numberOfTile the amount of tiles
      */

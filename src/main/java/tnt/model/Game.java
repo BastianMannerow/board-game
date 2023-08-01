@@ -392,8 +392,8 @@ public class Game extends Observable {
             playerOrder.remove(player);
             notifyObservers();
         }
-        playerOrder.remove(player);
-        notifyObservers();
+//        playerOrder.remove(player);
+//        notifyObservers();
     }
 
     /**

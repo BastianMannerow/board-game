@@ -59,6 +59,8 @@ public class GameView extends BorderPane implements Observer {
     @Override
     public void update() {
 
+        ((VBox) this.getRight()).getChildren().clear();
+
         updateLabels();
 
         if (game != Settings.getActualGame()){
@@ -74,13 +76,16 @@ public class GameView extends BorderPane implements Observer {
         ((ScrollPane) this.getCenter()).setFitToHeight(true);
         ((ScrollPane) this.getCenter()).setFitToWidth(true);
 
+
         updateFiguresRightBar();
+
+        updateFields();
 
         updateBuildings();
 
         removePlayer();
 
-        updateFields();
+
 
         for(ImageView img : highlighted){
             img.setFitHeight(SizeHandler.getPrefSize());
@@ -204,6 +209,23 @@ public class GameView extends BorderPane implements Observer {
      * Upgates the Right Bar where the Elements are while the Game is running
      */
     private void updateFiguresRightBar() {
+
+        ArrayList<Player> players = game.getPlayerOrder();
+        for (Player player: players) {
+            for (Figure fig : player.getFigure()) {
+                if (!figureHolder.containsKey(fig)) {
+                    FigureView figureView = null;
+                    try {
+                        figureView = new FigureView(player, fig);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    figureHolder.put(fig, figureView);
+                    setDragableEvents(figureView, false);
+                }
+            }
+        }
+
         if (game.placeFigures()){
             dragableObject.setMouseTransparent(true);
             dragableObject.setVisible(false);
@@ -211,23 +233,11 @@ public class GameView extends BorderPane implements Observer {
             // Todo: dont add the init figures every update anew
             ((VBox) this.getRight()).getChildren().clear();
 
-            ArrayList<Player> players = game.getPlayerOrder();
+
+
             for (Player player: players) {
                 for (Figure fig : player.getFigure()) {
                     if (!fig.isPlaced()) {
-                        if (!figureHolder.containsKey(fig)) {
-                            FigureView figureView = null;
-                            try {
-                                figureView = new FigureView(player, fig);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-
-                            figureHolder.put(fig, figureView);
-
-                            setDragableEvents(figureView, false);
-                        }
-
                         ((VBox) this.getRight()).getChildren().add(figureHolder.get(fig));
                     }
                 }
@@ -369,6 +379,16 @@ public class GameView extends BorderPane implements Observer {
      * @return the view of the figure
      */
     static FigureView getFigureView(Figure fig){
+//        if (!figureHolder.containsKey(fig)){
+//            try {
+//                FigureView figureView1 = new FigureView(fig.getOwner(), fig);
+//                figureHolder.put(fig, figureView1);
+////                setDragableEvents(figureView1, false);
+//            } catch (IOException e) {
+//                System.err.println("could not create FigureView");
+//                throw new RuntimeException(e);
+//            }
+//        }
         return figureHolder.get(fig);
     }
 
