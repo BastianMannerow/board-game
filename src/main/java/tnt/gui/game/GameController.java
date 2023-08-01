@@ -46,10 +46,16 @@ public class GameController{
         return ExecuteGameInputs.buildObject(buildLevel, field);
     }
 
+    /**
+     * the function swaps the scene to the mainMenu if it saved in the SceneHandler
+     */
     @FXML
     void goToMenu(){
         sceneHandler.loadView("mainMenu");
     }
+    /**
+     * the function swaps the scene to the playerMenu if it saved in the SceneHandler
+     */
     @FXML
     private void playerMenu(){
         sceneHandler.loadView("playerMenu");
