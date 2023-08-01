@@ -28,7 +28,6 @@ public class GameView extends BorderPane implements Observer {
     private DragableObject dragableObject;
     static private Map<Field, FieldView> fieldHolder = new HashMap<Field, FieldView>();
     static private Map<Figure, FigureView> figureHolder = new HashMap<Figure, FigureView>();
-//    static private Map<Integer, BuildingLevel> initBuildingHolder = new HashMap<Integer, BuildingLevel>();
     static private Map<Integer, HBox> initBuildingHolder = new HashMap<Integer, HBox>();
     GameController controller;
     private List<ImageView> highlighted = new ArrayList<>();
@@ -91,11 +90,17 @@ public class GameView extends BorderPane implements Observer {
         prepareEnd();
     }
 
+    /**
+     * updates the Labels of the Elements according to the Language setting
+     */
     private void updateLabels() {
         controller.mainMenu.setText(Language.getTranslation("mainMenuLabel"));
         controller.playerMenuButton.setText(Language.getTranslation("playerMenuLabel"));
     }
 
+    /**
+     * updates the Fields while the game is running
+     */
     private void updateFields() {
 
         if (game.isRunnung() || game.placeFigures()) {
@@ -109,6 +114,12 @@ public class GameView extends BorderPane implements Observer {
         }
     }
 
+    /**
+     * updates the Fields while the game is running
+     * @param gridPane of the View
+     * @param i ,x axis
+     * @param j ,y axis
+     */
     private void updateField(GridPane gridPane, int i, int j) {
         Field field = game.getBoard().getField(i, j);
         if (!fieldHolder.containsKey(field)) {
@@ -145,6 +156,9 @@ public class GameView extends BorderPane implements Observer {
         }
     }
 
+    /**
+     * Updates the Buildings while the Game is running
+     */
     private void updateBuildings() {
         if (game.isRunnung()){
             for (int level = 1; level <= game.getVictoryHeight() ; level++) {
@@ -156,6 +170,10 @@ public class GameView extends BorderPane implements Observer {
         }
     }
 
+    /**
+     * Updates the Buildings while the Game is running
+     * @param level ,height of the building
+     */
     private void updateBuilding(int level) {
         if (!initBuildingHolder.containsKey(level)) {
             BuildingLevel buildingLevel = null;
@@ -180,6 +198,9 @@ public class GameView extends BorderPane implements Observer {
         ((Label) buildingLevel.getChildren().get(1)).setText(Integer.toString(game.getPlayersTurn().getNrTile(level)));
     }
 
+    /**
+     * Upgates the Right Bar where the Elements are while the Game is running
+     */
     private void updateFiguresRightBar() {
         if (game.placeFigures()){
             dragableObject.setMouseTransparent(true);
@@ -349,6 +370,9 @@ public class GameView extends BorderPane implements Observer {
         return figureHolder.get(fig);
     }
 
+    /**
+     * Initializes the EndView the Endscreen of the Game
+     */
     private void prepareEnd(){
         if(game.getGameStatus() == Game.GameStatus.GAME_OVER) {
             endView.setController(controller);

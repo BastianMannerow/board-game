@@ -3,6 +3,7 @@ package tnt.gui.game;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -12,7 +13,7 @@ import tnt.model.FileManager;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
-import tnt.util.Observer;
+
 
 
 import java.io.IOException;
@@ -25,7 +26,6 @@ public class EndView extends VBox {
 
     private GameController controller;
     private Game game;
-    private Boolean notInitialized = true;
     private FileManager fileManager= new FileManager();
 
     /**
@@ -47,15 +47,25 @@ public class EndView extends VBox {
      */
     public void initialize(){
         this.setAlignment(Pos.CENTER);
-        if(notInitialized) {
-
-            String losers = game.getPlayersTurn().getTeam();
+        for (Node node:this.getChildren()) {
+            this.getChildren().removeAll(node);
+        }
+        String losers = game.getPlayersTurn().getTeam();
             String winner = "";
+            Player winPlayer=null;
+
             for (Player player : game.getPlayerOrder()) {
                 if (player.getTeam() != losers) {
                    winner = player.getName();
+                   winPlayer = player;
                 }
             }
+
+            String WinnerOfTheGame = "Name: "+winner+" LevelOfIntelligence: "+getPlayertype(winPlayer)+ " AmountOfTurns: "+game.getAmountOfTurns()+" Team Name: "+winPlayer.getTeam();
+            Label labelwin = new Label();
+            labelwin.setText(WinnerOfTheGame);
+            labelwin.setPadding(new Insets(50,50,50,50));
+            this.getChildren().add(labelwin);
             fileManager.checkHighscore(game,winner);
             ArrayList<String> highscores = fileManager.loadHighscore();
             for (int i=0;i<highscores.size();i=i+4) {
@@ -67,13 +77,13 @@ public class EndView extends VBox {
                 label.setPadding(new Insets(10,0,0,0));
                 this.getChildren().add(label);
             }
-            notInitialized=false;
             Button button = new Button("Menu");
             button.setOnMouseClicked(event -> controller.goToMenu());
             this.getChildren().add(button);
-        }
-
     }
+
+
+
 
     /**
      * Sets the Controller of this View
@@ -81,6 +91,26 @@ public class EndView extends VBox {
      */
     public void setController(GameController controller){
         this.controller=controller;
+    }
+
+    /**
+     * Returns a String of the Playertype
+     * @param winPlayer  the player that won
+     * @return a String of the Playertype
+     */
+    private String getPlayertype(Player winPlayer){
+        Player.PlayerType a = winPlayer.getLevelOfIntelligence();
+        String playertype ="";
+        switch (a) {
+            case HUMAN: playertype="HUMAN";
+                break;
+            case AI_1: playertype="AI_EASY";
+                break;
+            case AI_2: playertype="AI_MEDIUM";
+                break;
+            case AI_3: playertype="AI_HARD";
+        }
+        return  playertype;
     }
 
 }
