@@ -110,7 +110,6 @@ public class ArtificialPlayer{
             }
         }
         ExecuteGameInputs.placeFigure(bestFigure, bestMove);
-        System.out.println("Moving: " + Integer.toString(bestProgression));
     }
 
     /**
@@ -143,7 +142,6 @@ public class ArtificialPlayer{
                 }
             }
         }
-        System.out.println("Building: " + Integer.toString(bestProgression));
         ExecuteGameInputs.buildObject(bestBuild.getTowerLevel()+1, bestBuild);
     }
 
@@ -185,7 +183,7 @@ public class ArtificialPlayer{
         Figure bestFigure = null;
         Field bestMove = null;
         int bestProgression = 100; // An initial value, which will never be reached
-        int bestSabotageEnemy = 100; // An initial value, which will never be reached
+        int ownCostsToWin =  100; // An initial value, which will never be reached
 
         for (Figure figure:figureList){
             ArrayList<Field> possibleMoves = figure.getValidMoves(board);
@@ -196,46 +194,82 @@ public class ArtificialPlayer{
                     bestFigure = figure;
                     bestMove = field;
                     bestProgression = 0;
+                    ownCostsToWin = 0;
                     break;
                 }
                 // Calculating the heuristic and comparing it with the old best value
-                int ownProgression = ownMoveProgressionHeuristic(figure, field, game);
-                int sabotageEnemy = sabotageMoveEnemyHeuristic(figure, field, game);
+                int ownProgression = ownMoveProgressionHeuristic(field, game);
                 int punishment = punishMovement(figure, game, ownProgression);
 
                 // If move is better than the current best move, replace it
-                if (ownProgression + sabotageEnemy + punishment < bestProgression){
-                    bestSabotageEnemy = sabotageEnemy;
+                if (ownProgression + punishment < bestProgression){
                     bestMove = field;
                     bestFigure = figure;
-                    bestProgression = ownProgression + sabotageEnemy + punishment;
+                    bestProgression = ownProgression + punishment;
+                    ownCostsToWin = ownProgression;
                 }
-                else if (ownProgression + sabotageEnemy + punishment == bestProgression){
-                    // If move is as good as the current best move, prefer the sabotage
-                    if(sabotageEnemy < bestSabotageEnemy){
-                        bestSabotageEnemy = sabotageEnemy;
+                else if (ownProgression + punishment == bestProgression){
+                    Random random = new Random();
+                    int randomInt = random.nextInt(2);
+                    if (randomInt == 0){
                         bestMove = field;
                         bestFigure = figure;
                     }
-
-                    // If the moves are equally good, randomise
                     else{
-                        Random random = new Random();
-                        int randomInt = random.nextInt(2);
-                        if (randomInt == 0){
-                            bestMove = field;
-                            bestFigure = figure;
-                        }
-                        else{
-                            bestSabotageEnemy = sabotageEnemy;
-                            bestMove = field;
-                            bestFigure = figure;
-                        }
+                        bestMove = field;
+                        bestFigure = figure;
                     }
                 }
             }
         }
-        ExecuteGameInputs.placeFigure(bestFigure, bestMove);
+        // Checks if the own chances to win are better than the enemies and if moving to enemy is crucial
+        boolean enemySeemsToWin = ownCostsToWin >= ownMoveProgressionHeuristic(sabotageMoveEnemyHeuristic(player, game), game);
+        Figure fictiveFigure = new Figure(bestMove.getX(),bestMove.getY(), game, player);
+        Field enemyBestField = sabotageMoveEnemyHeuristic(player, game);
+        boolean enemyFieldAlreadyInReach = fictiveFigure.getValidBuilds(board).contains(enemyBestField);
+
+        if(enemySeemsToWin &&! enemyFieldAlreadyInReach){
+            moveToPreventEnemyVictory(board, enemyBestField, player, bestFigure, bestMove);
+        }
+        // If chances are better, execute
+        else{
+            ExecuteGameInputs.placeFigure(bestFigure, bestMove);
+        }
+    }
+
+    /**
+     * Tries to find a quick way to prevent the enemy from winning
+     *
+     * @param board the current status of the board
+     */
+    public static void moveToPreventEnemyVictory(Board board, Field enemyBestField, Player player, Figure bestFigure, Field bestMove){
+        Field closestFieldToEnemy = bestMove;
+        Figure closestFigureToEnemy = bestFigure;
+        int xDistance;
+        int yDistance;
+        int closestDistance = 100;
+        int targetX = enemyBestField.getX();
+        int targetY = enemyBestField.getY();
+        ArrayList<Figure> figureList = player.getFigure();
+        for (Figure figure:figureList) {
+            ArrayList<Field> possibleMoves = figure.getValidMoves(board);
+            for (Field field : possibleMoves) {
+                if(board.isRoundWorld()){
+                    xDistance = Math.min(board.getXSize() - field.getX() + targetX, Math.abs(field.getX() - targetX));
+                    yDistance = Math.min(board.getYSize() - field.getY() + targetY, Math.abs(field.getY() - targetY));
+                }
+                else{
+                    xDistance = Math.abs(field.getX() - targetX);
+                    yDistance = Math.abs(field.getY() - targetY);
+                }
+                if(xDistance + yDistance < closestDistance){
+                    closestFigureToEnemy = figure;
+                    closestFieldToEnemy = field;
+                    closestDistance = xDistance + yDistance;
+                }
+            }
+        }
+        ExecuteGameInputs.placeFigure(closestFigureToEnemy, closestFieldToEnemy);
     }
 
     /**
@@ -257,14 +291,8 @@ public class ArtificialPlayer{
             // Calculating the heuristic and comparing it with the old best value
             int ownProgression = ownBuildingProgressionHeuristic(field, game);
             int teamProgression = teamBuildingProgressionHeuristic(figure, field, game);
-            int sabotageEnemy = sabotageBuildingEnemyHeuristic(figure, field, game, ownProgression);
+            int sabotageEnemy = sabotageBuildingEnemyHeuristic(figure, field, game);
             int punishment = punishBuilding(figure, field, game);
-            System.out.println("----------------------------");
-            System.out.println("Feldposition: " + field.getX() + field.getY());
-            System.out.println("Progression: " + ownProgression);
-            System.out.println("Teammate: " + teamProgression);
-            System.out.println("Sabotage: " + sabotageEnemy);
-            System.out.println("Punishment: " + punishment);
 
             // If move is better than the current best move, replace it
             if (ownProgression + teamProgression + sabotageEnemy + punishment < bestProgression){
@@ -337,15 +365,46 @@ public class ArtificialPlayer{
     }
 
     /**
-     * Calculates a way to the nearest win.
+     * Reduces costs if moving brings the player closer to victory
      *
+     * @param field the targeted field
+     * @param game the game which is played on
+     *
+     * @return the costs
      */
-    public static int ownMoveProgressionHeuristic(Figure figure, Field field, Game game) {
+    public static int ownMoveProgressionHeuristic(Field field, Game game) {
         return game.getVictoryHeight() - field.getTowerLevel();
     }
 
-    public static int sabotageMoveEnemyHeuristic(Figure figure, Field field, Game game){
-        return 1;
+    /**
+     * Reduces costs if moving will enable the player to prevent an opponents victory.
+     *
+     * @param currentPlayer the current player
+     * @param game the game which is played on
+     *
+     * @return the costs
+     */
+    public static Field sabotageMoveEnemyHeuristic(Player currentPlayer, Game game){
+        Field dangerousEnemyField = new Field();
+        int lowestEnemyCost = 100;
+
+        ArrayList<Player> allPlayer = game.getPlayerOrder();
+        for (Player player: allPlayer) {
+            if (!player.getTeam().equals(currentPlayer.getTeam())) {
+                ArrayList<Figure> enemyFigures = player.getFigure();
+                for (Figure enemyFigure : enemyFigures) {
+                    ArrayList<Field> possibleEnemyMoves = enemyFigure.getValidMoves(game.getBoard());
+                    for (Field enemyMove: possibleEnemyMoves){
+                        int enemyCosts = ownMoveProgressionHeuristic(enemyMove, game);
+                        if(enemyCosts < lowestEnemyCost){
+                            lowestEnemyCost = enemyCosts;
+                            dangerousEnemyField = enemyMove;
+                        }
+                    }
+                }
+            }
+        }
+        return dangerousEnemyField;
     }
 
     /**
@@ -366,7 +425,7 @@ public class ArtificialPlayer{
                 for (Figure enemyFigure:enemyFigures){
                     ArrayList<Field> possibleEnemyMoves = enemyFigure.getValidMoves(game.getBoard());
                     if(possibleEnemyMoves.contains(currentField)){
-                        int enemyCost = ownMoveProgressionHeuristic(enemyFigure, currentField, game);
+                        int enemyCost = ownMoveProgressionHeuristic(currentField, game);
                         punishment = Math.max(0, ownProgression - enemyCost); // If the enemy will get more value, than the player himself
                     }
                 }
@@ -419,8 +478,8 @@ public class ArtificialPlayer{
                     fictiveField.setTowerLevel(fictiveField.getTowerLevel()+1);
                     ArrayList<Field> possibleTeamMateMoves = teamMateFigure.getValidMoves(fictiveBoard);
                     if(possibleTeamMateMoves.contains(fictiveField)) {
-                        int oldCosts = ownMoveProgressionHeuristic(teamMateFigure, field, game);
-                        int newCosts = ownMoveProgressionHeuristic(teamMateFigure, fictiveField, game);
+                        int oldCosts = ownMoveProgressionHeuristic(field, game);
+                        int newCosts = ownMoveProgressionHeuristic(fictiveField, game);
                         reward = Math.min(0, newCosts - oldCosts);
                     }
                 }
@@ -437,7 +496,7 @@ public class ArtificialPlayer{
      *
      * @return the punishment
      */
-    public static int sabotageBuildingEnemyHeuristic(Figure figure, Field field, Game game, int ownProgression){
+    public static int sabotageBuildingEnemyHeuristic(Figure figure, Field field, Game game){
         int reward = 0;
         ArrayList<Player> allPlayer = game.getPlayerOrder();
         for (Player player: allPlayer) {
@@ -447,14 +506,16 @@ public class ArtificialPlayer{
                     ArrayList<Field> possibleEnemyMoves = enemyFigure.getValidMoves(game.getBoard());
                     if(possibleEnemyMoves.contains(field)){
                         // the enemies potential costs if there is no building
-                        int enemyCost = ownMoveProgressionHeuristic(enemyFigure, field, game);
+                        int enemyCost = ownMoveProgressionHeuristic(field, game);
                         // checks if a move is sabotaged and rewards the player for sabotage
                         Board fictiveBoard = createFictiveBoard(game.getBoard());
                         Field fictiveField = fictiveBoard.getField(field.getX(), field.getY());
                         fictiveField.setTowerLevel(fictiveField.getTowerLevel()+1);
 
                         if(!enemyFigure.getValidMoves(fictiveBoard).contains(fictiveField)){
-                            reward = enemyCost * (-1);
+                            if(reward>(game.getVictoryHeight() - enemyCost) * (-1)){
+                                reward = (game.getVictoryHeight() - enemyCost) * (-1);
+                            }
                         }
                     }
                 }
@@ -535,7 +596,7 @@ public class ArtificialPlayer{
             }
         }
         Board fictiveBoard = new Board(fields, xSize, ySize);
-        fictiveBoard.setRoundWorld(originalBoard.getRoundWorld());
+        fictiveBoard.setRoundWorld(originalBoard.isRoundWorld());
         for (Field field: allFields){
             fictiveBoard.setField(field.getX(), field.getY(), field);
         }

@@ -12,7 +12,7 @@ public class ExecuteGameInputs {
      * @return if the movement was successful
      */
     public static boolean placeFigure(Figure figure, Field field){
-        System.out.println("placed Figure from x: " + figure.getX() + " y: " + figure.getY() + " to fild x :" + field.getX() + " y: " + field.getY());
+
         Game game = Settings.getActualGame();
         boolean return_val = false;
         switch (game.getGameStatus()) {
@@ -85,7 +85,7 @@ public class ExecuteGameInputs {
      * @return if build has finished successfully
      */
     public static boolean buildObject(int buildLevel, Field field) {
-        System.out.println("build object on x :" + field.getX() + " y: " + field.getY() + " with level " + buildLevel);
+
         Game game = Settings.getActualGame();
         if (game.isBuildMode() && game.getLastMovedFigure().getValidBuilds(game.getBoard()).contains(field)) {
             Settings.getNetworkHandler().build(buildLevel, field);
