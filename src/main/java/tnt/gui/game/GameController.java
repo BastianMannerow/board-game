@@ -56,7 +56,7 @@ public class GameController{
     /**
      * the function swaps the scene to the playerMenu if it saved in the SceneHandler
      */
-    @FXML @SuppressWarnings("UnusedPrivateMethod")
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void playerMenu(){
         sceneHandler.loadView("playerMenu");
     }
