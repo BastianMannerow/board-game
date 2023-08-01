@@ -3,6 +3,7 @@ package tnt.gui.game;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -12,7 +13,7 @@ import tnt.model.FileManager;
 import tnt.model.Game;
 import tnt.model.Player;
 import tnt.model.Settings;
-import tnt.util.Observer;
+
 
 
 import java.io.IOException;
@@ -25,7 +26,6 @@ public class EndView extends VBox {
 
     private GameController controller;
     private Game game;
-    private Boolean notInitialized = true;
     private FileManager fileManager= new FileManager();
 
     /**
@@ -47,9 +47,10 @@ public class EndView extends VBox {
      */
     public void initialize(){
         this.setAlignment(Pos.CENTER);
-        if(notInitialized) {
-
-            String losers = game.getPlayersTurn().getTeam();
+        for (Node node:this.getChildren()) {
+            this.getChildren().removeAll(node);
+        }
+        String losers = game.getPlayersTurn().getTeam();
             String winner = "";
             for (Player player : game.getPlayerOrder()) {
                 if (player.getTeam() != losers) {
@@ -67,13 +68,12 @@ public class EndView extends VBox {
                 label.setPadding(new Insets(10,0,0,0));
                 this.getChildren().add(label);
             }
-            notInitialized=false;
             Button button = new Button("Menu");
             button.setOnMouseClicked(event -> controller.goToMenu());
             this.getChildren().add(button);
-        }
-
     }
+
+
 
     /**
      * Sets the Controller of this View
