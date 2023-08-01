@@ -107,28 +107,26 @@ public class ArtificialPlayer{
     }
 
     public static void mediumAIBuilding(Board board, Player player, Game game){
-        ArrayList<Figure> figureList = player.getFigure();
+        Figure figure = game.getLastMovedFigure();
         Field bestBuild = new Field();
         int bestProgression = 100; // An initial value, which will never be reached
-        for (Figure figure:figureList) {
-            ArrayList<Field> possibleBuilds = figure.getValidBuilds(board);
-            // For each field the following heuristic is going to be calculated, which determines the best move
-            for (Field field : possibleBuilds) {
-                int ownProgression = ownBuildingProgressionHeuristic(figure, field, game);
-                if (ownProgression < bestProgression) {
-                    bestBuild = field;
-                    bestProgression = ownProgression;
-                }
+        ArrayList<Field> possibleBuilds = figure.getValidBuilds(board);
+        // For each field the following heuristic is going to be calculated, which determines the best move
+        for (Field field : possibleBuilds) {
+            int ownProgression = ownBuildingProgressionHeuristic(figure, field, game);
+            if (ownProgression < bestProgression) {
+                bestBuild = field;
+                bestProgression = ownProgression;
+            }
 
-                // Randomise if the moves are equally good
-                else if (bestProgression == ownProgression) {
-                    Random random = new Random();
-                    int randomInt = random.nextInt(2);
-                    if (randomInt == 0) {
-                        bestBuild = field;
-                    } else {
-                        bestBuild = field;
-                    }
+            // Randomise if the moves are equally good
+            else if (bestProgression == ownProgression) {
+                Random random = new Random();
+                int randomInt = random.nextInt(2);
+                if (randomInt == 0) {
+                    bestBuild = field;
+                } else {
+                    bestBuild = field;
                 }
             }
         }
@@ -164,140 +162,127 @@ public class ArtificialPlayer{
     public static void hardAIMove(Board board, Player player, Game game){
         ArrayList<Figure> figureList = player.getFigure();
         // execute movement
-        if(game.isMoveMode()) {
-            Figure bestFigure = null;
-            Field bestMove = null;
-            int bestProgression = 100; // An initial value, which will never be reached
-            int bestTeamProgression = 100; // An initial value, which will never be reached
-            int bestSabotageEnemy = 100; // An initial value, which will never be reached
+        Figure bestFigure = null;
+        Field bestMove = null;
+        int bestProgression = 100; // An initial value, which will never be reached
+        int bestTeamProgression = 100; // An initial value, which will never be reached
+        int bestSabotageEnemy = 100; // An initial value, which will never be reached
 
-            for (Figure figure:figureList){
-                ArrayList<Field> possibleMoves = figure.getValidMoves(board);
-                // For each field the following heuristic is going to be calculated, which determines the best move
-                for (Field field:possibleMoves){
-                    // If an instant win is possible, it will be executed
-                    if (moveToWin(field, game)){
-                        bestFigure = figure;
-                        bestMove = field;
-                        bestProgression = 0;
-                        break;
-                    }
-                    // Calculating the heuristic and comparing it with the old best value
-                    int ownProgression = ownMoveProgressionHeuristic(figure, field, game);
-                    int teamProgression = teamMoveProgressionHeuristic(figure, field, game);
-                    int sabotageEnemy = sabotageMoveEnemyHeuristic(figure, field, game);
-                    int punishment = punishMovement(figure, game, ownProgression);
-                    System.out.println(ownProgression);
-                    System.out.println(teamProgression);
-                    System.out.println(sabotageEnemy);
-                    System.out.println(punishment);
+        for (Figure figure:figureList){
+            ArrayList<Field> possibleMoves = figure.getValidMoves(board);
+            // For each field the following heuristic is going to be calculated, which determines the best move
+            for (Field field:possibleMoves){
+                // If an instant win is possible, it will be executed
+                if (moveToWin(field, game)){
+                    bestFigure = figure;
+                    bestMove = field;
+                    bestProgression = 0;
+                    break;
+                }
+                // Calculating the heuristic and comparing it with the old best value
+                int ownProgression = ownMoveProgressionHeuristic(figure, field, game);
+                int teamProgression = teamMoveProgressionHeuristic(figure, field, game);
+                int sabotageEnemy = sabotageMoveEnemyHeuristic(figure, field, game);
+                int punishment = punishMovement(figure, game, ownProgression);
 
-                    // If move is better than the current best move, replace it
-                    if (ownProgression + teamProgression + sabotageEnemy + punishment < bestProgression){
+                // If move is better than the current best move, replace it
+                if (ownProgression + teamProgression + sabotageEnemy + punishment < bestProgression){
+                    bestTeamProgression = teamProgression;
+                    bestSabotageEnemy = sabotageEnemy;
+                    bestMove = field;
+                    bestFigure = figure;
+                    bestProgression = ownProgression + teamProgression + sabotageEnemy + punishment;
+                }
+                else if (ownProgression + teamProgression + sabotageEnemy + punishment == bestProgression){
+                    // If move is as good as the current best move, prefer the sabotage
+                    if(sabotageEnemy < bestSabotageEnemy){
                         bestTeamProgression = teamProgression;
                         bestSabotageEnemy = sabotageEnemy;
                         bestMove = field;
                         bestFigure = figure;
-                        bestProgression = ownProgression + teamProgression + sabotageEnemy + punishment;
                     }
-                    else if (ownProgression + teamProgression + sabotageEnemy + punishment == bestProgression){
-                        // If move is as good as the current best move, prefer the sabotage
-                        if(sabotageEnemy < bestSabotageEnemy){
-                            bestTeamProgression = teamProgression;
-                            bestSabotageEnemy = sabotageEnemy;
-                            bestMove = field;
-                            bestFigure = figure;
-                        }
-                        // If move is as good as the current best move, prefer the teamProgression, since team-mate is able to move earlier
-                        else if(teamProgression < bestTeamProgression){
-                            bestTeamProgression = teamProgression;
-                            bestSabotageEnemy = sabotageEnemy;
-                            bestMove = field;
-                            bestFigure = figure;
-                        }
+                    // If move is as good as the current best move, prefer the teamProgression, since team-mate is able to move earlier
+                    else if(teamProgression < bestTeamProgression){
+                        bestTeamProgression = teamProgression;
+                        bestSabotageEnemy = sabotageEnemy;
+                        bestMove = field;
+                        bestFigure = figure;
+                    }
 
-                        // If the moves are equally good, randomise
+                    // If the moves are equally good, randomise
+                    else{
+                        Random random = new Random();
+                        int randomInt = random.nextInt(2);
+                        if (randomInt == 0){
+                            bestMove = field;
+                            bestFigure = figure;
+                        }
                         else{
-                            Random random = new Random();
-                            int randomInt = random.nextInt(2);
-                            if (randomInt == 0){
-                                bestMove = field;
-                                bestFigure = figure;
-                            }
-                            else{
-                                bestTeamProgression = teamProgression;
-                                bestSabotageEnemy = sabotageEnemy;
-                                bestMove = field;
-                                bestFigure = figure;
-                            }
+                            bestTeamProgression = teamProgression;
+                            bestSabotageEnemy = sabotageEnemy;
+                            bestMove = field;
+                            bestFigure = figure;
                         }
                     }
                 }
             }
-            System.out.println("Moving: " + Integer.toString(bestProgression));
-            ExecuteGameInputs.placeFigure(bestFigure, bestMove);
         }
+        ExecuteGameInputs.placeFigure(bestFigure, bestMove);
     }
 
     public static void hardAIBuilding(Board board, Player player, Game game){
-        ArrayList<Figure> figureList = player.getFigure();
         // execute random building
-        if(game.isBuildMode()) {
-            Field bestBuild = new Field();
-            int bestProgression = 100; // An initial value, which will never be reached
-            int bestTeamProgression = 100; // An initial value, which will never be reached
-            int bestSabotageEnemy = 100; // An initial value, which will never be reached
-            for (Figure figure:figureList) {
-                ArrayList<Field> possibleBuilds = figure.getValidBuilds(board);
-                // For each field the following heuristic is going to be calculated, which determines the best move
-                for (Field field : possibleBuilds) {
-                    // Calculating the heuristic and comparing it with the old best value
-                    int ownProgression = ownBuildingProgressionHeuristic(figure, field, game);
-                    int teamProgression = teamBuildingProgressionHeuristic(figure, field, game);
-                    int sabotageEnemy = sabotageBuildingEnemyHeuristic(figure, field, game, ownProgression);
-                    int punishment = punishBuilding(figure, field, game, ownProgression);
+        Field bestBuild = new Field();
+        int bestProgression = 100; // An initial value, which will never be reached
+        int bestTeamProgression = 100; // An initial value, which will never be reached
+        int bestSabotageEnemy = 100; // An initial value, which will never be reached
+        Figure figure = game.getLastMovedFigure();
+        ArrayList<Field> possibleBuilds = figure.getValidBuilds(board);
+        // For each field the following heuristic is going to be calculated, which determines the best move
+        for (Field field : possibleBuilds) {
+            // Calculating the heuristic and comparing it with the old best value
+            int ownProgression = ownBuildingProgressionHeuristic(figure, field, game);
+            int teamProgression = teamBuildingProgressionHeuristic(figure, field, game);
+            int sabotageEnemy = sabotageBuildingEnemyHeuristic(figure, field, game, ownProgression);
+            int punishment = punishBuilding(figure, field, game, ownProgression);
 
-                    // If move is better than the current best move, replace it
-                    if (ownProgression + teamProgression + sabotageEnemy + punishment < bestProgression){
+            // If move is better than the current best move, replace it
+            if (ownProgression + teamProgression + sabotageEnemy + punishment < bestProgression){
+                bestTeamProgression = teamProgression;
+                bestSabotageEnemy = sabotageEnemy;
+                bestBuild = field;
+                bestProgression = ownProgression + teamProgression + sabotageEnemy + punishment;
+            }
+            else if (ownProgression + teamProgression + sabotageEnemy + punishment == bestProgression){
+                // If move is as good as the current best move, prefer the sabotage
+                if(sabotageEnemy < bestSabotageEnemy){
+                    bestTeamProgression = teamProgression;
+                    bestSabotageEnemy = sabotageEnemy;
+                    bestBuild = field;
+                }
+                // If move is as good as the current best move, prefer the teamProgression, since team-mate is able to move earlier
+                else if(teamProgression < bestTeamProgression){
+                    bestTeamProgression = teamProgression;
+                    bestSabotageEnemy = sabotageEnemy;
+                    bestBuild = field;
+                }
+
+                // If the moves are equally good, randomise
+                else{
+                    Random random = new Random();
+                    int randomInt = random.nextInt(2);
+                    if (randomInt == 0){
+                        bestBuild = field;
+                    }
+                    else{
                         bestTeamProgression = teamProgression;
                         bestSabotageEnemy = sabotageEnemy;
                         bestBuild = field;
-                        bestProgression = ownProgression + teamProgression + sabotageEnemy + punishment;
-                    }
-                    else if (ownProgression + teamProgression + sabotageEnemy + punishment == bestProgression){
-                        // If move is as good as the current best move, prefer the sabotage
-                        if(sabotageEnemy < bestSabotageEnemy){
-                            bestTeamProgression = teamProgression;
-                            bestSabotageEnemy = sabotageEnemy;
-                            bestBuild = field;
-                        }
-                        // If move is as good as the current best move, prefer the teamProgression, since team-mate is able to move earlier
-                        else if(teamProgression < bestTeamProgression){
-                            bestTeamProgression = teamProgression;
-                            bestSabotageEnemy = sabotageEnemy;
-                            bestBuild = field;
-                        }
-
-                        // If the moves are equally good, randomise
-                        else{
-                            Random random = new Random();
-                            int randomInt = random.nextInt(2);
-                            if (randomInt == 0){
-                                bestBuild = field;
-                            }
-                            else{
-                                bestTeamProgression = teamProgression;
-                                bestSabotageEnemy = sabotageEnemy;
-                                bestBuild = field;
-                            }
-                        }
                     }
                 }
             }
-            System.out.println("Building: " + Integer.toString(bestProgression));
-            System.out.println("Building: " + bestBuild);
-            ExecuteGameInputs.buildObject(bestBuild.getTowerLevel()+1, bestBuild);
         }
+        ExecuteGameInputs.buildObject(bestBuild.getTowerLevel()+1, bestBuild);
     }
 
     /**
