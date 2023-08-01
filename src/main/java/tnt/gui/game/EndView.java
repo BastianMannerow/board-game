@@ -47,9 +47,7 @@ public class EndView extends VBox {
      */
     public void initialize(){
         this.setAlignment(Pos.CENTER);
-        for (Node node:this.getChildren()) {
-            this.getChildren().removeAll(node);
-        }
+        this.getChildren().remove(0,this.getChildren().size());
         String losers = game.getPlayersTurn().getTeam();
             String winner = "";
             Player winPlayer=null;

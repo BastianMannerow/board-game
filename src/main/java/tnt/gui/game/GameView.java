@@ -383,6 +383,9 @@ public class GameView extends BorderPane implements Observer {
         }
     }
 
+    /**
+     * removes the Figures of the Removed Player
+     */
     private void removePlayer(){
         ArrayList<Figure> figures=new ArrayList<Figure>();
         for (Figure figure:figureHolder.keySet()) {
