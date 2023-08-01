@@ -36,13 +36,15 @@ public class SaveLoadMenuView extends VBox{
         this.SaveLoadMenuController = SaveLoadMenuLayout.getController();
         this.SaveLoadMenuController.setSceneHandler(sceneHandler);
         sceneHandler.add("SaveLoad", this);
+        SaveLoadMenuController.setSaveLoadMenuView(this);
         this.getSaves();
     }
 
     /**
      * Gets the saves of the Games and displays them with their respective loading Button
      */
-    private void getSaves(){
+    public void getSaves(){
+        ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().clear();
         List<String> saves =SaveLoadMenuController.loadNames();
         for (String save: saves) {
              Label label= new Label();
@@ -58,4 +60,6 @@ public class SaveLoadMenuView extends VBox{
              ((VBox)((HBox)this.getChildren().get(0)).getChildren().get(0)).getChildren().add(saved);
        }
     }
+
+
 }

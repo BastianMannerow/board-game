@@ -1,6 +1,7 @@
 package tnt.gui.saveloadmenu;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.HBox;
 import tnt.gui.SceneHandler;
 import tnt.model.FileManager;
 import tnt.model.Game;
@@ -14,6 +15,7 @@ import java.util.List;
 public class SaveLoadMenuController {
     private SceneHandler sceneHandler;
     private FileManager fileManager= new FileManager();
+    private SaveLoadMenuView saveLoadMenuView;
 
 
     /**
@@ -47,6 +49,7 @@ public class SaveLoadMenuController {
     private void save(){
         try {
             fileManager.saveGame(Settings.getActualGame());
+            saveLoadMenuView.getSaves();
         }catch(Exception e){
             System.out.println(e);
             System.out.println("Could not save");
@@ -61,5 +64,10 @@ public class SaveLoadMenuController {
         Game game = new Game(0);
         fileManager.loadGame(save, game);
         Settings.setActualGame(game);
+    }
+
+
+    public void setSaveLoadMenuView(SaveLoadMenuView saveLoadMenuView) {
+        this.saveLoadMenuView = saveLoadMenuView;
     }
 }
