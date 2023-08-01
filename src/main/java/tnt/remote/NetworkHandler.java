@@ -147,7 +147,7 @@ public class NetworkHandler {
         header = (List<String>) dataObject.get(0);
         List<List<String>> figureData = (List<List<String>>) dataObject.get(1);
         fm.setFigureData(header, figureData, game, playerList);
-
+        System.out.println("Got new game");
         Settings.setActualGame(game);
     }
 

@@ -77,6 +77,7 @@ public class FileManager {
             String[] row = line.split(";,"); // A separator for parsing
             if(lineNumber == 0) { // The first line will be the header, which is used for an easier indexing
                 header = (List<String>) Arrays.asList(row).stream().map((rowhere) -> rowhere.replace(";-,", ";,"));
+                Arrays.asList(Arrays.stream(row).map(rowhere -> rowhere));
             } else {
                 data.add(Arrays.asList(row));
             }
@@ -130,6 +131,9 @@ public class FileManager {
         StringBuilder csvLine = new StringBuilder();
         for (String[] row : data) {
             for (int i = 0; i < row.length; i++) {
+                if (row[i] == null){
+                    row[i] = "";
+                }
                 csvLine.append(row[i].replace(";,", ";-,"));
                 if (i < row.length - 1) {
                     csvLine.append(";,");
