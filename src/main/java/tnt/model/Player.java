@@ -24,7 +24,7 @@ public class Player extends Observable {
     private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private String team;
-    private int[] numberOfTile;
+    private int[] numberOfTile={};
 
     /**
      * Constructing an object Player.

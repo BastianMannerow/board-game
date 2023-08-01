@@ -181,9 +181,10 @@ public class Game extends Observable {
     }
 
     /**
-     * @return GameStatus
+     * @param gameStatus the game Status of the game
      */
-    public void setGameStatus(GameStatus placeFigures) {
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus=gameStatus;
     }
 
     /**

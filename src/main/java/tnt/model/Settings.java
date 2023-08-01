@@ -23,7 +23,7 @@ public class Settings {
     static NetworkHandler networkHandler = new NetworkHandler();
 
 
-    private static int[] defaultNrTiles = {18, 22, 20, 14};
+    private static int[] defaultNrTiles = {18, 22, 20, 14, 10, 8};
     static Game actualGame;
 
     /**
