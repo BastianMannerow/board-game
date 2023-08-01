@@ -21,6 +21,7 @@ public class ExecuteGameInputsTest {
     public void setup() {
         ArrayList<Player> playerOrder = new ArrayList<>();
         game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
+        game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
         player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, 2, game, "Team A", 10);
         board = new Board(new Field[5][5], 5, 5);
         field = new Field(2, 2);
