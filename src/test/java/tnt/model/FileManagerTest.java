@@ -50,14 +50,16 @@ public class FileManagerTest {
      */
     @Test
     public void testReadString() {
-        String str = "Hans,Lulatsch\nStefan,Bombig";
+        String str = "Hans;Lulatsch\nStefan;Bombig";
         List<String[]> expectedData = new ArrayList<>();
         expectedData.add(new String[]{"Hans", "Lulatsch"});
         expectedData.add(new String[]{"Stefan", "Bombig"});
 
         List<String[]> actualData = fileManager.readString(str);
 
-        Assertions.assertEquals(expectedData, actualData);
+        for(int i = 0; i < expectedData.size(); i++){
+            Assertions.assertArrayEquals(expectedData.get(i), actualData.get(i));
+        }
     }
 
     /**
@@ -136,11 +138,21 @@ public class FileManagerTest {
      */
     @Test
     public void testLoadGame() {
-        String savedGame = "Test Game";
-        Game game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
+        String savedGame = "Test Game1";
+        ArrayList<Player> playerOrder= new ArrayList<>();
+        Game game = new Game(playerOrder, 12, "Test Game1", 1, 3, 3, true);
 
         Player player1 = new Player(Player.PlayerType.HUMAN, "Player1", Color.BLUE, 1, game, "1", 0);
         Player player2 = new Player(Player.PlayerType.HUMAN, "Player2", Color.BLUE, 0, game, "2", 0);
+        playerOrder.add(player1);
+        playerOrder.add(player2);
+        game.setNumberOfTile((new int[] {10,10,10,10,10,10}));
+        player1.setNumberOfTile(new int[] {10,10,10,10,10,10});
+        player2.setNumberOfTile(new int[] {10,10,10,10,10,10});
+        player1.addFigure(player1.getAmountOfFigures());
+        player2.addFigure(player2.getAmountOfFigures());
+
+        fileManager.saveGame(game);
 
         // Call the method under test.
         FileManager fileManager = new FileManager();
@@ -149,7 +161,7 @@ public class FileManagerTest {
 
         // Validate the results (e.g., check that the players have the correct figures).
         Assertions.assertEquals(1, player1.getAmountOfFigures());
-        Assertions.assertEquals(1, player2.getAmountOfFigures());
+        Assertions.assertEquals(0, player2.getAmountOfFigures());
 
         // Validate the position of figures
         Figure player1Figure = player1.getFigure().get(0);
@@ -172,7 +184,7 @@ public class FileManagerTest {
     @Test
     public void testSaveGame() {
         playerOrder = new ArrayList<>();
-        Game game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
+        Game game = new Game(playerOrder, 12, "Test GameX", 1, 3, 3, true);
 
         fileManager.saveGame(game);
     }
