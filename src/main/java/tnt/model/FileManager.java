@@ -304,7 +304,7 @@ public class FileManager {
         // Sorting the player order
         String playerOrder = gameData.get(0).get(header.indexOf("playerOrder"));
 
-        String[] parsedStringPlayerOrder = playerOrder.split(", ");
+        String[] parsedStringPlayerOrder = playerOrder.split(" ,");
         ArrayList<Player> finalPlayerOrder = new ArrayList<>();
         for (int i = 0; i < parsedStringPlayerOrder.length; i++) {
             for (Player player: playerList){
