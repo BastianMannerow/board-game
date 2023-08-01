@@ -182,6 +182,8 @@ public class Player extends Observable {
         figure.setX(field.getX());
         figure.setY(field.getY());
         field.setFigure(figure);
+        amountOfTurns = amountOfTurns+1;
+        game.setAmountOfTurns(amountOfTurns+1);
 
         // Check if game is already over
         if(field.getTowerLevel() == game.getVictoryHeight()){
