@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.io.File;
 import java.nio.file.*;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+
 import javafx.scene.paint.Color;
 
 /**
@@ -46,19 +48,29 @@ public class FileManager {
     }
 
     /**
-     * Parses a string reverse
-     *
-     * @param str The desired string
-     * @return the data
+     * converts a string representation to other object representation
+     * @param str the string to be converted
+     * @return the data with header
      */
-    public List<String[]> readString(String str) {
-        List<String[]> data = new ArrayList<>();
-        String[] rows = str.split("\n");
+    public List<Object> readString(String str) {
+        String newstr = str.replace("new##notaseperator##data", "new####data");
+        List<List<String>> data = new ArrayList<>();
+        List<String> header = new ArrayList<>();
+        String[] rows = newstr.split("\n");
+        int lineNumber = 0;
         for(String line : rows){
-            String[] row = line.split(";");
-            data.add(row);
+            String[] row = line.split(";,"); // A separator for parsing
+            if(lineNumber == 0) { // The first line will be the header, which is used for an easier indexing
+                header = Arrays.stream(row).map((rowhere) -> rowhere.replace(";-,", ";,")).collect(Collectors.toList());
+            } else {
+                data.add(Arrays.stream(row).map((rowhere) -> rowhere.replace(";-,", ";,")).collect(Collectors.toList()));
+            }
+            lineNumber++;
         }
-        return data;
+        List<Object> csv = new ArrayList<>();
+        csv.add(header);
+        csv.add(data);
+        return csv;
     }
 
     /**
@@ -95,23 +107,32 @@ public class FileManager {
     }
 
     /**
+<<<<<<< HEAD
+     * makes a string from the list of string array
+     * @param data the data to be converted to a single string
+     * @return the data represented as string
+=======
      * Transforms a list to string
      *
      * @param data The desired data
      * @return the transformed data
+>>>>>>> master
      */
     public static String makeString(List<String[]> data){
         StringBuilder csvLine = new StringBuilder();
         for (String[] row : data) {
             for (int i = 0; i < row.length; i++) {
-                csvLine.append(row[i]);
+                if (row[i] == null){
+                    row[i] = "";
+                }
+                csvLine.append(row[i].replace(";,", ";-,"));
                 if (i < row.length - 1) {
-                    csvLine.append(",");
+                    csvLine.append(";,");
                 }
             }
             csvLine.append(System.lineSeparator());
         }
-        return csvLine.toString();
+        return csvLine.toString().replace("new####data", "new##notaseperator##data");
     }
 
     /**
@@ -461,8 +482,8 @@ public class FileManager {
             String name = player.getName();
             String color = player.getColor().toString();
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
-//            int amountOfFigures = player.getAmountOfFigures();
-            int amountOfFigures = player.getRealAmountFigure();
+            int amountOfFigures = player.getAmountOfFigures();
+//            int amountOfFigures = player.getRealAmountFigure();
             int amountOfTurns = player.getAmountOfTurns();
             String team = player.getTeam();
             // Amount of tiles need a simple loop to be converted into String

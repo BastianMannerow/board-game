@@ -49,9 +49,11 @@ public class GameView extends BorderPane implements Observer {
         controller.setSceneHandler(sceneHandler);
         sceneHandler.add("gameView", this);
         this.getChildren().add(dragableObject);
+        dragableObject.setVisible(false);
         endView=new EndView(sceneHandler);
 
         SizeHandler.getInstance().addObserver(this);
+        Settings.getNetworkHandler().addObserver(this);
         game.addObserver(this);
         update();
     }
