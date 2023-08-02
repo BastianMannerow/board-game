@@ -82,6 +82,7 @@ public class PlayerChooseView extends VBox implements Observer {
             updatePlayer(player, i);
         }
         updateLabels();
+        controller.victoryHeight.end();
     }
 
     /**

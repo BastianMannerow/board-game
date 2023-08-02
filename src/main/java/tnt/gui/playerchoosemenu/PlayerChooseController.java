@@ -112,7 +112,7 @@ public class PlayerChooseController{
 
 
         int[] tiles = new int[victoryHeight + 1];
-        tilesCalc(tiles,game);
+        restoreOldTilesAmount(tiles,game);
 
 
         boolean globalTilePool = this.tilesSepBox.isSelected();
@@ -154,18 +154,18 @@ public class PlayerChooseController{
      * @param tiles
      * @param game ,the actual game
      */
-    private void tilesCalc(int[] tiles,Game game){
+    private void restoreOldTilesAmount(int[] tiles, Game game){
         for(int i = 0; i < tiles.length; i++){
             if (i < this.tileBox.getChildren().size() - 1) {
                 TextField tilenr = (TextField) ((VBox) this.tileBox.getChildren().get(i + 1)).getChildren().get(1);
                 if (i >= game.getTileSize()) {
-                    tiles[i] = updateValueOfTextfield(tilenr, 0);
+                    tiles[i] = updateValueOfTextfield(tilenr, Settings.getNrOfTile(i));
                 } else {
                     tiles[i] = updateValueOfTextfield(tilenr, game.getNrTile(i));
                 }
             } else {
                 if (i >= game.getTileSize()) {
-                    tiles[i] = 0;
+                    tiles[i] = Settings.getNrOfTile(i);
                 } else {
                     tiles[i] = game.getNrTile(i);
                 }
