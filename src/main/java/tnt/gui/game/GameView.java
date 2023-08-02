@@ -53,6 +53,7 @@ public class GameView extends BorderPane implements Observer {
         endView=new EndView(sceneHandler);
 
         SizeHandler.getInstance().addObserver(this);
+        Settings.getNetworkHandler().addObserver(this);
         game.addObserver(this);
         update();
     }

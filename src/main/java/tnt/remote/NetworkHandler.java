@@ -2,6 +2,7 @@ package tnt.remote;
 
 import javafx.scene.control.TextInputDialog;
 import tnt.model.*;
+import tnt.util.Observable;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,7 +14,7 @@ import java.util.Optional;
 /**
  * Network handler for handling the network connections
  */
-public class NetworkHandler {
+public class NetworkHandler extends Observable {
     private static final int PORT_NUMBER = 4444;
     private List<PrintWriter> networkPrinter = new ArrayList<>();
 
@@ -99,6 +100,7 @@ public class NetworkHandler {
         switch (msg.substring(0,4)){
             case "game":
                 parseGame(fm, msg.substring(4));
+                notifyObservers();
                 break;
             case "play":
                 break;
@@ -116,6 +118,7 @@ public class NetworkHandler {
     }
 
     private void parseGame(FileManager fm, String gameStr){
+        System.out.println(gameStr);
         String[] data = gameStr.split("new####data");
         Game game = new Game(1);
         // getting player data

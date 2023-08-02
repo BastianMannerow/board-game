@@ -482,8 +482,8 @@ public class FileManager {
             String name = player.getName();
             String color = player.getColor().toString();
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
-//            int amountOfFigures = player.getAmountOfFigures();
-            int amountOfFigures = player.getRealAmountFigure();
+            int amountOfFigures = player.getAmountOfFigures();
+//            int amountOfFigures = player.getRealAmountFigure();
             int amountOfTurns = player.getAmountOfTurns();
             String team = player.getTeam();
             // Amount of tiles need a simple loop to be converted into String

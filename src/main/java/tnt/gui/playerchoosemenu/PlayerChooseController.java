@@ -78,6 +78,7 @@ public class PlayerChooseController{
             game.initGame();
             game.startPlaceFigures();
         }
+//        Settings.getNetworkHandler().sendGame(game);
         sceneHandler.loadView("gameView");
     }
 

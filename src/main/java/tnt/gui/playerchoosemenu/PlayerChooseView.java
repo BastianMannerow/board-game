@@ -48,6 +48,7 @@ public class PlayerChooseView extends VBox implements Observer {
         controller.playerPaneSingle.setPadding(new Insets(20,0,5,0));
         controller.fieldSizeX.setPromptText(Integer.toString(SizeHandler.getNrFieldsX()));
         controller.fieldSizeY.setPromptText(Integer.toString(SizeHandler.getNrFieldsX()));
+        Settings.getNetworkHandler().addObserver(this);
         game.addObserver(this);
         update();
         VBox popup = new VBox();
