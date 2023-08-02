@@ -611,7 +611,6 @@ public class FileManager {
         }
         ArrayList<String> extractedData = new ArrayList<>();
         extractedData.addAll(Arrays.asList(topOneplayerNames, topOneLevelOfIntelligence, topOneAmountOfTurns, topOneTeamName, topTwoplayerNames, topTwoLevelOfIntelligence, topTwoAmountOfTurns, topTwoTeamName, topThreeplayerNames, topThreeLevelOfIntelligence, topThreeAmountOfTurns, topThreeTeamName));
-        System.out.println(extractedData);
         return extractedData;
     }
 
