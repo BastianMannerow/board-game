@@ -193,6 +193,8 @@ public class FileManagerTest {
         game.setVictoryHeight(3);
         game.getBoard().getField(1,1).setTowerLevel(3);
 
+        Settings.setActualGame(game);
+
         Player player = new Player(Player.PlayerType.HUMAN, "Player", Color.BLUE, 2, game, "1", 0);
         player.initPlayer();
         //player.executeMove(game.getBoard(),player.getFigure().get(0);
@@ -201,10 +203,15 @@ public class FileManagerTest {
         player2.initPlayer();
         playerOrder.add(player2);
 
+        game.setNumberOfTile((new int[] {10,10,10,10,10,10}));
+        player.setNumberOfTile(new int[] {10,10,10,10,10,10});
+        player2.setNumberOfTile(new int[] {10,10,10,10,10,10});
         game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
 
         ExecuteGameInputs.placeFigure(player.getFigure().get(0),game.getBoard().getField(1,2));
-
+        ExecuteGameInputs.placeFigure(player.getFigure().get(1),game.getBoard().getField(2,2));
+        ExecuteGameInputs.placeFigure(player2.getFigure().get(0),game.getBoard().getField(3,3));
+        ExecuteGameInputs.placeFigure(player2.getFigure().get(1),game.getBoard().getField(3,2));
 
         fileManager.saveGame(game);
     }
@@ -263,6 +270,7 @@ public class FileManagerTest {
     @Test
     public void testSaveHighscore() {
         Game game = new Game(2);
+        fileManager.checkHighscore(game,game.getPlayersTurn().getName());
         ArrayList<Player> playerList = new ArrayList<>();
         fileManager.saveHighscore(game, "Team A", 1);
     }
