@@ -90,8 +90,10 @@ public class PlayerAloneChooseView extends HBox implements Observer {
         }
         TextField amountOfFigures = (TextField) ((VBox) this.getChildren().get(3)).getChildren().get(1);
         if (amountOfFigures.getText().equals("")){
+//            amountOfFigures.setPromptText(Integer.toString(player.getAmountOfFigures()));
             amountOfFigures.setPromptText(Integer.toString(player.getAmountOfFigures()));
         } else {
+//            amountOfFigures.setText(Integer.toString(player.getAmountOfFigures()));
             amountOfFigures.setText(Integer.toString(player.getAmountOfFigures()));
         }
         ChoiceBox playerType = (ChoiceBox) ((VBox) this.getChildren().get(6)).getChildren().get(1);

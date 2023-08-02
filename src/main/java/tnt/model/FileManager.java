@@ -48,23 +48,6 @@ public class FileManager {
     }
 
     /**
-     * converts a string representation to a list of string arrays
-     * @param str the string to be converted
-     * @return the data as list of string array
-     */
-    public List<String[]> readStringold(String str) {
-        List<String[]> data = new ArrayList<>();
-        String newstr = str.replace("new##notaseperator##data", "new####data");
-        String[] rows = newstr.split("\n");
-        for(String line : rows){
-            String[] row = line.split(";,");
-            // Todo: replace ";-," with ";," again
-            data.add(row);
-        }
-        return data;
-    }
-
-    /**
      * converts a string representation to other object representation
      * @param str the string to be converted
      * @return the data with header
@@ -124,9 +107,16 @@ public class FileManager {
     }
 
     /**
+<<<<<<< HEAD
      * makes a string from the list of string array
      * @param data the data to be converted to a single string
      * @return the data represented as string
+=======
+     * Transforms a list to string
+     *
+     * @param data The desired data
+     * @return the transformed data
+>>>>>>> master
      */
     public static String makeString(List<String[]> data){
         StringBuilder csvLine = new StringBuilder();
@@ -259,7 +249,7 @@ public class FileManager {
             color = "#" + color.substring(2); // Entfernt das "0x" und fügt "#" hinzu
             playerObject.setColor(Color.web(color));
             playerObject.setAmountOfFigures(amountOfFigures);
-            playerObject.addFigure(amountOfFigures);
+//            playerObject.addFigure(amountOfFigures);
 
             playerObject.setAmountOfTurns(amountOfTurns);
             playerObject.setTeam(team);
@@ -287,7 +277,7 @@ public class FileManager {
             for (Player player: playerList){
                 if(player.getName().equals(figure.get(header.indexOf("player")))){
                     player.addFigure(1);
-                    Figure currentFigure = player.getFigure().get(player.getAmountOfFigures()-1);
+                    Figure currentFigure = player.getFigure().get(player.getRealAmountFigure()-1);
                     currentFigure.setX(Integer.parseInt(figure.get(header.indexOf("x"))));
                     currentFigure.setY(Integer.parseInt(figure.get(header.indexOf("y"))));
                     if(Boolean.valueOf(figure.get(header.indexOf("placed")))){
@@ -347,7 +337,7 @@ public class FileManager {
         // Sorting the player order
         String playerOrder = gameData.get(0).get(header.indexOf("playerOrder"));
 
-        String[] parsedStringPlayerOrder = playerOrder.split(", ");
+        String[] parsedStringPlayerOrder = playerOrder.split(" ,");
         ArrayList<Player> finalPlayerOrder = new ArrayList<>();
         for (int i = 0; i < parsedStringPlayerOrder.length; i++) {
             for (Player player: playerList){
@@ -364,6 +354,8 @@ public class FileManager {
         game.setVictoryHeight(Integer.valueOf(gameData.get(0).get(header.indexOf("victoryHeight"))));
         game.setGameName(gameData.get(0).get(header.indexOf("gameName")));
         game.setGlobalTilePool(Boolean.valueOf(gameData.get(0).get(header.indexOf("globalTilePool"))));
+
+        game.setGameStatus(Game.GameStatus.valueOf(gameData.get(0).get(header.indexOf("gameStatus"))));
 
         String stringNumberOfTiles = gameData.get(0).get(header.indexOf("numberOfTiles"));
         // Parses the tile pool
@@ -490,7 +482,8 @@ public class FileManager {
             String name = player.getName();
             String color = player.getColor().toString();
             Player.PlayerType levelOfIntelligence = player.getLevelOfIntelligence();
-            int amountOfFigures = player.getAmountOfFigures();
+//            int amountOfFigures = player.getAmountOfFigures();
+            int amountOfFigures = player.getRealAmountFigure();
             int amountOfTurns = player.getAmountOfTurns();
             String team = player.getTeam();
             // Amount of tiles need a simple loop to be converted into String
@@ -516,7 +509,7 @@ public class FileManager {
      */
     public List<String[]> getGameData(Game game){
         List<String[]> gameData = new ArrayList<>();
-        String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTiles", "globalTilePool"};
+        String[] header = {"playerOrder", "amountOfTurns", "maxStepUpHeight", "maxStepDownHeight", "gameName", "victoryHeight", "numberOfTiles", "globalTilePool", "gameStatus"};
         gameData.add(header);
 
         ArrayList<Player> playerList = game.getPlayerOrder();
@@ -539,6 +532,7 @@ public class FileManager {
         String gameName = game.getGameName();
         String victoryHeight = Integer.toString(game.getVictoryHeight());
         String globalTilePool = Boolean.toString(game.isGlobalTilePool());
+        String gameStatus = game.getGameStatus().toString();
         // Amount of tiles need a simple loop to be converted into String
         String amountOfTiles = "";
         for (int j = 0; j < game.getTileSize(); j++) {
@@ -549,7 +543,7 @@ public class FileManager {
                 amountOfTiles = amountOfTiles.concat(", ").concat(String.valueOf(game.getNrTile(i)));
             }
         }
-        gameData.add(new String[]{playerOrder, amountOfTurns, maxStepUpHeight, maxStepDownHeight, gameName, victoryHeight, amountOfTiles, globalTilePool});
+        gameData.add(new String[]{playerOrder, amountOfTurns, maxStepUpHeight, maxStepDownHeight, gameName, victoryHeight, amountOfTiles, globalTilePool, gameStatus});
         return gameData;
     }
 
@@ -565,12 +559,14 @@ public class FileManager {
         boardData.add(header);
         String xSize = Integer.toString(game.getBoard().getXSize());
         String ySize = Integer.toString(game.getBoard().getYSize());
-        String roundWorld = Boolean.toString(game.getBoard().getRoundWorld());
+        String roundWorld = Boolean.toString(game.getBoard().isRoundWorld());
         boardData.add(new String[]{xSize, ySize, roundWorld});
         return boardData;
     }
 
     /**
+     * Loads the current highscore.
+     *
      * @return the highscore data
      */
     public ArrayList<String> loadHighscore() {

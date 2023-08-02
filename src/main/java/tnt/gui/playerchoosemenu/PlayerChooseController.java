@@ -13,7 +13,7 @@ import tnt.model.Settings;
 
 /**
  * The controller for the view where the player can be choosen
- */
+ */ @SuppressWarnings("PMD.TooManyFields")
 public class PlayerChooseController{
 
     @FXML
@@ -70,7 +70,7 @@ public class PlayerChooseController{
     /**
      * The method getting called, when user pressed the play button
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void runGame() {
         updateGameSettings();
         Game game = Settings.getActualGame();
@@ -110,14 +110,7 @@ public class PlayerChooseController{
 
 
         int[] tiles = new int[victoryHeight + 1];
-        for(int i = 0; i< tiles.length; i++){
-            TextField tilenr = (TextField) ((VBox) this.tileBox.getChildren().get(i+1)).getChildren().get(1);
-            if (i >= game.getTileSize()){
-                tiles[i] = updateValueOfTextfield(tilenr, 0);
-            } else {
-                tiles[i] = updateValueOfTextfield(tilenr, game.getNrTile(i));
-            }
-        }
+        tilesCalc(tiles,game);
 
 
         boolean globalTilePool = this.tilesSepBox.isSelected();
@@ -144,6 +137,9 @@ public class PlayerChooseController{
             game.setMaxStepDownHeight(maxStepDown);
             game.setVictoryHeight(victoryHeight);
             for(int i = 0; i < game.getTileSize(); i++){
+                if (i >= tiles.length){
+                    break;
+                }
                 game.setNrTile(i, tiles[i]);
             }
             game.setVictoryHeight(victoryHeight);
@@ -151,6 +147,29 @@ public class PlayerChooseController{
         }
     }
 
+    /**
+     * Helps Calculating stuff for the Tiles
+     * @param tiles
+     * @param game ,the actual game
+     */
+    private void tilesCalc(int[] tiles,Game game){
+        for(int i = 0; i < tiles.length; i++){
+            if (i < this.tileBox.getChildren().size() - 1) {
+                TextField tilenr = (TextField) ((VBox) this.tileBox.getChildren().get(i + 1)).getChildren().get(1);
+                if (i >= game.getTileSize()) {
+                    tiles[i] = updateValueOfTextfield(tilenr, 0);
+                } else {
+                    tiles[i] = updateValueOfTextfield(tilenr, game.getNrTile(i));
+                }
+            } else {
+                if (i >= game.getTileSize()) {
+                    tiles[i] = 0;
+                } else {
+                    tiles[i] = game.getNrTile(i);
+                }
+            }
+        }
+    }
     /**
      * Updates the integer Value in the given textfield
      * @param textfield ,the given textfield which you want to update
@@ -188,6 +207,7 @@ public class PlayerChooseController{
                 }
 
                 int amount = player.getAmountOfFigures();
+//                int amount = player.getRealAmountFigure();
                 try {
                     amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
                 } catch (NumberFormatException e) {
@@ -209,7 +229,8 @@ public class PlayerChooseController{
                     player.setAmountOfFigures(amount);
                     // Todo: set Team and playertype (or outside this condition)
                 }
-                nrOfFigures += player.getAmountOfFigures();
+//                nrOfFigures += player.getAmountOfFigures();
+                nrOfFigures += player.getRealAmountFigure();
             }
         }
         return nrOfFigures;
@@ -218,7 +239,7 @@ public class PlayerChooseController{
     /**
      * The method getting called, when user pressed the add player button
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void addPlayer() {
         Settings.getActualGame().addPlayer(2, String.valueOf(Settings.getActualGame().getPlayerOrder().size()), Settings.getActualGame().getAmountOfTurns());
     }
@@ -226,7 +247,7 @@ public class PlayerChooseController{
     /**
      * The method getting called, when user pressed the add player button
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void setAmountOfFigures() {
         int amountOfFigures = 2;
         try {
@@ -242,7 +263,7 @@ public class PlayerChooseController{
     /**
      * Swaps the scene to the MainMenu
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void gotoHome(){
         sceneHandler.loadView("mainMenu");
     }

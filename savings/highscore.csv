@@ -1,4 +1,4 @@
 Name;LevelOfIntelligence;AmountOfTurns;Team Name
-1;HUMAN;0;1
-1;HUMAN;0;1
-1;HUMAN;0;1
+Basti, Mathis;HUMAN, HUMAN;78;Backend
+Peter, Ludwig;HUMAN, HUMAN;90;Frontend
+Terminator, ChatGPT;AI_1, AI_3;100;KI

@@ -35,7 +35,7 @@ public class SettingsController {
     /**
      * The method getting called, when user pressed the back to main menu button
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void gotoMainMenu() {
         sceneHandler.loadView("mainMenu");
     }
@@ -43,7 +43,7 @@ public class SettingsController {
     /**
      * Swaps the local Language to English
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void chooseEnglish(){
         Language.getInstance().setLanguage(Locale.ENGLISH);
     }
@@ -51,7 +51,7 @@ public class SettingsController {
     /**
      * Swaps the local Language to German
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void chooseGerman(){
         Language.getInstance().setLanguage(Locale.GERMAN);
     }
@@ -59,7 +59,7 @@ public class SettingsController {
     /**
      * Swaps the theme to Blood Theme
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void chooseThemeBlood(){
 //        sceneHandler.loadStyle("blood");
         GUISettings.getInstance().setTheme("Horror1");
@@ -68,7 +68,7 @@ public class SettingsController {
     /**
      * Swaps the theme to Zombie Theme
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void chooseThemeZombies(){
 //        sceneHandler.loadStyle("zombies");
         GUISettings.getInstance().setTheme("Horror2");
@@ -77,7 +77,7 @@ public class SettingsController {
     /**
      * Swaps the theme to Default Theme
      */
-    @FXML
+    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void chooseThemeDefault(){
 //        sceneHandler.loadStyle("zombies");
         GUISettings.getInstance().setTheme("");

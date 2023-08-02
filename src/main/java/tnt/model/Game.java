@@ -124,7 +124,7 @@ public class Game extends Observable {
      * @param victoryHeight the victory height to be set
      */
     public void setVictoryHeight(int victoryHeight) {
-        int[] new_tiles = new int[victoryHeight];
+        int[] new_tiles = new int[victoryHeight + 1];
         for (int i = 0; i < new_tiles.length; i++){
             if (i >= this.numberOfTile.length){
                     new_tiles[i] = Settings.getNrOfTile(i);
@@ -133,6 +133,7 @@ public class Game extends Observable {
                 }
         }
         this.victoryHeight = victoryHeight;
+        this.numberOfTile = new_tiles;
         for (Player player: playerOrder){
             if (globalTilePool){
                 player.setNumberOfTile(numberOfTile);
@@ -181,9 +182,10 @@ public class Game extends Observable {
     }
 
     /**
-     * @return GameStatus
+     * @param gameStatus the game Status of the game
      */
-    public void setGameStatus(GameStatus placeFigures) {
+    public void setGameStatus(GameStatus gameStatus) {
+        this.gameStatus=gameStatus;
     }
 
     /**
@@ -390,8 +392,8 @@ public class Game extends Observable {
             playerOrder.remove(player);
             notifyObservers();
         }
-        playerOrder.remove(player);
-        notifyObservers();
+//        playerOrder.remove(player);
+//        notifyObservers();
     }
 
     /**

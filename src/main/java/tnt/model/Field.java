@@ -90,11 +90,17 @@ public class Field extends Observable {
         return fieldY;
     }
 
+    /**
+     * @param figure, which is placed on this Field
+     */
     public void setFigure(Figure figure) {
         this.figure = figure;
         notifyObservers();
     }
 
+    /**
+     * @return the figure, which is placed on this Field
+     */
     public Figure getFigure() {
         return figure;
     }

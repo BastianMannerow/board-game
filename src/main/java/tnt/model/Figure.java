@@ -1,8 +1,7 @@
 package tnt.model;
 import tnt.util.Observable;
-import java.util.Iterator;
+
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * A figure owned by the Player.
@@ -98,7 +97,7 @@ public class Figure extends Observable {
             for (int j = y-1; j <= y+1; j++) {
 
                 // "Wahlpflichtfeature - Die Welt ist eine Kugel"
-                if(board.getRoundWorld()){
+                if(board.isRoundWorld()){
                     reachableFields.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
                 }
                 else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {
@@ -129,7 +128,7 @@ public class Figure extends Observable {
             for (int j = y-1; j <= y+1; j++) {
 
                 // "Wahlpflichtfeature - Die Welt ist eine Kugel"
-                if(board.getRoundWorld()){
+                if(board.isRoundWorld()){
                     validBuilds.add(board.getField((i+boardX)%boardX, (j+boardY)%boardY));
                 }
                 else if(i>= 0 && i < boardX && j>= 0 && j < boardY) {

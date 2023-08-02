@@ -24,7 +24,7 @@ public class Player extends Observable {
     private int amountOfTurns;
     private ArrayList<Figure> figures = new ArrayList<>();
     private String team;
-    private int[] numberOfTile;
+    private int[] numberOfTile={};
 
     /**
      * Constructing an object Player.
@@ -172,20 +172,6 @@ public class Player extends Observable {
     }
 
     /**
-     * Increases the height of a field
-     *
-     * @param field the field chosen by the player
-     */
-    public void executeBuild(Field field){
-        int newLevel = field.getTowerLevel()+1;
-        field.setTowerLevel(newLevel);
-        if(newLevel == 4){
-            field.setTowerComplete(true);
-        }
-        // TODO: remove a tile
-    }
-
-    /**
      * Moves the figure on the board
      *
      * @param field the field chosen by the player
@@ -196,6 +182,8 @@ public class Player extends Observable {
         figure.setX(field.getX());
         figure.setY(field.getY());
         field.setFigure(figure);
+        amountOfTurns = amountOfTurns+1;
+        game.setAmountOfTurns(amountOfTurns+1);
 
         // Check if game is already over
         if(field.getTowerLevel() == game.getVictoryHeight()){
@@ -239,6 +227,14 @@ public class Player extends Observable {
      */
     public int getAmountOfFigures() {
         return this.amountOfFigures;
+    }
+
+    /**
+     * getter for the number of figures this player really has
+     * @return the number of figures
+     */
+    public int getRealAmountFigure() {
+        return figures.size();
     }
 
     /**

@@ -1,20 +1,21 @@
 package tnt.model;
 
+import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
 
 /**
  * Unit tests for the FileManager class.
  */
 public class FileManagerTest {
     private FileManager fileManager;
+    private ArrayList<Player> playerOrder;
 
     /**
      * Set up the FileManager instance before each test.
@@ -30,28 +31,40 @@ public class FileManagerTest {
     @Test
     public void testLoadCSV() {
         String filepath = "path/to/file.csv";
-        List<String[]> expectedData = new ArrayList<>();
-        expectedData.add(new String[]{"Hans", "Lulatsch"});
-        expectedData.add(new String[]{"Stefan", "Bombig"});
+        List<String> expectedHeader = Arrays.asList("Hans", "Lulatsch");
+        List<List<String>> expectedData = new ArrayList<>();
+        expectedData.add(Arrays.asList("Stefan", "Bombig"));
 
-        List<Object> actualData = fileManager.loadCSV(filepath);
+        List<Object> expected = new ArrayList<>();
+        expected.add(expectedHeader);
+        expected.add(expectedData);
 
-        Assertions.assertEquals(expectedData, actualData);
+        List<Object> actual = fileManager.loadCSV(filepath);
+
+        Assertions.assertEquals(expected, actual);
     }
+
 
     /**
      * Test case for the readString method.
      */
     @Test
     public void testReadString() {
-        String str = "Hans,Lulatsch\nStefan,Bombig";
+        String str = "Hans;Lulatsch\nStefan;Bombig";
         List<String[]> expectedData = new ArrayList<>();
         expectedData.add(new String[]{"Hans", "Lulatsch"});
         expectedData.add(new String[]{"Stefan", "Bombig"});
 
-        List<String[]> actualData = fileManager.readString(str);
+        List<Object> csv = fileManager.readString(str);
+        List<String> header = (List<String>) csv.get(0);
+        List<List<String>> actualData = (List<List<String>>) csv.get(1);
 
-        Assertions.assertEquals(expectedData, actualData);
+        for(int i = 0; i < expectedData.size(); i++){
+            for (int j = 0; j < expectedData.get(i).length; i++) {
+//                Assertions(Arrays.asList(expectedData.get(i)), actualData.get(i));
+                Assertions.assertEquals(expectedData.get(i)[j], actualData.get(i).get(j));
+            }
+        }
     }
 
     /**
@@ -77,10 +90,11 @@ public class FileManagerTest {
     @Test
     public void testMakeString() {
         List<String[]> data = new ArrayList<>();
+        String lineSeparator = System.getProperty("line.separator");
         data.add(new String[]{"Hans", "Lulatsch"});
         data.add(new String[]{"Stefan", "Bombig"});
 
-        String expectedString = "John,Doe\nJane,Smith";
+        String expectedString = "Hans,Lulatsch" + lineSeparator + "Stefan,Bombig" + lineSeparator;
 
         String actualString = FileManager.makeString(data);
 
@@ -107,24 +121,67 @@ public class FileManagerTest {
      */
     @Test
     public void testGetSavedGames() {
-        ArrayList<String> expectedGames = new ArrayList<>();
-        expectedGames.add("Game 1");
-        expectedGames.add("Game 2");
+        playerOrder = new ArrayList<>();
+        ArrayList<Figure> figures = new ArrayList<>();
+        int initialNumberOfGames = fileManager.getSavedGames().size();
 
-        ArrayList<String> actualGames = fileManager.getSavedGames();
+        Game game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
+        Player player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
+        playerOrder.add(player);
+        fileManager.saveGame(game);
 
-        Assertions.assertEquals(expectedGames, actualGames);
+        ArrayList<String> savedGames = fileManager.getSavedGames();
+        int numberOfGamesAfterAddingNew = savedGames.size();
+
+        Assertions.assertEquals(initialNumberOfGames + 1, numberOfGamesAfterAddingNew);
+        fileManager.deleteFolder(new File(System.getProperty("user.dir")+File.separator + "savings"+File.separator + "Test Game"));
     }
+
 
     /**
      * Test case for the loadGame method.
      */
     @Test
     public void testLoadGame() {
-        String savedGame = "Game 1";
-        Game game = new Game(2);
+        String savedGame = "Test Game1";
+        ArrayList<Player> playerOrder= new ArrayList<>();
+        Game game = new Game(playerOrder, 12, "Test Game1", 1, 3, 3, true);
 
-        fileManager.loadGame(savedGame, game);
+        Player player1 = new Player(Player.PlayerType.HUMAN, "Player1", Color.BLUE, 1, game, "1", 0);
+        Player player2 = new Player(Player.PlayerType.HUMAN, "Player2", Color.BLUE, 0, game, "2", 0);
+        playerOrder.add(player1);
+        playerOrder.add(player2);
+        game.setNumberOfTile((new int[] {10,10,10,10,10,10}));
+        player1.setNumberOfTile(new int[] {10,10,10,10,10,10});
+        player2.setNumberOfTile(new int[] {10,10,10,10,10,10});
+        player1.addFigure(player1.getAmountOfFigures());
+        player2.addFigure(player2.getAmountOfFigures());
+
+        fileManager.saveGame(game);
+
+        // Call the method under test.
+        FileManager fileManager = new FileManager();
+        fileManager.getSavedGames();
+        Game gamex= new Game(1);
+        fileManager.loadGame(savedGame, gamex);
+
+
+        // Validate the results (e.g., check that the players have the correct figures).
+        Assertions.assertEquals(1, player1.getAmountOfFigures());
+        Assertions.assertEquals(0, player2.getAmountOfFigures());
+
+        // Validate the position of figures
+        Figure player1Figure = player1.getFigure().get(0);
+
+
+        Assertions.assertEquals(0, player1Figure.getX());
+        Assertions.assertEquals(0, player1Figure.getY());
+
+
+        // Validate the placed state of figures
+        Assertions.assertFalse(player1Figure.isPlaced());
+        player1Figure.setPlaced();
+        Assertions.assertTrue(player1Figure.isPlaced());
 
     }
 
@@ -133,11 +190,10 @@ public class FileManagerTest {
      */
     @Test
     public void testSaveGame() {
-        Game game = new Game(2);
-        // ... Set up the game object and other necessary data
+        playerOrder = new ArrayList<>();
+        Game game = new Game(playerOrder, 12, "Test GameX", 1, 3, 3, true);
 
         fileManager.saveGame(game);
-
     }
 
     /**
@@ -146,8 +202,6 @@ public class FileManagerTest {
     @Test
     public void testGetFieldsData() {
         Game game = new Game(2);
-        // ... Set up the game object and its board with necessary data
-
         List<String[]> fieldsData = fileManager.getFieldsData(game);
 
     }
@@ -158,7 +212,6 @@ public class FileManagerTest {
     @Test
     public void testGetFiguresData() {
         ArrayList<Player> playerList = new ArrayList<>();
-
         List<String[]> figureData = fileManager.getFiguresData(playerList);
 
     }
@@ -169,7 +222,6 @@ public class FileManagerTest {
     @Test
     public void testGetPlayersData() {
         ArrayList<Player> playerList = new ArrayList<>();
-
         List<String[]> playerData = fileManager.getPlayersData(playerList);
 
     }
@@ -180,7 +232,6 @@ public class FileManagerTest {
     @Test
     public void testGetGameData() {
         Game game = new Game(2);
-
         List<String[]> gameData = fileManager.getGameData(game);
 
     }
@@ -191,7 +242,6 @@ public class FileManagerTest {
     @Test
     public void testLoadHighscore() {
         fileManager.loadHighscore();
-
     }
 
     /**
@@ -201,8 +251,6 @@ public class FileManagerTest {
     public void testSaveHighscore() {
         Game game = new Game(2);
         ArrayList<Player> playerList = new ArrayList<>();
-
         fileManager.saveHighscore(game, "Team A", 1);
-
     }
 }

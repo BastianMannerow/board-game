@@ -53,10 +53,17 @@ public class Board {
         return ySize;
     }
 
+    /**
+     * @param selected the boolean if the world is round
+     */
     public void setRoundWorld(boolean selected) {
         this.roundWorld = selected;
     }
-    public boolean getRoundWorld() {
+
+    /**
+     * @return the boolean if the world is round
+     */
+    public boolean isRoundWorld() {
         return this.roundWorld;
     }
 }

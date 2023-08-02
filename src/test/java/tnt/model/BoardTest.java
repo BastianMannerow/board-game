@@ -62,7 +62,7 @@ public class BoardTest {
     @Test
     public void testSetRoundWorld() {
         board.setRoundWorld(true);
-        Assertions.assertTrue(board.getRoundWorld());
+        Assertions.assertTrue(board.isRoundWorld());
     }
 
     /**
@@ -71,6 +71,6 @@ public class BoardTest {
      */
     @Test
     public void testGetRoundWorld() {
-        Assertions.assertFalse(board.getRoundWorld());
+        Assertions.assertFalse(board.isRoundWorld());
     }
 }

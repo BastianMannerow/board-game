@@ -29,7 +29,6 @@ public class GameTest {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player);
         game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
-
     }
 
     /**
