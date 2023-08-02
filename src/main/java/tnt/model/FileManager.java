@@ -385,7 +385,7 @@ public class FileManager {
                 saveGameName = "Game ".concat(Integer.toString(number));
             }
             else {
-                String lastGame = getSavedGames().get(getSavedGames().size() - 1);
+                String lastGame = savedGames.get(savedGames.size() - 1);
                 lastGame = lastGame.replace("Game ", "").trim();
                 int lastGameNumber = Integer.parseInt(lastGame);
                 saveGameName = "Game ".concat(Integer.toString(lastGameNumber + 1));
