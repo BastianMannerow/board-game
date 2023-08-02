@@ -56,7 +56,7 @@ public class FileManager {
         String newstr = str.replace("new##notaseperator##data", "new####data");
         List<List<String>> data = new ArrayList<>();
         List<String> header = new ArrayList<>();
-        String[] rows = newstr.split("\n");
+        String[] rows = newstr.split(System.getProperty("line.separator"));
         int lineNumber = 0;
         for(String line : rows){
             String[] row = line.split(";,"); // A separator for parsing
@@ -130,7 +130,7 @@ public class FileManager {
                     csvLine.append(";,");
                 }
             }
-            csvLine.append(System.lineSeparator());
+            csvLine.append(System.getProperty("line.separator"));
         }
         return csvLine.toString().replace("new####data", "new##notaseperator##data");
     }
