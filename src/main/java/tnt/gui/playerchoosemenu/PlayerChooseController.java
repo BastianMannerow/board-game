@@ -50,7 +50,7 @@ public class PlayerChooseController{
     @FXML
     Label maxStepDownHeight;
     @FXML
-    Label maxBuildingHeightLabel;
+    Label victoryHeightLabel;
     @FXML
     Button addPlayerBtn;
     @FXML
