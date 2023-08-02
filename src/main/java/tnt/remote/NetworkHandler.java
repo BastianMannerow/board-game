@@ -36,13 +36,10 @@ public class NetworkHandler extends Observable {
     }
 
     void startServerClientConnection(Socket socket) {
-        System.out.println("Server: Client connected");
         try {
             initConnection(socket);
             Settings.setServerMode(true);
         } catch (IOException e) {
-//            error("Server: Error opening connecting", e.getMessage());
-//            reset();
             System.err.println("could not establish server socket");
         }
     }
@@ -118,7 +115,6 @@ public class NetworkHandler extends Observable {
     }
 
     private void parseGame(FileManager fm, String gameStr){
-        System.out.println(gameStr);
         String[] data = gameStr.split("new####data");
         Game game = new Game(1);
         // getting player data
@@ -150,7 +146,6 @@ public class NetworkHandler extends Observable {
         header = (List<String>) dataObject.get(0);
         List<List<String>> figureData = (List<List<String>>) dataObject.get(1);
         fm.setFigureData(header, figureData, game, playerList);
-        System.out.println("Got new game");
         Settings.setActualGame(game);
     }
 
@@ -215,7 +210,6 @@ public class NetworkHandler extends Observable {
      * @param actualGame
      */
     public void sendGame(Game actualGame) {
-        System.out.println("Sending here the game");
         FileManager fm = new FileManager();
         StringBuilder data = new StringBuilder();
 
@@ -239,7 +233,6 @@ public class NetworkHandler extends Observable {
         List<String[]> boardData = fm.getBoardData(actualGame);
         data.append(fm.makeString(boardData));
         data.append("new####data");
-//        System.out.println("sendet this game: " + data.toString());
 
         // Get Figure Information
         List<String[]> figureData = fm.getFiguresData(playerList);
