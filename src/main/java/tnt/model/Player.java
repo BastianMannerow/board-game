@@ -1,5 +1,6 @@
 package tnt.model;
 import java.util.ArrayList;
+import java.util.Set;
 
 import javafx.scene.paint.Color;
 import tnt.util.Observable;
@@ -259,13 +260,19 @@ public class Player extends Observable {
     public void prePlayersTurn(){
         switch (levelOfIntelligence){
             case AI_1:
-                ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                if (Settings.isServerMode()) {
+                    ArtificialPlayer.easyAI(game.getBoard(), this, game);
+                }
                 break;
             case AI_2:
-                ArtificialPlayer.mediumAI(game.getBoard(), this, game);
+                if (Settings.isServerMode()) {
+                    ArtificialPlayer.mediumAI(game.getBoard(), this, game);
+                }
                 break;
             case AI_3:
-                ArtificialPlayer.hardAI(game.getBoard(), this, game);
+                if (Settings.isServerMode()) {
+                    ArtificialPlayer.hardAI(game.getBoard(), this, game);
+                }
                 break;
             default:
                 break;
