@@ -102,7 +102,6 @@ public class PlayerChooseController{
      * @param nrOfFigures ,the amount of figures selected within the Menu
      */
     private void updateGameSettings(Game game, int nrOfFigures) {
-        // Todo: get the other fields
 
         int maxStepUp = updateValueOfTextfield(this.maxStepUp, game.getMaxStepUpHeight());
         int maxStepDown = updateValueOfTextfield(this.maxStepDown, game.getMaxStepDownHeight());
@@ -174,10 +173,10 @@ public class PlayerChooseController{
         }
     }
     /**
-     * Updates the integer Value in the given textfield
-     * @param textfield ,the given textfield which you want to update
-     * @param initvalue ,the value with which you want to intialize TODO: Seeing if this line is correct
-     * @return
+     * Updates the integer represeted by the textfield
+     * @param textfield ,the given textfield where the data should come from
+     * @param initvalue ,the value it returns if parsing dont work
+     * @return the value of the textfield if parsing succeed, else the initvalue
      */
     private int updateValueOfTextfield(TextField textfield, int initvalue) {
         int value = initvalue;
@@ -210,7 +209,6 @@ public class PlayerChooseController{
                 }
 
                 int amount = player.getAmountOfFigures();
-//                int amount = player.getRealAmountFigure();
                 try {
                     amount = Integer.parseInt(((TextField) ((VBox) playerView.getChildren().get(3)).getChildren().get(1)).getText());
                 } catch (NumberFormatException e) {
@@ -230,9 +228,7 @@ public class PlayerChooseController{
 
                 if (game.selectingPlayers()){
                     player.setAmountOfFigures(amount);
-                    // Todo: set Team and playertype (or outside this condition)
                 }
-//                nrOfFigures += player.getAmountOfFigures();
                 nrOfFigures += player.getRealAmountFigure();
             }
         }

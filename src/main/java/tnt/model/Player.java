@@ -12,7 +12,6 @@ public class Player extends Observable {
 
     public enum PlayerType {
         HUMAN,
-//        REMOTE,
         AI_1,
         AI_2,
         AI_3,

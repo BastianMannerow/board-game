@@ -15,8 +15,6 @@ public class ResourceHandler {
 
     private Map<String, Image> imgs = new HashMap<String, Image>();
     private Map<String, FXMLLoader> fxmls = new HashMap<String, FXMLLoader>();
-//    private Map<String, String> csss = new HashMap<String, String>();
-
     private ResourceHandler() {
 
     }

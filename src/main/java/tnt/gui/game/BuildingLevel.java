@@ -28,7 +28,6 @@ public class BuildingLevel extends DragableObject implements Observer {
      * @throws IOException Exception when the given level does not exist
      */
     public BuildingLevel(int level) throws IOException {
-//        FXMLLoader loader;
         GUISettings.getInstance().addObserver(this);
         imageView = new ImageView();
         this.level = level;

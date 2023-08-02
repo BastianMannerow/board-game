@@ -32,7 +32,6 @@ public class Gui extends Application {
 
         // adding the main menu to the scenehandler
         sceneHandler.addMain(new Scene(mainView, 1000, 800));
-//        sceneHandler.loadStyle(GUISettings.getDefaultTheme());
 
         new SettingsView(sceneHandler);
 

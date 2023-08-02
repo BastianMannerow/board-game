@@ -30,7 +30,6 @@ public class ListenService extends Service<Integer> {
                 try {
                     serverSocket.close();
                 } catch (IOException e) {
-                    // ignore
                     System.err.println("Socket has been closed already");
                 }
             }

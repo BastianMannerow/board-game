@@ -16,9 +16,6 @@ import java.io.IOException;
 public class MainMenuView extends VBox implements Observer {
 
     private MainMenuController mainMenuController;
-
-    // Todo: Maybe hold the scenebuilder in another class extending FXMLLoader and load every scene with that (than you dont have to call setScenebuilder each time)
-
     /**
      * Constructor for the main menu view
      * @param sceneHandler the scene handler holding all scenes

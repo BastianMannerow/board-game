@@ -232,11 +232,7 @@ public class GameView extends BorderPane implements Observer {
             dragableObject.setMouseTransparent(true);
             dragableObject.setVisible(false);
 
-            // Todo: dont add the init figures every update anew
             ((VBox) this.getRight()).getChildren().clear();
-
-
-
             for (Player player: players) {
                 for (Figure fig : player.getFigure()) {
                     if (!fig.isPlaced()) {
@@ -351,7 +347,6 @@ public class GameView extends BorderPane implements Observer {
             highlight.setPreserveRatio(true);
             highlight.setDisable(true);
             highlight.setFitHeight(SizeHandler.getPrefSize());
-//            highlighted.put(fieldv, highlight);
             list.add(highlight);
             ((StackPane) fieldv.getChildren().get(0)).getChildren().add(highlight);
         } catch (Exception e) {
@@ -381,16 +376,6 @@ public class GameView extends BorderPane implements Observer {
      * @return the view of the figure
      */
     static FigureView getFigureView(Figure fig){
-//        if (!figureHolder.containsKey(fig)){
-//            try {
-//                FigureView figureView1 = new FigureView(fig.getOwner(), fig);
-//                figureHolder.put(fig, figureView1);
-////                setDragableEvents(figureView1, false);
-//            } catch (IOException e) {
-//                System.err.println("could not create FigureView");
-//                throw new RuntimeException(e);
-//            }
-//        }
         return figureHolder.get(fig);
     }
 

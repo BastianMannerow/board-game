@@ -63,8 +63,7 @@ public class FieldView extends HBox implements Observer {
     }
 
     /**
-     * TODO: better description i don´t know what is going on here
-     * Updates Complete Towers
+     * Updates Complete Towers, adds the dome to the view
      */
     private void updateTowerComplete() {
         if (field.getTowerComplete()) {
@@ -100,9 +99,6 @@ public class FieldView extends HBox implements Observer {
             if (!((StackPane) this.getChildren().get(0)).getChildren().contains(buildingHolder.get(level))) {
                 ((StackPane) this.getChildren().get(0)).getChildren().add(buildingHolder.get(level));
             }
-
-            // Todo: Remove not supported right now
-//            ((StackPane) this.getChildren().get(0)).getChildren().removeIf(node -> node instanceof FigureView);
         }
     }
 

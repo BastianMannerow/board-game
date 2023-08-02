@@ -86,7 +86,7 @@ public class PlayerChooseView extends VBox implements Observer {
     }
 
     /**
-     * Updates the tiles TODO: what are you doing here???
+     * Updates the tiles in this view
      */
     private void updateTileResources() {
         controller.tilesSepBox.setSelected(game.isGlobalTilePool());
@@ -98,9 +98,9 @@ public class PlayerChooseView extends VBox implements Observer {
             Label tileLabel = new Label();
             TextField textField = new TextField();
             if (i==0) {
-                tileLabel.setText(Language.getTranslation("domeLabel")); // Todo
+                tileLabel.setText(Language.getTranslation("domeLabel"));
             } else {
-                tileLabel.setText(Language.getTranslation("buildingLevelLabel") + " " + i); // Todo, but what was it?
+                tileLabel.setText(Language.getTranslation("buildingLevelLabel") + " " + i);
             }
             textField.setText(Integer.toString(game.getPlayersTurn().getNrTile(i)));
             textField.setPrefWidth(USE_COMPUTED_SIZE);
@@ -187,16 +187,6 @@ public class PlayerChooseView extends VBox implements Observer {
                     player.setTeam(team.getText());
                 }
             });
-
-            // Todo: Check if this is necessary, often playertype is null when action is called...
-
-//            ChoiceBox playerType = (ChoiceBox) ((VBox) playerAloneChooseView.getChildren().get(6)).getChildren().get(1);
-//            playerType.setOnAction(new EventHandler<ActionEvent>() {
-//                @Override
-//                public void handle(ActionEvent actionEvent) {
-//                    player.setLevelOfIntelligence((Player.PlayerType) playerType.getValue());
-//                }
-//            });
         }
         playerHolder.get(player).setPlayerNumber(i);
     }

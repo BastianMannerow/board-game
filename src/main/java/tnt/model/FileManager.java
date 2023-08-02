@@ -249,7 +249,6 @@ public class FileManager {
             color = "#" + color.substring(2); // Entfernt das "0x" und fügt "#" hinzu
             playerObject.setColor(Color.web(color));
             playerObject.setAmountOfFigures(amountOfFigures);
-//            playerObject.addFigure(amountOfFigures);
 
             playerObject.setAmountOfTurns(amountOfTurns);
             playerObject.setTeam(team);

@@ -52,10 +52,6 @@ public class NetworkHandler extends Observable {
 
         networkPrinter.add(new PrintWriter(socket.getOutputStream(), true));
 
-        readLineService.setOnFailed(failedEvent -> {
-//            reset();
-//            toolbar.getItems().remove(closeButton);
-        });
         readLineService.setOnSucceeded(readEvent -> {
             String line = (String) readEvent.getSource().getValue();
             receiveMsg(line);
@@ -75,8 +71,6 @@ public class NetworkHandler extends Observable {
             Settings.setServerMode(false);
         } catch (IOException e) {
             System.err.println("Error connecting to the server");
-//            error("Error connecting to the server", e.getMessage());
-//            reset();
         }
     }
 
@@ -156,7 +150,6 @@ public class NetworkHandler extends Observable {
             ExecuteGameInputs.buildObject(Integer.parseInt(buildData[0]), field);
         } catch (NumberFormatException e) {
             System.err.println("Could not build object, because integer could not get parsed: " + buildData[0] + ", " + buildData[1] + ", " + buildData[2] + ", " + e);
-//                    throw new RuntimeException(e);
         }
     }
 
@@ -181,7 +174,6 @@ public class NetworkHandler extends Observable {
             }
         } catch (NumberFormatException e) {
             System.err.println("Could not move figure, because integer could not get parsed: " + moveData[0] + ", " + moveData[1] + ", " + moveData[2] + ", " + e);
-//                    throw new RuntimeException(e);
         }
     }
 

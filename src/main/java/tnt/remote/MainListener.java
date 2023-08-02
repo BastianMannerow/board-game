@@ -43,10 +43,6 @@ public class MainListener extends Service<Integer> {
                         listenService.setOnFailed(failedEvent -> {
                             System.err.println("Unable to start the server." );
                         });
-
-//                        listenService.setOnSucceeded(succeededEvent -> {
-////                            System.out.println("Finished with that client");
-//                        });
                         listenService.start();
 
                     } catch (IOException e) {
@@ -54,7 +50,6 @@ public class MainListener extends Service<Integer> {
                         System.err.println("could not accept");
                     }
                 }
-//                return 0;
             }
 
             @Override
@@ -62,7 +57,6 @@ public class MainListener extends Service<Integer> {
                 try {
                     serverSocket.close();
                 } catch (IOException e) {
-                    // ignore
                     System.err.println("socket has already been closed");
                 }
             }
