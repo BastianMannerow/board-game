@@ -375,8 +375,13 @@ public class FileManager {
     public void saveGame(Game game){
         String saveGameName = game.getGameName();
         // If new game, create new saving folder
+        if (saveGameName == null){
+            saveGameName = "newGame";
+        }
         if(saveGameName.equals("newGame")){
-            if(getSavedGames().get(getSavedGames().size() - 1).equals("-")){
+            ArrayList<String> savedGames = getSavedGames();
+            savedGames.removeIf(str -> str.startsWith("Test"));
+            if(savedGames.isEmpty()){
                 int number = 1;
                 saveGameName = "Game ".concat(Integer.toString(number));
             }
