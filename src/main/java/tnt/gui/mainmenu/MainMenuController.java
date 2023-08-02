@@ -17,6 +17,7 @@ import tnt.model.Settings;
 /**
  * The controller for the main menu
  */
+@SuppressWarnings("PMD.UnusedPrivateMethod")
 public class MainMenuController{
 
     /**
@@ -50,7 +51,7 @@ public class MainMenuController{
     /**
      * Initializes the Controller
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void initialize(){
         defaultConfigs = FXCollections.observableArrayList(DefaultConfig.values());
         defaultConfig.setConverter(new StringConverter<DefaultConfig>() {
@@ -98,10 +99,9 @@ public class MainMenuController{
     /**
      * Starts a new Game
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void newGame() {
         Settings.setActualGame(new Game(getAmountOfPlayer((DefaultConfig) defaultConfig.getValue())));
-        System.out.println(Settings.getActualGame());
         gotoGame();
     }
 
@@ -109,7 +109,7 @@ public class MainMenuController{
     /**
      * method to get called when load/save game is pressed
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void gotoSaveMenu() {
         sceneHandler.loadView("SaveLoad");
     }
@@ -118,7 +118,7 @@ public class MainMenuController{
     /**
      * method to get called when settings is pressed
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void gotoSettings() {
         sceneHandler.loadView("settings");
     }
@@ -126,34 +126,17 @@ public class MainMenuController{
     /**
      * method to get called when start server is pressed
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void startServer() {
-        System.out.println("about to start the server");
         Settings.getNetworkHandler().listen();
-        System.out.println("startet the server");
     }
 
     /**
      * method to get called when connect to server is pressed
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void connectToServer() {
-        System.out.println("about to connect as client to server");
-//        Settings.getNetworkHandler().startClient("localhost");
         Settings.getNetworkHandler().askForHost().ifPresent(Settings.getNetworkHandler()::startClient);
-//        Settings.setClientMode();
-        System.out.println("connected to server");
-    }
-
-    /**
-     * Sends data to through the established connection
-     */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
-    private void sendToPartner() {
-//        networkHandler.sendMsg("Hello\nabc");
-        FileManager fileManager = new FileManager();
-        Settings.getNetworkHandler().sendGame(Settings.getActualGame());
-
     }
 
     /**

@@ -56,7 +56,6 @@
          <children>
             <Button fx:id="serverButton" mnemonicParsing="false" onAction="#startServer" text="Start Server" />
             <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectToServer" text="Connect as Client" />
-            <Button mnemonicParsing="false" onAction="#sendToPartner" text="Send something" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

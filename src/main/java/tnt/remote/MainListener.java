@@ -31,29 +31,27 @@ public class MainListener extends Service<Integer> {
                     serverSocket = new ServerSocket(port);
                     networkHandler.clear();
                 } catch (IOException e) {
-                    System.out.println("could not start server");
+                    System.err.println("could not start server");
                     e.printStackTrace();
                 }
                 while (true) {
                     try {
-                        System.out.println("waiting for client");
                         Socket socket = serverSocket.accept();
-//                        System.out.println("client connected oho");
                         ListenService listenService = new ListenService();
                         listenService.setNetworkHandler(networkHandler);
                         listenService.setSocket(socket);
                         listenService.setOnFailed(failedEvent -> {
-                            System.out.println("Unable to start the server." );
+                            System.err.println("Unable to start the server." );
                         });
 
-                        listenService.setOnSucceeded(succeededEvent -> {
-                            System.out.println("Finished with that client");
-                        });
+//                        listenService.setOnSucceeded(succeededEvent -> {
+////                            System.out.println("Finished with that client");
+//                        });
                         listenService.start();
 
                     } catch (IOException e) {
-                        System.out.println("I/O error: " + e);
-                        System.out.println("could not accept");
+                        System.err.println("I/O error: " + e);
+                        System.err.println("could not accept");
                     }
                 }
 //                return 0;

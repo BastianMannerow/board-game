@@ -8,6 +8,7 @@ import tnt.model.*;
 /**
  * The controller for the game
  */
+@SuppressWarnings("PMD.UnusedPrivateMethod")
 public class GameController{
 
     private SceneHandler sceneHandler;
@@ -56,7 +57,7 @@ public class GameController{
     /**
      * the function swaps the scene to the playerMenu if it saved in the SceneHandler
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void playerMenu(){
         sceneHandler.loadView("playerMenu");
     }

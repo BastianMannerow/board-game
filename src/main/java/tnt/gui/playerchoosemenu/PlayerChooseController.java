@@ -13,7 +13,8 @@ import tnt.model.Settings;
 
 /**
  * The controller for the view where the player can be choosen
- */ @SuppressWarnings("PMD.TooManyFields")
+ */
+@SuppressWarnings({"PMD.TooManyFields", "PMD.UnusedPrivateMethod"})
 public class PlayerChooseController{
 
     @FXML
@@ -70,7 +71,7 @@ public class PlayerChooseController{
     /**
      * The method getting called, when user pressed the play button
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void runGame() {
         updateGameSettings();
         Game game = Settings.getActualGame();
@@ -240,7 +241,7 @@ public class PlayerChooseController{
     /**
      * The method getting called, when user pressed the add player button
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void addPlayer() {
         Settings.getActualGame().addPlayer(2, String.valueOf(Settings.getActualGame().getPlayerOrder().size()), Settings.getActualGame().getAmountOfTurns());
     }
@@ -248,7 +249,7 @@ public class PlayerChooseController{
     /**
      * The method getting called, when user pressed the add player button
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void setAmountOfFigures() {
         int amountOfFigures = 2;
         try {
@@ -264,7 +265,7 @@ public class PlayerChooseController{
     /**
      * Swaps the scene to the MainMenu
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void gotoHome(){
         sceneHandler.loadView("mainMenu");
     }

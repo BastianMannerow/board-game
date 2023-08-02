@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Controller class for the save load menu
  */
+@SuppressWarnings("PMD.UnusedPrivateMethod")
 public class SaveLoadMenuController {
     private SceneHandler sceneHandler;
     private FileManager fileManager= new FileManager();
@@ -21,7 +22,7 @@ public class SaveLoadMenuController {
     /**
      * Swaps the scene to the MainMenu if the scene exists
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void goToMenu() {
         sceneHandler.loadView("mainMenu");
     }
@@ -45,7 +46,7 @@ public class SaveLoadMenuController {
     /**
      * Saves a State of the Game through fileManager
      */
-    @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
+    @FXML
     private void save(){
         try {
             fileManager.saveGame(Settings.getActualGame());
