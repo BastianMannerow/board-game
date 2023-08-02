@@ -81,6 +81,7 @@ public class PlayerChooseController{
         }
         Settings.getNetworkHandler().sendGame(game);
         sceneHandler.loadView("gameView");
+        game.getPlayersTurn().prePlayersTurn();
     }
 
     /**
