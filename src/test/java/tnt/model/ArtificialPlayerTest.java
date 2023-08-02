@@ -89,7 +89,7 @@ public class ArtificialPlayerTest {
             }
         }
 
-        ExecuteGameInputs.placeFigure( game.getPlayersTurn().getFigure().get(0), freefield2);
+        ExecuteGameInputs.placeFigure( game.getPlayersTurn().getFigure().get(1), freefield2);
         Assertions.assertEquals(game.getPlayerOrder().get(1).allFiguresPlaced(),true);
         Figure fig1=player.getFigure().get(0);
         Figure fig2=player.getFigure().get(1);
