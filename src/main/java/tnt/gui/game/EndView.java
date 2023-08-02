@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import tnt.ResourceHandler;
+import tnt.gui.Language;
 import tnt.gui.SceneHandler;
 import tnt.model.FileManager;
 import tnt.model.Game;
@@ -59,7 +60,10 @@ public class EndView extends VBox {
                 }
             }
 
-            String WinnerOfTheGame = "Name: "+winner+" LevelOfIntelligence: "+getPlayertype(winPlayer)+ " AmountOfTurns: "+game.getAmountOfTurns()+" Team Name: "+winPlayer.getTeam();
+            String WinnerOfTheGame = Language.getTranslation("NameEnd") +
+                    winner+Language.getTranslation("LevelOfIntelligence") +getPlayertype(winPlayer)+
+                    Language.getTranslation("AmountOfTurns")+game.getAmountOfTurns()+
+                    Language.getTranslation("TeamNameEnd")+winPlayer.getTeam();
             Label labelwin = new Label();
             labelwin.setText(WinnerOfTheGame);
             labelwin.setPadding(new Insets(50,50,50,50));
@@ -68,8 +72,8 @@ public class EndView extends VBox {
             ArrayList<String> highscores = fileManager.loadHighscore();
             for (int i=0;i<highscores.size();i=i+4) {
                 String print="";
-                print += "Name: "+highscores.get(i)+" LevelOfIntelligence: "+
-                        highscores.get(i+1)+" AmountOfTurns: "+highscores.get(i+2)+" Team Name: "+highscores.get(i+3);
+                print += Language.getTranslation("NameEnd")+highscores.get(i)+Language.getTranslation("LevelOfIntelligence")+
+                        highscores.get(i+1)+Language.getTranslation("AmountOfTurns")+highscores.get(i+2)+Language.getTranslation("TeamNameEnd")+highscores.get(i+3);
                 Label label = new Label();
                 label.setText(print);
                 label.setPadding(new Insets(10,0,0,0));

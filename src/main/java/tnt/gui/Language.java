@@ -15,6 +15,10 @@ public class Language extends Observable {
 
     private static Map<String, String> actualLanguage;
     private static Map<String, String> english = Map.ofEntries(
+            entry("TeamNameEnd"," Team name: "),
+            entry("AmountOfTurns"," Amount of turns: "),
+            entry("LevelOfIntelligence"," Playertype: "),
+            entry("NameEnd","Name: "),
             entry("getDefaultLabel", "Please choose default config:"),
             entry("getStartServerLabel", "start server"),
             entry("getConnectAsClientLabel", "connect as client"),
@@ -53,6 +57,10 @@ public class Language extends Observable {
             entry("", "")
     );
     private static Map<String, String> german = Map.ofEntries(
+            entry("TeamNameEnd"," Team Name: "),
+            entry("AmountOfTurns"," Spielzuganzahl: "),
+            entry("LevelOfIntelligence"," Spielertyp: "),
+            entry("NameEnd","Name: "),
             entry("getDefaultLabel", "Wählen Sie bitte ein Preset:"),
             entry("getStartServerLabel", "Starte Server"),
             entry("getConnectAsClientLabel", "Verbinde zu Server"),
