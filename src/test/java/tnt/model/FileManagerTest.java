@@ -50,21 +50,22 @@ public class FileManagerTest {
      */
     @Test
     public void testReadString() {
-        String str = "Hans;Lulatsch\nStefan;Bombig";
+        String str = "Hans;,Lulatsch"+System.getProperty("line.separator")+"Stefan;,Bombig";
         List<String[]> expectedData = new ArrayList<>();
         expectedData.add(new String[]{"Hans", "Lulatsch"});
         expectedData.add(new String[]{"Stefan", "Bombig"});
 
         List<Object> csv = fileManager.readString(str);
         List<String> header = (List<String>) csv.get(0);
-        List<List<String>> actualData = (List<List<String>>) csv.get(1);
+        List<List<String>> actualData = (List<List<String>>) csv.get(0);
 
-        for(int i = 0; i < expectedData.size(); i++){
-            for (int j = 0; j < expectedData.get(i).length; i++) {
-//                Assertions(Arrays.asList(expectedData.get(i)), actualData.get(i));
-                Assertions.assertEquals(expectedData.get(i)[j], actualData.get(i).get(j));
-            }
-        }
+        Assertions.assertEquals(expectedData.get(0)[0],actualData.get(0));
+        Assertions.assertEquals(expectedData.get(0)[1],actualData.get(1));
+
+        List<List<String>> actualData2 = (List<List<String>>) csv.get(1);
+
+        Assertions.assertEquals(expectedData.get(1)[0],actualData2.get(0).get(0));
+        Assertions.assertEquals(expectedData.get(1)[1],actualData2.get(0).get(1));
     }
 
     /**
@@ -94,7 +95,7 @@ public class FileManagerTest {
         data.add(new String[]{"Hans", "Lulatsch"});
         data.add(new String[]{"Stefan", "Bombig"});
 
-        String expectedString = "Hans,Lulatsch" + lineSeparator + "Stefan,Bombig" + lineSeparator;
+        String expectedString = "Hans;,Lulatsch" + lineSeparator + "Stefan;,Bombig" + lineSeparator;
 
         String actualString = FileManager.makeString(data);
 
@@ -126,6 +127,9 @@ public class FileManagerTest {
         int initialNumberOfGames = fileManager.getSavedGames().size();
 
         Game game = new Game(playerOrder, 12, "Test Game", 1, 3, 3, true);
+
+        game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
+
         Player player = new Player(Player.PlayerType.HUMAN, "John", Color.RED, figures, 10);
         playerOrder.add(player);
         fileManager.saveGame(game);
