@@ -1,2 +1,0 @@
-playerOrder;amountOfTurns;maxStepUpHeight;maxStepDownHeight;gameName;victoryHeight;numberOfTiles;globalTilePool;gameStatus
-Player1 ,Player2;12;1;3;Test Game1;3;10, 10, 10, 10, 10, 10;true;PLACE_FIGURES

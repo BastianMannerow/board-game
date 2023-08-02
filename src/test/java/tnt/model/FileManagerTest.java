@@ -55,10 +55,15 @@ public class FileManagerTest {
         expectedData.add(new String[]{"Hans", "Lulatsch"});
         expectedData.add(new String[]{"Stefan", "Bombig"});
 
-        List<String[]> actualData = fileManager.readString(str);
+        List<Object> csv = fileManager.readString(str);
+        List<String> header = (List<String>) csv.get(0);
+        List<List<String>> actualData = (List<List<String>>) csv.get(1);
 
         for(int i = 0; i < expectedData.size(); i++){
-            Assertions.assertArrayEquals(expectedData.get(i), actualData.get(i));
+            for (int j = 0; j < expectedData.get(i).length; i++) {
+//                Assertions(Arrays.asList(expectedData.get(i)), actualData.get(i));
+                Assertions.assertEquals(expectedData.get(i)[j], actualData.get(i).get(j));
+            }
         }
     }
 

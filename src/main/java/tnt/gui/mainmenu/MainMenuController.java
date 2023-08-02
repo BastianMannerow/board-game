@@ -100,7 +100,7 @@ public class MainMenuController{
      */
     @FXML @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void newGame() {
-        Settings.setActualGame(null);
+        Settings.setActualGame(new Game(getAmountOfPlayer((DefaultConfig) defaultConfig.getValue())));
         System.out.println(Settings.getActualGame());
         gotoGame();
     }
@@ -152,8 +152,7 @@ public class MainMenuController{
     private void sendToPartner() {
 //        networkHandler.sendMsg("Hello\nabc");
         FileManager fileManager = new FileManager();
-        String data = FileManager.makeString(fileManager.getGameData(Settings.getActualGame()));
-        Settings.getNetworkHandler().sendMsg("game" + data);
+        Settings.getNetworkHandler().sendGame(Settings.getActualGame());
 
     }
 

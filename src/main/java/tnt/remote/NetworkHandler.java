@@ -2,11 +2,9 @@ package tnt.remote;
 
 import javafx.scene.control.TextInputDialog;
 import tnt.model.*;
+import tnt.util.Observable;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.Optional;
 /**
  * Network handler for handling the network connections
  */
-public class NetworkHandler {
+public class NetworkHandler extends Observable {
     private static final int PORT_NUMBER = 4444;
     private List<PrintWriter> networkPrinter = new ArrayList<>();
 
@@ -38,13 +36,10 @@ public class NetworkHandler {
     }
 
     void startServerClientConnection(Socket socket) {
-        System.out.println("Server: Client connected");
         try {
             initConnection(socket);
             Settings.setServerMode(true);
         } catch (IOException e) {
-//            error("Server: Error opening connecting", e.getMessage());
-//            reset();
             System.err.println("could not establish server socket");
         }
     }
@@ -90,10 +85,10 @@ public class NetworkHandler {
      * @param msg the message to get send
      */
     public void sendMsg(String msg) {
+        String msgnew = msg.replace("\n", "\\n");
         for(PrintWriter pw: networkPrinter) {
-            pw.println(msg.replace("\n", "\\n"));
+            pw.println(msgnew);
         }
-//        networkPrinter.println(msg);
     }
 
     private void receiveMsg(String line) {
@@ -102,6 +97,7 @@ public class NetworkHandler {
         switch (msg.substring(0,4)){
             case "game":
                 parseGame(fm, msg.substring(4));
+                notifyObservers();
                 break;
             case "play":
                 break;
@@ -119,10 +115,37 @@ public class NetworkHandler {
     }
 
     private void parseGame(FileManager fm, String gameStr){
-        List<String[]> gameData = fm.readString(gameStr);
-        Game game = new Game(0);
-        game.setAmountOfTurns(Integer.parseInt(gameData.get(0)[2]));
-        // Todo: set tiles for each player
+        String[] data = gameStr.split("new####data");
+        Game game = new Game(1);
+        // getting player data
+        List<Object> dataObject = fm.readString(data[0]);
+        List<String> header = (List<String>) dataObject.get(0);
+        List<List<String>> playerData = (List<List<String>>) dataObject.get(1);
+        ArrayList<Player> playerList = fm.setPlayerData(header, playerData, game);
+
+        // getting game data
+        dataObject = fm.readString(data[1]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> gameData = (List<List<String>>) dataObject.get(1);
+        fm.setGameData(header, gameData, game, playerList);
+
+        // getting fields data
+        dataObject = fm.readString(data[2]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> fieldData = (List<List<String>>) dataObject.get(1);
+        ArrayList<Field> allFields = fm.setFieldData(header, fieldData);
+
+        // getting board data
+        dataObject = fm.readString(data[3]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> boardData = (List<List<String>>) dataObject.get(1);
+        fm.setBoardData(header, boardData, game, allFields);
+
+        // getting figure data
+        dataObject = fm.readString(data[4]);
+        header = (List<String>) dataObject.get(0);
+        List<List<String>> figureData = (List<List<String>>) dataObject.get(1);
+        fm.setFigureData(header, figureData, game, playerList);
         Settings.setActualGame(game);
     }
 
@@ -157,7 +180,7 @@ public class NetworkHandler {
                 ExecuteGameInputs.placeFigure(figure, fieldDest);
             }
         } catch (NumberFormatException e) {
-            System.err.println("Could not build object, because integer could not get parsed: " + moveData[0] + ", " + moveData[1] + ", " + moveData[2] + ", " + e);
+            System.err.println("Could not move figure, because integer could not get parsed: " + moveData[0] + ", " + moveData[1] + ", " + moveData[2] + ", " + e);
 //                    throw new RuntimeException(e);
         }
     }
@@ -187,7 +210,34 @@ public class NetworkHandler {
      * @param actualGame
      */
     public void sendGame(Game actualGame) {
-        System.out.println("Sending here the game");
+        FileManager fm = new FileManager();
+        StringBuilder data = new StringBuilder();
+
+        // Get Player Information
+        ArrayList<Player> playerList = actualGame.getPlayerOrder();
+        List<String[]> playerData = fm.getPlayersData(playerList);
+        data.append(fm.makeString(playerData));
+        data.append("new####data");
+
+        // Get Game Information
+        List<String[]> gameData = fm.getGameData(actualGame);
+        data.append(fm.makeString(gameData));
+        data.append("new####data");
+
+        // Get Field Information
+        List<String[]> fieldsData = fm.getFieldsData(actualGame);
+        data.append(fm.makeString(fieldsData));
+        data.append("new####data");
+
+        // Get Board Information
+        List<String[]> boardData = fm.getBoardData(actualGame);
+        data.append(fm.makeString(boardData));
+        data.append("new####data");
+
+        // Get Figure Information
+        List<String[]> figureData = fm.getFiguresData(playerList);
+        data.append(fm.makeString(figureData));
+        sendMsg("game" + data);
     }
 
     /**
