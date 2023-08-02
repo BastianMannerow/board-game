@@ -192,12 +192,14 @@ public class FileManagerTest {
     @Test
     public void testSaveGame() {
         playerOrder = new ArrayList<>();
-        Game game = new Game(playerOrder, 12, "Test GameX", 1, 3, 3, true);
+        Game game = new Game(playerOrder, 12, "Test Game2", 1, 3, 3, true);
 
         game.createBoard(5,5);
         game.setVictoryHeight(3);
         game.getBoard().getField(1,1).setTowerLevel(3);
 
+
+        game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
         Settings.setActualGame(game);
 
         Player player = new Player(Player.PlayerType.HUMAN, "Player", Color.BLUE, 2, game, "1", 0);
@@ -211,7 +213,6 @@ public class FileManagerTest {
         game.setNumberOfTile((new int[] {10,10,10,10,10,10}));
         player.setNumberOfTile(new int[] {10,10,10,10,10,10});
         player2.setNumberOfTile(new int[] {10,10,10,10,10,10});
-        game.setGameStatus(Game.GameStatus.PLACE_FIGURES);
 
         ExecuteGameInputs.placeFigure(player.getFigure().get(0),game.getBoard().getField(1,2));
         ExecuteGameInputs.placeFigure(player.getFigure().get(1),game.getBoard().getField(2,2));
