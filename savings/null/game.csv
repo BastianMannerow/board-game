@@ -1,0 +1,2 @@
+playerOrder;amountOfTurns;maxStepUpHeight;maxStepDownHeight;gameName;victoryHeight;numberOfTiles;globalTilePool;gameStatus
+Kokoloco ,Lalala;4;3;3;null;5;20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20;true;MOVE_FIGURE

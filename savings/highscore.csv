@@ -1,4 +1,4 @@
 Name;LevelOfIntelligence;AmountOfTurns;Team Name
-2;AI_1;0;2
-1;HUMAN;1;1
-1;HUMAN;3;1
+Mathis, Basti;HUMAN, HUMAN;40;Backend
+Ludwig, Peter;HUMAN, HUMAN;41;Frontend
+Terminator;AI_3;300;Standard
